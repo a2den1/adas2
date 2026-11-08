@@ -3,5 +3,5 @@
   "buildCommand": "",
   "outputDirectory": ".",
   "cleanUrls": true,
-  "rewrites": [{ "source": "/", "destination": "/docs/index.html" }]
+  "rewrites": [{ "source": "/", "destination": "/docs" }]
 }
