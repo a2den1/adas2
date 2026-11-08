@@ -24,8 +24,8 @@ Themes · Factory · Window manager · Tooltips · Shortcuts
 ## 📦 CDN
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v2.0.1/dist/adas2.min.css">
-<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v2.0.1/dist/adas2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v2.0.2/dist/adas2.min.css">
+<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v2.0.2/dist/adas2.min.js"></script>
 ```
 
 The font is [Gmarket Sans](https://corp.gmarket.com/fonts/), loaded from a CDN inside the CSS, so nothing else is needed. Set the theme's `font` value to change it.

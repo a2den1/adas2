@@ -3,6 +3,8 @@
 import { ensureDefaults } from './context.js';
 import { h, icon, userIcon, resolveParent, scaleOf, resolveOptions } from './dom.js';
 
+let soloZ = 0;
+
 export const WindowOptions = {
   id: null, title: 'Window', size: [640, 480], position: null,
   icon: null, iconSize: 40, showCloseButton: true, draggable: true,
@@ -71,7 +73,8 @@ export class A2Window {
     this.applyPos();
   }
   applyPos() { this.el.style.transform = `translate(${Math.round(this.x)}px, ${Math.round(this.y)}px)`; }
-  bringToFront() { if (this.manager) this.manager.bringToFront(this); else if (this.el.parentElement) this.el.parentElement.appendChild(this.el); }
+  // DOM 위치를 옮기지 않고 z-index 로 올린다. 누르는 도중에 요소를 옮기면 click 이 사라지기 때문.
+  bringToFront() { if (this.manager) this.manager.bringToFront(this); else this.el.style.zIndex = String(++soloZ); }
   show() { this.el.hidden = false; this.bringToFront(); }
   hide() { this.el.hidden = true; }
   get visible() { return !this.el.hidden; }
@@ -134,12 +137,20 @@ export class WindowManager {
     this.root = r;
     r.classList.add('a2-window-root');
     this.windows = new Set();
+    this.z = 0;
   }
   create(opts) {
     const w = new A2Window(this, opts);
     this.windows.add(w);
+    this.bringToFront(w);
     return w;
   }
   get(id) { for (const w of this.windows) if (w.id === id) return w; return null; }
-  bringToFront(w) { this.root.appendChild(w.el); }
+  bringToFront(w) {
+    if (w.el.style.zIndex && +w.el.style.zIndex === this.z) return;
+    w.el.style.zIndex = String(++this.z);
+    this.order = [...this.windows].sort((a, b) => (+a.el.style.zIndex || 0) - (+b.el.style.zIndex || 0));
+  }
+  /** 맨 위 창 */
+  get top() { let t = null; for (const w of this.windows) if (!w.el.hidden && (!t || (+w.el.style.zIndex || 0) > (+t.el.style.zIndex || 0))) t = w; return t; }
 }

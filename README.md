@@ -24,8 +24,8 @@
 ## 📦 CDN
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v2.0.1/dist/adas2.min.css">
-<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v2.0.1/dist/adas2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v2.0.2/dist/adas2.min.css">
+<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v2.0.2/dist/adas2.min.js"></script>
 ```
 
 글꼴은 [지마켓 산스](https://corp.gmarket.com/fonts/)를 씁니다. CSS 안에서 CDN 으로 불러오므로 따로 넣지 않아도 됩니다. 바꾸려면 테마의 `font` 값을 지정합니다.

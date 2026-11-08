@@ -1,4 +1,4 @@
-/*! adas2 v2.0.1 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
+/*! adas2 v2.0.2 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
 var adas2 = (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -606,6 +606,7 @@ var adas2 = (() => {
   }
 
   // src/core/window.js
+  var soloZ = 0;
   var WindowOptions = {
     id: null,
     title: "Window",
@@ -717,9 +718,10 @@ var adas2 = (() => {
     applyPos() {
       this.el.style.transform = `translate(${Math.round(this.x)}px, ${Math.round(this.y)}px)`;
     }
+    // DOM 위치를 옮기지 않고 z-index 로 올린다. 누르는 도중에 요소를 옮기면 click 이 사라지기 때문.
     bringToFront() {
       if (this.manager) this.manager.bringToFront(this);
-      else if (this.el.parentElement) this.el.parentElement.appendChild(this.el);
+      else this.el.style.zIndex = String(++soloZ);
     }
     show() {
       this.el.hidden = false;
@@ -823,10 +825,12 @@ var adas2 = (() => {
       this.root = r;
       r.classList.add("a2-window-root");
       this.windows = /* @__PURE__ */ new Set();
+      this.z = 0;
     }
     create(opts) {
       const w = new A2Window(this, opts);
       this.windows.add(w);
+      this.bringToFront(w);
       return w;
     }
     get(id) {
@@ -834,7 +838,15 @@ var adas2 = (() => {
       return null;
     }
     bringToFront(w) {
-      this.root.appendChild(w.el);
+      if (w.el.style.zIndex && +w.el.style.zIndex === this.z) return;
+      w.el.style.zIndex = String(++this.z);
+      this.order = [...this.windows].sort((a, b) => (+a.el.style.zIndex || 0) - (+b.el.style.zIndex || 0));
+    }
+    /** 맨 위 창 */
+    get top() {
+      let t = null;
+      for (const w of this.windows) if (!w.el.hidden && (!t || (+w.el.style.zIndex || 0) > (+t.el.style.zIndex || 0))) t = w;
+      return t;
     }
   };
 
@@ -2584,7 +2596,7 @@ var adas2 = (() => {
   });
 
   // src/index.js
-  var version = true ? "2.0.1" : "dev";
+  var version = true ? "2.0.2" : "dev";
   var adas2 = {
     version,
     get context() {

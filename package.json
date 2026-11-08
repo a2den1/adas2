@@ -1,6 +1,6 @@
 {
   "name": "adas2",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "웹용 UI 툴킷 — 테마·팩토리·창 관리자·툴팁·단축키 (A web UI toolkit with themes, a factory API, windows, tooltips and shortcuts)",
   "keywords": [
     "ui",

@@ -1,4 +1,4 @@
-/*! adas2 v2.0.1 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
+/*! adas2 v2.0.2 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
 /* adas2 — 기본: 단위·공통 규칙
    모든 치수는 "디자인 단위 × --a2-px" 이다. --a2-px = --a2-scale(기본 0.6) px.
    색·크기는 adas2.setTheme() 이 --a2-* 변수로 루트에 넣는다. 아래 값은 설정 전 대비용 기본값. */
