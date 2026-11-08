@@ -1,4 +1,4 @@
-/*! adas2 v1.1.1 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
+/*! adas2 v1.1.2 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
 /* adas2 — UI framework
    상태 변화는 스프링 애니메이션(adas2.Motion)으로 처리한다.
    <link rel="stylesheet" href="adas2.css"> + <script src="adas2.js"></script> 만 넣으면 a2-* 태그를 쓸 수 있다.
@@ -918,10 +918,27 @@
         '<circle class="a2-ld-arc" cx="25" cy="25" r="20" fill="none" stroke-width="7"/></svg>';
     }
     // 수동 모드(a2-ld-manual)에서 p(0~1) 만큼 호를 그린다. 끌어서 새로고침에서 쓴다.
+    // 호 길이는 최대 80 — CSS 회전 애니메이션(a2-arc) 50% 지점의 길이와 같게 맞춰 둔다
     setProgress(p) {
       const svg = this.firstChild; if (!svg) return;
-      svg.lastChild.style.strokeDasharray = `${Math.max(1, clamp(p) * 100)} 200`;
-      svg.style.transform = `rotate(${-90 + clamp(p) * 270}deg)`;
+      this._rot = -90 + clamp(p) * 270;
+      svg.style.animationDelay = svg.lastChild.style.animationDelay = '';
+      svg.lastChild.style.strokeDasharray = `${Math.max(1, clamp(p) * 80)} 200`;
+      svg.style.transform = `rotate(${this._rot}deg)`;
+    }
+    // 수동 모드의 지금 모습(각도·호 길이) 그대로 CSS 회전을 시작한다.
+    // a2-arc 를 50%(길이 80, 오프셋 -20)부터 돌리고, 오프셋만큼 앞당겨진 각도를 a2-spin 시작 각도에서 빼 준다.
+    spinFromCurrent() {
+      const svg = this.firstChild; if (!svg) return;
+      const arc = svg.lastChild;
+      const still = reduce.matches;            // 줄인 움직임: 호 길이 애니메이션 없음, 회전 2.4초
+      const shift = still ? 0 : 20 / (2 * Math.PI * 20) * 360;
+      const spinDur = still ? 2.4 : 1.1;
+      const start = ((((this._rot ?? -90) - shift) % 360) + 360) % 360;
+      svg.style.animationDelay = `${-(start / 360) * spinDur}s`;
+      arc.style.animationDelay = still ? '' : '-0.7s';
+      svg.style.transform = ''; arc.style.strokeDasharray = '';
+      this.classList.remove('a2-ld-manual');
     }
   }
 
@@ -1068,9 +1085,8 @@
       if (this.busy) return;
       this.busy = true;
       this.setAttribute('aria-busy', 'true');
-      const svg = this.spin.firstChild;
-      if (svg) { svg.style.transform = ''; svg.lastChild.style.strokeDasharray = ''; }
-      this.spin.classList.remove('a2-ld-manual');
+      if (this.spin.spinFromCurrent) this.spin.spinFromCurrent();
+      else this.spin.classList.remove('a2-ld-manual');
       this.m.to({ y: RF.hold * this._unit() });
       const jobs = [];
       emit(this, 'refresh', { waitUntil: p => jobs.push(Promise.resolve(p)) });
@@ -1096,7 +1112,7 @@
   const define = () => { for (const [n, c] of Object.entries(defs)) if (!customElements.get(n)) customElements.define(n, c); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', define); else define();
 
-  window.adas2 = { Motion, springs: SP, version: '1.1.1' };
+  window.adas2 = { Motion, springs: SP, version: '1.1.2' };
 })();
 
 const adas2 = window.adas2;
