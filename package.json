@@ -1,14 +1,16 @@
 {
   "name": "adas2",
-  "version": "1.1.2",
-  "description": "웹 컴포넌트로 만든 UI 프레임워크 (A UI framework built on Web Components)",
+  "version": "2.0.0",
+  "description": "웹용 UI 툴킷 — 테마·팩토리·창 관리자·툴팁·단축키 (A web UI toolkit with themes, a factory API, windows, tooltips and shortcuts)",
   "keywords": [
     "ui",
-    "framework",
-    "web-components",
-    "custom-elements",
-    "spring-animation",
-    "design-system",
+    "toolkit",
+    "components",
+    "theme",
+    "window-manager",
+    "tooltip",
+    "shortcut",
+    "color-picker",
     "korean"
   ],
   "license": "SEE LICENSE IN LICENSE",

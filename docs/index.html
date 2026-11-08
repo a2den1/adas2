@@ -5,190 +5,124 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>adas2</title>
 <link rel="icon" href="../docs/logo.svg" type="image/svg+xml">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/static/woff2/SUIT.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <link rel="stylesheet" href="../dist/adas2.css">
 <style>
-  :root { --page: #EDEDED; --cap: #9A9A9A; }
-  html { background: var(--page); scrollbar-gutter: stable; }
-  body { margin: 0; font-family: var(--a2-font); color: #3E3E3E; }
-  .wrap { max-width: 1120px; margin: 0 auto; padding: 56px 32px 120px; }
-  header { display: flex; align-items: center; gap: 14px; margin-bottom: 48px; }
-  header svg { width: 44px; height: 44px; display: block; }
-  header h1 { margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -.02em; color: #1d1d1d; }
-  main { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 48px 40px; align-items: start; }
-  section { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
-  section.wide { grid-column: span 2; }
-  section > h2 { margin: 0; font-size: 13px; font-weight: 600; color: var(--cap); }
-  .stack { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
-  .row { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 18px; }
-  .split-room { height: calc(var(--a2-u) * 250); }
-  .appbar-frame { width: calc(var(--a2-u) * 1012); max-width: 100%; height: calc(var(--a2-u) * 624); background: #fff; }
-  .refresh-frame { height: calc(var(--a2-u) * 900); border-radius: calc(var(--a2-u) * 40); background: #fff; }
-  @media (max-width: 760px) { section.wide { grid-column: auto; } .wrap { padding: 32px 16px 80px; } }
+  html, body { margin: 0; height: 100%; }
+  body { background: #17161D; font-family: var(--a2-font); overflow: hidden; }
+  html[data-a2-theme="light"] body { background: #C9CAD6; }
+  #desk { position: fixed; inset: 0; }
+  .hint { position: fixed; left: 16px; bottom: 12px; font: 12px var(--a2-font); color: rgba(255,255,255,.35); pointer-events: none; }
+  html[data-a2-theme="light"] .hint { color: rgba(0,0,0,.4); }
+  .pages { position: relative; overflow: hidden; }
+  .pages > .a2-stack { position: absolute; inset: 0; }
 </style>
 </head>
 <body>
-<div class="wrap">
-<header>
-  <svg viewBox="0 0 466 466" aria-label="adas2" role="img">
-    <rect x="21" y="21" width="424" height="424" rx="82" fill="#fff"/>
-    <rect x="21" y="21" width="424" height="424" rx="82" fill="none" stroke="#FF793F" stroke-width="42"/>
-    <path d="M147.783 126.952C152.74 114.314 164.93 106 178.506 106H315.5C339.048 106 355.018 129.956 345.962 151.692L288.462 289.692C283.338 301.99 271.322 310 258 310H124.388C101.137 310 85.1772 286.598 93.6658 264.952L147.783 126.952Z" fill="#FF793F"/>
-    <defs><path id="a2logo2" d="M254.188 363V338.98L304.589 294.854C308.368 291.435 311.584 288.309 314.238 285.475C316.892 282.596 318.916 279.718 320.31 276.839C321.705 273.915 322.402 270.744 322.402 267.325C322.402 263.502 321.57 260.241 319.906 257.542C318.241 254.798 315.947 252.684 313.023 251.2C310.1 249.715 306.749 248.973 302.97 248.973C299.147 248.973 295.796 249.76 292.917 251.335C290.038 252.864 287.789 255.09 286.17 258.014C284.595 260.938 283.808 264.491 283.808 268.675H252.164C252.164 259.274 254.278 251.155 258.506 244.317C262.735 237.48 268.672 232.218 276.319 228.529C284.011 224.796 292.939 222.929 303.105 222.929C313.586 222.929 322.694 224.683 330.431 228.192C338.168 231.7 344.15 236.603 348.379 242.901C352.652 249.153 354.788 256.417 354.788 264.694C354.788 269.957 353.731 275.174 351.617 280.347C349.503 285.52 345.702 291.233 340.214 297.485C334.772 303.737 327.035 311.227 317.004 319.953L300.474 335.202V336.079H356.475V363H254.188Z"/>
-      <mask id="a2logoMask" maskUnits="userSpaceOnUse" x="207" y="177" width="195" height="231"><rect fill="#fff" x="207" y="177" width="195" height="231"/><use href="#a2logo2" fill="#000"/></mask></defs>
-    <use href="#a2logo2" fill="#000"/>
-    <use href="#a2logo2" fill="none" stroke="#fff" stroke-width="90" mask="url(#a2logoMask)"/>
-  </svg>
-  <h1>adas2</h1>
-</header>
-
-<main>
-  <section>
-    <h2>버튼</h2>
-    <div class="row">
-      <a2-button aria-label="버튼"></a2-button>
-      <a2-button data-a2-modal="#demo-modal">모달 열기</a2-button>
-    </div>
-  </section>
-
-  <section>
-    <h2>슬라이드바</h2>
-    <div class="stack">
-      <a2-slider value="80"></a2-slider>
-      <a2-slider value="70" output></a2-slider>
-    </div>
-  </section>
-
-  <section>
-    <h2>드롭다운</h2>
-    <a2-dropdown value="항목 1">
-      <option>항목 1</option>
-      <option>항목 2</option>
-      <option>항목 3</option>
-    </a2-dropdown>
-  </section>
-
-  <section>
-    <h2>텍스트 필드</h2>
-    <div class="stack">
-      <a2-textfield label="이름"></a2-textfield>
-      <a2-textfield label="이름" value="홍길동"></a2-textfield>
-    </div>
-  </section>
-
-  <section>
-    <h2>스플릿 버튼</h2>
-    <div class="stack">
-      <a2-split><a2-split-item></a2-split-item><a2-split-item></a2-split-item><a2-split-item></a2-split-item></a2-split>
-      <a2-split><a2-split-item></a2-split-item><a2-split-item></a2-split-item><a2-split-item selected></a2-split-item></a2-split>
-      <div class="split-room">
-        <a2-split><a2-split-item></a2-split-item><a2-split-item></a2-split-item><a2-split-item menu open></a2-split-item></a2-split>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2>체크박스</h2>
-    <div class="row">
-      <a2-checkbox aria-label="체크박스"></a2-checkbox>
-      <a2-checkbox checked aria-label="체크박스"></a2-checkbox>
-      <a2-checkbox checked>밥 먹기</a2-checkbox>
-    </div>
-  </section>
-
-  <section>
-    <h2>플로팅 내비게이션바</h2>
-    <a2-navbar value="0">
-      <a2-nav-item icon="house" aria-label="홈"></a2-nav-item>
-      <a2-nav-item icon="magnifying-glass" aria-label="검색"></a2-nav-item>
-      <a2-nav-item icon="user" aria-label="내 정보"></a2-nav-item>
-    </a2-navbar>
-  </section>
-
-  <section>
-    <h2>날짜 선택</h2>
-    <a2-datepicker value="2026-01-19"></a2-datepicker>
-  </section>
-
-  <section>
-    <h2>시간 선택</h2>
-    <a2-timepicker value="09:30"></a2-timepicker>
-  </section>
-
-  <section>
-    <h2>앱바</h2>
-    <div class="appbar-frame">
-      <a2-appbar heading="Title" back></a2-appbar>
-    </div>
-  </section>
-
-  <section>
-    <h2>로딩</h2>
-    <div class="row" style="align-items:center">
-      <a2-loading></a2-loading>
-      <a2-button loading>저장</a2-button>
-      <a2-button tone="soft" loading>취소</a2-button>
-    </div>
-  </section>
-
-  <section>
-    <h2>바 인디케이터</h2>
-    <div class="stack" style="align-items:stretch">
-      <a2-progress id="demo-progress" value="40"></a2-progress>
-      <a2-progress></a2-progress>
-    </div>
-  </section>
-
-  <section>
-    <h2>리스트</h2>
-    <a2-list selectable>
-      <a2-list-item icon="bell" sub="새 소식을 알려 드려요" chevron selected>알림</a2-list-item>
-      <a2-list-item icon="lock" sub="비밀번호, 2단계 인증" chevron>보안</a2-list-item>
-      <a2-list-item icon="globe" meta="한국어">언어</a2-list-item>
-    </a2-list>
-  </section>
-
-  <section>
-    <h2>끌어서 새로고침</h2>
-    <a2-refresh id="demo-refresh" class="refresh-frame">
-      <a2-list id="demo-feed">
-        <a2-list-item icon="envelope" sub="오전 9:30" chevron>메일 3통</a2-list-item>
-        <a2-list-item icon="calendar" sub="오후 2:00" chevron>회의 일정</a2-list-item>
-        <a2-list-item icon="cloud" sub="어제" chevron>백업 완료</a2-list-item>
-        <a2-list-item icon="image" sub="어제" chevron>사진 12장</a2-list-item>
-      </a2-list>
-    </a2-refresh>
-  </section>
-</main>
-</div>
-
-<a2-modal id="demo-modal" heading="저장할까요?">
-  바꾼 내용은 저장하기 전까지 반영되지 않아요.
-  <a2-button slot="actions" tone="soft" data-a2-close>취소</a2-button>
-  <a2-button slot="actions" data-a2-close>저장</a2-button>
-</a2-modal>
+<div id="desk"></div>
+<div class="hint">Alt + ` : 창 보이기/숨기기</div>
 
 <script src="../dist/adas2.js"></script>
 <script>
-  // 데모: 진행 바 값 바꾸기, 새로고침하면 맨 위에 항목 추가
-  const bar = document.getElementById('demo-progress');
-  const steps = [40, 72, 100, 0, 18];
-  let si = 0;
-  setInterval(() => { si = (si + 1) % steps.length; bar.value = steps[si]; }, 1600);
+const { Factory: F, Theme, WindowManager, ShortcutManager, KeyCombo, switchPage } = adas2;
+adas2.configure({ config: { uiScale: 0.6 }, theme: Theme.Dark });
 
-  document.getElementById('demo-refresh').addEventListener('refresh', e => {
-    e.detail.waitUntil(new Promise(r => setTimeout(r, 1200)).then(() => {
-      const t = new Date();
-      const item = document.createElement('a2-list-item');
-      item.setAttribute('icon', 'rotate');
-      item.setAttribute('sub', `${t.getHours()}:${String(t.getMinutes()).padStart(2, '0')}`);
-      item.setAttribute('chevron', '');
-      item.textContent = '새로 고침됨';
-      const feed = document.getElementById('demo-feed');
-      feed.insertBefore(item, feed.querySelector('a2-list-item'));
-    }));
-  });
+const windows = WindowManager.create('#desk');
+const vw = innerWidth || 1280, vh = innerHeight || 800;
+const small = vw < 760;
+const main = windows.create({
+  title: 'adas2', icon: '<img src="../docs/logo.svg" alt="">', iconSize: 36,
+  size: small ? [Math.floor((vw - 16) / 0.6), Math.floor((vh - 16) / 0.6)] : [900, Math.min(1300, Math.floor((vh - 40) / 0.6))],
+  resizable: !small, minSize: [600, 600], clipContent: true, padding: 0,
+});
+main.on('closeRequested', w => w.hide());
+// 화면 크기에 맞추기: 좁으면 화면을 꽉 채우고, 넓으면 높이만 화면 안으로
+function fit() {
+  const s = adas2.context.config.uiScale, W = innerWidth, H = innerHeight;
+  if (!W || !H) return;
+  if (W < 760) main.setSize(Math.floor((W - 16) / s), Math.floor((H - 16) / s));
+  else main.setSize(Math.max(main.w, 600), Math.min(1300, Math.floor((H - 40) / s)));
+  main.setPosition(null);
+}
+addEventListener('resize', fit);
+requestAnimationFrame(fit);
+
+const scroll = F.scrollView(main, { spacing: 12, padding: 16, expand: true });
+const C = scroll.content;
+
+// ── 테마
+const themeCard = F.card(C, { title: '테마', showActiveToggle: false, showDelete: false });
+F.segmented(themeCard, 'theme', {
+  values: ['dark', 'light', 'orange'], value: 'dark', defaultValue: 'dark',
+  display: v => ({ dark: 'Dark', light: 'Light', orange: 'Orange' })[v],
+  onChanged: v => adas2.setTheme({ dark: Theme.Dark, light: Theme.Light, orange: Theme.Orange }[v]),
+});
+F.slider(themeCard, 'scale', {
+  label: 'UI 배율', min: 0.4, max: 1, value: 0.6, defaultValue: 0.6, format: 2,
+  onComplete: v => adas2.setConfig({ uiScale: v }),
+});
+F.slider(themeCard, 'speed', {
+  label: '애니메이션 속도', min: 0, max: 3, value: 1, defaultValue: 1, format: 2,
+  onChanged: v => adas2.setConfig({ animationSpeed: v }),
+});
+
+// ── 기본 컨트롤
+const basic = F.card(C, { title: '기본 컨트롤', onDelete: card => card.el.remove() });
+const row = F.row(basic);
+F.button(row, () => counter.text = `눌림 ${++count}`, '버튼', 'btn_hello');
+const counter = F.button(row, 'btn_count', { text: '눌림 0', onClick: () => counter.text = `눌림 ${++count}` });
+let count = 0;
+F.toggle(basic, 'notify', { text: '알림 받기', value: true, defaultValue: true, tooltip: '가운데 버튼으로 누르면 기본값으로 돌아갑니다' });
+F.slider(basic, 'volume', { label: '음량', min: 0, max: 100, value: 70, defaultValue: 70, format: 0,
+  tooltip: '끌어서 바꾸거나, 눌러서 값을 입력합니다.\n계산식도 됩니다: 50+25, x*2, sqrt(2)*10' });
+F.slider(basic, 'offset', { label: '오프셋', min: -1, max: 1, value: 0, defaultValue: 0, format: 3, clampInput: true });
+F.input(basic, 'name', { placeholder: '이름', icon: 'fa-solid fa-pen', defaultValue: '' });
+F.input(basic, 'memo', { placeholder: '여러 줄 메모', multiline: true });
+
+// ── 고르기
+const pick = F.card(C, { title: '고르기' });
+F.segmented(pick, 'align', { values: ['왼쪽', '가운데', '오른쪽'], value: '가운데', defaultValue: '가운데' });
+F.dropdown(pick, 'quality', { values: ['낮음', '보통', '높음', '최고'], value: '보통', defaultValue: '보통' });
+F.multiDropdown(pick, 'layers', { values: ['배경', '캐릭터', '효과', 'UI'], value: ['배경', 'UI'], defaultValue: ['배경', 'UI'] });
+F.colorPicker(pick, 'accent', { label: '강조색', value: '#919AFF', defaultValue: '#919AFF' });
+
+// ── 페이지 전환
+const pg = F.card(C, { title: '페이지 전환' });
+const pagesBox = F.stack(pg); pagesBox.classList.add('pages'); pagesBox.style.height = 'calc(var(--a2-px) * 170)';
+const pages = new Map();
+['첫 번째', '두 번째', '세 번째'].forEach((name, i) => {
+  const p = F.stack(pagesBox);
+  F.text(p, `${name} 페이지`, { h1: true });
+  F.text(p, '오른쪽에서 들어오고, 지금 페이지는 왼쪽으로 나갑니다.', { dim: true });
+  if (i) p.hidden = true;
+  pages.set(i, p);
+});
+let page = 0;
+F.segmented(pg, 'page', { values: [0, 1, 2], value: 0, display: v => `${v + 1}`, onChanged: v => { switchPage(pages, page, v); page = v; } });
+
+// ── 창
+const winCard = F.card(C, { title: '창' });
+let sub = null;
+F.button(winCard, () => {
+  if (sub && sub.visible) { sub.bringToFront(); return; }
+  if (!sub) {
+    sub = windows.create({ title: '새 창', size: [620, 520], position: [small ? 0 : 360, small ? 0 : -120], resizable: true, minSize: [420, 360] });
+    sub.on('closeRequested', w => w.hide());
+    F.text(sub, '위쪽 막대를 끌어 옮기고, 가장자리를 끌어 크기를 바꿉니다.', { dim: true });
+    F.toggle(sub, null, { text: '항상 위', value: false });
+    F.button(sub, () => sub.hide(), '닫기');
+  }
+  sub.show();
+}, '새 창 열기');
+F.text(winCard, '닫기 버튼은 closeRequested 이벤트만 보냅니다. 숨길지 지울지는 쓰는 쪽이 정합니다.', { dim: true });
+
+// ── 단축키: Alt+` 로 메인 창 보이기/숨기기, 0.6초 누르고 있으면 가운데로
+ShortcutManager.register('toggle', new KeyCombo('Backquote', 'Alt'), 0.6, {
+  onPressed: () => (main.visible ? main.hide() : main.show()),
+  onHeld: () => { main.show(); main.setPosition(null); },
+});
 </script>
 </body>
 </html>

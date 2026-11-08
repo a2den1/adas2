@@ -1,0 +1,93 @@
+/* adas2 — 기본: 단위·공통 규칙
+   모든 치수는 "디자인 단위 × --a2-px" 이다. --a2-px = --a2-scale(기본 0.6) px.
+   색·크기는 adas2.setTheme() 이 --a2-* 변수로 루트에 넣는다. 아래 값은 설정 전 대비용 기본값. */
+
+:root {
+  --a2-scale: .6; --a2-speed: 1;
+  --a2-panel-bg: #25242E; --a2-top-bar: #414255; --a2-menu-bg: #6B6E8B; --a2-object-bg: #3C3A4B;
+  --a2-object-button: #7A83DF; --a2-object-active: #919AFF; --a2-object-active-bright: #CFD3FF;
+  --a2-menu-hover: rgba(162,167,224,.4); --a2-card-header: #4C4D66; --a2-card-panel: #2F2E3A;
+  --a2-soft-red: #E2676D; --a2-button-hover: #9CA3EC; --a2-button-pressed: #CFD3FF; --a2-text: #FFFFFF;
+  --a2-tooltip-bg: rgba(0,0,0,.6); --a2-overlay-scrim: rgba(0,0,0,.58); --a2-outline: #FFFFFF;
+  --a2-control-outline-idle: rgba(255,255,255,0); --a2-control-outline-hover: #919AFF;
+  --a2-math-ok: #96FF91; --a2-math-warn: #FFE591; --a2-math-err: #FF9191;
+  --a2-channel-r: #FF6B70; --a2-channel-g: #7AD17A; --a2-channel-b: #8F8FE6; --a2-channel-a: #737373; --a2-channel-s: #61C7FF; --a2-channel-v: #FFD159;
+  --a2-inactive-alpha: .4; --a2-text-dim-alpha: .6; --a2-text-faint-alpha: .2; --a2-disabled-alpha: .42;
+  --a2-radius: 12; --a2-outline-width: 2; --a2-control-height: 50; --a2-control-pad-y: 8; --a2-line-height: 1.35;
+  --a2-font-body: 24; --a2-font-h1: 32;
+  --a2-font: "SUIT", "Pretendard", system-ui, -apple-system, "Malgun Gothic", sans-serif;
+  --a2-font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+
+.a2 {
+  --a2-px: calc(var(--a2-scale) * 1px);
+  --a2-r: calc(var(--a2-radius) * var(--a2-px));
+  --a2-ow: calc(var(--a2-outline-width) * var(--a2-px));
+  --a2-row-h: calc(var(--a2-control-height) * var(--a2-px));
+  --a2-fs: var(--a2-font-body);
+  --a2-dim: color-mix(in srgb, var(--a2-text) calc(var(--a2-text-dim-alpha) * 100%), transparent);
+  --a2-faint: color-mix(in srgb, var(--a2-text) calc(var(--a2-text-faint-alpha) * 100%), transparent);
+  --a2-inactive: color-mix(in srgb, var(--a2-object-active) calc(var(--a2-inactive-alpha) * 100%), transparent);
+  box-sizing: border-box;
+  font-family: var(--a2-font);
+  color: var(--a2-text);
+  -webkit-tap-highlight-color: transparent;
+}
+.a2 *, .a2 *::before, .a2 *::after { box-sizing: border-box; }
+.a2[hidden], .a2 [hidden] { display: none !important; }
+.a2 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: pointer; }
+.a2-icon, .a2-uicon { display: inline-flex; align-items: center; justify-content: center; flex: none; line-height: 1; }
+.a2-icon svg { width: 100%; height: 100%; display: block; }
+
+/* 컨트롤 한 줄: ObjectBG 둥근 막대 */
+.a2-ctl {
+  position: relative; display: flex; align-items: center;
+  width: 100%; height: calc(var(--a2-h, var(--a2-control-height)) * var(--a2-px)); flex: none;
+  background: var(--a2-object-bg); border-radius: var(--a2-r);
+  font-size: calc(var(--a2-fs) * var(--a2-px)); letter-spacing: -.03em;
+  -webkit-user-select: none; user-select: none; outline: none;
+}
+.a2-label {
+  position: relative; z-index: 2; min-width: 0; flex: 1;
+  padding-left: calc(16 * var(--a2-px)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+/* 마우스를 올리면 보이는 테두리 */
+.a2-hover-outline {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  border-radius: inherit; border: var(--a2-ow) solid var(--a2-control-outline-idle);
+  transition: border-color calc(.1s / var(--a2-speed));
+}
+.a2-ctl:hover > .a2-hover-outline, .a2-ctl:focus-visible > .a2-hover-outline,
+.a2-dd-header:hover > .a2-hover-outline, .a2-dd-header:focus-visible > .a2-hover-outline,
+.a2-dd-check-row:hover > .a2-hover-outline, .a2-card-delete:hover > .a2-hover-outline {
+  border-color: var(--a2-control-outline-hover);
+}
+/* 계산식 입력 중: 상태 색 */
+.a2-stated > .a2-hover-outline { border-color: var(--a2-state) !important; transition-duration: calc(.2s / var(--a2-speed)); }
+
+/* 바뀜 점: 기본값과 다를 때 */
+.a2-dot {
+  position: absolute; z-index: 3; left: calc(6 * var(--a2-px)); top: calc(6 * var(--a2-px));
+  width: calc(8 * var(--a2-px)); height: calc(8 * var(--a2-px)); border-radius: 50%;
+  background: var(--a2-object-active); opacity: 0; pointer-events: none;
+  transition: opacity calc(.2s / var(--a2-speed)), background-color calc(.2s / var(--a2-speed));
+}
+.a2-dot.a2-on { opacity: 1; }
+.a2-dot.a2-no-anim { transition: none; }
+.a2-stated .a2-dot { background: var(--a2-state); }
+
+.a2-blocked { opacity: var(--a2-disabled-alpha); pointer-events: none; }
+
+/* 배치 도우미 */
+.a2-row { display: flex; gap: calc(8 * var(--a2-px)); width: 100%; height: calc(var(--a2-h, var(--a2-control-height)) * var(--a2-px)); align-items: stretch; }
+.a2-row > .a2-ctl { flex: 1; width: auto; height: auto; }
+.a2-stack { display: flex; flex-direction: column; gap: calc(var(--a2-gap, 8) * var(--a2-px)); width: 100%; }
+.a2-text { margin: 0; font-size: calc(var(--a2-font-body) * var(--a2-px)); line-height: var(--a2-line-height); letter-spacing: -.03em; }
+.a2-text.a2-h1 { font-size: calc(var(--a2-font-h1) * var(--a2-px)); font-weight: 500; }
+.a2-text.a2-dim { color: var(--a2-dim); }
+
+@media (prefers-reduced-motion: reduce) {
+  .a2, .a2 * { transition-duration: 0s !important; }
+}

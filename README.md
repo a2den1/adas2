@@ -1,203 +1,51 @@
+# <div align="center">adas2</div>
+
+<div align="center">
+  <img src="docs/logo.svg" height="160" alt="adas2 로고">
+</div>
+
 <div align="center">
 
-<img src="docs/logo.svg" width="88" height="88" alt="adas2 로고">
+### 웹용 UI 툴킷
 
-# adas2
+테마 · 팩토리 · 창 관리자 · 툴팁 · 단축키
 
-웹 컴포넌트로 만든 UI 프레임워크
-
-**한국어** · [English](README.en.md)
-
-[![version](https://img.shields.io/badge/version-1.1.2-FF793F?style=flat-square)](https://github.com/a2den1/adas2/releases)
-![size](https://img.shields.io/badge/min-36KB%20JS%20%2B%2014KB%20CSS-3E3E3E?style=flat-square)
-![dependencies](https://img.shields.io/badge/dependencies-0-3E3E3E?style=flat-square)
-[![license](https://img.shields.io/badge/license-adas2%20License-FF9B70?style=flat-square)](LICENSE)
-
-[데모](https://adas2-six.vercel.app) · [설치](#설치) · [컴포넌트](#컴포넌트) · [설정](#크기와-색) · [라이선스](#라이선스)
-
-<a href="https://adas2-six.vercel.app"><img src="docs/preview.png" width="820" alt="adas2 컴포넌트 미리보기"></a>
+**한국어** · [English](README.en.md) · [데모](https://adas2-six.vercel.app)
 
 </div>
 
-## 소개
+<p align="center">
+  <img src="docs/preview-dark.png" width="49%" alt="다크 테마">
+  <img src="docs/preview-light.png" width="49%" alt="라이트 테마">
+</p>
 
-adas2는 `<a2-button>`, `<a2-dropdown>` 같은 HTML 태그로 쓰는 UI 컴포넌트 모음입니다.
+# 🛠️ 설치
 
-- 표준 커스텀 엘리먼트라 순수 HTML, React, Vue, Svelte 등 어디서나 쓸 수 있습니다.
-- 런타임 의존성이 없고, CSS 파일 하나와 JS 파일 하나만 불러오면 됩니다.
-- `--a2-u` 값 하나로 전체 크기를, CSS 변수로 색을 바꿀 수 있습니다.
-- 키보드 조작과 ARIA 역할을 지원하고, `prefers-reduced-motion` 설정을 따릅니다.
-
-## 컴포넌트
-
-<table>
-  <tr>
-    <td align="center" width="50%"><img src="docs/img/button.png" alt="버튼"><br><b>버튼</b> <code>a2-button</code></td>
-    <td align="center" width="50%"><img src="docs/img/slider.png" alt="슬라이드바"><br><b>슬라이드바</b> <code>a2-slider</code></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="docs/img/dropdown.png" alt="드롭다운"><br><b>드롭다운</b> <code>a2-dropdown</code></td>
-    <td align="center"><img src="docs/img/textfield.png" alt="텍스트 필드"><br><b>텍스트 필드</b> <code>a2-textfield</code></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="docs/img/split.png" alt="스플릿 버튼"><br><b>스플릿 버튼</b> <code>a2-split</code></td>
-    <td align="center"><img src="docs/img/checkbox.png" alt="체크박스"><br><b>체크박스</b> <code>a2-checkbox</code></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="docs/img/navbar.png" alt="내비게이션바"><br><b>내비게이션바</b> <code>a2-navbar</code></td>
-    <td align="center"><img src="docs/img/appbar.png" alt="앱바"><br><b>앱바</b> <code>a2-appbar</code></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="docs/img/datepicker.png" alt="날짜 선택"><br><b>날짜 선택</b> <code>a2-datepicker</code></td>
-    <td align="center"><img src="docs/img/timepicker.png" alt="시간 선택"><br><b>시간 선택</b> <code>a2-timepicker</code></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="docs/img/loading.png" alt="로딩"><br><b>로딩</b> <code>a2-loading</code></td>
-    <td align="center"><img src="docs/img/progress.png" alt="진행 바"><br><b>진행 바</b> <code>a2-progress</code></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="docs/img/list.png" alt="리스트"><br><b>리스트</b> <code>a2-list</code></td>
-    <td align="center"><img src="docs/img/refresh.png" alt="끌어서 새로고침"><br><b>끌어서 새로고침</b> <code>a2-refresh</code></td>
-  </tr>
-  <tr>
-    <td align="center" colspan="2"><img src="docs/img/modal.png" width="600" alt="모달"><br><b>모달</b> <code>a2-modal</code></td>
-  </tr>
-</table>
-
-## 설치
-
-### CDN
+## 📦 CDN
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v1.1.2/dist/adas2.min.css">
-<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v1.1.2/dist/adas2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/static/woff2/SUIT.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v2.0.0/dist/adas2.min.css">
+<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v2.0.0/dist/adas2.min.js"></script>
 ```
 
-글꼴은 [Pretendard](https://github.com/orioncactus/pretendard), 아이콘은 [Font Awesome 6](https://fontawesome.com) (solid)을 씁니다.
+글꼴은 [SUIT](https://github.com/sun-typeface/SUIT)(본문)와 [JetBrains Mono](https://www.jetbrains.com/lp/mono/)(숫자 입력)를 씁니다. 없으면 시스템 글꼴로 대신합니다.
 
-### npm
+## 📦 npm
 
 ```bash
 npm install github:a2den1/adas2
 ```
 
 ```js
-import 'adas2';          // 태그 등록
-import 'adas2/css';      // 스타일 (번들러가 CSS 를 처리하는 경우)
-import { Motion } from 'adas2';
+import adas2, { Factory, Theme } from 'adas2';
+import 'adas2/css';
 ```
 
-브라우저에서만 동작합니다. 서버 렌더링을 쓰는 경우 클라이언트에서만 불러오세요.
+브라우저 전용입니다.
 
-## 사용 예
-
-```html
-<a2-dropdown value="항목 1">
-  <option>항목 1</option>
-  <option>항목 2</option>
-  <option>항목 3</option>
-</a2-dropdown>
-
-<a2-textfield label="이름"></a2-textfield>
-<a2-checkbox checked>밥 먹기</a2-checkbox>
-
-<a2-button data-a2-modal="#confirm">저장</a2-button>
-<a2-modal id="confirm" heading="저장할까요?">
-  바꾼 내용은 저장하기 전까지 반영되지 않아요.
-  <a2-button slot="actions" tone="soft" data-a2-close>취소</a2-button>
-  <a2-button slot="actions" data-a2-close>저장</a2-button>
-</a2-modal>
-
-<script>
-  document.querySelector('a2-dropdown')
-    .addEventListener('change', e => console.log(e.detail.value));
-</script>
-```
-
-## API
-
-| 태그 | HTML 속성 | JS 속성·메서드 | 이벤트 |
-|---|---|---|---|
-| `a2-button` | `disabled` `tone="soft"` `loading` | | `click` |
-| `a2-slider` | `value` `min` `max` `step` `output` | `value` | `input` `change` |
-| `a2-dropdown` + `<option>` | `value` `fit` `shadow` | `value` `selectedIndex` `setOpen()` `toggle()` `close()` | `change` `open` `close` |
-| `a2-textfield` | `label` `value` `name` `type` | `value` `focus()` | `input` `change` |
-| `a2-split` + `a2-split-item` | 항목에 `selected` `menu` `open` | `selectedIndex` | `change` `open` `close` |
-| `a2-navbar` + `a2-nav-item` | `value`, 항목에 `icon` | `value` `select()` | `change` |
-| `a2-appbar` | `heading` `back` | `setTitle()` | `back` |
-| `a2-checkbox` | `checked` | `checked` | `change` |
-| `a2-datepicker` | `value="2026-01-19"` | `value` `shift(n)` | `change` |
-| `a2-timepicker` | `value="09:30"` `minute-step` | `value` `setMode('h' \| 'm')` | `input` `change` |
-| `a2-modal` | `heading` `open` | `open(trigger?)` `close()` `isOpen` | `open` `close` |
-| `a2-loading` | `tone="white"` | | |
-| `a2-progress` | `value` (0~100, 없으면 진행률 모름) | `value` | |
-| `a2-list` + `a2-list-item` | `selectable`, 항목에 `icon` `sub` `meta` `chevron` `selected` | `items` `selectedIndex` | `select` |
-| `a2-refresh` | | `refresh()` `done()` `busy` | `refresh` |
-
-<details>
-<summary>속성 설명</summary>
-
-- `a2-slider` `output`: 손잡이 안에 값을 항상 표시합니다. 없으면 끄는 동안에만 표시합니다.
-- `a2-dropdown` `fit`: 선택 칸의 폭을 글자 길이에 맞춥니다. `shadow`: 그림자를 넣습니다.
-- `a2-split-item` `menu`: 누르면 판 모양으로 펼쳐지는 칸입니다.
-- `a2-nav-item` `icon`: Font Awesome 아이콘 이름 (`house`, `magnifying-glass`, `user` 등).
-- `a2-checkbox`: 태그 안에 글자를 넣으면 라벨이 붙은 형태가 됩니다.
-- `a2-modal`: `data-a2-modal="#id"` 가 붙은 요소를 누르면 열리고, `data-a2-close` 가 붙은 요소·Esc·바깥 영역을 누르면 닫힙니다.
-- `a2-button` `loading`: 글자 대신 로딩 표시를 보여 주고 누를 수 없게 합니다.
-- `a2-loading`: 크기는 `--a2-loading-size`(기본 120 단위)로 바꿉니다. 주황 배경 위에서는 `tone="white"`.
-- `a2-list` `selectable`: 누른 항목을 선택 상태로 표시합니다. 없으면 누르는 동안만 표시합니다.
-- `a2-list-item`: `icon` 왼쪽 아이콘, `sub` 아래 설명, `meta` 오른쪽 글자, `chevron` 오른쪽 화살표.
-- `a2-refresh`: 안의 내용을 스크롤 영역으로 감쌉니다. 높이를 지정해서 쓰고, 맨 위에서 아래로 끌었다 놓으면 `refresh` 이벤트가 납니다.
-
-```js
-document.querySelector('a2-refresh').addEventListener('refresh', e => {
-  e.detail.waitUntil(fetch('/api/feed').then(r => r.json()).then(render)); // 끝나면 로딩 표시가 사라집니다
-});
-```
-
-</details>
-
-## 크기와 색
-
-```css
-:root {
-  --a2-u: .36px;            /* 모든 치수의 단위. 기본 .36px */
-  --a2-picker-scale: 1.6;   /* 날짜·시간 선택에만 곱하는 배율 */
-  --a2-orange: #FF793F;     /* 강조색 */
-  --a2-orange-2: #FF9B70;
-  --a2-orange-3: #FFCFBA;
-  --a2-peach: #FFECE4;
-  --a2-surface: #FFFFFF;
-  --a2-font: "Pretendard", sans-serif;
-}
-```
-
-일부 영역만 바꾸려면 그 요소에 변수를 지정합니다. 예: `<section style="--a2-u: .5px">`
-
-## 애니메이션 엔진
-
-컴포넌트가 쓰는 스프링 애니메이션을 직접 쓸 수 있습니다.
-
-```js
-const box = document.querySelector('#box');
-const m = new adas2.Motion({ x: 0, s: 1 }, v => {
-  box.style.transform = `translateX(${v.x}px) scale(${v.s})`;
-});
-
-m.to({ x: 240, s: 1.2 });                                  // 기본 스프링
-m.to({ x: 0 }, { x: adas2.springs.slow }, () => done());   // 값별 스프링, 끝나면 콜백
-m.set({ x: 0, s: 1 });                                     // 애니메이션 없이 바로 적용
-```
-
-`adas2.springs`: `base` · `fast` · `slow` · `press`
-
-## 브라우저 지원
-
-Chrome·Edge 111 이상, Safari 16.4 이상, Firefox 113 이상
-
-## 개발
+## 🔧 소스에서 빌드
 
 ```bash
 npm install
@@ -205,16 +53,134 @@ npm run build      # src/ → dist/
 npm run dev        # http://localhost:5880/docs/
 ```
 
+# ⌨️ 사용법
+
+### 설정
+
+* **한 번 설정:** 시작할 때 `adas2.configure(...)` 를 부릅니다. 빠진 값은 기본값을 씁니다.
+  ```js
+  adas2.configure({
+    config: { uiScale: 0.6, animationSpeed: 1 },
+    theme: adas2.Theme.Dark,
+    root: document.documentElement,   // 테마 변수를 넣을 요소
+  });
+  ```
+* **설정 없이 바로:** 컨트롤을 만들면 `adas2.ensureDefaults()` 가 자동으로 불려 기본값이 적용됩니다.
+* **설정 값**
+
+  | 이름 | 기본값 | 설명 |
+  |---|---|---|
+  | `uiScale` | `0.6` | 모든 치수에 곱하는 배율. 디자인 단위(줄 높이 50, 글자 24)에 곱합니다 |
+  | `animationSpeed` | `1` | 애니메이션 속도. `2` 는 두 배 빠르게, `0` 은 끔 |
+  | `tooltipEnabled` | `true` | 툴팁 사용 |
+  | `middleClickToDefault` | `true` | 가운데 버튼 클릭으로 기본값 되돌리기 |
+  | `sliderSensitivity` | `1` | 슬라이더 끌기 감도 |
+
+### 테마
+
+* **프리셋:** `Theme.Dark`, `Theme.Light`, `Theme.Orange`
+* **일부만 바꾸기:** `with()` 로 새 테마를 만들어 적용합니다. CSS 변수라 이미 만든 컨트롤에도 바로 적용됩니다.
+  ```js
+  adas2.setTheme(adas2.Theme.Dark.with({ panelBg: '#1A1A24', objectActive: '#7FD1AE' }));
+  ```
+* 바꿀 수 있는 값: `panelBg` `topBar` `objectBg` `objectButton` `objectActive` `buttonHover` `buttonPressed` `cardHeader` `cardPanel` `softRed` `text` `tooltipBg` `outline` `controlOutlineHover` `mathOk` `mathWarn` `mathErr` `cornerRadius` `controlHeight` `fontSizeBody` `fontSizeH1` `font` `fontMono` 등 ([theme.js](src/core/theme.js))
+
+### 컨트롤 만들기
+
+* **팩토리:** `adas2.Factory` 의 함수는 모두 `(부모, id, 옵션)` 순서입니다. 옵션 자리에 설정 함수를 넘겨도 됩니다.
+  ```js
+  const F = adas2.Factory;
+  F.button(parent, () => alert('hi'), 'Hello', 'btn_hello');          // 짧은 형태
+  F.toggle(parent, 'notify', { text: '알림', value: true, defaultValue: true });
+  F.slider(parent, 'volume', o => { o.label = '음량'; o.max = 100; o.value = 70; o.format = 0; });
+  ```
+* **직접 만들기:** `new adas2.Slider(parent, 'volume', { ... })`
+* 부모 자리에는 요소, 선택자 문자열, 창, 카드, 스크롤 영역을 모두 넣을 수 있습니다.
+* id 를 준 컨트롤은 `adas2.getControl('volume')` 으로 찾습니다.
+
+| 팩토리 | 주요 옵션 | 설명 |
+|---|---|---|
+| `button` | `text` `icon` `onClick` | 글자 또는 아이콘 버튼 |
+| `toggle` | `text` `value` `defaultValue` `onChanged` | 줄 전체를 누르면 켜고 끕니다 |
+| `slider` | `label` `min` `max` `value` `defaultValue` `format` `onChanged` `onComplete` `dragStep` `scale` | 끌어서 바꾸고, 누르면 값을 입력합니다 |
+| `input` | `placeholder` `icon` `multiline` `monospace` `onChanged` `onEndEdit` | 글자 입력 |
+| `segmented` | `values` `value` `display` `onChanged` | 2~4개 중 하나 |
+| `dropdown` | `values` `value` `display` `onChanged` | 아래로 펼치는 목록 |
+| `multiDropdown` | `values` `value`(배열) `summary` `onChanged` | 여러 개 고르기 |
+| `colorPicker` | `label` `value` `defaultValue` `onChanged` `onComplete` | 색상환·RGB/HSV·HEX |
+| `card` | `title` `active` `onActiveChanged` `onDelete` | 켜기 체크·접기·삭제가 있는 묶음 |
+| `scrollView` | `spacing` `padding` `expand` | 휠로 부드럽게 굴러가는 영역 |
+| `row` `stack` `text` | | 가로 줄, 세로 묶음, 글자 |
+
+공통 메서드: `set(값, notify)` `reset()` `setDefaultValue(값)` `setBlocked(bool)` `dispose()`
+
+* **슬라이더 값 입력:** 값 칸을 누르면 계산식을 쓸 수 있습니다. `50+25`, `x*2`(x 는 지금 값), `sqrt(2)*10`, `clamp(x, 0, 50)`. 입력하는 동안 결과와 범위 상태가 색으로 표시되고, Enter 로 적용, Esc 로 취소합니다.
+* **기본값:** `defaultValue` 가 있으면 값이 다를 때 왼쪽 위에 점이 보이고, 가운데 버튼 클릭으로 되돌립니다.
+
+### 창
+
+* `WindowManager` 가 창 구조와 겹침 순서를 맡습니다. 보이기·숨기기와 열고 닫는 연출은 쓰는 쪽이 정합니다. 닫기 버튼은 창을 닫지 않고 `closeRequested` 를 알립니다.
+  ```js
+  const windows = adas2.WindowManager.create(document.body);
+  const win = windows.create({ title: 'Hello', size: [640, 480], resizable: true });
+  win.on('closeRequested', w => w.hide());
+  F.toggle(win, 'opt', { text: '옵션' });
+  ```
+* 옵션: `title` `size` `position` `icon` `resizable` `minSize` `draggable` `showCloseButton` `clipContent` `padding` `topBarHeight` …
+* 메서드: `show()` `hide()` `setTitle()` `setIcon()` `setSize()` `setPosition()` `bringToFront()` `dispose()`
+
+### 툴팁
+
+```js
+adas2.tooltip(element, '설명');               // 또는 옵션에 tooltip: '설명'
+adas2.tooltip(element, () => `지금 값: ${v}`);  // 함수면 보여 줄 때마다 부릅니다
+```
+
+### 단축키
+
+이름을 붙여 등록하고, 누르고 있는 시간을 정할 수 있습니다. 글자를 입력하는 중에는 동작하지 않습니다.
+
+```js
+adas2.ShortcutManager.register('toggle', new adas2.KeyCombo('Backquote', 'Alt'), 0.4, {
+  onPressed: () => toggle(),
+  onHeld: () => resetLayout(),
+});
+```
+
+키 이름은 `KeyboardEvent.code` 를 씁니다(`KeyS`, `Backquote` …). `Alt` `Ctrl` `Shift` `Meta` 는 왼쪽·오른쪽 모두 해당합니다.
+
+### 페이지 전환
+
+```js
+adas2.switchPage(new Map([[0, pageA], [1, pageB]]), 0, 1);
+```
+
+### 트윈
+
+```js
+adas2.tween({ x: 0 }, { x: 240 }, 0.45, 'OutExpo', v => { el.style.translate = `${v.x}px`; });
+```
+
+이징: `Linear`, `In`/`Out`/`InOut` × `Sine` `Quad` `Cubic` `Quart` `Quint` `Expo` `Circ` `Back` `Elastic` `Bounce`
+
+# 🧭 구조
+
 | 경로 | 내용 |
 |---|---|
-| `src/` | 원본 JS·CSS |
-| `dist/` | 빌드 결과 (스크립트, ES 모듈, 압축본) |
+| `src/core/` | 설정·테마·컨텍스트, 이징·트윈, 창, 툴팁 |
+| `src/controls/` | 버튼·토글·슬라이더·입력·세그먼트·드롭다운·색 고르기·카드·스크롤 |
+| `src/factory/` | 팩토리 |
+| `src/input/` | 단축키 |
+| `src/transition/` | 페이지 전환 |
+| `src/eval/` | 계산식 해석기 |
+| `src/styles/` | CSS |
 | `types/` | TypeScript 선언 |
-| `docs/` | 데모 페이지와 이미지 |
 
-버그 제보와 제안은 [Issues](https://github.com/a2den1/adas2/issues)에 남겨 주세요.
+브라우저 지원: Chrome·Edge 111 이상, Safari 16.4 이상, Firefox 121 이상
 
-## 라이선스
+# ⚖️ 라이선스
+
+### adas2
 
 [adas2 라이선스 1.0](LICENSE). 오픈소스 라이선스가 아닙니다.
 
@@ -223,6 +189,11 @@ npm run dev        # http://localhost:5880/docs/
 | 개인·상업 프로젝트에서 무료로 사용 | 소스·배포 파일 수정 |
 | CDN·npm 으로 불러와 사용 | 포크 등 2차적 저작물 제작 |
 | 수정하지 않은 파일을 내 서비스에 포함해 배포 | 복제해서 별도 라이브러리·템플릿으로 배포·판매 |
-| CSS 변수·속성·API 로 모양 변경 | 자신이 만든 것처럼 표시 |
+| 테마·CSS 변수·옵션·API 로 모양 바꾸기 | 자신이 만든 것처럼 표시 |
 
-그 밖의 사용은 저작권자에게 문의해 주세요. © 2026 a2den1
+© 2026 a2den1
+
+### 참고
+
+- 구성과 동작은 [O5Kit](https://github.com/modlist-org/O5Kit)(Unity uGUI 툴킷, LGPL-3.0)을 참고해 웹용으로 새로 작성했습니다. O5Kit 의 코드나 그림 파일은 들어 있지 않습니다.
+- 글꼴은 이 저장소에 들어 있지 않고 CDN 에서 불러옵니다(SUIT, JetBrains Mono 모두 OFL-1.1).
