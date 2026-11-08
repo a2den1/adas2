@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>adas2</title>
+<link rel="icon" href="../docs/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link rel="stylesheet" href="../dist/adas2.css">
+<style>
+  :root { --page: #EDEDED; --cap: #9A9A9A; }
+  html { background: var(--page); }
+  body { margin: 0; font-family: var(--a2-font); color: #3E3E3E; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 56px 32px 120px; }
+  header { display: flex; align-items: center; gap: 14px; margin-bottom: 48px; }
+  header svg { width: 44px; height: 44px; display: block; }
+  header h1 { margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -.02em; color: #1d1d1d; }
+  main { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 48px 40px; align-items: start; }
+  section { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  section.wide { grid-column: span 2; }
+  section > h2 { margin: 0; font-size: 13px; font-weight: 600; color: var(--cap); }
+  .stack { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
+  .row { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 18px; }
+  .split-room { height: calc(var(--a2-u) * 250); }
+  .appbar-frame { width: calc(var(--a2-u) * 1012); max-width: 100%; height: calc(var(--a2-u) * 624); background: #fff; }
+  @media (max-width: 760px) { section.wide { grid-column: auto; } .wrap { padding: 32px 16px 80px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <svg viewBox="0 0 466 466" aria-label="adas2" role="img">
+    <rect x="21" y="21" width="424" height="424" rx="82" fill="#fff"/>
+    <rect x="21" y="21" width="424" height="424" rx="82" fill="none" stroke="#FF793F" stroke-width="42"/>
+    <path d="M147.783 126.952C152.74 114.314 164.93 106 178.506 106H315.5C339.048 106 355.018 129.956 345.962 151.692L288.462 289.692C283.338 301.99 271.322 310 258 310H124.388C101.137 310 85.1772 286.598 93.6658 264.952L147.783 126.952Z" fill="#FF793F"/>
+    <defs><path id="a2logo2" d="M254.188 363V338.98L304.589 294.854C308.368 291.435 311.584 288.309 314.238 285.475C316.892 282.596 318.916 279.718 320.31 276.839C321.705 273.915 322.402 270.744 322.402 267.325C322.402 263.502 321.57 260.241 319.906 257.542C318.241 254.798 315.947 252.684 313.023 251.2C310.1 249.715 306.749 248.973 302.97 248.973C299.147 248.973 295.796 249.76 292.917 251.335C290.038 252.864 287.789 255.09 286.17 258.014C284.595 260.938 283.808 264.491 283.808 268.675H252.164C252.164 259.274 254.278 251.155 258.506 244.317C262.735 237.48 268.672 232.218 276.319 228.529C284.011 224.796 292.939 222.929 303.105 222.929C313.586 222.929 322.694 224.683 330.431 228.192C338.168 231.7 344.15 236.603 348.379 242.901C352.652 249.153 354.788 256.417 354.788 264.694C354.788 269.957 353.731 275.174 351.617 280.347C349.503 285.52 345.702 291.233 340.214 297.485C334.772 303.737 327.035 311.227 317.004 319.953L300.474 335.202V336.079H356.475V363H254.188Z"/>
+      <mask id="a2logoMask" maskUnits="userSpaceOnUse" x="207" y="177" width="195" height="231"><rect fill="#fff" x="207" y="177" width="195" height="231"/><use href="#a2logo2" fill="#000"/></mask></defs>
+    <use href="#a2logo2" fill="#000"/>
+    <use href="#a2logo2" fill="none" stroke="#fff" stroke-width="90" mask="url(#a2logoMask)"/>
+  </svg>
+  <h1>adas2</h1>
+</header>
+
+<main>
+  <section>
+    <h2>버튼</h2>
+    <div class="row">
+      <a2-button aria-label="버튼"></a2-button>
+      <a2-button data-a2-modal="#demo-modal">모달 열기</a2-button>
+    </div>
+  </section>
+
+  <section>
+    <h2>슬라이드바</h2>
+    <div class="stack">
+      <a2-slider value="80"></a2-slider>
+      <a2-slider value="70" output></a2-slider>
+    </div>
+  </section>
+
+  <section>
+    <h2>드롭다운</h2>
+    <a2-dropdown value="항목 1">
+      <option>항목 1</option>
+      <option>항목 2</option>
+      <option>항목 3</option>
+    </a2-dropdown>
+  </section>
+
+  <section>
+    <h2>텍스트 필드</h2>
+    <div class="stack">
+      <a2-textfield label="이름"></a2-textfield>
+      <a2-textfield label="이름" value="홍길동"></a2-textfield>
+    </div>
+  </section>
+
+  <section>
+    <h2>스플릿 버튼</h2>
+    <div class="stack">
+      <a2-split><a2-split-item></a2-split-item><a2-split-item></a2-split-item><a2-split-item></a2-split-item></a2-split>
+      <a2-split><a2-split-item></a2-split-item><a2-split-item></a2-split-item><a2-split-item selected></a2-split-item></a2-split>
+      <div class="split-room">
+        <a2-split><a2-split-item></a2-split-item><a2-split-item></a2-split-item><a2-split-item menu open></a2-split-item></a2-split>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>체크박스</h2>
+    <div class="row">
+      <a2-checkbox aria-label="체크박스"></a2-checkbox>
+      <a2-checkbox checked aria-label="체크박스"></a2-checkbox>
+      <a2-checkbox checked>밥 먹기</a2-checkbox>
+    </div>
+  </section>
+
+  <section>
+    <h2>플로팅 내비게이션바</h2>
+    <a2-navbar value="0">
+      <a2-nav-item icon="house" aria-label="홈"></a2-nav-item>
+      <a2-nav-item icon="magnifying-glass" aria-label="검색"></a2-nav-item>
+      <a2-nav-item icon="user" aria-label="내 정보"></a2-nav-item>
+    </a2-navbar>
+  </section>
+
+  <section>
+    <h2>날짜 선택</h2>
+    <a2-datepicker value="2026-01-19"></a2-datepicker>
+  </section>
+
+  <section>
+    <h2>시간 선택</h2>
+    <a2-timepicker value="09:30"></a2-timepicker>
+  </section>
+
+  <section>
+    <h2>앱바</h2>
+    <div class="appbar-frame">
+      <a2-appbar heading="Title" back></a2-appbar>
+    </div>
+  </section>
+</main>
+</div>
+
+<a2-modal id="demo-modal" heading="저장할까요?">
+  바꾼 내용은 저장하기 전까지 반영되지 않아요.
+  <a2-button slot="actions" tone="soft" data-a2-close>취소</a2-button>
+  <a2-button slot="actions" data-a2-close>저장</a2-button>
+</a2-modal>
+
+<script src="../dist/adas2.js"></script>
+</body>
+</html>
