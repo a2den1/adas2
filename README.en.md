@@ -24,13 +24,11 @@ Themes · Factory · Window manager · Tooltips · Shortcuts
 ## 📦 CDN
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/static/woff2/SUIT.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v2.0.0/dist/adas2.min.css">
 <script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v2.0.0/dist/adas2.min.js"></script>
 ```
 
-Fonts: [SUIT](https://github.com/sun-typeface/SUIT) for text and [JetBrains Mono](https://www.jetbrains.com/lp/mono/) for number input. System fonts are used if they are missing.
+The font is [Gmarket Sans](https://corp.gmarket.com/fonts/), loaded from a CDN inside the CSS, so nothing else is needed. Set the theme's `font` value to change it.
 
 ## 📦 npm
 
@@ -70,7 +68,7 @@ npm run dev        # http://localhost:5880/docs/
 
   | Name | Default | Description |
   |---|---|---|
-  | `uiScale` | `0.6` | Multiplies every dimension (design units: row height 50, text 24) |
+  | `uiScale` | `0.6` | Multiplies every dimension (design units: row height 52, text 23) |
   | `animationSpeed` | `1` | `2` is twice as fast, `0` turns animation off |
   | `tooltipEnabled` | `true` | Enable tooltips |
   | `middleClickToDefault` | `true` | Middle click resets a control to its default |
@@ -78,12 +76,12 @@ npm run dev        # http://localhost:5880/docs/
 
 ### Theme
 
-* **Presets:** `Theme.Dark`, `Theme.Light`, `Theme.Orange`
+* **Presets:** `Theme.Dark`, `Theme.Light`, `Theme.Ocean`
 * **Derive your own** with `with()`. Themes are CSS variables, so existing controls update immediately.
   ```js
   adas2.setTheme(adas2.Theme.Dark.with({ panelBg: '#1A1A24', objectActive: '#7FD1AE' }));
   ```
-* Keys include `panelBg` `topBar` `objectBg` `objectButton` `objectActive` `buttonHover` `buttonPressed` `cardHeader` `cardPanel` `softRed` `text` `tooltipBg` `outline` `controlOutlineHover` `mathOk` `mathWarn` `mathErr` `cornerRadius` `controlHeight` `fontSizeBody` `fontSizeH1` `font` `fontMono` ([theme.js](src/core/theme.js))
+* Keys include `panelBg` `topBar` `objectBg` `objectHover` `objectButton` `objectActive` `objectOnActive` `switchTrack` `buttonHover` `buttonPressed` `cardHeader` `cardPanel` `softRed` `text` `tooltipBg` `outline` `controlOutlineHover` `mathOk` `mathWarn` `mathErr` `cornerRadius` `controlHeight` `fontSizeBody` `fontSizeH1` `font` `fontMono` ([theme.js](src/core/theme.js))
 
 ### Create controls
 
@@ -195,5 +193,5 @@ Browsers: Chrome / Edge 111+, Safari 16.4+, Firefox 121+
 
 ### Credits
 
-- The structure and behavior are modeled on [O5Kit](https://github.com/modlist-org/O5Kit) (a Unity uGUI toolkit, LGPL-3.0) and written from scratch for the web. No O5Kit code or artwork is included.
-- Fonts are not bundled; they load from CDNs (SUIT and JetBrains Mono, both OFL-1.1).
+- The API layout (config, themes, factory, window manager) takes cues from [O5Kit](https://github.com/modlist-org/O5Kit) (a Unity uGUI toolkit). The code, design and artwork are adas2's own; no O5Kit files are included.
+- The font (Gmarket Sans) is not bundled; it loads from a CDN. Copyright belongs to Gmarket.

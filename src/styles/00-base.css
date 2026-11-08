@@ -4,20 +4,25 @@
 
 :root {
   --a2-scale: .6; --a2-speed: 1;
-  --a2-panel-bg: #25242E; --a2-top-bar: #414255; --a2-menu-bg: #6B6E8B; --a2-object-bg: #3C3A4B;
-  --a2-object-button: #7A83DF; --a2-object-active: #919AFF; --a2-object-active-bright: #CFD3FF;
-  --a2-menu-hover: rgba(162,167,224,.4); --a2-card-header: #4C4D66; --a2-card-panel: #2F2E3A;
-  --a2-soft-red: #E2676D; --a2-button-hover: #9CA3EC; --a2-button-pressed: #CFD3FF; --a2-text: #FFFFFF;
-  --a2-tooltip-bg: rgba(0,0,0,.6); --a2-overlay-scrim: rgba(0,0,0,.58); --a2-outline: #FFFFFF;
-  --a2-control-outline-idle: rgba(255,255,255,0); --a2-control-outline-hover: #919AFF;
-  --a2-math-ok: #96FF91; --a2-math-warn: #FFE591; --a2-math-err: #FF9191;
-  --a2-channel-r: #FF6B70; --a2-channel-g: #7AD17A; --a2-channel-b: #8F8FE6; --a2-channel-a: #737373; --a2-channel-s: #61C7FF; --a2-channel-v: #FFD159;
-  --a2-inactive-alpha: .4; --a2-text-dim-alpha: .6; --a2-text-faint-alpha: .2; --a2-disabled-alpha: .42;
-  --a2-radius: 12; --a2-outline-width: 2; --a2-control-height: 50; --a2-control-pad-y: 8; --a2-line-height: 1.35;
-  --a2-font-body: 24; --a2-font-h1: 32;
-  --a2-font: "SUIT", "Pretendard", system-ui, -apple-system, "Malgun Gothic", sans-serif;
-  --a2-font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --a2-panel-bg: #1E1C1A; --a2-top-bar: #1E1C1A; --a2-menu-bg: #3A3632; --a2-object-bg: #2C2926; --a2-object-hover: #36322E;
+  --a2-object-button: #FF793F; --a2-object-active: #FF8A55; --a2-object-active-bright: #FFB792; --a2-object-on-active: #FFFFFF;
+  --a2-switch-track: #4A4540; --a2-menu-hover: rgba(255,138,85,.3); --a2-card-header: #262320; --a2-card-panel: #262320;
+  --a2-soft-red: #F0605D; --a2-button-hover: #FF8C5A; --a2-button-pressed: #E8662F; --a2-text: #F4EFEA;
+  --a2-tooltip-bg: rgba(12,11,10,.86); --a2-overlay-scrim: rgba(0,0,0,.5); --a2-outline: rgba(255,255,255,.06);
+  --a2-control-outline-idle: rgba(255,255,255,0); --a2-control-outline-hover: rgba(255,255,255,0);
+  --a2-math-ok: #7EE08A; --a2-math-warn: #FFD166; --a2-math-err: #FF7A7A;
+  --a2-channel-r: #FF6B6B; --a2-channel-g: #5FD38D; --a2-channel-b: #5B8CFF; --a2-channel-a: #8A847E; --a2-channel-s: #4CC9F0; --a2-channel-v: #FFC94D;
+  --a2-inactive-alpha: .4; --a2-text-dim-alpha: .6; --a2-text-faint-alpha: .3; --a2-disabled-alpha: .42;
+  --a2-radius: 22; --a2-outline-width: 2; --a2-control-height: 52; --a2-control-pad-y: 8; --a2-line-height: 1.4;
+  --a2-font-body: 23; --a2-font-h1: 32;
+  --a2-font: "GmarketSans", "Pretendard", system-ui, -apple-system, "Malgun Gothic", sans-serif;
+  --a2-font-mono: "GmarketSans", "Pretendard", system-ui, sans-serif;
 }
+
+/* 지마켓 산스 (G마켓 무료 글꼴) */
+@font-face { font-family: "GmarketSans"; font-weight: 300; font-display: swap; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff") format("woff"); }
+@font-face { font-family: "GmarketSans"; font-weight: 500; font-display: swap; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff") format("woff"); }
+@font-face { font-family: "GmarketSans"; font-weight: 700; font-display: swap; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff") format("woff"); }
 
 .a2 {
   --a2-px: calc(var(--a2-scale) * 1px);
@@ -43,14 +48,19 @@
 .a2-ctl {
   position: relative; display: flex; align-items: center;
   width: 100%; height: calc(var(--a2-h, var(--a2-control-height)) * var(--a2-px)); flex: none;
-  background: var(--a2-object-bg); border-radius: var(--a2-r);
-  font-size: calc(var(--a2-fs) * var(--a2-px)); letter-spacing: -.03em;
+  background: var(--a2-object-bg); border-radius: calc(var(--a2-h, var(--a2-control-height)) * var(--a2-px) / 2);
+  font-size: calc(var(--a2-fs) * var(--a2-px)); font-weight: 500; letter-spacing: -.02em;
   -webkit-user-select: none; user-select: none; outline: none;
+  transition: background-color calc(.15s / var(--a2-speed));
+}
+.a2-ctl:hover { background-color: var(--a2-object-hover); }
+.a2-ctl:focus-visible, .a2-dd-header:focus-visible, .a2-seg:focus-visible, .a2-card-title:focus-visible, .a2-card-check:focus-visible {
+  box-shadow: 0 0 0 calc(3 * var(--a2-px)) color-mix(in srgb, var(--a2-object-active) 55%, transparent);
 }
 .a2-label {
   position: relative; z-index: 2; min-width: 0; flex: 1;
-  padding-left: calc(16 * var(--a2-px)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  pointer-events: none;
+  padding-left: calc(24 * var(--a2-px)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  pointer-events: none; padding-top: .08em;
 }
 
 /* 마우스를 올리면 보이는 테두리 */
@@ -69,8 +79,8 @@
 
 /* 바뀜 점: 기본값과 다를 때 */
 .a2-dot {
-  position: absolute; z-index: 3; left: calc(6 * var(--a2-px)); top: calc(6 * var(--a2-px));
-  width: calc(8 * var(--a2-px)); height: calc(8 * var(--a2-px)); border-radius: 50%;
+  position: absolute; z-index: 3; left: calc(10 * var(--a2-px)); top: calc(50% - 3.5 * var(--a2-px));
+  width: calc(7 * var(--a2-px)); height: calc(7 * var(--a2-px)); border-radius: 50%;
   background: var(--a2-object-active); opacity: 0; pointer-events: none;
   transition: opacity calc(.2s / var(--a2-speed)), background-color calc(.2s / var(--a2-speed));
 }
@@ -84,8 +94,8 @@
 .a2-row { display: flex; gap: calc(8 * var(--a2-px)); width: 100%; height: calc(var(--a2-h, var(--a2-control-height)) * var(--a2-px)); align-items: stretch; }
 .a2-row > .a2-ctl { flex: 1; width: auto; height: auto; }
 .a2-stack { display: flex; flex-direction: column; gap: calc(var(--a2-gap, 8) * var(--a2-px)); width: 100%; }
-.a2-text { margin: 0; font-size: calc(var(--a2-font-body) * var(--a2-px)); line-height: var(--a2-line-height); letter-spacing: -.03em; }
-.a2-text.a2-h1 { font-size: calc(var(--a2-font-h1) * var(--a2-px)); font-weight: 500; }
+.a2-text { margin: 0; font-size: calc(var(--a2-font-body) * var(--a2-px)); font-weight: 500; line-height: var(--a2-line-height); letter-spacing: -.02em; }
+.a2-text.a2-h1 { font-size: calc(var(--a2-font-h1) * var(--a2-px)); font-weight: 700; }
 .a2-text.a2-dim { color: var(--a2-dim); }
 
 @media (prefers-reduced-motion: reduce) {

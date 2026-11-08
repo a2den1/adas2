@@ -1,26 +1,38 @@
-/* ───────── 버튼 ───────── */
-.a2-button { justify-content: center; cursor: pointer; background: var(--a2-object-button); }
-.a2-btn-text { position: relative; z-index: 2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 calc(12 * var(--a2-px)); }
-.a2-icon-button .a2-btn-icon { position: absolute; z-index: 2; inset: calc(var(--a2-icon-pad, 5) * var(--a2-px)); font-size: calc((var(--a2-h, var(--a2-control-height)) - 2 * var(--a2-icon-pad, 5)) * .6 * var(--a2-px)); }
+/* ───────── 버튼: 알약, 강조색 ───────── */
+.a2-button {
+  justify-content: center; cursor: pointer;
+  background: var(--a2-object-button); color: var(--a2-object-on-active);
+  transition: transform calc(.18s / var(--a2-speed)) cubic-bezier(.3, .7, .3, 1);
+}
+.a2-button:hover { background-color: var(--a2-object-button); }
+.a2-button:active { transform: scale(.97); }
+.a2-btn-text { position: relative; z-index: 2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: .08em calc(16 * var(--a2-px)) 0; }
+.a2-icon-button .a2-btn-icon { position: absolute; z-index: 2; inset: calc(var(--a2-icon-pad, 5) * var(--a2-px)); font-size: calc((var(--a2-h, var(--a2-control-height)) - 2 * var(--a2-icon-pad, 5)) * .55 * var(--a2-px)); }
 .a2-icon-button { width: calc(var(--a2-h, var(--a2-control-height)) * var(--a2-px)); }
 
-/* ───────── 토글: 오른쪽 둥근 손잡이 (가운데가 오른쪽 끝에서 23) ───────── */
-.a2-toggle { cursor: pointer; }
-.a2-knob, .a2-card-check {
-  --a2-k: calc(var(--a2-knob, 26) * var(--a2-px));
-  position: relative; z-index: 2; flex: none; display: grid; place-items: center;
+/* ───────── 스위치 (토글·카드) ───────── */
+.a2-switch {
+  --a2-sw-w: calc(72 * var(--a2-px)); --a2-sw-h: calc(40 * var(--a2-px)); --a2-sw-k: calc(32 * var(--a2-px)); --a2-sw-pad: calc(4 * var(--a2-px));
+  position: relative; z-index: 2; flex: none; display: block;
+  width: var(--a2-sw-w); height: var(--a2-sw-h); border-radius: 999px;
+  background: var(--a2-switch-track);
+  transition: background-color calc(.22s / var(--a2-speed));
 }
-.a2-toggle .a2-knob { position: absolute; right: calc(23 * var(--a2-px)); top: 50%; width: 0; height: 0; }
-.a2-knob .a2-icon, .a2-card-check .a2-icon {
-  position: absolute; width: var(--a2-k); height: var(--a2-k);
-  color: var(--a2-inactive); transition: color calc(.15s / var(--a2-speed)) ease-out, opacity calc(.15s / var(--a2-speed));
+.a2-switch-knob {
+  position: absolute; left: var(--a2-sw-pad); top: var(--a2-sw-pad);
+  width: var(--a2-sw-k); height: var(--a2-sw-k); border-radius: 999px; background: #fff;
+  box-shadow: 0 calc(2 * var(--a2-px)) calc(6 * var(--a2-px)) rgba(0, 0, 0, .25);
+  transition: transform calc(.32s / var(--a2-speed)) cubic-bezier(.3, .8, .25, 1), width calc(.2s / var(--a2-speed)) cubic-bezier(.3, .8, .25, 1);
 }
-.a2-toggle .a2-knob .a2-icon { left: calc(var(--a2-k) / -2); top: calc(var(--a2-k) / -2); }
-.a2-knob-on { opacity: 0; }
-.a2-on > .a2-knob .a2-knob-on, .a2-card-check.a2-on .a2-knob-on { opacity: 1; color: var(--a2-object-active); }
-.a2-on > .a2-knob .a2-knob-off, .a2-card-check.a2-on .a2-knob-off { opacity: 0; color: var(--a2-object-active); }
+.a2-on > .a2-switch, .a2-card-check.a2-on > .a2-switch { background: var(--a2-object-active); }
+.a2-on > .a2-switch .a2-switch-knob, .a2-card-check.a2-on .a2-switch-knob { transform: translateX(calc(var(--a2-sw-w) - var(--a2-sw-k) - 2 * var(--a2-sw-pad))); }
+/* 누르는 동안 손잡이가 살짝 늘어난다 */
+.a2-toggle:active .a2-switch-knob, .a2-card-check:active .a2-switch-knob { width: calc(var(--a2-sw-k) + 6 * var(--a2-px)); }
+.a2-toggle.a2-on:active .a2-switch-knob, .a2-card-check.a2-on:active .a2-switch-knob { transform: translateX(calc(var(--a2-sw-w) - var(--a2-sw-k) - 6 * var(--a2-px) - 2 * var(--a2-sw-pad))); }
+.a2-switch.a2-no-anim, .a2-switch.a2-no-anim .a2-switch-knob { transition: none; }
+.a2-toggle { cursor: pointer; padding-right: calc(8 * var(--a2-px)); }
 
-/* ───────── 슬라이더 ───────── */
+/* ───────── 슬라이더: 알약 막대를 채운다 ───────── */
 .a2-slider { cursor: ew-resize; overflow: hidden; }
 .a2-slider.a2-dragging { cursor: none; }
 .a2-fill {
@@ -28,11 +40,13 @@
   border-radius: inherit; background: var(--a2-fill, var(--a2-object-active));
   transition: background-color calc(.2s / var(--a2-speed));
 }
-.a2-dot.a2-dot-in-fill { background: var(--a2-object-bg); }
+.a2-slider .a2-label { color: var(--a2-text); }
+.a2-dot.a2-dot-in-fill { background: var(--a2-object-on-active); }
 .a2-value, .a2-preview {
   position: absolute; inset: 0; z-index: 2;
-  padding: 0 calc(16 * var(--a2-px)); text-align: right; white-space: pre; overflow: hidden;
-  font-family: var(--a2-font-mono); font-size: calc(var(--a2-fs) * var(--a2-px)); letter-spacing: 0;
+  padding: .08em calc(24 * var(--a2-px)) 0; text-align: right; white-space: pre; overflow: hidden;
+  font-family: var(--a2-font-mono); font-size: calc(var(--a2-fs) * var(--a2-px)); font-weight: 500; letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
   display: flex; align-items: center; justify-content: flex-end;
 }
 .a2-value {
@@ -40,7 +54,7 @@
   color: var(--a2-text); pointer-events: none; caret-color: var(--a2-object-active);
 }
 .a2-slider.a2-editing .a2-value { pointer-events: auto; cursor: text; -webkit-user-select: text; user-select: text; }
-.a2-slider.a2-editing .a2-label { opacity: .5; }
+.a2-slider.a2-editing .a2-label { opacity: .45; }
 .a2-stated .a2-value { caret-color: var(--a2-state); }
 .a2-value::selection { background: var(--a2-menu-hover); }
 .a2-preview { pointer-events: none; color: var(--a2-dim); z-index: 1; }
@@ -49,101 +63,120 @@
 /* ───────── 입력칸 ───────── */
 .a2-input { cursor: text; }
 .a2-input .a2-field {
-  position: absolute; z-index: 2; inset: calc(4 * var(--a2-px)) calc(48 * var(--a2-px)) calc(4 * var(--a2-px)) calc(16 * var(--a2-px));
-  width: auto; height: auto; margin: 0; padding: 0; border: 0; outline: 0; background: transparent; resize: none;
-  font: 500 calc(var(--a2-fs) * var(--a2-px)) / 1.35 var(--a2-font); letter-spacing: -.03em; color: var(--a2-text);
+  position: absolute; z-index: 2; inset: calc(4 * var(--a2-px)) calc(56 * var(--a2-px)) calc(4 * var(--a2-px)) calc(24 * var(--a2-px));
+  width: auto; height: auto; margin: 0; padding: .08em 0 0; border: 0; outline: 0; background: transparent; resize: none;
+  font: 500 calc(var(--a2-fs) * var(--a2-px)) / 1.4 var(--a2-font); letter-spacing: -.02em; color: var(--a2-text);
   caret-color: var(--a2-object-active);
 }
-.a2-input.a2-no-icon .a2-field { right: calc(12 * var(--a2-px)); }
+.a2-input.a2-no-icon .a2-field { right: calc(20 * var(--a2-px)); }
 .a2-input.a2-mono .a2-field { font-family: var(--a2-font-mono); letter-spacing: 0; }
 .a2-input .a2-field::placeholder { color: var(--a2-faint); opacity: 1; }
 .a2-input .a2-field::selection { background: var(--a2-menu-hover); }
-.a2-input.a2-multiline { height: auto; min-height: calc(160 * var(--a2-px)); align-items: stretch; }
-.a2-input.a2-multiline .a2-field { position: relative; inset: auto; width: 100%; min-height: calc(160 * var(--a2-px)); padding: calc(12 * var(--a2-px)) calc(12 * var(--a2-px)) calc(12 * var(--a2-px)) calc(16 * var(--a2-px)); white-space: pre-wrap; resize: vertical; }
+.a2-input.a2-focus { background-color: var(--a2-object-hover); }
+.a2-input.a2-multiline { height: auto; min-height: calc(160 * var(--a2-px)); align-items: stretch; border-radius: var(--a2-r); }
+.a2-input.a2-multiline .a2-field { position: relative; inset: auto; width: 100%; min-height: calc(160 * var(--a2-px)); padding: calc(16 * var(--a2-px)) calc(20 * var(--a2-px)) calc(16 * var(--a2-px)) calc(24 * var(--a2-px)); white-space: pre-wrap; resize: vertical; }
 .a2-input-icon {
-  position: absolute; z-index: 2; right: calc(10 * var(--a2-px)); top: 50%; translate: 0 -50%;
-  width: calc(26 * var(--a2-px)); height: calc(26 * var(--a2-px)); font-size: calc(22 * var(--a2-px));
-  color: var(--a2-text); opacity: var(--a2-text-faint-alpha); pointer-events: none;
-  transition: opacity calc(.3s / var(--a2-speed)) ease-out;
+  position: absolute; z-index: 2; right: calc(20 * var(--a2-px)); top: 50%; translate: 0 -50%;
+  width: calc(26 * var(--a2-px)); height: calc(26 * var(--a2-px)); font-size: calc(21 * var(--a2-px));
+  color: var(--a2-text); opacity: .45; pointer-events: none;
+  transition: opacity calc(.3s / var(--a2-speed)) ease-out, color calc(.2s / var(--a2-speed));
 }
-.a2-input.a2-focus .a2-input-icon { opacity: 0; transition-duration: calc(.2s / var(--a2-speed)); }
-.a2-input.a2-focus > .a2-hover-outline { border-color: var(--a2-control-outline-hover); }
+.a2-input.a2-focus .a2-input-icon { opacity: 1; color: var(--a2-object-active); transition-duration: calc(.2s / var(--a2-speed)); }
 
-/* ───────── 세그먼트 ───────── */
-.a2-segmented { background: transparent; }
-.a2-seg-mask { position: absolute; inset: 0; display: flex; border-radius: var(--a2-r); overflow: hidden; background: var(--a2-object-button); }
-.a2-seg {
-  flex: 1 1 0; min-width: 0; height: 100%; display: flex; align-items: center; justify-content: center;
-  background: var(--a2-object-button); color: var(--a2-dim); font-weight: 400;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 calc(8 * var(--a2-px));
+/* ───────── 세그먼트: 고른 칸 뒤 알약이 옮겨 간다 ───────── */
+.a2-segmented { background: var(--a2-object-bg); }
+.a2-segmented:hover { background: var(--a2-object-bg); }
+.a2-seg-mask { position: absolute; inset: calc(4 * var(--a2-px)); display: flex; border-radius: 999px; }
+.a2-seg-ind {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 999px;
+  background: var(--a2-object-active); box-shadow: 0 calc(3 * var(--a2-px)) calc(10 * var(--a2-px)) color-mix(in srgb, var(--a2-object-active) 35%, transparent);
 }
-.a2 .a2-seg { color: var(--a2-dim); }
-.a2 .a2-seg.a2-selected { color: var(--a2-text); font-weight: 700; }
-.a2-seg-border { position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: var(--a2-r); border: var(--a2-ow) solid var(--a2-control-outline-idle); }
+.a2 .a2-seg {
+  position: relative; z-index: 1; flex: 1 1 0; min-width: 0; height: 100%; display: flex; align-items: center; justify-content: center;
+  padding: .08em calc(10 * var(--a2-px)) 0; border-radius: 999px; outline: none;
+  color: var(--a2-dim); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: color calc(.2s / var(--a2-speed));
+}
+.a2 .a2-seg:hover { color: var(--a2-text); }
+.a2 .a2-seg.a2-selected { color: var(--a2-object-on-active); font-weight: 700; }
 
-/* ───────── 드롭다운 ───────── */
-.a2-dd { display: block; background: transparent; overflow: hidden; height: var(--a2-row-h); border-radius: 0; }
+/* ───────── 드롭다운: 아래에 떠서 열리는 목록 ───────── */
+.a2-dd { display: block; background: transparent; height: var(--a2-row-h); position: relative; }
+.a2-dd:hover { background: transparent; }
+.a2-dd.a2-open { z-index: 40; }
 .a2-dd-header {
   position: relative; display: flex; align-items: center; height: var(--a2-row-h);
-  background: var(--a2-object-bg); border-radius: var(--a2-r); cursor: pointer; outline: none;
+  background: var(--a2-object-bg); border-radius: 999px; cursor: pointer; outline: none;
+  transition: background-color calc(.15s / var(--a2-speed));
 }
-.a2-dd-label { padding-right: calc(48 * var(--a2-px)); }
+.a2-dd-header:hover, .a2-open .a2-dd-header { background: var(--a2-object-hover); }
+.a2-dd-label { padding-right: calc(56 * var(--a2-px)); }
 .a2-dd-tri {
-  position: absolute; z-index: 2; right: calc(10 * var(--a2-px)); top: calc(50% - 13 * var(--a2-px));
-  width: calc(26 * var(--a2-px)); height: calc(26 * var(--a2-px));
-  color: var(--a2-inactive); transition: color calc(.2s / var(--a2-speed));
+  position: absolute; z-index: 2; right: calc(18 * var(--a2-px)); top: calc(50% - 13 * var(--a2-px));
+  width: calc(26 * var(--a2-px)); height: calc(26 * var(--a2-px)); color: var(--a2-dim);
+  transition: color calc(.2s / var(--a2-speed));
 }
 .a2-open .a2-dd-tri { color: var(--a2-object-active); }
-.a2-dd-list { margin-top: calc(12 * var(--a2-px)); background: var(--a2-object-bg); border-radius: var(--a2-r); opacity: 0; display: flex; flex-direction: column; }
+.a2-dd-list {
+  position: fixed; z-index: 1500;
+  font-size: calc(var(--a2-font-body) * var(--a2-px)); font-weight: 500; letter-spacing: -.02em;
+  -webkit-user-select: none; user-select: none;
+  display: flex; flex-direction: column; padding: calc(6 * var(--a2-px)); max-height: calc(420 * var(--a2-px)); overflow-y: auto;
+  background: var(--a2-object-bg); border-radius: var(--a2-r); opacity: 0; transform-origin: top center;
+  box-shadow: 0 calc(16 * var(--a2-px)) calc(40 * var(--a2-px)) rgba(0, 0, 0, .35), 0 0 0 1px var(--a2-outline);
+  scrollbar-width: thin;
+}
+.a2-dd-list.a2-up { transform-origin: bottom center; }
 .a2-dd-row {
-  position: relative; display: flex; align-items: center; height: var(--a2-row-h); flex: none;
-  padding-left: calc(16 * var(--a2-px)); border-radius: var(--a2-r); cursor: pointer;
+  position: relative; display: flex; align-items: center; flex: none;
+  height: calc(46 * var(--a2-px)); padding: .08em calc(18 * var(--a2-px)) 0; border-radius: calc(16 * var(--a2-px)); cursor: pointer;
   transition: background-color calc(.12s / var(--a2-speed));
 }
+.a2-dd-row:hover { background: var(--a2-object-hover); }
 .a2-dd-row-text { position: relative; z-index: 2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.a2-dropdown .a2-dd-row:hover { background: var(--a2-object-active); }
-.a2-dd-row.a2-selected .a2-dd-row-text { font-weight: 700; }
-.a2-dd-check-row { padding-right: calc(48 * var(--a2-px)); }
+.a2-dd-row.a2-selected .a2-dd-row-text { color: var(--a2-object-active); font-weight: 700; }
+.a2-dd-check-row { padding-right: calc(52 * var(--a2-px)); }
 .a2-dd-check-row .a2-icon {
-  position: absolute; z-index: 2; right: calc(10 * var(--a2-px)); top: calc(50% - 13 * var(--a2-px));
-  width: calc(26 * var(--a2-px)); height: calc(26 * var(--a2-px)); color: var(--a2-inactive);
+  position: absolute; z-index: 2; right: calc(14 * var(--a2-px)); top: calc(50% - 12 * var(--a2-px));
+  width: calc(24 * var(--a2-px)); height: calc(24 * var(--a2-px)); color: var(--a2-text);
+  transition: opacity calc(.15s / var(--a2-speed));
 }
-.a2-check-on { opacity: 0; }
-.a2-dd-check-row.a2-selected .a2-check-on { opacity: 1; color: var(--a2-object-active); }
+.a2-check-on { opacity: 0; color: var(--a2-object-active) !important; }
+.a2-dd-check-row.a2-selected .a2-check-on { opacity: 1; }
 .a2-dd-check-row.a2-selected .a2-check-off { opacity: 0; }
-.a2-dd-check-row.a2-selected .a2-dd-row-text { font-weight: 400; }
+.a2-dd-check-row.a2-selected .a2-dd-row-text { color: var(--a2-text); font-weight: 500; }
 
 /* ───────── 색 고르기 ───────── */
 .a2-colorpicker { cursor: pointer; }
 .a2-swatch {
   position: absolute; z-index: 2; right: calc(7 * var(--a2-px)); top: calc(7 * var(--a2-px)); bottom: calc(7 * var(--a2-px));
-  width: calc(200 * var(--a2-px)); border-radius: calc((var(--a2-radius) - 4) * var(--a2-px)); overflow: hidden;
+  width: calc(190 * var(--a2-px)); border-radius: 999px; overflow: hidden;
   background: repeating-conic-gradient(#8a8a8a 0 25%, #c8c8c8 0 50%) 0 0 / calc(16 * var(--a2-px)) calc(16 * var(--a2-px));
 }
 .a2-swatch-fill { position: absolute; inset: 0; }
-.a2-swatch-text { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--a2-font-mono); font-size: calc(18 * var(--a2-px)); letter-spacing: 0; }
+.a2-swatch-text { position: absolute; inset: 0; display: grid; place-items: center; padding-top: .1em; font-family: var(--a2-font-mono); font-size: calc(18 * var(--a2-px)); font-weight: 500; letter-spacing: .02em; }
 .a2-cp-blocker { position: fixed; inset: 0; z-index: 1999; }
 .a2-cp-popup {
-  --a2-wheel: calc(336 * var(--a2-px)); --a2-wheel-x: calc(12 * var(--a2-px)); --a2-wheel-y: calc(12 * var(--a2-px));
-  position: fixed; z-index: 2000; width: calc(360 * var(--a2-px));
-  padding: calc(12 * var(--a2-px)); display: flex; flex-direction: column; gap: calc(10 * var(--a2-px));
-  background: var(--a2-panel-bg); border-radius: var(--a2-r);
-  box-shadow: 0 0 0 var(--a2-ow) var(--a2-outline), 0 calc(16 * var(--a2-px)) calc(48 * var(--a2-px)) rgba(0,0,0,.35);
+  --a2-wheel: calc(336 * var(--a2-px)); --a2-wheel-x: calc(16 * var(--a2-px)); --a2-wheel-y: calc(16 * var(--a2-px));
+  position: fixed; z-index: 2000; width: calc(368 * var(--a2-px));
+  padding: calc(16 * var(--a2-px)); display: flex; flex-direction: column; gap: calc(10 * var(--a2-px));
+  background: var(--a2-panel-bg); border-radius: calc(28 * var(--a2-px));
+  box-shadow: 0 calc(24 * var(--a2-px)) calc(64 * var(--a2-px)) rgba(0,0,0,.45), 0 0 0 1px var(--a2-outline);
   transform-origin: top left;
 }
 .a2-cp-wheel { width: var(--a2-wheel); height: var(--a2-wheel); display: block; touch-action: none; cursor: crosshair; }
 .a2-cp-handle {
-  position: absolute; z-index: 2; width: calc(18 * var(--a2-px)); height: calc(18 * var(--a2-px)); translate: -50% -50%;
-  border-radius: 50%; box-shadow: 0 0 0 calc(3 * var(--a2-px)) #fff, 0 0 0 calc(4 * var(--a2-px)) rgba(0,0,0,.35); pointer-events: none;
+  position: absolute; z-index: 2; width: calc(20 * var(--a2-px)); height: calc(20 * var(--a2-px)); translate: -50% -50%;
+  border-radius: 50%; box-shadow: 0 0 0 calc(3 * var(--a2-px)) #fff, 0 calc(2 * var(--a2-px)) calc(6 * var(--a2-px)) rgba(0,0,0,.4); pointer-events: none;
 }
-.a2-cp-tabs { display: flex; gap: calc(4 * var(--a2-px)); height: calc(40 * var(--a2-px)); }
+.a2-cp-tabs { position: relative; display: flex; gap: calc(4 * var(--a2-px)); height: calc(42 * var(--a2-px)); padding: calc(4 * var(--a2-px)); border-radius: 999px; background: var(--a2-object-bg); }
 .a2-cp-tab {
-  flex: 1; border-radius: var(--a2-r); font-size: calc(20 * var(--a2-px)); color: var(--a2-dim) !important;
-  transition: background-color calc(.15s / var(--a2-speed)), color calc(.15s / var(--a2-speed));
+  flex: 1; border-radius: 999px; font-size: calc(19 * var(--a2-px)); font-weight: 500; padding-top: .08em; color: var(--a2-dim) !important;
+  transition: background-color calc(.18s / var(--a2-speed)), color calc(.18s / var(--a2-speed));
 }
-.a2-cp-tab:hover { background: var(--a2-object-bg) !important; }
-.a2-cp-tab.a2-on { background: var(--a2-object-active) !important; color: var(--a2-text) !important; }
+.a2-cp-tab:hover { color: var(--a2-text) !important; }
+.a2-cp-tab.a2-on { background: var(--a2-object-active) !important; color: var(--a2-object-on-active) !important; font-weight: 700; }
 .a2-cp-channels { display: flex; flex-direction: column; gap: calc(8 * var(--a2-px)); }
-.a2-cp-channels .a2-slider { --a2-fs: 20; }
-.a2-cp-hex { height: calc(40 * var(--a2-px)); --a2-fs: 20; }
-.a2-cp-hex .a2-field { font-family: var(--a2-font-mono) !important; letter-spacing: 0 !important; }
+.a2-cp-channels .a2-slider { --a2-fs: 19; }
+.a2-cp-hex { height: calc(42 * var(--a2-px)); --a2-fs: 19; border-radius: 999px; }
+.a2-cp-hex .a2-field { font-family: var(--a2-font-mono) !important; letter-spacing: .02em !important; }

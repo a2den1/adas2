@@ -5,16 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>adas2</title>
 <link rel="icon" href="../docs/logo.svg" type="image/svg+xml">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/static/woff2/SUIT.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <link rel="stylesheet" href="../dist/adas2.css">
 <style>
   html, body { margin: 0; height: 100%; }
-  body { background: #17161D; font-family: var(--a2-font); overflow: hidden; }
-  html[data-a2-theme="light"] body { background: #C9CAD6; }
+  body { background: #121110; font-family: var(--a2-font); overflow: hidden; transition: background-color .3s; }
+  html[data-a2-theme="light"] body { background: #E6DFD7; }
+  html[data-a2-theme="ocean"] body { background: #0D1015; }
   #desk { position: fixed; inset: 0; }
-  .hint { position: fixed; left: 16px; bottom: 12px; font: 12px var(--a2-font); color: rgba(255,255,255,.35); pointer-events: none; }
+  .hint { position: fixed; left: 16px; bottom: 12px; font: 500 12px var(--a2-font); color: rgba(255,255,255,.35); pointer-events: none; }
   html[data-a2-theme="light"] .hint { color: rgba(0,0,0,.4); }
   .pages { position: relative; overflow: hidden; }
   .pages > .a2-stack { position: absolute; inset: 0; }
@@ -55,9 +54,9 @@ const C = scroll.content;
 // ── 테마
 const themeCard = F.card(C, { title: '테마', showActiveToggle: false, showDelete: false });
 F.segmented(themeCard, 'theme', {
-  values: ['dark', 'light', 'orange'], value: 'dark', defaultValue: 'dark',
-  display: v => ({ dark: 'Dark', light: 'Light', orange: 'Orange' })[v],
-  onChanged: v => adas2.setTheme({ dark: Theme.Dark, light: Theme.Light, orange: Theme.Orange }[v]),
+  values: ['dark', 'light', 'ocean'], value: 'dark', defaultValue: 'dark',
+  display: v => ({ dark: 'Dark', light: 'Light', ocean: 'Ocean' })[v],
+  onChanged: v => adas2.setTheme({ dark: Theme.Dark, light: Theme.Light, ocean: Theme.Ocean }[v]),
 });
 F.slider(themeCard, 'scale', {
   label: 'UI 배율', min: 0.4, max: 1, value: 0.6, defaultValue: 0.6, format: 2,
@@ -86,7 +85,7 @@ const pick = F.card(C, { title: '고르기' });
 F.segmented(pick, 'align', { values: ['왼쪽', '가운데', '오른쪽'], value: '가운데', defaultValue: '가운데' });
 F.dropdown(pick, 'quality', { values: ['낮음', '보통', '높음', '최고'], value: '보통', defaultValue: '보통' });
 F.multiDropdown(pick, 'layers', { values: ['배경', '캐릭터', '효과', 'UI'], value: ['배경', 'UI'], defaultValue: ['배경', 'UI'] });
-F.colorPicker(pick, 'accent', { label: '강조색', value: '#919AFF', defaultValue: '#919AFF' });
+F.colorPicker(pick, 'accent', { label: '강조색', value: '#FF8A55', defaultValue: '#FF8A55' });
 
 // ── 페이지 전환
 const pg = F.card(C, { title: '페이지 전환' });

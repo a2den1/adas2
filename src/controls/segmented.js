@@ -1,6 +1,6 @@
 import { Control } from './control.js';
 import { h, resolveOptions, themeVar } from '../core/dom.js';
-import { tweenColor } from '../core/tween.js';
+import { tween } from '../core/tween.js';
 
 export const SegmentedOptions = {
   values: [], value: undefined, defaultValue: null,
@@ -19,11 +19,11 @@ export class Segmented extends Control {
     if (o.height != null) el.style.setProperty('--a2-h', o.height);
     if (o.fontSize != null) el.style.setProperty('--a2-fs', o.fontSize);
     this.mask = h('div', 'a2-seg-mask', el);
-    this.border = h('div', 'a2-seg-border', el);
     this.addChangedDot();
     this.value = o.value !== undefined ? o.value : o.values[0];
     this.build();
     this.enableMiddleReset(el, false);
+    new ResizeObserver(() => this.moveIndicator(true)).observe(this.mask);
   }
   set fontSize(v) { this.el.style.setProperty('--a2-fs', v); }
   color(name) {
@@ -34,31 +34,33 @@ export class Segmented extends Control {
   }
   build() {
     this.mask.textContent = '';
+    this.ind = h('div', 'a2-seg-ind', this.mask);
     this.segs = this.opts.values.map(v => {
       const s = h('button', 'a2-seg', this.mask, this.opts.display(v));
       s.type = 'button';
       s.setAttribute('role', 'radio');
       s._v = v;
-      let hover = false, down = false;
-      const target = () => {
-        const sel = this.equals(v, this.value);
-        if (down) return sel ? this.color('object-active-bright') : this.color('button-hover');
-        if (sel) return hover ? this.color('object-active-bright') : this.color('active');
-        return hover ? this.color('button-hover') : this.color('normal');
-      };
-      s._paint = (dur, noAnimate) => {
-        s._t && s._t.kill();
-        if (noAnimate) { s.style.backgroundColor = target(); return; }
-        s._t = tweenColor(() => s.style.backgroundColor || this.color('normal'), c => { s.style.backgroundColor = c; }, target(), dur);
-      };
-      s.addEventListener('pointerenter', () => { hover = true; s._paint(0.12); });
-      s.addEventListener('pointerleave', () => { hover = false; down = false; s._paint(0.12); });
-      s.addEventListener('pointerdown', e => { if (e.button === 0) { down = true; s._paint(0.08); } });
-      s.addEventListener('pointerup', () => { if (down) { down = false; s._paint(0.12); } });
       s.addEventListener('click', () => { if (!this.blocked) this.set(v, true); });
       return s;
     });
+    this._placed = false;
     this.updateVisual(true);
+    requestAnimationFrame(() => this.updateVisual(true));
+  }
+  /** 알약을 고른 칸으로 옮긴다 */
+  moveIndicator(noAnimate) {
+    const seg = (this.segs || []).find(s => this.equals(s._v, this.value));
+    if (!seg || !seg.offsetWidth) { this.ind.style.opacity = seg ? '' : '0'; return; }
+    const to = { x: seg.offsetLeft, w: seg.offsetWidth };
+    this._it && this._it.kill();
+    if (noAnimate || !this._placed) {
+      this._ind = to;
+      this.ind.style.transform = `translateX(${to.x}px)`; this.ind.style.width = `${to.w}px`;
+      this._placed = true;
+      return;
+    }
+    const from = this._ind || to;
+    this._it = tween(from, to, 0.34, 'OutExpo', v => { this._ind = v; this.ind.style.transform = `translateX(${v.x}px)`; this.ind.style.width = `${v.w}px`; });
   }
   /** 목록을 바꾼다. 지금 값이 없으면 첫 값으로 */
   setValues(values, notify = false) {
@@ -71,8 +73,8 @@ export class Segmented extends Control {
       const sel = this.equals(s._v, this.value);
       s.classList.toggle('a2-selected', sel);
       s.setAttribute('aria-checked', sel);
-      s._paint(0.15, noAnimate);
     }
+    this.moveIndicator(noAnimate);
     this.paintChangedDot(true);
   }
 }

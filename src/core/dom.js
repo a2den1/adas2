@@ -32,10 +32,10 @@ export const themeVar = (el, name) => getComputedStyle(el || document.documentEl
 
 // 아이콘: 직접 그린 SVG (currentColor)
 const SVG = {
-  triangle: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 8.6h13.6c.9 0 1.4 1.1.8 1.8l-6.8 7.6a1.1 1.1 0 0 1-1.6 0L4.4 10.4c-.6-.7-.1-1.8.8-1.8z" fill="currentColor"/></svg>',
+  triangle: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 9.5l5.5 5.5 5.5-5.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>',
   x: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" fill="none"/></svg>',
-  on: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M7.2 12.4l3.2 3.1 6.4-6.6" stroke="var(--a2-panel-bg)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>',
-  off: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.6" stroke="currentColor" stroke-width="2.8" fill="none"/></svg>',
+  on: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="7" fill="currentColor"/><path d="M7.4 12.3l3.1 3 6-6.2" stroke="var(--a2-object-on-active)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>',
+  off: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="7" fill="currentColor" opacity=".35"/></svg>',
 };
 export function icon(name, cls, parent) {
   const el = h('span', `a2-icon ${cls || ''}`, parent);

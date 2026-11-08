@@ -1,7 +1,7 @@
 // 전역 설정. adas2.configure({ config: { ... } }) 로 바꾼다.
 export class Config {
   constructor(init = {}) {
-    /** 모든 치수에 곱하는 배율. 디자인 단위(줄 높이 50, 글자 24)에 곱해진다. 기본 0.6 → 줄 높이 30px, 글자 14.4px */
+    /** 모든 치수에 곱하는 배율. 디자인 단위(줄 높이 52, 글자 23)에 곱해진다. 기본 0.6 → 줄 높이 31px, 글자 14px */
     this.uiScale = 0.6;
     /** 툴팁 사용 여부 */
     this.tooltipEnabled = true;

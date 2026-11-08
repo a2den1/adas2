@@ -1,13 +1,12 @@
 import { Control } from './control.js';
 import { h, icon, px, resolveOptions } from '../core/dom.js';
-import { tween, tweenNumber } from '../core/tween.js';
+import { tween } from '../core/tween.js';
 
 export const DropdownOptions = {
   values: [], value: undefined, defaultValue: null,
   display: v => String(v),
   onChanged: null, tooltip: null,
 };
-const GAP = 12;
 
 /** 펼치면 아래 요소를 밀어내며 목록이 열리는 드롭다운 (한 개 고르기) */
 export class Dropdown extends Control {
@@ -24,7 +23,7 @@ export class Dropdown extends Control {
     this.addChangedDot(this.header);
     this.label = h('span', 'a2-label a2-dd-label', this.header);
     this.tri = icon('triangle', 'a2-dd-tri', this.header);
-    this.list = h('div', 'a2-dd-list', el);
+    this.list = h('div', `a2 a2-dd-list a2-${kind}-list`, el);
     this.list.setAttribute('role', 'listbox');
     this.initValue();
     this.build();
@@ -67,32 +66,56 @@ export class Dropdown extends Control {
     this.expanded = open;
     this.el.classList.toggle('a2-open', open);
     this.header.setAttribute('aria-expanded', open);
-    // 높이(0.14 OutBack), 목록 투명도(0.16), 삼각형 회전(0.4 OutBack)
-    this._ht && this._ht.kill(); this._at && this._at.kill(); this._rt && this._rt.kill();
-    const from = this.el.getBoundingClientRect().height;
-    const to = this.openHeight(open);
-    this._ht = tweenNumber(from, to, 0.14, 'OutBack', v => { this.el.style.height = `${Math.max(v, this.closedHeight())}px`; },
-      () => { if (!this.expanded) this.el.style.height = ''; });
-    this._at = tweenNumber(+getComputedStyle(this.list).opacity, open ? 1 : 0, 0.16, 'OutSine', v => { this.list.style.opacity = v; });
-    this._rt = tween({ r: this._rot || 0 }, { r: open ? 180 : 0 }, 0.4, 'OutBack', v => { this._rot = v.r; this.tri.style.transform = `rotate(${v.r}deg)`; });
+    const L = this.list;
+    this._lt && this._lt.kill(); this._rt && this._rt.kill();
     if (open) {
-      this._outside = e => { if (!this.el.contains(e.target)) this.setExpanded(false); };
-      setTimeout(() => document.addEventListener('pointerdown', this._outside), 0);
-    } else if (this._outside) document.removeEventListener('pointerdown', this._outside);
+      // 목록은 화면 맨 위 층(body)에 띄운다: 카드·스크롤 영역에 잘리지 않게
+      if (L.parentNode !== document.body) document.body.appendChild(L);
+      L.hidden = false;
+      this._decided = false;
+      this.place();
+      // 열려 있는 동안 매 프레임 머리 위치를 따라간다 (창을 옮겨도 붙어 있게)
+      const track = () => { if (!this.expanded) return; this.place(); this._track = requestAnimationFrame(track); };
+      cancelAnimationFrame(this._track); this._track = requestAnimationFrame(track);
+    }
+    const from = this._lp ?? 0;
+    this._lt = tween({ p: from }, { p: open ? 1 : 0 }, open ? 0.22 : 0.14, open ? 'OutCubic' : 'OutSine', v => {
+      this._lp = v.p;
+      L.style.opacity = v.p;
+      L.style.transform = `translateY(${(1 - v.p) * (this._up ? 8 : -8) * px(this.el, 1)}px) scale(${0.97 + 0.03 * v.p})`;
+    }, () => { if (!this.expanded) L.hidden = true; });
+    this._rt = tween({ r: this._rot || 0 }, { r: open ? 180 : 0 }, 0.3, 'OutCubic', v => { this._rot = v.r; this.tri.style.transform = `rotate(${v.r}deg)`; });
+    if (open) {
+      this._outside = e => { if (!this.el.contains(e.target) && !L.contains(e.target)) this.setExpanded(false); };
+      this._esc = e => { if (e.key === 'Escape') this.setExpanded(false); };
+      setTimeout(() => { document.addEventListener('pointerdown', this._outside); addEventListener('keydown', this._esc); }, 0);
+    } else {
+      if (this._outside) document.removeEventListener('pointerdown', this._outside);
+      if (this._esc) removeEventListener('keydown', this._esc);
+      cancelAnimationFrame(this._track);
+    }
   }
-  closedHeight() { return this.header.getBoundingClientRect().height; }
-  openHeight(open) {
-    const H = this.closedHeight();
-    return open ? H + px(this.el, GAP) + this.list.scrollHeight : H;
+  /** 머리 바로 아래(공간이 모자라면 위)에 목록을 놓는다 */
+  place() {
+    const L = this.list, r = this.header.getBoundingClientRect(), gap = px(this.el, 8);
+    L.style.width = `${r.width}px`;
+    L.style.left = `${r.left}px`;
+    if (!this._decided) {
+      const need = L.scrollHeight + gap;
+      this._up = r.bottom + need > innerHeight && r.top - need > 0;
+      L.classList.toggle('a2-up', this._up);
+      this._decided = true;
+    }
+    if (this._up) { L.style.top = 'auto'; L.style.bottom = `${innerHeight - r.top + gap}px`; }
+    else { L.style.bottom = 'auto'; L.style.top = `${r.bottom + gap}px`; }
+    if (r.bottom < 0 || r.top > innerHeight) this.setExpanded(false);
   }
-  paintOpen(p, noAnimate) {
-    if (!noAnimate) return;
-    this.list.style.opacity = p;
-    this._rot = p ? 180 : 0;
-    this.tri.style.transform = `rotate(${this._rot}deg)`;
-    if (p) this.el.style.height = `${this.openHeight(true)}px`;
+  paintOpen() {
+    this.list.hidden = true; this.list.style.opacity = 0; this._lp = 0;
+    this._rot = 0; this.tri.style.transform = 'rotate(0deg)';
   }
   setBlocked(b) { super.setBlocked(b); if (b) this.setExpanded(false); }
+  dispose() { this.setExpanded(false); this.list.remove(); super.dispose(); }
   updateVisual(noAnimate) {
     this.label.textContent = this.summary();
     this.label.title = this.label.textContent;

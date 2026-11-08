@@ -24,13 +24,11 @@
 ## 📦 CDN
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/static/woff2/SUIT.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v2.0.0/dist/adas2.min.css">
 <script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v2.0.0/dist/adas2.min.js"></script>
 ```
 
-글꼴은 [SUIT](https://github.com/sun-typeface/SUIT)(본문)와 [JetBrains Mono](https://www.jetbrains.com/lp/mono/)(숫자 입력)를 씁니다. 없으면 시스템 글꼴로 대신합니다.
+글꼴은 [지마켓 산스](https://corp.gmarket.com/fonts/)를 씁니다. CSS 안에서 CDN 으로 불러오므로 따로 넣지 않아도 됩니다. 바꾸려면 테마의 `font` 값을 지정합니다.
 
 ## 📦 npm
 
@@ -70,7 +68,7 @@ npm run dev        # http://localhost:5880/docs/
 
   | 이름 | 기본값 | 설명 |
   |---|---|---|
-  | `uiScale` | `0.6` | 모든 치수에 곱하는 배율. 디자인 단위(줄 높이 50, 글자 24)에 곱합니다 |
+  | `uiScale` | `0.6` | 모든 치수에 곱하는 배율. 디자인 단위(줄 높이 52, 글자 23)에 곱합니다 |
   | `animationSpeed` | `1` | 애니메이션 속도. `2` 는 두 배 빠르게, `0` 은 끔 |
   | `tooltipEnabled` | `true` | 툴팁 사용 |
   | `middleClickToDefault` | `true` | 가운데 버튼 클릭으로 기본값 되돌리기 |
@@ -78,12 +76,12 @@ npm run dev        # http://localhost:5880/docs/
 
 ### 테마
 
-* **프리셋:** `Theme.Dark`, `Theme.Light`, `Theme.Orange`
+* **프리셋:** `Theme.Dark`, `Theme.Light`, `Theme.Ocean`
 * **일부만 바꾸기:** `with()` 로 새 테마를 만들어 적용합니다. CSS 변수라 이미 만든 컨트롤에도 바로 적용됩니다.
   ```js
   adas2.setTheme(adas2.Theme.Dark.with({ panelBg: '#1A1A24', objectActive: '#7FD1AE' }));
   ```
-* 바꿀 수 있는 값: `panelBg` `topBar` `objectBg` `objectButton` `objectActive` `buttonHover` `buttonPressed` `cardHeader` `cardPanel` `softRed` `text` `tooltipBg` `outline` `controlOutlineHover` `mathOk` `mathWarn` `mathErr` `cornerRadius` `controlHeight` `fontSizeBody` `fontSizeH1` `font` `fontMono` 등 ([theme.js](src/core/theme.js))
+* 바꿀 수 있는 값: `panelBg` `topBar` `objectBg` `objectHover` `objectButton` `objectActive` `objectOnActive` `switchTrack` `buttonHover` `buttonPressed` `cardHeader` `cardPanel` `softRed` `text` `tooltipBg` `outline` `controlOutlineHover` `mathOk` `mathWarn` `mathErr` `cornerRadius` `controlHeight` `fontSizeBody` `fontSizeH1` `font` `fontMono` 등 ([theme.js](src/core/theme.js))
 
 ### 컨트롤 만들기
 
@@ -195,5 +193,5 @@ adas2.tween({ x: 0 }, { x: 240 }, 0.45, 'OutExpo', v => { el.style.translate = `
 
 ### 참고
 
-- 구성과 동작은 [O5Kit](https://github.com/modlist-org/O5Kit)(Unity uGUI 툴킷, LGPL-3.0)을 참고해 웹용으로 새로 작성했습니다. O5Kit 의 코드나 그림 파일은 들어 있지 않습니다.
-- 글꼴은 이 저장소에 들어 있지 않고 CDN 에서 불러옵니다(SUIT, JetBrains Mono 모두 OFL-1.1).
+- API 구성(설정·테마·팩토리·창 관리자)은 [O5Kit](https://github.com/modlist-org/O5Kit)(Unity uGUI 툴킷)을 참고했습니다. 코드·디자인·그림은 adas2 가 새로 만든 것이며 O5Kit 의 파일은 들어 있지 않습니다.
+- 글꼴(지마켓 산스)은 이 저장소에 들어 있지 않고 CDN 에서 불러옵니다. 저작권은 G마켓에 있습니다.

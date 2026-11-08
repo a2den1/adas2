@@ -93,6 +93,9 @@ var adas2 = (() => {
     objectActive: "object-active",
     // 켜짐·선택·포커스 강조
     objectActiveBright: "object-active-bright",
+    objectHover: "object-hover",
+    objectOnActive: "object-on-active",
+    switchTrack: "switch-track",
     menuHover: "menu-hover",
     // 선택 영역(글자 선택 등)
     cardHeader: "card-header",
@@ -163,86 +166,107 @@ var adas2 = (() => {
     static get Light() {
       return LIGHT;
     }
-    static get Orange() {
-      return ORANGE;
+    static get Ocean() {
+      return OCEAN;
     }
   };
   var BASE = {
     name: "dark",
-    panelBg: "#25242E",
-    topBar: "#414255",
-    menuBg: "#6B6E8B",
-    objectBg: "#3C3A4B",
-    objectButton: "#7A83DF",
-    objectActive: "#919AFF",
-    objectActiveBright: "#CFD3FF",
-    menuHover: "rgba(162, 167, 224, 0.4)",
-    cardHeader: "#4C4D66",
-    cardPanel: "#2F2E3A",
-    softRed: "#E2676D",
-    buttonHover: "#9CA3EC",
-    buttonPressed: "#CFD3FF",
-    text: "#FFFFFF",
-    tooltipBg: "rgba(0, 0, 0, 0.6)",
-    overlayScrim: "rgba(0, 0, 0, 0.58)",
-    outline: "#FFFFFF",
+    panelBg: "#1E1C1A",
+    // 창·패널
+    topBar: "#1E1C1A",
+    // 창 위쪽 (패널과 같은 색)
+    menuBg: "#3A3632",
+    objectBg: "#2C2926",
+    // 컨트롤 바탕
+    objectHover: "#36322E",
+    // 마우스를 올렸을 때 컨트롤 바탕
+    objectButton: "#FF793F",
+    // 버튼
+    objectActive: "#FF8A55",
+    // 켜짐·선택
+    objectActiveBright: "#FFB792",
+    objectOnActive: "#FFFFFF",
+    // 강조색 위의 글자
+    switchTrack: "#4A4540",
+    // 꺼진 스위치 바탕
+    menuHover: "rgba(255, 138, 85, 0.3)",
+    cardHeader: "#262320",
+    cardPanel: "#262320",
+    softRed: "#F0605D",
+    buttonHover: "#FF8C5A",
+    buttonPressed: "#E8662F",
+    text: "#F4EFEA",
+    tooltipBg: "rgba(12, 11, 10, 0.86)",
+    overlayScrim: "rgba(0, 0, 0, 0.5)",
+    outline: "rgba(255, 255, 255, 0.06)",
     controlOutlineIdle: "rgba(255, 255, 255, 0)",
-    controlOutlineHover: "#919AFF",
-    mathOk: "#96FF91",
-    mathWarn: "#FFE591",
-    mathErr: "#FF9191",
-    channelR: "#FF6B70",
-    channelG: "#7AD17A",
-    channelB: "#8F8FE6",
-    channelA: "#737373",
-    channelS: "#61C7FF",
-    channelV: "#FFD159",
+    controlOutlineHover: "rgba(255, 255, 255, 0)",
+    mathOk: "#7EE08A",
+    mathWarn: "#FFD166",
+    mathErr: "#FF7A7A",
+    channelR: "#FF6B6B",
+    channelG: "#5FD38D",
+    channelB: "#5B8CFF",
+    channelA: "#8A847E",
+    channelS: "#4CC9F0",
+    channelV: "#FFC94D",
     inactiveAlpha: 0.4,
     textDimAlpha: 0.6,
-    textFaintAlpha: 0.2,
+    textFaintAlpha: 0.3,
     disabledContentAlpha: 0.42,
-    cornerRadius: 12,
+    cornerRadius: 22,
     outlineWidth: 2,
-    controlHeight: 50,
+    controlHeight: 52,
     controlPaddingY: 8,
-    lineHeight: 1.35,
-    fontSizeBody: 24,
+    lineHeight: 1.4,
+    fontSizeBody: 23,
     fontSizeH1: 32,
-    font: '"SUIT", "Pretendard", system-ui, -apple-system, "Malgun Gothic", sans-serif',
-    fontMono: '"JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace'
+    font: '"GmarketSans", "Pretendard", system-ui, -apple-system, "Malgun Gothic", sans-serif',
+    fontMono: '"GmarketSans", "Pretendard", system-ui, sans-serif'
   };
   var DARK = new Theme();
   var LIGHT = new Theme({
     name: "light",
-    panelBg: "#EDEDF2",
-    topBar: "#D1D4E6",
-    menuBg: "#C7C9E0",
-    objectBg: "#E0E0EB",
-    objectButton: "#6B75D9",
-    objectActive: "#5966E6",
-    objectActiveBright: "#3340BF",
-    buttonHover: "#5560CF",
-    buttonPressed: "#3340BF",
-    cardHeader: "#D6D8E8",
-    cardPanel: "#F6F6FA",
-    text: "#1A1A24",
-    tooltipBg: "rgba(242, 242, 250, 0.95)",
-    outline: "rgba(26, 26, 36, 0.5)",
-    controlOutlineHover: "#5966E6",
-    menuHover: "rgba(89, 102, 230, 0.25)",
-    mathOk: "#1E9E3A",
-    mathWarn: "#B08300",
-    mathErr: "#D23C3C"
-  });
-  var ORANGE = new Theme({
-    name: "orange",
+    panelBg: "#FBF8F5",
+    topBar: "#FBF8F5",
+    menuBg: "#E2DBD3",
+    objectBg: "#F0EBE5",
+    objectHover: "#E8E1D9",
     objectButton: "#FF793F",
-    objectActive: "#FF9B70",
-    objectActiveBright: "#FFCFBA",
-    buttonHover: "#FF8C59",
-    buttonPressed: "#FFCFBA",
-    controlOutlineHover: "#FF9B70",
-    menuHover: "rgba(255, 155, 112, 0.35)"
+    objectActive: "#FF6E2F",
+    objectActiveBright: "#FFA77E",
+    objectOnActive: "#FFFFFF",
+    switchTrack: "#D9D1C8",
+    menuHover: "rgba(255, 110, 47, 0.22)",
+    cardHeader: "#F5F0EA",
+    cardPanel: "#F5F0EA",
+    buttonHover: "#FF8A55",
+    buttonPressed: "#E8662F",
+    text: "#2A2420",
+    tooltipBg: "rgba(42, 36, 32, 0.92)",
+    outline: "rgba(0, 0, 0, 0.05)",
+    mathOk: "#1F9D4C",
+    mathWarn: "#B7791F",
+    mathErr: "#D64545"
+  });
+  var OCEAN = new Theme({
+    name: "ocean",
+    panelBg: "#161A20",
+    topBar: "#161A20",
+    menuBg: "#2E3642",
+    objectBg: "#222831",
+    objectHover: "#2B323D",
+    objectButton: "#3D8BFF",
+    objectActive: "#4C95FF",
+    objectActiveBright: "#9CC3FF",
+    switchTrack: "#3A4350",
+    menuHover: "rgba(76, 149, 255, 0.3)",
+    cardHeader: "#1C2129",
+    cardPanel: "#1C2129",
+    buttonHover: "#5A9DFF",
+    buttonPressed: "#2C74E0",
+    text: "#EEF2F7"
   });
 
   // src/core/context.js
@@ -465,10 +489,10 @@ var adas2 = (() => {
   var px = (el, n) => n * scaleOf(el);
   var themeVar = (el, name) => getComputedStyle(el || document.documentElement).getPropertyValue(`--a2-${name}`).trim();
   var SVG = {
-    triangle: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 8.6h13.6c.9 0 1.4 1.1.8 1.8l-6.8 7.6a1.1 1.1 0 0 1-1.6 0L4.4 10.4c-.6-.7-.1-1.8.8-1.8z" fill="currentColor"/></svg>',
+    triangle: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 9.5l5.5 5.5 5.5-5.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>',
     x: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" fill="none"/></svg>',
-    on: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M7.2 12.4l3.2 3.1 6.4-6.6" stroke="var(--a2-panel-bg)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>',
-    off: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.6" stroke="currentColor" stroke-width="2.8" fill="none"/></svg>'
+    on: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="7" fill="currentColor"/><path d="M7.4 12.3l3.1 3 6-6.2" stroke="var(--a2-object-on-active)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>',
+    off: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="7" fill="currentColor" opacity=".35"/></svg>'
   };
   function icon(name, cls, parent) {
     const el = h("span", `a2-icon ${cls || ""}`, parent);
@@ -587,9 +611,9 @@ var adas2 = (() => {
     draggable: true,
     resizable: false,
     minSize: [900, 500],
-    showOutline: true,
+    showOutline: false,
     clipContent: false,
-    topBarHeight: 60,
+    topBarHeight: 72,
     padding: 12,
     panelColor: null,
     topBarColor: null,
@@ -1138,6 +1162,11 @@ var adas2 = (() => {
 
   // src/controls/toggle.js
   var ToggleOptions = { value: false, defaultValue: null, text: "", onChanged: null, tooltip: null };
+  function makeSwitch(parent) {
+    const sw = h("span", "a2-switch", parent);
+    h("span", "a2-switch-knob", sw);
+    return sw;
+  }
   var Toggle = class extends Control {
     constructor(parent, id, opts) {
       super(parent, id, resolveOptions(ToggleOptions, opts), "toggle");
@@ -1148,9 +1177,7 @@ var adas2 = (() => {
       this.addHoverOutline();
       this.addChangedDot();
       this.label = h("span", "a2-label", el, o.text);
-      this.knob = h("span", "a2-knob", el);
-      this.onIcon = icon("on", "a2-knob-on", this.knob);
-      this.offIcon = icon("off", "a2-knob-off", this.knob);
+      this.sw = makeSwitch(el);
       el.addEventListener("click", () => {
         if (!this.blocked) this.toggle(true);
       });
@@ -1169,18 +1196,9 @@ var adas2 = (() => {
     updateVisual(noAnimate) {
       const on = this.value;
       this.el.setAttribute("aria-checked", on);
+      this.sw.classList.toggle("a2-no-anim", !!noAnimate);
       this.el.classList.toggle("a2-on", on);
       this.paintChangedDot(noAnimate);
-      if (noAnimate) return;
-      this._pop && this._pop.kill();
-      this._pop = tweenNumber(
-        30,
-        26,
-        0.3,
-        "OutQuad",
-        (v) => this.knob.style.setProperty("--a2-knob", v),
-        () => this.knob.style.removeProperty("--a2-knob")
-      );
     }
   };
 
@@ -1548,11 +1566,11 @@ var adas2 = (() => {
       if (o.height != null) el.style.setProperty("--a2-h", o.height);
       if (o.fontSize != null) el.style.setProperty("--a2-fs", o.fontSize);
       this.mask = h("div", "a2-seg-mask", el);
-      this.border = h("div", "a2-seg-border", el);
       this.addChangedDot();
       this.value = o.value !== void 0 ? o.value : o.values[0];
       this.build();
       this.enableMiddleReset(el, false);
+      new ResizeObserver(() => this.moveIndicator(true)).observe(this.mask);
     }
     set fontSize(v) {
       this.el.style.setProperty("--a2-fs", v);
@@ -1565,55 +1583,43 @@ var adas2 = (() => {
     }
     build() {
       this.mask.textContent = "";
+      this.ind = h("div", "a2-seg-ind", this.mask);
       this.segs = this.opts.values.map((v) => {
         const s = h("button", "a2-seg", this.mask, this.opts.display(v));
         s.type = "button";
         s.setAttribute("role", "radio");
         s._v = v;
-        let hover = false, down2 = false;
-        const target2 = () => {
-          const sel = this.equals(v, this.value);
-          if (down2) return sel ? this.color("object-active-bright") : this.color("button-hover");
-          if (sel) return hover ? this.color("object-active-bright") : this.color("active");
-          return hover ? this.color("button-hover") : this.color("normal");
-        };
-        s._paint = (dur, noAnimate) => {
-          s._t && s._t.kill();
-          if (noAnimate) {
-            s.style.backgroundColor = target2();
-            return;
-          }
-          s._t = tweenColor(() => s.style.backgroundColor || this.color("normal"), (c) => {
-            s.style.backgroundColor = c;
-          }, target2(), dur);
-        };
-        s.addEventListener("pointerenter", () => {
-          hover = true;
-          s._paint(0.12);
-        });
-        s.addEventListener("pointerleave", () => {
-          hover = false;
-          down2 = false;
-          s._paint(0.12);
-        });
-        s.addEventListener("pointerdown", (e) => {
-          if (e.button === 0) {
-            down2 = true;
-            s._paint(0.08);
-          }
-        });
-        s.addEventListener("pointerup", () => {
-          if (down2) {
-            down2 = false;
-            s._paint(0.12);
-          }
-        });
         s.addEventListener("click", () => {
           if (!this.blocked) this.set(v, true);
         });
         return s;
       });
+      this._placed = false;
       this.updateVisual(true);
+      requestAnimationFrame(() => this.updateVisual(true));
+    }
+    /** 알약을 고른 칸으로 옮긴다 */
+    moveIndicator(noAnimate) {
+      const seg = (this.segs || []).find((s) => this.equals(s._v, this.value));
+      if (!seg || !seg.offsetWidth) {
+        this.ind.style.opacity = seg ? "" : "0";
+        return;
+      }
+      const to = { x: seg.offsetLeft, w: seg.offsetWidth };
+      this._it && this._it.kill();
+      if (noAnimate || !this._placed) {
+        this._ind = to;
+        this.ind.style.transform = `translateX(${to.x}px)`;
+        this.ind.style.width = `${to.w}px`;
+        this._placed = true;
+        return;
+      }
+      const from = this._ind || to;
+      this._it = tween(from, to, 0.34, "OutExpo", (v) => {
+        this._ind = v;
+        this.ind.style.transform = `translateX(${v.x}px)`;
+        this.ind.style.width = `${v.w}px`;
+      });
     }
     /** 목록을 바꾼다. 지금 값이 없으면 첫 값으로 */
     setValues(values, notify2 = false) {
@@ -1630,8 +1636,8 @@ var adas2 = (() => {
         const sel = this.equals(s._v, this.value);
         s.classList.toggle("a2-selected", sel);
         s.setAttribute("aria-checked", sel);
-        s._paint(0.15, noAnimate);
       }
+      this.moveIndicator(noAnimate);
       this.paintChangedDot(true);
     }
   };
@@ -1645,7 +1651,6 @@ var adas2 = (() => {
     onChanged: null,
     tooltip: null
   };
-  var GAP = 12;
   var Dropdown = class extends Control {
     constructor(parent, id, opts, kind = "dropdown") {
       super(parent, id, resolveOptions(DropdownOptions, opts), kind);
@@ -1660,7 +1665,7 @@ var adas2 = (() => {
       this.addChangedDot(this.header);
       this.label = h("span", "a2-label a2-dd-label", this.header);
       this.tri = icon("triangle", "a2-dd-tri", this.header);
-      this.list = h("div", "a2-dd-list", el);
+      this.list = h("div", `a2 a2-dd-list a2-${kind}-list`, el);
       this.list.setAttribute("role", "listbox");
       this.initValue();
       this.build();
@@ -1720,54 +1725,86 @@ var adas2 = (() => {
       this.expanded = open;
       this.el.classList.toggle("a2-open", open);
       this.header.setAttribute("aria-expanded", open);
-      this._ht && this._ht.kill();
-      this._at && this._at.kill();
+      const L = this.list;
+      this._lt && this._lt.kill();
       this._rt && this._rt.kill();
-      const from = this.el.getBoundingClientRect().height;
-      const to = this.openHeight(open);
-      this._ht = tweenNumber(
-        from,
-        to,
-        0.14,
-        "OutBack",
-        (v) => {
-          this.el.style.height = `${Math.max(v, this.closedHeight())}px`;
-        },
-        () => {
-          if (!this.expanded) this.el.style.height = "";
-        }
-      );
-      this._at = tweenNumber(+getComputedStyle(this.list).opacity, open ? 1 : 0, 0.16, "OutSine", (v) => {
-        this.list.style.opacity = v;
+      if (open) {
+        if (L.parentNode !== document.body) document.body.appendChild(L);
+        L.hidden = false;
+        this._decided = false;
+        this.place();
+        const track = () => {
+          if (!this.expanded) return;
+          this.place();
+          this._track = requestAnimationFrame(track);
+        };
+        cancelAnimationFrame(this._track);
+        this._track = requestAnimationFrame(track);
+      }
+      const from = this._lp ?? 0;
+      this._lt = tween({ p: from }, { p: open ? 1 : 0 }, open ? 0.22 : 0.14, open ? "OutCubic" : "OutSine", (v) => {
+        this._lp = v.p;
+        L.style.opacity = v.p;
+        L.style.transform = `translateY(${(1 - v.p) * (this._up ? 8 : -8) * px(this.el, 1)}px) scale(${0.97 + 0.03 * v.p})`;
+      }, () => {
+        if (!this.expanded) L.hidden = true;
       });
-      this._rt = tween({ r: this._rot || 0 }, { r: open ? 180 : 0 }, 0.4, "OutBack", (v) => {
+      this._rt = tween({ r: this._rot || 0 }, { r: open ? 180 : 0 }, 0.3, "OutCubic", (v) => {
         this._rot = v.r;
         this.tri.style.transform = `rotate(${v.r}deg)`;
       });
       if (open) {
         this._outside = (e) => {
-          if (!this.el.contains(e.target)) this.setExpanded(false);
+          if (!this.el.contains(e.target) && !L.contains(e.target)) this.setExpanded(false);
         };
-        setTimeout(() => document.addEventListener("pointerdown", this._outside), 0);
-      } else if (this._outside) document.removeEventListener("pointerdown", this._outside);
+        this._esc = (e) => {
+          if (e.key === "Escape") this.setExpanded(false);
+        };
+        setTimeout(() => {
+          document.addEventListener("pointerdown", this._outside);
+          addEventListener("keydown", this._esc);
+        }, 0);
+      } else {
+        if (this._outside) document.removeEventListener("pointerdown", this._outside);
+        if (this._esc) removeEventListener("keydown", this._esc);
+        cancelAnimationFrame(this._track);
+      }
     }
-    closedHeight() {
-      return this.header.getBoundingClientRect().height;
+    /** 머리 바로 아래(공간이 모자라면 위)에 목록을 놓는다 */
+    place() {
+      const L = this.list, r = this.header.getBoundingClientRect(), gap = px(this.el, 8);
+      L.style.width = `${r.width}px`;
+      L.style.left = `${r.left}px`;
+      if (!this._decided) {
+        const need = L.scrollHeight + gap;
+        this._up = r.bottom + need > innerHeight && r.top - need > 0;
+        L.classList.toggle("a2-up", this._up);
+        this._decided = true;
+      }
+      if (this._up) {
+        L.style.top = "auto";
+        L.style.bottom = `${innerHeight - r.top + gap}px`;
+      } else {
+        L.style.bottom = "auto";
+        L.style.top = `${r.bottom + gap}px`;
+      }
+      if (r.bottom < 0 || r.top > innerHeight) this.setExpanded(false);
     }
-    openHeight(open) {
-      const H = this.closedHeight();
-      return open ? H + px(this.el, GAP) + this.list.scrollHeight : H;
-    }
-    paintOpen(p, noAnimate) {
-      if (!noAnimate) return;
-      this.list.style.opacity = p;
-      this._rot = p ? 180 : 0;
-      this.tri.style.transform = `rotate(${this._rot}deg)`;
-      if (p) this.el.style.height = `${this.openHeight(true)}px`;
+    paintOpen() {
+      this.list.hidden = true;
+      this.list.style.opacity = 0;
+      this._lp = 0;
+      this._rot = 0;
+      this.tri.style.transform = "rotate(0deg)";
     }
     setBlocked(b) {
       super.setBlocked(b);
       if (b) this.setExpanded(false);
+    }
+    dispose() {
+      this.setExpanded(false);
+      this.list.remove();
+      super.dispose();
     }
     updateVisual(noAnimate) {
       this.label.textContent = this.summary();
@@ -2212,9 +2249,9 @@ var adas2 = (() => {
       if (o.showActiveToggle) {
         this.check = h("button", "a2-card-check", this.header);
         this.check.type = "button";
-        this.check.setAttribute("role", "checkbox");
-        icon("on", "a2-knob-on", this.check);
-        icon("off", "a2-knob-off", this.check);
+        this.check.setAttribute("role", "switch");
+        this.check.setAttribute("aria-label", "켜기");
+        makeSwitch(this.check);
         this.check.addEventListener("click", () => this.setActive(!this.active, true));
       }
       this.titleBtn = h("button", "a2-card-title", this.header);
@@ -2259,11 +2296,10 @@ var adas2 = (() => {
       }
       this.check.classList.toggle("a2-on", this.active);
       this.check.setAttribute("aria-checked", this.active);
+      this.el.classList.toggle("a2-card-off", !this.active);
       this.body.classList.toggle("a2-inactive", !this.active);
       this.body.inert = !this.active;
-      if (noAnimate) return;
-      this._pop && this._pop.kill();
-      this._pop = tweenNumber(30, 26, 0.3, "OutQuad", (v) => this.check.style.setProperty("--a2-knob", v), () => this.check.style.removeProperty("--a2-knob"));
+      this.check.querySelector(".a2-switch").classList.toggle("a2-no-anim", !!noAnimate);
     }
     /** 접기/펼치기 (0.18초 OutCubic) */
     setExpanded(open) {

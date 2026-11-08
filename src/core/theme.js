@@ -10,6 +10,9 @@ const KEYS = {
   objectButton: 'object-button',  // 버튼 배경
   objectActive: 'object-active',  // 켜짐·선택·포커스 강조
   objectActiveBright: 'object-active-bright',
+  objectHover: 'object-hover',
+  objectOnActive: 'object-on-active',
+  switchTrack: 'switch-track',
   menuHover: 'menu-hover',        // 선택 영역(글자 선택 등)
   cardHeader: 'card-header',
   cardPanel: 'card-panel',
@@ -64,78 +67,91 @@ export class Theme {
   }
   static get Dark() { return DARK; }
   static get Light() { return LIGHT; }
-  static get Orange() { return ORANGE; }
+  static get Ocean() { return OCEAN; }
 }
 
 const BASE = {
   name: 'dark',
-  panelBg: '#25242E',
-  topBar: '#414255',
-  menuBg: '#6B6E8B',
-  objectBg: '#3C3A4B',
-  objectButton: '#7A83DF',
-  objectActive: '#919AFF',
-  objectActiveBright: '#CFD3FF',
-  menuHover: 'rgba(162, 167, 224, 0.4)',
-  cardHeader: '#4C4D66',
-  cardPanel: '#2F2E3A',
-  softRed: '#E2676D',
-  buttonHover: '#9CA3EC',
-  buttonPressed: '#CFD3FF',
-  text: '#FFFFFF',
-  tooltipBg: 'rgba(0, 0, 0, 0.6)',
-  overlayScrim: 'rgba(0, 0, 0, 0.58)',
-  outline: '#FFFFFF',
+  panelBg: '#1E1C1A',            // 창·패널
+  topBar: '#1E1C1A',             // 창 위쪽 (패널과 같은 색)
+  menuBg: '#3A3632',
+  objectBg: '#2C2926',           // 컨트롤 바탕
+  objectHover: '#36322E',        // 마우스를 올렸을 때 컨트롤 바탕
+  objectButton: '#FF793F',       // 버튼
+  objectActive: '#FF8A55',       // 켜짐·선택
+  objectActiveBright: '#FFB792',
+  objectOnActive: '#FFFFFF',     // 강조색 위의 글자
+  switchTrack: '#4A4540',        // 꺼진 스위치 바탕
+  menuHover: 'rgba(255, 138, 85, 0.3)',
+  cardHeader: '#262320',
+  cardPanel: '#262320',
+  softRed: '#F0605D',
+  buttonHover: '#FF8C5A',
+  buttonPressed: '#E8662F',
+  text: '#F4EFEA',
+  tooltipBg: 'rgba(12, 11, 10, 0.86)',
+  overlayScrim: 'rgba(0, 0, 0, 0.5)',
+  outline: 'rgba(255, 255, 255, 0.06)',
   controlOutlineIdle: 'rgba(255, 255, 255, 0)',
-  controlOutlineHover: '#919AFF',
-  mathOk: '#96FF91', mathWarn: '#FFE591', mathErr: '#FF9191',
-  channelR: '#FF6B70', channelG: '#7AD17A', channelB: '#8F8FE6',
-  channelA: '#737373', channelS: '#61C7FF', channelV: '#FFD159',
+  controlOutlineHover: 'rgba(255, 255, 255, 0)',
+  mathOk: '#7EE08A', mathWarn: '#FFD166', mathErr: '#FF7A7A',
+  channelR: '#FF6B6B', channelG: '#5FD38D', channelB: '#5B8CFF',
+  channelA: '#8A847E', channelS: '#4CC9F0', channelV: '#FFC94D',
   inactiveAlpha: 0.4,
   textDimAlpha: 0.6,
-  textFaintAlpha: 0.2,
+  textFaintAlpha: 0.3,
   disabledContentAlpha: 0.42,
-  cornerRadius: 12,
+  cornerRadius: 22,
   outlineWidth: 2,
-  controlHeight: 50,
+  controlHeight: 52,
   controlPaddingY: 8,
-  lineHeight: 1.35,
-  fontSizeBody: 24,
+  lineHeight: 1.4,
+  fontSizeBody: 23,
   fontSizeH1: 32,
-  font: '"SUIT", "Pretendard", system-ui, -apple-system, "Malgun Gothic", sans-serif',
-  fontMono: '"JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace',
+  font: '"GmarketSans", "Pretendard", system-ui, -apple-system, "Malgun Gothic", sans-serif',
+  fontMono: '"GmarketSans", "Pretendard", system-ui, sans-serif',
 };
 
 const DARK = new Theme();
 
 const LIGHT = new Theme({
   name: 'light',
-  panelBg: '#EDEDF2',
-  topBar: '#D1D4E6',
-  menuBg: '#C7C9E0',
-  objectBg: '#E0E0EB',
-  objectButton: '#6B75D9',
-  objectActive: '#5966E6',
-  objectActiveBright: '#3340BF',
-  buttonHover: '#5560CF',
-  buttonPressed: '#3340BF',
-  cardHeader: '#D6D8E8',
-  cardPanel: '#F6F6FA',
-  text: '#1A1A24',
-  tooltipBg: 'rgba(242, 242, 250, 0.95)',
-  outline: 'rgba(26, 26, 36, 0.5)',
-  controlOutlineHover: '#5966E6',
-  menuHover: 'rgba(89, 102, 230, 0.25)',
-  mathOk: '#1E9E3A', mathWarn: '#B08300', mathErr: '#D23C3C',
+  panelBg: '#FBF8F5',
+  topBar: '#FBF8F5',
+  menuBg: '#E2DBD3',
+  objectBg: '#F0EBE5',
+  objectHover: '#E8E1D9',
+  objectButton: '#FF793F',
+  objectActive: '#FF6E2F',
+  objectActiveBright: '#FFA77E',
+  objectOnActive: '#FFFFFF',
+  switchTrack: '#D9D1C8',
+  menuHover: 'rgba(255, 110, 47, 0.22)',
+  cardHeader: '#F5F0EA',
+  cardPanel: '#F5F0EA',
+  buttonHover: '#FF8A55',
+  buttonPressed: '#E8662F',
+  text: '#2A2420',
+  tooltipBg: 'rgba(42, 36, 32, 0.92)',
+  outline: 'rgba(0, 0, 0, 0.05)',
+  mathOk: '#1F9D4C', mathWarn: '#B7791F', mathErr: '#D64545',
 });
 
-const ORANGE = new Theme({
-  name: 'orange',
-  objectButton: '#FF793F',
-  objectActive: '#FF9B70',
-  objectActiveBright: '#FFCFBA',
-  buttonHover: '#FF8C59',
-  buttonPressed: '#FFCFBA',
-  controlOutlineHover: '#FF9B70',
-  menuHover: 'rgba(255, 155, 112, 0.35)',
+const OCEAN = new Theme({
+  name: 'ocean',
+  panelBg: '#161A20',
+  topBar: '#161A20',
+  menuBg: '#2E3642',
+  objectBg: '#222831',
+  objectHover: '#2B323D',
+  objectButton: '#3D8BFF',
+  objectActive: '#4C95FF',
+  objectActiveBright: '#9CC3FF',
+  switchTrack: '#3A4350',
+  menuHover: 'rgba(76, 149, 255, 0.3)',
+  cardHeader: '#1C2129',
+  cardPanel: '#1C2129',
+  buttonHover: '#5A9DFF',
+  buttonPressed: '#2C74E0',
+  text: '#EEF2F7',
 });

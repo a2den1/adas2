@@ -1,6 +1,7 @@
 import { ensureDefaults } from '../core/context.js';
 import { h, icon, resolveParent, resolveOptions } from '../core/dom.js';
 import { tween, tweenNumber } from '../core/tween.js';
+import { makeSwitch } from './toggle.js';
 
 export const CardOptions = {
   title: '', active: true, onActiveChanged: null, onDelete: null,
@@ -19,8 +20,9 @@ export class Card {
     if (o.showActiveToggle) {
       this.check = h('button', 'a2-card-check', this.header);
       this.check.type = 'button';
-      this.check.setAttribute('role', 'checkbox');
-      icon('on', 'a2-knob-on', this.check); icon('off', 'a2-knob-off', this.check);
+      this.check.setAttribute('role', 'switch');
+      this.check.setAttribute('aria-label', '켜기');
+      makeSwitch(this.check);
       this.check.addEventListener('click', () => this.setActive(!this.active, true));
     }
     this.titleBtn = h('button', 'a2-card-title', this.header);
@@ -56,11 +58,10 @@ export class Card {
     if (!this.check) { this.body.classList.toggle('a2-inactive', !this.active); this.body.inert = !this.active; return; }
     this.check.classList.toggle('a2-on', this.active);
     this.check.setAttribute('aria-checked', this.active);
+    this.el.classList.toggle('a2-card-off', !this.active);
     this.body.classList.toggle('a2-inactive', !this.active);
     this.body.inert = !this.active;
-    if (noAnimate) return;
-    this._pop && this._pop.kill();
-    this._pop = tweenNumber(30, 26, 0.3, 'OutQuad', v => this.check.style.setProperty('--a2-knob', v), () => this.check.style.removeProperty('--a2-knob'));
+    this.check.querySelector('.a2-switch').classList.toggle('a2-no-anim', !!noAnimate);
   }
   /** 접기/펼치기 (0.18초 OutCubic) */
   setExpanded(open) {

@@ -6,8 +6,8 @@ import { h, icon, userIcon, resolveParent, scaleOf, resolveOptions } from './dom
 export const WindowOptions = {
   id: null, title: 'Window', size: [640, 480], position: null,
   icon: null, iconSize: 40, showCloseButton: true, draggable: true,
-  resizable: false, minSize: [900, 500], showOutline: true, clipContent: false,
-  topBarHeight: 60, padding: 12, panelColor: null, topBarColor: null,
+  resizable: false, minSize: [900, 500], showOutline: false, clipContent: false,
+  topBarHeight: 72, padding: 12, panelColor: null, topBarColor: null,
   titleFontSize: null, bringToFrontOnFocus: true,
 };
 
