@@ -1,4 +1,4 @@
-/*! adas2 v1.1.0 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
+/*! adas2 v1.1.1 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
 /* adas2 — UI framework
    상태 변화는 스프링 애니메이션(adas2.Motion)으로 처리한다.
    <link rel="stylesheet" href="adas2.css"> + <script src="adas2.js"></script> 만 넣으면 a2-* 태그를 쓸 수 있다.
@@ -914,7 +914,7 @@
     build() {
       this.setAttribute('role', 'progressbar');
       if (!this.hasAttribute('aria-label')) this.setAttribute('aria-label', '로딩 중');
-      this.innerHTML = '<svg viewBox="0 0 50 50" aria-hidden="true"><circle class="a2-ld-track" cx="25" cy="25" r="20" fill="none" stroke-width="7"/>' +
+      this.innerHTML = '<svg viewBox="0 0 50 50" aria-hidden="true">' +
         '<circle class="a2-ld-arc" cx="25" cy="25" r="20" fill="none" stroke-width="7"/></svg>';
     }
     // 수동 모드(a2-ld-manual)에서 p(0~1) 만큼 호를 그린다. 끌어서 새로고침에서 쓴다.
@@ -1096,5 +1096,5 @@
   const define = () => { for (const [n, c] of Object.entries(defs)) if (!customElements.get(n)) customElements.define(n, c); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', define); else define();
 
-  window.adas2 = { Motion, springs: SP, version: '1.1.0' };
+  window.adas2 = { Motion, springs: SP, version: '1.1.1' };
 })();

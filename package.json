@@ -1,6 +1,6 @@
 {
   "name": "adas2",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "웹 컴포넌트로 만든 UI 프레임워크 (A UI framework built on Web Components)",
   "keywords": [
     "ui",

@@ -279,16 +279,14 @@ a2-modal { display: none; }
 }
 a2-button[tone="soft"] { background: var(--a2-peach); color: var(--a2-orange); }
 
-/* ───────── 로딩 120 (굵기 17) ───────── */
+/* ───────── 로딩 120 (굵기 17, 배경 원 없이 호만) ───────── */
 a2-loading {
   --u: var(--a2-u);
   display: inline-block; vertical-align: middle; flex: none;
   width: calc(var(--u) * var(--a2-loading-size, 120)); height: calc(var(--u) * var(--a2-loading-size, 120));
 }
 a2-loading svg { display: block; width: 100%; height: 100%; animation: a2-spin 1.1s linear infinite; }
-a2-loading .a2-ld-track { stroke: var(--a2-peach); }
 a2-loading .a2-ld-arc { stroke: var(--a2-orange); stroke-linecap: round; stroke-dasharray: 80 200; animation: a2-arc 1.4s ease-in-out infinite; }
-a2-loading[tone="white"] .a2-ld-track { stroke: rgba(255, 255, 255, .32); }
 a2-loading[tone="white"] .a2-ld-arc { stroke: #fff; }
 a2-loading.a2-ld-manual svg, a2-loading.a2-ld-manual .a2-ld-arc { animation: none; }
 @keyframes a2-spin { to { transform: rotate(360deg); } }

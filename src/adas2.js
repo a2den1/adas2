@@ -913,7 +913,7 @@
     build() {
       this.setAttribute('role', 'progressbar');
       if (!this.hasAttribute('aria-label')) this.setAttribute('aria-label', '로딩 중');
-      this.innerHTML = '<svg viewBox="0 0 50 50" aria-hidden="true"><circle class="a2-ld-track" cx="25" cy="25" r="20" fill="none" stroke-width="7"/>' +
+      this.innerHTML = '<svg viewBox="0 0 50 50" aria-hidden="true">' +
         '<circle class="a2-ld-arc" cx="25" cy="25" r="20" fill="none" stroke-width="7"/></svg>';
     }
     // 수동 모드(a2-ld-manual)에서 p(0~1) 만큼 호를 그린다. 끌어서 새로고침에서 쓴다.

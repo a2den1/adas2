@@ -8,7 +8,7 @@ A UI framework built on Web Components
 
 [한국어](README.md) · **English**
 
-[![version](https://img.shields.io/badge/version-1.1.0-FF793F?style=flat-square)](https://github.com/a2den1/adas2/releases)
+[![version](https://img.shields.io/badge/version-1.1.1-FF793F?style=flat-square)](https://github.com/a2den1/adas2/releases)
 ![size](https://img.shields.io/badge/min-36KB%20JS%20%2B%2014KB%20CSS-3E3E3E?style=flat-square)
 ![dependencies](https://img.shields.io/badge/dependencies-0-3E3E3E?style=flat-square)
 [![license](https://img.shields.io/badge/license-adas2%20License-FF9B70?style=flat-square)](LICENSE)
@@ -71,8 +71,8 @@ adas2 is a set of UI components you use as HTML tags such as `<a2-button>` and `
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v1.1.0/dist/adas2.min.css">
-<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v1.1.0/dist/adas2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v1.1.1/dist/adas2.min.css">
+<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v1.1.1/dist/adas2.min.js"></script>
 ```
 
 The default font is [Pretendard](https://github.com/orioncactus/pretendard) and icons come from [Font Awesome 6](https://fontawesome.com) (solid).
