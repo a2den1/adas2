@@ -34,6 +34,12 @@ export interface A2CheckboxElement extends HTMLElement { checked: boolean; }
 export interface A2DatepickerElement extends HTMLElement { /** YYYY-MM-DD */ value: string; shift(months: number): void; }
 export interface A2TimepickerElement extends HTMLElement { /** HH:MM (24시간) */ value: string; setMode(mode: 'h' | 'm'): void; }
 export interface A2ModalElement extends HTMLElement { readonly isOpen: boolean; open(trigger?: Element | null): void; close(): void; }
+export interface A2LoadingElement extends HTMLElement {}
+export interface A2ProgressElement extends HTMLElement { /** 0~100, null 이면 진행률을 모르는 상태 */ value: number | null; }
+export interface A2ListElement extends HTMLElement { readonly items: A2ListItemElement[]; selectedIndex: number; }
+export interface A2ListItemElement extends HTMLElement {}
+export interface RefreshEventDetail { waitUntil(promise: Promise<unknown>): void; }
+export interface A2RefreshElement extends HTMLElement { readonly busy: boolean; refresh(): void; done(): void; }
 
 declare global {
   interface Window { adas2: typeof adas2; }
@@ -51,5 +57,10 @@ declare global {
     'a2-datepicker': A2DatepickerElement;
     'a2-timepicker': A2TimepickerElement;
     'a2-modal': A2ModalElement;
+    'a2-loading': A2LoadingElement;
+    'a2-progress': A2ProgressElement;
+    'a2-list': A2ListElement;
+    'a2-list-item': A2ListItemElement;
+    'a2-refresh': A2RefreshElement;
   }
 }

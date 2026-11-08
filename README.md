@@ -8,8 +8,8 @@
 
 **한국어** · [English](README.en.md)
 
-[![version](https://img.shields.io/badge/version-1.0.1-FF793F?style=flat-square)](https://github.com/a2den1/adas2/releases)
-![size](https://img.shields.io/badge/min-30KB%20JS%20%2B%2010KB%20CSS-3E3E3E?style=flat-square)
+[![version](https://img.shields.io/badge/version-1.1.0-FF793F?style=flat-square)](https://github.com/a2den1/adas2/releases)
+![size](https://img.shields.io/badge/min-36KB%20JS%20%2B%2014KB%20CSS-3E3E3E?style=flat-square)
 ![dependencies](https://img.shields.io/badge/dependencies-0-3E3E3E?style=flat-square)
 [![license](https://img.shields.io/badge/license-adas2%20License-FF9B70?style=flat-square)](LICENSE)
 
@@ -52,6 +52,14 @@ adas2는 `<a2-button>`, `<a2-dropdown>` 같은 HTML 태그로 쓰는 UI 컴포�
     <td align="center"><img src="docs/img/timepicker.png" alt="시간 선택"><br><b>시간 선택</b> <code>a2-timepicker</code></td>
   </tr>
   <tr>
+    <td align="center"><img src="docs/img/loading.png" alt="로딩"><br><b>로딩</b> <code>a2-loading</code></td>
+    <td align="center"><img src="docs/img/progress.png" alt="진행 바"><br><b>진행 바</b> <code>a2-progress</code></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/img/list.png" alt="리스트"><br><b>리스트</b> <code>a2-list</code></td>
+    <td align="center"><img src="docs/img/refresh.png" alt="끌어서 새로고침"><br><b>끌어서 새로고침</b> <code>a2-refresh</code></td>
+  </tr>
+  <tr>
     <td align="center" colspan="2"><img src="docs/img/modal.png" width="600" alt="모달"><br><b>모달</b> <code>a2-modal</code></td>
   </tr>
 </table>
@@ -63,8 +71,8 @@ adas2는 `<a2-button>`, `<a2-dropdown>` 같은 HTML 태그로 쓰는 UI 컴포�
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v1.0.1/dist/adas2.min.css">
-<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v1.0.1/dist/adas2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v1.1.0/dist/adas2.min.css">
+<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v1.1.0/dist/adas2.min.js"></script>
 ```
 
 글꼴은 [Pretendard](https://github.com/orioncactus/pretendard), 아이콘은 [Font Awesome 6](https://fontawesome.com) (solid)을 씁니다.
@@ -112,7 +120,7 @@ import { Motion } from 'adas2';
 
 | 태그 | HTML 속성 | JS 속성·메서드 | 이벤트 |
 |---|---|---|---|
-| `a2-button` | `disabled` `tone="soft"` | | `click` |
+| `a2-button` | `disabled` `tone="soft"` `loading` | | `click` |
 | `a2-slider` | `value` `min` `max` `step` `output` | `value` | `input` `change` |
 | `a2-dropdown` + `<option>` | `value` `fit` `shadow` | `value` `selectedIndex` `setOpen()` `toggle()` `close()` | `change` `open` `close` |
 | `a2-textfield` | `label` `value` `name` `type` | `value` `focus()` | `input` `change` |
@@ -123,6 +131,10 @@ import { Motion } from 'adas2';
 | `a2-datepicker` | `value="2026-01-19"` | `value` `shift(n)` | `change` |
 | `a2-timepicker` | `value="09:30"` `minute-step` | `value` `setMode('h' \| 'm')` | `input` `change` |
 | `a2-modal` | `heading` `open` | `open(trigger?)` `close()` `isOpen` | `open` `close` |
+| `a2-loading` | `tone="white"` | | |
+| `a2-progress` | `value` (0~100, 없으면 진행률 모름) | `value` | |
+| `a2-list` + `a2-list-item` | `selectable`, 항목에 `icon` `sub` `meta` `chevron` `selected` | `items` `selectedIndex` | `select` |
+| `a2-refresh` | | `refresh()` `done()` `busy` | `refresh` |
 
 <details>
 <summary>속성 설명</summary>
@@ -133,6 +145,17 @@ import { Motion } from 'adas2';
 - `a2-nav-item` `icon`: Font Awesome 아이콘 이름 (`house`, `magnifying-glass`, `user` 등).
 - `a2-checkbox`: 태그 안에 글자를 넣으면 라벨이 붙은 형태가 됩니다.
 - `a2-modal`: `data-a2-modal="#id"` 가 붙은 요소를 누르면 열리고, `data-a2-close` 가 붙은 요소·Esc·바깥 영역을 누르면 닫힙니다.
+- `a2-button` `loading`: 글자 대신 로딩 표시를 보여 주고 누를 수 없게 합니다.
+- `a2-loading`: 크기는 `--a2-loading-size`(기본 120 단위)로 바꿉니다. 주황 배경 위에서는 `tone="white"`.
+- `a2-list` `selectable`: 누른 항목을 선택 상태로 표시합니다. 없으면 누르는 동안만 표시합니다.
+- `a2-list-item`: `icon` 왼쪽 아이콘, `sub` 아래 설명, `meta` 오른쪽 글자, `chevron` 오른쪽 화살표.
+- `a2-refresh`: 안의 내용을 스크롤 영역으로 감쌉니다. 높이를 지정해서 쓰고, 맨 위에서 아래로 끌었다 놓으면 `refresh` 이벤트가 납니다.
+
+```js
+document.querySelector('a2-refresh').addEventListener('refresh', e => {
+  e.detail.waitUntil(fetch('/api/feed').then(r => r.json()).then(render)); // 끝나면 로딩 표시가 사라집니다
+});
+```
 
 </details>
 

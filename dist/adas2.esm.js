@@ -1,4 +1,4 @@
-/*! adas2 v1.0.1 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
+/*! adas2 v1.1.0 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
 /* adas2 — UI framework
    상태 변화는 스프링 애니메이션(adas2.Motion)으로 처리한다.
    <link rel="stylesheet" href="adas2.css"> + <script src="adas2.js"></script> 만 넣으면 a2-* 태그를 쓸 수 있다.
@@ -106,6 +106,7 @@
 
   /* ───────────── 버튼 ───────────── */
   class A2Button extends Base {
+    static get observedAttributes() { return ['loading']; }
     build() {
       this.setAttribute('role', 'button');
       if (!this.hasAttribute('tabindex')) this.tabIndex = 0;
@@ -113,7 +114,22 @@
       press(this, () => m.to({ s: 0.955 }), () => m.to({ s: 1 }, { s: SP.base }));
       this.addEventListener('pointerdown', () => { m.sp.s = SP.press; });
       keyClick(this);
+      this.syncLoading();
     }
+    // loading 속성: 글자 대신 로딩 표시, 누를 수 없음
+    syncLoading() {
+      const on = this.hasAttribute('loading');
+      let sp = this.querySelector(':scope > .a2-btn-spin');
+      if (on && !sp) {
+        sp = document.createElement('a2-loading');
+        sp.className = 'a2-btn-spin';
+        if (this.getAttribute('tone') !== 'soft') sp.setAttribute('tone', 'white');
+        this.appendChild(sp);
+      }
+      if (!on && sp) sp.remove();
+      this.setAttribute('aria-busy', on);
+    }
+    attributeChangedCallback() { if (this._built) this.syncLoading(); }
   }
 
   /* ───────────── 슬라이드바 ───────────── */
@@ -893,15 +909,194 @@
     if (m && m.open) m.open(t);
   });
 
+  /* ───────────── 로딩 ───────────── */
+  class A2Loading extends Base {
+    build() {
+      this.setAttribute('role', 'progressbar');
+      if (!this.hasAttribute('aria-label')) this.setAttribute('aria-label', '로딩 중');
+      this.innerHTML = '<svg viewBox="0 0 50 50" aria-hidden="true"><circle class="a2-ld-track" cx="25" cy="25" r="20" fill="none" stroke-width="7"/>' +
+        '<circle class="a2-ld-arc" cx="25" cy="25" r="20" fill="none" stroke-width="7"/></svg>';
+    }
+    // 수동 모드(a2-ld-manual)에서 p(0~1) 만큼 호를 그린다. 끌어서 새로고침에서 쓴다.
+    setProgress(p) {
+      const svg = this.firstChild; if (!svg) return;
+      svg.lastChild.style.strokeDasharray = `${Math.max(1, clamp(p) * 100)} 200`;
+      svg.style.transform = `rotate(${-90 + clamp(p) * 270}deg)`;
+    }
+  }
+
+  /* ───────────── 진행 바 ───────────── */
+  class A2Progress extends Base {
+    static get observedAttributes() { return ['value']; }
+    build() {
+      this.setAttribute('role', 'progressbar');
+      this.setAttribute('aria-valuemin', 0);
+      this.setAttribute('aria-valuemax', 100);
+      this.innerHTML = '<div class="a2-pg-fill"></div>';
+      this.fill = this.firstChild;
+      this.m = new Motion({ w: 0 }, v => { this.fill.style.width = `${clamp(v.w, 0, 100)}%`; });
+      this.sync(false);
+    }
+    sync(anim) {
+      const raw = this.getAttribute('value');
+      const ind = raw === null || raw === '';
+      this.classList.toggle('a2-indeterminate', ind);
+      if (ind) { this.removeAttribute('aria-valuenow'); this.fill.style.width = ''; return; }
+      const v = clamp(+raw || 0, 0, 100);
+      this.setAttribute('aria-valuenow', v);
+      anim ? this.m.to({ w: v }) : this.m.set({ w: v });
+    }
+    get value() { const r = this.getAttribute('value'); return r === null ? null : +r; }
+    set value(v) { if (v === null || v === undefined) this.removeAttribute('value'); else this.setAttribute('value', v); }
+    attributeChangedCallback(n, o, v) { if (this._built && o !== v) this.sync(true); }
+  }
+
+  /* ───────────── 리스트 ───────────── */
+  class A2ListItem extends Base {
+    build() {
+      const title = this.textContent.trim();
+      const icon = this.getAttribute('icon'), sub = this.getAttribute('sub'), meta = this.getAttribute('meta');
+      this.setAttribute('role', 'listitem');
+      if (!this.hasAttribute('tabindex')) this.tabIndex = 0;
+      this.innerHTML =
+        (icon ? `<span class="a2-li-icon"><i class="fa-solid fa-${esc(icon)}"></i></span>` : '') +
+        `<span class="a2-li-text"><span class="a2-li-title">${esc(title)}</span>${sub ? `<span class="a2-li-sub">${esc(sub)}</span>` : ''}</span>` +
+        (meta ? `<span class="a2-li-meta">${esc(meta)}</span>` : '') +
+        (this.hasAttribute('chevron') ? '<span class="a2-li-chev"><i class="fa-solid fa-chevron-right"></i></span>' : '');
+      keyClick(this);
+    }
+  }
+  class A2List extends Base {
+    build() {
+      this.setAttribute('role', 'list');
+      this.hl = document.createElement('div');
+      this.hl.className = 'a2-list-hl';
+      this.prepend(this.hl);
+      this.m = new Motion({ y: 0, h: 0, o: 0 }, v => {
+        this.hl.style.transform = `translateY(${v.y}px)`;
+        this.hl.style.height = `${Math.max(0, v.h)}px`;
+        this.hl.style.opacity = clamp(v.o);
+      });
+      this.cur = null;
+      const sel = this.querySelector(':scope > a2-list-item[selected]');
+      // 처음 선택된 항목: 표시만 켜 두고 위치는 아래 ResizeObserver 가 레이아웃이 잡힌 뒤 맞춘다
+      if (this.hasAttribute('selectable') && sel) { this.cur = sel; this.m.set({ o: 1 }); }
+      this.addEventListener('pointerdown', e => {
+        const it = e.target.closest('a2-list-item');
+        if (!it || it.parentNode !== this || e.button !== 0) return;
+        if (!this.hasAttribute('selectable')) this.moveTo(it, this.m.v.o > 0.05, 1);
+      });
+      const release = () => { if (!this.hasAttribute('selectable')) this.m.to({ o: 0 }); };
+      for (const t of ['pointerup', 'pointercancel', 'pointerleave']) this.addEventListener(t, release);
+      this.addEventListener('click', e => {
+        const it = e.target.closest('a2-list-item');
+        if (!it || it.parentNode !== this) return;
+        if (this.hasAttribute('selectable')) {
+          for (const x of this.items) { x.toggleAttribute('selected', x === it); x.setAttribute('aria-selected', x === it); }
+          this.moveTo(it, this.m.v.o > 0.05, 1);
+        }
+        emit(this, 'select', { index: this.items.indexOf(it), item: it });
+      });
+      const relayout = () => { if (this.cur && this.cur.isConnected) this.moveTo(this.cur, false, this.m.t.o); };
+      new ResizeObserver(relayout).observe(this);
+      setTimeout(relayout, 0);
+      if (document.fonts) document.fonts.ready.then(relayout);
+    }
+    get items() { return [...this.querySelectorAll(':scope > a2-list-item')]; }
+    moveTo(it, anim, o) {
+      this.cur = it;
+      const t = { y: it.offsetTop, h: it.offsetHeight, o };
+      if (anim) this.m.to(t);
+      else { this.m.set({ y: t.y, h: t.h }); this.m.to({ o }); }
+    }
+    get selectedIndex() { return this.items.findIndex(x => x.hasAttribute('selected')); }
+    set selectedIndex(i) { const it = this.items[i]; if (it) it.click(); }
+  }
+
+  /* ───────────── 끌어서 새로고침 ─────────────
+     맨 위에서 아래로 끌었다 놓으면 refresh 이벤트가 난다.
+     e.detail.waitUntil(promise) 를 부르면 그 작업이 끝날 때까지 로딩 표시가 남는다. */
+  const RF = { size: 96, threshold: 230, hold: 170 };
+  class A2Refresh extends Base {
+    build() {
+      const kids = [...this.childNodes];
+      this.innerHTML = '<div class="a2-rf-ind"><a2-loading class="a2-ld-manual"></a2-loading></div><div class="a2-rf-scroll"></div>';
+      this.ind = this.firstChild;
+      this.spin = this.ind.firstChild;
+      this.scroll = this.lastChild;
+      for (const k of kids) this.scroll.appendChild(k);
+      this.busy = false;
+      this._unit = () => (parseFloat(getComputedStyle(this.ind).width) || 35) / RF.size;
+      this.m = new Motion({ y: 0 }, v => this.paint(v.y));
+      let y0 = null, pulling = false;
+      const resist = dist => { const L = RF.threshold * this._unit() * 1.8; return L * (1 - Math.exp(-dist * 0.6 / L)); };
+      const start = y => { if (this.busy || this.scroll.scrollTop > 0) return; y0 = y; pulling = false; };
+      const move = (y, e) => {
+        if (y0 === null) return;
+        const dy = y - y0;
+        if (!pulling && (dy <= 4 || this.scroll.scrollTop > 0)) { if (dy < 0) y0 = null; return; }
+        pulling = true;
+        if (e.cancelable) e.preventDefault();
+        this.m.set({ y: resist(dy) });
+      };
+      const end = () => {
+        if (y0 === null) return;
+        y0 = null;
+        if (!pulling) return;
+        pulling = false;
+        if (this.m.v.y >= RF.threshold * this._unit()) this.refresh();
+        else this.m.to({ y: 0 });
+      };
+      this.scroll.addEventListener('touchstart', e => start(e.touches[0].clientY), { passive: true });
+      this.scroll.addEventListener('touchmove', e => move(e.touches[0].clientY, e), { passive: false });
+      this.scroll.addEventListener('touchend', end);
+      this.scroll.addEventListener('touchcancel', end);
+      this.scroll.addEventListener('pointerdown', e => { if (e.pointerType === 'mouse' && e.button === 0) start(e.clientY); });
+      addEventListener('pointermove', e => { if (e.pointerType === 'mouse' && y0 !== null) move(e.clientY, e); });
+      addEventListener('pointerup', e => { if (e.pointerType === 'mouse') end(); });
+    }
+    paint(y) {
+      const k = this._unit(), T = RF.threshold * k, S = RF.size * k;
+      this.scroll.style.transform = y > 0.01 ? `translateY(${y}px)` : '';
+      const p = clamp(y / T);
+      this.ind.style.transform = `translateY(${Math.max(y / 2 - S / 2, -S)}px) scale(${0.6 + 0.4 * p})`;
+      this.ind.style.opacity = clamp(y / (T * 0.4));
+      if (!this.busy && this.spin.setProgress) this.spin.setProgress(p);
+      this.classList.toggle('a2-pulling', y > 0.5);
+    }
+    refresh() {
+      if (this.busy) return;
+      this.busy = true;
+      this.setAttribute('aria-busy', 'true');
+      const svg = this.spin.firstChild;
+      if (svg) { svg.style.transform = ''; svg.lastChild.style.strokeDasharray = ''; }
+      this.spin.classList.remove('a2-ld-manual');
+      this.m.to({ y: RF.hold * this._unit() });
+      const jobs = [];
+      emit(this, 'refresh', { waitUntil: p => jobs.push(Promise.resolve(p)) });
+      (jobs.length ? Promise.allSettled(jobs) : new Promise(r => setTimeout(r, 900))).then(() => this.done());
+    }
+    done() {
+      if (!this.busy) return;
+      this.m.to({ y: 0 }, null, () => {
+        this.busy = false;
+        this.removeAttribute('aria-busy');
+        this.spin.classList.add('a2-ld-manual');
+        if (this.spin.setProgress) this.spin.setProgress(0);
+      });
+    }
+  }
+
   const defs = {
     'a2-button': A2Button, 'a2-slider': A2Slider, 'a2-dropdown': A2Dropdown, 'a2-textfield': A2Textfield,
     'a2-split': A2Split, 'a2-split-item': A2SplitItem, 'a2-navbar': A2Navbar, 'a2-nav-item': A2NavItem,
     'a2-appbar': A2Appbar, 'a2-checkbox': A2Checkbox, 'a2-datepicker': A2Datepicker, 'a2-timepicker': A2Timepicker, 'a2-modal': A2Modal,
+    'a2-loading': A2Loading, 'a2-progress': A2Progress, 'a2-list': A2List, 'a2-list-item': A2ListItem, 'a2-refresh': A2Refresh,
   };
   const define = () => { for (const [n, c] of Object.entries(defs)) if (!customElements.get(n)) customElements.define(n, c); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', define); else define();
 
-  window.adas2 = { Motion, springs: SP, version: '1.0.1' };
+  window.adas2 = { Motion, springs: SP, version: '1.1.0' };
 })();
 
 const adas2 = window.adas2;

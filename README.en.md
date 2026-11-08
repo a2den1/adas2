@@ -8,8 +8,8 @@ A UI framework built on Web Components
 
 [한국어](README.md) · **English**
 
-[![version](https://img.shields.io/badge/version-1.0.1-FF793F?style=flat-square)](https://github.com/a2den1/adas2/releases)
-![size](https://img.shields.io/badge/min-30KB%20JS%20%2B%2010KB%20CSS-3E3E3E?style=flat-square)
+[![version](https://img.shields.io/badge/version-1.1.0-FF793F?style=flat-square)](https://github.com/a2den1/adas2/releases)
+![size](https://img.shields.io/badge/min-36KB%20JS%20%2B%2014KB%20CSS-3E3E3E?style=flat-square)
 ![dependencies](https://img.shields.io/badge/dependencies-0-3E3E3E?style=flat-square)
 [![license](https://img.shields.io/badge/license-adas2%20License-FF9B70?style=flat-square)](LICENSE)
 
@@ -52,6 +52,14 @@ adas2 is a set of UI components you use as HTML tags such as `<a2-button>` and `
     <td align="center"><img src="docs/img/timepicker.png" alt="Time picker"><br><b>Time picker</b> <code>a2-timepicker</code></td>
   </tr>
   <tr>
+    <td align="center"><img src="docs/img/loading.png" alt="Loading"><br><b>Loading</b> <code>a2-loading</code></td>
+    <td align="center"><img src="docs/img/progress.png" alt="Progress bar"><br><b>Progress bar</b> <code>a2-progress</code></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/img/list.png" alt="List"><br><b>List</b> <code>a2-list</code></td>
+    <td align="center"><img src="docs/img/refresh.png" alt="Pull to refresh"><br><b>Pull to refresh</b> <code>a2-refresh</code></td>
+  </tr>
+  <tr>
     <td align="center" colspan="2"><img src="docs/img/modal.png" width="600" alt="Modal"><br><b>Modal</b> <code>a2-modal</code></td>
   </tr>
 </table>
@@ -63,8 +71,8 @@ adas2 is a set of UI components you use as HTML tags such as `<a2-button>` and `
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v1.0.1/dist/adas2.min.css">
-<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v1.0.1/dist/adas2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v1.1.0/dist/adas2.min.css">
+<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v1.1.0/dist/adas2.min.js"></script>
 ```
 
 The default font is [Pretendard](https://github.com/orioncactus/pretendard) and icons come from [Font Awesome 6](https://fontawesome.com) (solid).
@@ -112,7 +120,7 @@ Browser only. With server-side rendering, import it on the client.
 
 | Tag | HTML attributes | JS properties / methods | Events |
 |---|---|---|---|
-| `a2-button` | `disabled` `tone="soft"` | | `click` |
+| `a2-button` | `disabled` `tone="soft"` `loading` | | `click` |
 | `a2-slider` | `value` `min` `max` `step` `output` | `value` | `input` `change` |
 | `a2-dropdown` + `<option>` | `value` `fit` `shadow` | `value` `selectedIndex` `setOpen()` `toggle()` `close()` | `change` `open` `close` |
 | `a2-textfield` | `label` `value` `name` `type` | `value` `focus()` | `input` `change` |
@@ -123,6 +131,10 @@ Browser only. With server-side rendering, import it on the client.
 | `a2-datepicker` | `value="2026-01-19"` | `value` `shift(n)` | `change` |
 | `a2-timepicker` | `value="09:30"` `minute-step` | `value` `setMode('h' \| 'm')` | `input` `change` |
 | `a2-modal` | `heading` `open` | `open(trigger?)` `close()` `isOpen` | `open` `close` |
+| `a2-loading` | `tone="white"` | | |
+| `a2-progress` | `value` (0–100, omit for indeterminate) | `value` | |
+| `a2-list` + `a2-list-item` | `selectable`, `icon` `sub` `meta` `chevron` `selected` on items | `items` `selectedIndex` | `select` |
+| `a2-refresh` | | `refresh()` `done()` `busy` | `refresh` |
 
 <details>
 <summary>Attribute notes</summary>
@@ -133,6 +145,17 @@ Browser only. With server-side rendering, import it on the client.
 - `a2-nav-item` `icon`: a Font Awesome icon name (`house`, `magnifying-glass`, `user`, …).
 - `a2-checkbox`: put text inside the tag to get the labeled style.
 - `a2-modal`: opens from any element with `data-a2-modal="#id"`; closes with `data-a2-close`, Esc, or a click outside.
+- `a2-button` `loading`: shows a spinner instead of the label and disables the button.
+- `a2-loading`: set the size with `--a2-loading-size` (default 120 units). Use `tone="white"` on orange backgrounds.
+- `a2-list` `selectable`: keeps the pressed item marked as selected. Without it, the mark shows only while pressing.
+- `a2-list-item`: `icon` leading icon, `sub` secondary text, `meta` trailing text, `chevron` trailing arrow.
+- `a2-refresh`: wraps its content in a scroll area. Give it a height; pulling down from the top and releasing fires `refresh`.
+
+```js
+document.querySelector('a2-refresh').addEventListener('refresh', e => {
+  e.detail.waitUntil(fetch('/api/feed').then(r => r.json()).then(render)); // the spinner hides when this settles
+});
+```
 
 </details>
 

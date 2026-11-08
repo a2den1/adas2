@@ -24,6 +24,7 @@
   .row { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 18px; }
   .split-room { height: calc(var(--a2-u) * 250); }
   .appbar-frame { width: calc(var(--a2-u) * 1012); max-width: 100%; height: calc(var(--a2-u) * 624); background: #fff; }
+  .refresh-frame { height: calc(var(--a2-u) * 900); border-radius: calc(var(--a2-u) * 40); background: #fff; }
   @media (max-width: 760px) { section.wide { grid-column: auto; } .wrap { padding: 32px 16px 80px; } }
 </style>
 </head>
@@ -121,6 +122,44 @@
       <a2-appbar heading="Title" back></a2-appbar>
     </div>
   </section>
+
+  <section>
+    <h2>로딩</h2>
+    <div class="row" style="align-items:center">
+      <a2-loading></a2-loading>
+      <a2-button loading>저장</a2-button>
+      <a2-button tone="soft" loading>취소</a2-button>
+    </div>
+  </section>
+
+  <section>
+    <h2>바 인디케이터</h2>
+    <div class="stack" style="align-items:stretch">
+      <a2-progress id="demo-progress" value="40"></a2-progress>
+      <a2-progress></a2-progress>
+    </div>
+  </section>
+
+  <section>
+    <h2>리스트</h2>
+    <a2-list selectable>
+      <a2-list-item icon="bell" sub="새 소식을 알려 드려요" chevron selected>알림</a2-list-item>
+      <a2-list-item icon="lock" sub="비밀번호, 2단계 인증" chevron>보안</a2-list-item>
+      <a2-list-item icon="globe" meta="한국어">언어</a2-list-item>
+    </a2-list>
+  </section>
+
+  <section>
+    <h2>끌어서 새로고침</h2>
+    <a2-refresh id="demo-refresh" class="refresh-frame">
+      <a2-list id="demo-feed">
+        <a2-list-item icon="envelope" sub="오전 9:30" chevron>메일 3통</a2-list-item>
+        <a2-list-item icon="calendar" sub="오후 2:00" chevron>회의 일정</a2-list-item>
+        <a2-list-item icon="cloud" sub="어제" chevron>백업 완료</a2-list-item>
+        <a2-list-item icon="image" sub="어제" chevron>사진 12장</a2-list-item>
+      </a2-list>
+    </a2-refresh>
+  </section>
 </main>
 </div>
 
@@ -131,5 +170,25 @@
 </a2-modal>
 
 <script src="../dist/adas2.js"></script>
+<script>
+  // 데모: 진행 바 값 바꾸기, 새로고침하면 맨 위에 항목 추가
+  const bar = document.getElementById('demo-progress');
+  const steps = [40, 72, 100, 0, 18];
+  let si = 0;
+  setInterval(() => { si = (si + 1) % steps.length; bar.value = steps[si]; }, 1600);
+
+  document.getElementById('demo-refresh').addEventListener('refresh', e => {
+    e.detail.waitUntil(new Promise(r => setTimeout(r, 1200)).then(() => {
+      const t = new Date();
+      const item = document.createElement('a2-list-item');
+      item.setAttribute('icon', 'rotate');
+      item.setAttribute('sub', `${t.getHours()}:${String(t.getMinutes()).padStart(2, '0')}`);
+      item.setAttribute('chevron', '');
+      item.textContent = '새로 고침됨';
+      const feed = document.getElementById('demo-feed');
+      feed.insertBefore(item, feed.querySelector('a2-list-item'));
+    }));
+  });
+</script>
 </body>
 </html>

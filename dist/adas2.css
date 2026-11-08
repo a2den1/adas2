@@ -1,4 +1,4 @@
-/*! adas2 v1.0.1 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
+/*! adas2 v1.1.0 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
 /* adas2 — UI framework
    모든 치수는 Figma 시안(New Age Project)의 px 값을 그대로 쓰고, --a2-u 한 단위로 곱한다.
    기본값 .36px (버튼 406×170 → 146×61px).
@@ -279,3 +279,79 @@ a2-modal { display: none; }
   pointer-events: none; white-space: nowrap;
 }
 a2-button[tone="soft"] { background: var(--a2-peach); color: var(--a2-orange); }
+
+/* ───────── 로딩 120 (굵기 17) ───────── */
+a2-loading {
+  --u: var(--a2-u);
+  display: inline-block; vertical-align: middle; flex: none;
+  width: calc(var(--u) * var(--a2-loading-size, 120)); height: calc(var(--u) * var(--a2-loading-size, 120));
+}
+a2-loading svg { display: block; width: 100%; height: 100%; animation: a2-spin 1.1s linear infinite; }
+a2-loading .a2-ld-track { stroke: var(--a2-peach); }
+a2-loading .a2-ld-arc { stroke: var(--a2-orange); stroke-linecap: round; stroke-dasharray: 80 200; animation: a2-arc 1.4s ease-in-out infinite; }
+a2-loading[tone="white"] .a2-ld-track { stroke: rgba(255, 255, 255, .32); }
+a2-loading[tone="white"] .a2-ld-arc { stroke: #fff; }
+a2-loading.a2-ld-manual svg, a2-loading.a2-ld-manual .a2-ld-arc { animation: none; }
+@keyframes a2-spin { to { transform: rotate(360deg); } }
+@keyframes a2-arc {
+  0%   { stroke-dasharray: 2 200;  stroke-dashoffset: 0; }
+  50%  { stroke-dasharray: 80 200; stroke-dashoffset: -20; }
+  100% { stroke-dasharray: 2 200;  stroke-dashoffset: -124; }
+}
+@media (prefers-reduced-motion: reduce) {
+  a2-loading svg { animation-duration: 2.4s; }
+  a2-loading .a2-ld-arc { animation: none; }
+}
+
+/* 버튼 loading */
+a2-button[loading] { color: transparent; pointer-events: none; position: relative; }
+a2-button > .a2-btn-spin { position: absolute; left: 50%; top: 50%; translate: -50% -50%; --a2-loading-size: 76; }
+
+/* ───────── 진행 바: 높이 24, r12 ───────── */
+a2-progress {
+  --u: var(--a2-u);
+  display: block; position: relative; overflow: hidden;
+  height: calc(var(--u) * 24); border-radius: calc(var(--u) * 12);
+  background: var(--a2-peach);
+}
+.a2-pg-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: inherit; background: var(--a2-orange); }
+a2-progress.a2-indeterminate .a2-pg-fill { width: 38%; animation: a2-indet 1.5s cubic-bezier(.45, 0, .35, 1) infinite; }
+@keyframes a2-indet { from { transform: translateX(-100%); } to { transform: translateX(265%); } }
+@media (prefers-reduced-motion: reduce) { a2-progress.a2-indeterminate .a2-pg-fill { animation-duration: 3s; } }
+
+/* ───────── 리스트: 항목 높이 170 ───────── */
+a2-list {
+  --u: var(--a2-u);
+  display: block; position: relative;
+  padding: calc(var(--u) * 16);
+  border-radius: calc(var(--u) * 40); background: var(--a2-surface);
+  font-family: var(--a2-font); -webkit-user-select: none; user-select: none;
+}
+.a2-list-hl {
+  position: absolute; left: calc(var(--u) * 16); right: calc(var(--u) * 16); top: 0; height: 0;
+  border-radius: calc(var(--u) * 28); background: var(--a2-peach); opacity: 0; pointer-events: none;
+}
+a2-list-item { --u: var(--a2-u); font-family: var(--a2-font); box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+a2-list-item.a2 {
+  position: relative; display: flex; align-items: center; gap: calc(var(--u) * 40);
+  min-height: calc(var(--u) * 170); padding: calc(var(--u) * 28) calc(var(--u) * 44);
+  border-radius: calc(var(--u) * 28); cursor: pointer;
+}
+.a2 .a2-li-icon .fa-solid, .a2 .a2-li-chev .fa-solid { position: static; display: inline-block; }
+.a2-li-icon { flex: none; width: calc(var(--u) * 64); text-align: center; font-size: calc(var(--u) * 56); color: var(--a2-orange); line-height: 1; }
+.a2-li-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: calc(var(--u) * 6); }
+.a2-li-title { font-weight: 700; font-size: calc(var(--u) * 48.5); line-height: 1.25; color: var(--a2-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.a2-li-sub { font-weight: 500; font-size: calc(var(--u) * 37); line-height: 1.35; color: var(--a2-ink-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.a2-li-meta { flex: none; font-weight: 500; font-size: calc(var(--u) * 40); color: var(--a2-ink-muted); }
+.a2-li-chev { flex: none; font-size: calc(var(--u) * 38); color: #B9B9B9; line-height: 1; }
+a2-list-item:focus-visible { outline: calc(var(--u) * 6) solid color-mix(in srgb, var(--a2-orange) 45%, transparent); outline-offset: calc(var(--u) * -6); }
+
+/* ───────── 끌어서 새로고침 ───────── */
+a2-refresh { --u: var(--a2-u); display: block; position: relative; overflow: hidden; }
+.a2-rf-scroll { height: 100%; overflow: auto; overscroll-behavior-y: contain; will-change: transform; }
+.a2-rf-ind {
+  position: absolute; left: 50%; top: 0; z-index: 2; pointer-events: none; opacity: 0;
+  width: calc(var(--u) * 96); height: calc(var(--u) * 96); margin-left: calc(var(--u) * -48);
+}
+.a2-rf-ind a2-loading { --a2-loading-size: 96; }
+a2-refresh.a2-pulling { -webkit-user-select: none; user-select: none; }
