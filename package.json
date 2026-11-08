@@ -1,16 +1,16 @@
 {
   "name": "adas2",
-  "version": "2.0.2",
-  "description": "웹용 UI 툴킷 — 테마·팩토리·창 관리자·툴팁·단축키 (A web UI toolkit with themes, a factory API, windows, tooltips and shortcuts)",
+  "version": "3.0.0",
+  "description": "웹용 UI 툴킷 (A UI toolkit for the web)",
   "keywords": [
     "ui",
     "toolkit",
     "components",
     "theme",
-    "window-manager",
-    "tooltip",
-    "shortcut",
+    "toast",
+    "dialog",
     "color-picker",
+    "shortcut",
     "korean"
   ],
   "license": "SEE LICENSE IN LICENSE",

@@ -1,23 +1,17 @@
-/* adas2 — 기본: 단위·공통 규칙
-   모든 치수는 "디자인 단위 × --a2-px" 이다. --a2-px = --a2-scale(기본 0.6) px.
-   색·크기는 adas2.setTheme() 이 --a2-* 변수로 루트에 넣는다. 아래 값은 설정 전 대비용 기본값. */
+/* adas2 — 기본
+   치수는 "디자인 단위 × --a2-u". --a2-u = --a2-scale(기본 .6) px.
+   색·크기는 adas2.setup()/setTheme() 이 --a2-* 변수로 루트에 넣는다. 아래는 설정 전 기본값. */
 
 :root {
   --a2-scale: .6; --a2-speed: 1;
-  --a2-panel-bg: #1E1C1A; --a2-top-bar: #1E1C1A; --a2-menu-bg: #3A3632; --a2-object-bg: #2C2926; --a2-object-hover: #36322E;
-  --a2-object-button: #FF793F; --a2-object-active: #FF8A55; --a2-object-active-bright: #FFB792; --a2-object-on-active: #FFFFFF;
-  --a2-switch-track: #4A4540; --a2-menu-hover: rgba(255,138,85,.3); --a2-card-header: #262320; --a2-card-panel: #262320;
-  --a2-soft-red: #F0605D; --a2-button-hover: #FF8C5A; --a2-button-pressed: #E8662F; --a2-text: #F4EFEA;
-  --a2-tooltip-bg: rgba(12,11,10,.86); --a2-overlay-scrim: rgba(0,0,0,.5); --a2-outline: rgba(255,255,255,.06);
-  --a2-control-outline-idle: rgba(255,255,255,0); --a2-control-outline-hover: rgba(255,255,255,0);
-  --a2-math-ok: #7EE08A; --a2-math-warn: #FFD166; --a2-math-err: #FF7A7A;
-  --a2-channel-r: #FF6B6B; --a2-channel-g: #5FD38D; --a2-channel-b: #5B8CFF; --a2-channel-a: #8A847E; --a2-channel-s: #4CC9F0; --a2-channel-v: #FFC94D;
-  --a2-inactive-alpha: .4; --a2-text-dim-alpha: .6; --a2-text-faint-alpha: .3; --a2-disabled-alpha: .42;
-  --a2-radius: 22; --a2-outline-width: 2; --a2-control-height: 52; --a2-control-pad-y: 8; --a2-line-height: 1.4;
-  --a2-font-body: 23; --a2-font-h1: 32;
-  --a2-weight: 300; --a2-weight-strong: 500;
+  --a2-bg: #1B1917; --a2-surface: #272421; --a2-surface-hover: #2F2B28; --a2-surface-active: #36312D; --a2-raised: #2C2825;
+  --a2-accent: #FF7A45; --a2-accent-hover: #FF8B5C; --a2-accent-pressed: #EB6630; --a2-accent-soft: rgba(255,122,69,.16); --a2-on-accent: #fff;
+  --a2-text: #F3EEE9; --a2-text-muted: rgba(243,238,233,.58); --a2-text-faint: rgba(243,238,233,.3);
+  --a2-danger: #F25F5C; --a2-success: #5CCB8A; --a2-warning: #F4B740;
+  --a2-shadow: 0 18px 50px rgba(0,0,0,.45); --a2-scrim: rgba(10,9,8,.55); --a2-tooltip: rgba(14,13,12,.92);
+  --a2-radius: 14; --a2-radius-lg: 24; --a2-ch: 52; --a2-fs: 24; --a2-fs-sm: 20; --a2-fs-title: 32;
   --a2-font: "GmarketSans", "Pretendard", system-ui, -apple-system, "Malgun Gothic", sans-serif;
-  --a2-font-mono: "GmarketSans", "Pretendard", system-ui, sans-serif;
+  --a2-weight: 300; --a2-weight-strong: 500;
 }
 
 /* 지마켓 산스 (G마켓 무료 글꼴) */
@@ -26,79 +20,65 @@
 @font-face { font-family: "GmarketSans"; font-weight: 700; font-display: swap; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff") format("woff"); }
 
 .a2 {
-  --a2-px: calc(var(--a2-scale) * 1px);
-  --a2-r: calc(var(--a2-radius) * var(--a2-px));
-  --a2-ow: calc(var(--a2-outline-width) * var(--a2-px));
-  --a2-row-h: calc(var(--a2-control-height) * var(--a2-px));
-  --a2-fs: var(--a2-font-body);
-  --a2-dim: color-mix(in srgb, var(--a2-text) calc(var(--a2-text-dim-alpha) * 100%), transparent);
-  --a2-faint: color-mix(in srgb, var(--a2-text) calc(var(--a2-text-faint-alpha) * 100%), transparent);
-  --a2-inactive: color-mix(in srgb, var(--a2-object-active) calc(var(--a2-inactive-alpha) * 100%), transparent);
+  --a2-u: calc(var(--a2-scale) * 1px);
+  --a2-r: calc(var(--a2-radius) * var(--a2-u));
+  --a2-rl: calc(var(--a2-radius-lg) * var(--a2-u));
+  --a2-h: calc(var(--a2-ch) * var(--a2-u));
+  --a2-t-fast: calc(.14s / var(--a2-speed));
+  --a2-t-mid: calc(.24s / var(--a2-speed));
   box-sizing: border-box;
-  font-family: var(--a2-font);
+  font-family: var(--a2-font); font-weight: var(--a2-weight);
+  font-size: calc(var(--a2-fs) * var(--a2-u)); letter-spacing: -.01em; line-height: 1.4;
   color: var(--a2-text);
   -webkit-tap-highlight-color: transparent;
 }
-.a2 *, .a2 *::before, .a2 *::after { box-sizing: border-box; }
+:where(.a2) *, :where(.a2) *::before, :where(.a2) *::after { box-sizing: border-box; }
 .a2[hidden], .a2 [hidden] { display: none !important; }
-.a2 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: pointer; }
-.a2-icon, .a2-uicon { display: inline-flex; align-items: center; justify-content: center; flex: none; line-height: 1; }
+:where(.a2) :where(button), :where(button.a2) { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: pointer; letter-spacing: inherit; }
+:where(.a2) :where(input, textarea) { font: inherit; color: inherit; letter-spacing: inherit; }
+:where(.a2) :focus, :where(.a2):focus { outline: none; }
+.a2 :focus-visible, .a2:focus-visible { outline: calc(2.5 * var(--a2-u)) solid var(--a2-accent); outline-offset: calc(2 * var(--a2-u)); }
+.a2-icon, .a2-uicon { display: inline-grid; place-items: center; flex: none; line-height: 1; }
 .a2-icon svg { width: 100%; height: 100%; display: block; }
+.a2-disabled { opacity: .42; pointer-events: none; }
 
-/* 컨트롤 한 줄: ObjectBG 둥근 막대 */
-.a2-ctl {
-  position: relative; display: flex; align-items: center;
-  width: 100%; height: calc(var(--a2-h, var(--a2-control-height)) * var(--a2-px)); flex: none;
-  background: var(--a2-object-bg); border-radius: calc(var(--a2-h, var(--a2-control-height)) * var(--a2-px) / 2);
-  font-size: calc(var(--a2-fs) * var(--a2-px)); font-weight: var(--a2-weight); letter-spacing: -.02em;
-  -webkit-user-select: none; user-select: none; outline: none;
-  transition: background-color calc(.15s / var(--a2-speed));
+/* 제목 줄: 라벨 + 되돌리기 + 오른쪽 자리 */
+.a2-head { display: flex; align-items: center; gap: calc(6 * var(--a2-u)); min-height: calc(30 * var(--a2-u)); margin-bottom: calc(8 * var(--a2-u)); }
+.a2-head-label { font-size: calc(var(--a2-fs-sm) * var(--a2-u)); color: var(--a2-text-muted); padding-top: .1em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.a2-head-slot { margin-left: auto; display: flex; align-items: center; gap: calc(8 * var(--a2-u)); min-width: 0; }
+.a2-head-slot:empty { display: none; }
+.a2-reset {
+  flex: none; width: calc(28 * var(--a2-u)); height: calc(28 * var(--a2-u)); border-radius: 50%;
+  display: grid; place-items: center; color: var(--a2-accent);
+  opacity: 0; scale: .5; pointer-events: none;
+  transition: opacity var(--a2-t-mid), scale var(--a2-t-mid) cubic-bezier(.3, 1.4, .5, 1), background-color var(--a2-t-fast);
 }
-.a2-ctl:hover { background-color: var(--a2-object-hover); }
-.a2-ctl:focus-visible, .a2-dd-header:focus-visible, .a2-seg:focus-visible, .a2-card-title:focus-visible, .a2-card-check:focus-visible {
-  box-shadow: 0 0 0 calc(3 * var(--a2-px)) color-mix(in srgb, var(--a2-object-active) 55%, transparent);
-}
-.a2-label {
-  position: relative; z-index: 2; min-width: 0; flex: 1;
-  padding-left: calc(24 * var(--a2-px)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  pointer-events: none; padding-top: .08em;
-}
+.a2-reset .a2-icon { width: calc(18 * var(--a2-u)); height: calc(18 * var(--a2-u)); }
+.a2-reset.a2-show { opacity: 1; scale: 1; pointer-events: auto; }
+.a2-reset:hover { background: var(--a2-accent-soft); }
+.a2-desc { display: block; font-size: calc(var(--a2-fs-sm) * var(--a2-u)); color: var(--a2-text-muted); line-height: 1.45; margin-top: calc(2 * var(--a2-u)); }
 
-/* 마우스를 올리면 보이는 테두리 */
-.a2-hover-outline {
-  position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  border-radius: inherit; border: var(--a2-ow) solid var(--a2-control-outline-idle);
-  transition: border-color calc(.1s / var(--a2-speed));
+/* 줄 컴포넌트(스위치·체크·스테퍼·단축키): 바탕 없이, 올리면 살짝 */
+.a2-switch, .a2-check, .a2-stepper, .a2-keybind {
+  display: flex; align-items: center; gap: calc(16 * var(--a2-u));
+  min-height: var(--a2-h); padding: calc(8 * var(--a2-u)) calc(14 * var(--a2-u)); margin: 0 calc(-14 * var(--a2-u));
+  border-radius: var(--a2-r); transition: background-color var(--a2-t-fast);
 }
-.a2-ctl:hover > .a2-hover-outline, .a2-ctl:focus-visible > .a2-hover-outline,
-.a2-dd-header:hover > .a2-hover-outline, .a2-dd-header:focus-visible > .a2-hover-outline,
-.a2-dd-check-row:hover > .a2-hover-outline, .a2-card-delete:hover > .a2-hover-outline {
-  border-color: var(--a2-control-outline-hover);
-}
-/* 계산식 입력 중: 상태 색 */
-.a2-stated > .a2-hover-outline { border-color: var(--a2-state) !important; transition-duration: calc(.2s / var(--a2-speed)); }
+.a2-switch, .a2-check { cursor: pointer; -webkit-user-select: none; user-select: none; }
+.a2-switch:hover, .a2-check:hover { background: var(--a2-surface-hover); }
+.a2-row-text { flex: 1; min-width: 0; }
+.a2-row-text .a2-head { margin: 0; min-height: 0; }
+.a2-row-text .a2-head-label { font-size: inherit; color: var(--a2-text); }
 
-/* 바뀜 점: 기본값과 다를 때 */
-.a2-dot {
-  position: absolute; z-index: 3; left: calc(10 * var(--a2-px)); top: calc(50% - 3.5 * var(--a2-px));
-  width: calc(7 * var(--a2-px)); height: calc(7 * var(--a2-px)); border-radius: 50%;
-  background: var(--a2-object-active); opacity: 0; pointer-events: none;
-  transition: opacity calc(.2s / var(--a2-speed)), background-color calc(.2s / var(--a2-speed));
-}
-.a2-dot.a2-on { opacity: 1; }
-.a2-dot.a2-no-anim { transition: none; }
-.a2-stated .a2-dot { background: var(--a2-state); }
+/* 배치 */
+.a2-row { display: flex; flex-wrap: wrap; gap: calc(var(--a2-gap, 10) * var(--a2-u)); align-items: center; }
+.a2-row > .a2-btn { flex: 1 1 0; }
+.a2-row > .a2-field, .a2-row > .a2-select, .a2-row > .a2-color { flex: 1 1 calc(200 * var(--a2-u)); }
+.a2-stack { display: flex; flex-direction: column; gap: calc(var(--a2-gap, 16) * var(--a2-u)); }
+.a2-text { margin: 0; line-height: 1.55; }
+.a2-text.a2-muted { color: var(--a2-text-muted); }
+.a2-text.a2-small { font-size: calc(var(--a2-fs-sm) * var(--a2-u)); }
+.a2-title { margin: 0; font-size: calc(var(--a2-fs-title) * var(--a2-u)); font-weight: var(--a2-weight-strong); letter-spacing: -.02em; }
+.a2-divider { border: 0; height: 1px; margin: calc(4 * var(--a2-u)) 0; background: var(--a2-surface-active); }
 
-.a2-blocked { opacity: var(--a2-disabled-alpha); pointer-events: none; }
-
-/* 배치 도우미 */
-.a2-row { display: flex; gap: calc(8 * var(--a2-px)); width: 100%; height: calc(var(--a2-h, var(--a2-control-height)) * var(--a2-px)); align-items: stretch; }
-.a2-row > .a2-ctl { flex: 1; width: auto; height: auto; }
-.a2-stack { display: flex; flex-direction: column; gap: calc(var(--a2-gap, 8) * var(--a2-px)); width: 100%; }
-.a2-text { margin: 0; font-size: calc(var(--a2-font-body) * var(--a2-px)); font-weight: var(--a2-weight); line-height: var(--a2-line-height); letter-spacing: -.02em; }
-.a2-text.a2-h1 { font-size: calc(var(--a2-font-h1) * var(--a2-px)); font-weight: var(--a2-weight-strong); }
-.a2-text.a2-dim { color: var(--a2-dim); }
-
-@media (prefers-reduced-motion: reduce) {
-  .a2, .a2 * { transition-duration: 0s !important; }
-}
+@media (prefers-reduced-motion: reduce) { .a2, .a2 * { transition-duration: 0s !important; animation-duration: 0s !important; } }

@@ -1,5 +1,5 @@
 // 툴팁: 화면에 하나만 있다. 마우스를 올리고 0.14초 뒤 나타나 커서를 따라간다.
-import { ctx, ensureDefaults } from './context.js';
+import { settings, ensureSetup } from './settings.js';
 import { h, scaleOf } from './dom.js';
 import { tweenNumber } from './tween.js';
 
@@ -10,7 +10,7 @@ addEventListener('pointermove', e => { mouse = { x: e.clientX, y: e.clientY }; }
 
 function ensureBox() {
   if (box) return box;
-  ensureDefaults();
+  ensureSetup();
   box = h('div', 'a2 a2-tooltip', document.body);
   box.setAttribute('role', 'tooltip');
   box.style.opacity = '0';
@@ -40,7 +40,7 @@ function fade(to, done) {
 export const Tooltip = {
   /** 글자를 보여 준다 */
   show(text) {
-    if (!ctx.config.tooltipEnabled || !text) return;
+    if (!settings.tooltips || !text) return;
     ensureBox();
     current = text;
     box.textContent = text;
@@ -54,7 +54,7 @@ export const Tooltip = {
       if (current !== text) return;
       fade(1);
       if (!follow) follow = requestAnimationFrame(loop);
-    }, 140 / Math.max(ctx.config.animationSpeed, 0.001));
+    }, 140 / Math.max(settings.animation, 0.001));
   },
   hide() {
     if (!box || !current) return;

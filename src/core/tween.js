@@ -1,6 +1,6 @@
 // 시간·이징 기반 트윈. 숫자(여러 개)와 색을 보간한다.
 import { easeOf } from './ease.js';
-import { ctx } from './context.js';
+import { settings } from './settings.js';
 
 const running = new Set();
 let raf = 0, last = 0;
@@ -22,7 +22,7 @@ class TweenHandle {
   constructor(from, to, duration, ease, onUpdate, onDone) {
     this.from = from; this.to = to; this.ease = easeOf(ease);
     this.onUpdate = onUpdate; this.onDone = onDone;
-    const speed = ctx.config.animationSpeed;
+    const speed = settings.animation;
     this.duration = speed > 0 && !reduce.matches ? (duration * 1000) / speed : 0;
     this.start = performance.now();
     this.alive = true;
@@ -52,6 +52,13 @@ class TweenHandle {
  * @returns {TweenHandle} kill() 로 멈춘다
  */
 export function tween(from, to, duration, ease, onUpdate, onDone) {
+  return new TweenHandle(from, to, duration, ease, onUpdate, onDone);
+}
+
+/**
+ * 애니메이션: adas2.animate({ x: 0 }, { x: 100 }, { duration: 0.4, ease: 'OutCubic', onUpdate, onDone })
+ */
+export function animate(from, to, { duration = 0.3, ease = 'OutCubic', onUpdate = () => {}, onDone } = {}) {
   return new TweenHandle(from, to, duration, ease, onUpdate, onDone);
 }
 

@@ -1,16 +1,16 @@
-# <div align="center">adas2</div>
-
-<div align="center">
-  <img src="docs/logo.svg" height="160" alt="adas2 logo">
-</div>
-
 <div align="center">
 
-### A UI toolkit for the web
+<img src="docs/logo.svg" width="88" height="88" alt="adas2 logo">
 
-Themes · Factory · Window manager · Tooltips · Shortcuts
+# adas2
+
+A UI toolkit for the web
 
 [한국어](README.md) · **English** · [Demo](https://adas2-six.vercel.app)
+
+[![version](https://img.shields.io/badge/version-3.0.0-FF7A45?style=flat-square)](https://github.com/a2den1/adas2/releases)
+![dependencies](https://img.shields.io/badge/dependencies-0-29231F?style=flat-square)
+[![license](https://img.shields.io/badge/license-adas2%20License-F26A32?style=flat-square)](LICENSE)
 
 </div>
 
@@ -19,31 +19,143 @@ Themes · Factory · Window manager · Tooltips · Shortcuts
   <img src="docs/preview-light.png" width="49%" alt="Light theme">
 </p>
 
-# 🛠️ Installation
+## Overview
 
-## 📦 CDN
+Input components — buttons, switches, sliders, selects, a color picker, tabs — plus panels, toasts, dialogs and menus in one toolkit.
+
+- No runtime dependencies. Load one CSS file and one JS file.
+- Build screens line by line with the builder (`adas2.ui`), or create components directly.
+- Three themes (dark, light, ocean), with colors, sizes and fonts all adjustable.
+- Components with a default show a reset (↺) button once the value changes.
+- Number inputs accept expressions such as `50+25` or `x*2` (x is the current value).
+
+## Install
+
+### CDN
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v2.0.2/dist/adas2.min.css">
-<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v2.0.2/dist/adas2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v3.0.0/dist/adas2.min.css">
+<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v3.0.0/dist/adas2.min.js"></script>
 ```
 
-The font is [Gmarket Sans](https://corp.gmarket.com/fonts/), loaded from a CDN inside the CSS, so nothing else is needed. Set the theme's `font` value to change it.
+The font (Gmarket Sans) is loaded by the CSS.
 
-## 📦 npm
+### npm
 
 ```bash
 npm install github:a2den1/adas2
 ```
 
 ```js
-import adas2, { Factory, Theme } from 'adas2';
+import adas2 from 'adas2';
 import 'adas2/css';
 ```
 
 Browser only.
 
-## 🔧 From source
+## Getting started
+
+```js
+adas2.setup({ theme: 'dark', scale: 0.6 });   // optional
+
+const ui = adas2.ui('#settings');
+
+ui.switch('Notifications', { value: true, default: true });
+ui.slider('Volume', { min: 0, max: 100, value: 70, unit: '%', onChange: v => console.log(v) });
+ui.select('Quality', ['Low', 'Medium', 'High'], { value: 'Medium' });
+ui.button('Save', () => adas2.toast('Saved', { type: 'success' }));
+
+ui.section('Advanced', { collapsible: true, toggle: true }, s => {
+  s.stepper('Retries', { min: 0, max: 10, value: 3 });
+  s.keybind('Quick save', { value: 'Ctrl+KeyS', onPress: save });
+});
+```
+
+## Components
+
+Every builder method returns the component. Components have `.value`, `.set(v)`, `.reset()`, `.on('change' | 'commit', fn)`, `.disable()` and `.destroy()`.
+
+| Builder | Main options | Description |
+|---|---|---|
+| `button(text, onClick)` | `variant` (primary, soft, ghost, danger) `icon` `size` `block` | Button. `setLoading(true)` shows a busy state |
+| `switch(label)` | `value` `default` `description` | Switch on the right |
+| `checkbox(label)` | `value` `default` `description` | Check on the left |
+| `radio(label, options)` | `value` `default` | One of several rows; options may have a `description` |
+| `slider(label)` | `min` `max` `step` `value` `default` `unit` `decimals` `format` | Click or drag the track, click the number to type |
+| `stepper(label)` | `min` `max` `step` `value` `default` `unit` | − / + buttons, repeats while held |
+| `field(label)` | `placeholder` `icon` `multiline` `maxLength` `type` | Text input |
+| `select(label, options)` | `value` `default` `placeholder` | List that drops down |
+| `multiSelect(label, options)` | `value` (array) `summary` | Multiple selection |
+| `segmented(options)` | `value` `label` `default` | One of 2–5 options |
+| `color(label)` | `value` `default` `presets` | Saturation/value square, hue and alpha bars, hex, presets |
+| `keybind(label)` | `value` `default` `onPress` `hold` | Shortcut input; with `onPress` the shortcut works right away |
+| `progress(label)` | `value` (0–1, `null` for indeterminate) `showValue` | Progress bar |
+| `spinner()` | `size` | Spinner |
+| `tabs(tabs)` | `value` | `[{ label, build: t => ... }]`, content slides when switching |
+| `section(title, opts, fill)` | `description` `toggle` `collapsible` `collapsed` `actions` | Group under a heading |
+| `scroll(opts, fill)` | `height` | Smooth scrolling area |
+| `row(fill)` `stack(fill)` `text(t)` `title(t)` `divider()` | | Layout and text |
+
+All options also accept `id` (look up later with `adas2.get(id)`), `tooltip`, `className`, `onChange` and `onCommit`.
+
+## Panels, notifications, menus
+
+```js
+// Floating panel: drag the top to move, resize from the edges when resizable
+const p = adas2.panel({ title: 'Settings', width: 640, height: 820, resizable: true }, ui => {
+  ui.switch('Dark screen', { value: true });
+});
+p.show(); p.hide(); p.toggle(); p.on('close', () => {});
+
+adas2.toast('Saved', { type: 'success' });                         // info · success · warning · error
+adas2.toast('Deleted 3 items', { action: { label: 'Undo', onClick: undo } });
+
+if (await adas2.confirm('Delete this?', { title: 'Delete', ok: 'Delete', danger: true })) remove();
+await adas2.alert('Update finished.');
+const v = await adas2.dialog({ title, message, buttons: [{ label: 'Later', value: 0 }, { label: 'Now', value: 1, variant: 'primary' }] });
+
+adas2.menu(element, [                                              // right-click menu
+  { label: 'Copy', icon: 'fa-regular fa-copy', shortcut: 'Ctrl+C', onSelect: copy },
+  '-',
+  { label: 'Delete', danger: true, onSelect: remove },
+]);
+
+adas2.tooltip(element, 'Description');
+```
+
+## Shortcuts
+
+```js
+const k = adas2.keys.bind('Alt+Backquote', togglePanel, { hold: 0.6, onHold: resetLayout });
+k.rebind('Ctrl+KeyK');
+k.unbind();
+```
+
+Keys use `KeyboardEvent.code` (`KeyS`, `Backquote`, …); `Ctrl` `Alt` `Shift` `Meta` match either side. Shortcuts pause while a text input is focused.
+
+## Themes
+
+```js
+adas2.setTheme('light');                                           // 'dark' · 'light' · 'ocean'
+adas2.setTheme(adas2.themes.dark.extend({ accent: '#4C8DFF', radius: 10 }));
+adas2.setup({ scale: 0.7, animation: 1.5 });                       // overall size, animation speed (0 turns it off)
+```
+
+| Theme value | Description |
+|---|---|
+| `bg` `surface` `surfaceHover` `surfaceActive` `raised` | Background, controls, hover, pressed, floating surfaces |
+| `accent` `accentHover` `accentPressed` `accentSoft` `onAccent` | Accent and text on it |
+| `text` `textMuted` `textFaint` | Text |
+| `danger` `success` `warning` | Status colors |
+| `radius` `radiusLarge` `controlHeight` `fontSize` `fontSizeSmall` `fontSizeTitle` | Sizes (design units, multiplied by `scale`) |
+| `font` `weight` `weightStrong` | Font and weights |
+
+## Other tools
+
+- `adas2.animate(from, to, { duration, ease, onUpdate, onDone })` — value animation. Eases: `Linear`, `In`/`Out`/`InOut` × `Sine` `Quad` `Cubic` `Quart` `Quint` `Expo` `Circ` `Back` `Elastic` `Bounce`
+- `adas2.evaluate('x*2', { x: 5 })` — the expression evaluator used by number inputs
+
+## Development
 
 ```bash
 npm install
@@ -51,134 +163,17 @@ npm run build      # src/ → dist/
 npm run dev        # http://localhost:5880/docs/
 ```
 
-# ⌨️ Usage
-
-### Setup
-
-* **Configure once** at startup. Missing values fall back to defaults.
-  ```js
-  adas2.configure({
-    config: { uiScale: 0.6, animationSpeed: 1 },
-    theme: adas2.Theme.Dark,
-    root: document.documentElement,   // element that receives the theme variables
-  });
-  ```
-* **Or zero setup:** creating any control calls `adas2.ensureDefaults()` for you.
-* **Config**
-
-  | Name | Default | Description |
-  |---|---|---|
-  | `uiScale` | `0.6` | Multiplies every dimension (design units: row height 52, text 23) |
-  | `animationSpeed` | `1` | `2` is twice as fast, `0` turns animation off |
-  | `tooltipEnabled` | `true` | Enable tooltips |
-  | `middleClickToDefault` | `true` | Middle click resets a control to its default |
-  | `sliderSensitivity` | `1` | Slider drag sensitivity |
-
-### Theme
-
-* **Presets:** `Theme.Dark`, `Theme.Light`, `Theme.Ocean`
-* **Derive your own** with `with()`. Themes are CSS variables, so existing controls update immediately.
-  ```js
-  adas2.setTheme(adas2.Theme.Dark.with({ panelBg: '#1A1A24', objectActive: '#7FD1AE' }));
-  ```
-* Keys include `panelBg` `topBar` `objectBg` `objectHover` `objectButton` `objectActive` `objectOnActive` `switchTrack` `buttonHover` `buttonPressed` `cardHeader` `cardPanel` `softRed` `text` `tooltipBg` `outline` `controlOutlineHover` `mathOk` `mathWarn` `mathErr` `cornerRadius` `controlHeight` `fontSizeBody` `fontSizeH1` `font` `fontMono` `fontWeight` `fontWeightStrong` ([theme.js](src/core/theme.js))
-
-### Create controls
-
-* **Factory:** every `adas2.Factory` function takes `(parent, id, options)`. You can pass a configure function instead of an options object.
-  ```js
-  const F = adas2.Factory;
-  F.button(parent, () => alert('hi'), 'Hello', 'btn_hello');          // short form
-  F.toggle(parent, 'notify', { text: 'Notify', value: true, defaultValue: true });
-  F.slider(parent, 'volume', o => { o.label = 'Volume'; o.max = 100; o.value = 70; o.format = 0; });
-  ```
-* **Or directly:** `new adas2.Slider(parent, 'volume', { ... })`
-* A parent can be an element, a selector string, a window, a card or a scroll view.
-* Controls with an id can be found with `adas2.getControl('volume')`.
-
-| Factory | Main options | Description |
-|---|---|---|
-| `button` | `text` `icon` `onClick` | Text or icon button |
-| `toggle` | `text` `value` `defaultValue` `onChanged` | Click anywhere on the row to toggle |
-| `slider` | `label` `min` `max` `value` `defaultValue` `format` `onChanged` `onComplete` `dragStep` `scale` | Drag to change, click to type a value |
-| `input` | `placeholder` `icon` `multiline` `monospace` `onChanged` `onEndEdit` | Text input |
-| `segmented` | `values` `value` `display` `onChanged` | One of 2–4 options |
-| `dropdown` | `values` `value` `display` `onChanged` | List that expands downward |
-| `multiDropdown` | `values` `value` (array) `summary` `onChanged` | Multiple selection |
-| `colorPicker` | `label` `value` `defaultValue` `onChanged` `onComplete` | Color wheel, RGB/HSV, hex |
-| `card` | `title` `active` `onActiveChanged` `onDelete` | Group with an enable check, collapse and delete |
-| `scrollView` | `spacing` `padding` `expand` | Smooth wheel scrolling area |
-| `row` `stack` `text` | | Horizontal row, vertical stack, text |
-
-Common methods: `set(value, notify)` `reset()` `setDefaultValue(value)` `setBlocked(bool)` `dispose()`
-
-* **Slider input:** click the value to type an expression: `50+25`, `x*2` (x is the current value), `sqrt(2)*10`, `clamp(x, 0, 50)`. While typing, the result and range state are shown in color. Enter applies, Esc cancels.
-* **Defaults:** with `defaultValue`, a dot appears at the top left when the value differs, and a middle click resets it.
-
-### Windows
-
-* `WindowManager` handles structure and z-order. Visibility and open/close animation are up to you. The close button raises `closeRequested` instead of closing.
-  ```js
-  const windows = adas2.WindowManager.create(document.body);
-  const win = windows.create({ title: 'Hello', size: [640, 480], resizable: true });
-  win.on('closeRequested', w => w.hide());
-  F.toggle(win, 'opt', { text: 'Option' });
-  ```
-* Options: `title` `size` `position` `icon` `resizable` `minSize` `draggable` `showCloseButton` `clipContent` `padding` `topBarHeight` …
-* Methods: `show()` `hide()` `setTitle()` `setIcon()` `setSize()` `setPosition()` `bringToFront()` `dispose()`
-
-### Tooltips
-
-```js
-adas2.tooltip(element, 'Description');            // or tooltip: '...' in options
-adas2.tooltip(element, () => `Value: ${v}`);       // functions are called each time it shows
-```
-
-### Shortcuts
-
-Register named shortcuts with an optional hold time. They pause while a text input is focused.
-
-```js
-adas2.ShortcutManager.register('toggle', new adas2.KeyCombo('Backquote', 'Alt'), 0.4, {
-  onPressed: () => toggle(),
-  onHeld: () => resetLayout(),
-});
-```
-
-Keys use `KeyboardEvent.code` (`KeyS`, `Backquote`, …). `Alt` `Ctrl` `Shift` `Meta` match either side.
-
-### Page switching
-
-```js
-adas2.switchPage(new Map([[0, pageA], [1, pageB]]), 0, 1);
-```
-
-### Tweens
-
-```js
-adas2.tween({ x: 0 }, { x: 240 }, 0.45, 'OutExpo', v => { el.style.translate = `${v.x}px`; });
-```
-
-Eases: `Linear`, `In`/`Out`/`InOut` × `Sine` `Quad` `Cubic` `Quart` `Quint` `Expo` `Circ` `Back` `Elastic` `Bounce`
-
-# 🧭 Layout
-
 | Path | Contents |
 |---|---|
-| `src/core/` | Config, theme, context, easing, tween, windows, tooltip |
-| `src/controls/` | Button, toggle, slider, input, segmented, dropdown, color picker, card, scroll |
-| `src/factory/` | Factory |
-| `src/input/` | Shortcuts |
-| `src/transition/` | Page switching |
-| `src/eval/` | Expression evaluator |
+| `src/core/` | Settings, theme, animation, panel, floating layer, tooltip, shortcuts |
+| `src/components/` | Components |
+| `src/ui.js` | Builder |
 | `src/styles/` | CSS |
 | `types/` | TypeScript declarations |
 
 Browsers: Chrome / Edge 111+, Safari 16.4+, Firefox 121+
 
-# ⚖️ License
-
-### adas2
+## License
 
 [adas2 License 1.0](LICENSE). This is not an open-source license.
 
@@ -187,11 +182,6 @@ Browsers: Chrome / Edge 111+, Safari 16.4+, Firefox 121+
 | Free use in personal and commercial projects | Modifying the source or distributed files |
 | Loading via CDN or npm | Creating derivative works such as forks |
 | Shipping unmodified files inside your product | Copying it and distributing or selling it as a separate library or template |
-| Restyling through themes, CSS variables, options and the API | Presenting it as your own work |
+| Restyling through themes, options and the API | Presenting it as your own work |
 
-© 2026 a2den1
-
-### Credits
-
-- The API layout (config, themes, factory, window manager) takes cues from [O5Kit](https://github.com/modlist-org/O5Kit) (a Unity uGUI toolkit). The code, design and artwork are adas2's own; no O5Kit files are included.
-- The font (Gmarket Sans) is not bundled; it loads from a CDN. Copyright belongs to Gmarket.
+The font (Gmarket Sans) is not bundled; it loads from a CDN and its copyright belongs to Gmarket. © 2026 a2den1

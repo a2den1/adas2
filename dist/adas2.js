@@ -1,4 +1,4 @@
-/*! adas2 v2.0.2 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
+/*! adas2 v3.0.0 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
 var adas2 = (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -21,305 +21,208 @@ var adas2 = (() => {
   // src/index.js
   var index_exports = {};
   __export(index_exports, {
+    Builder: () => Builder,
     Button: () => Button,
-    Card: () => Card,
+    Checkbox: () => Checkbox,
     ColorPicker: () => ColorPicker,
-    Config: () => Config,
-    Control: () => Control,
-    Dropdown: () => Dropdown,
+    Component: () => Component,
     Ease: () => Ease,
-    Factory: () => Factory,
-    Input: () => Input,
-    KeyCombo: () => KeyCombo,
-    MultiDropdown: () => MultiDropdown,
-    PageSwitcher: () => PageSwitcher,
-    ScrollView: () => ScrollView,
+    Field: () => Field,
+    KeyBind: () => KeyBind,
+    MultiSelect: () => MultiSelect,
+    Panel: () => Panel,
+    Progress: () => Progress,
+    Radio: () => Radio,
+    ScrollArea: () => ScrollArea,
+    Section: () => Section,
     Segmented: () => Segmented,
-    ShortcutManager: () => ShortcutManager,
+    Select: () => Select,
     Slider: () => Slider,
+    Spinner: () => Spinner,
+    Stepper: () => Stepper,
+    Switch: () => Switch,
+    Tabs: () => Tabs,
     Theme: () => Theme,
-    Toggle: () => Toggle,
-    Tooltip: () => Tooltip,
-    Window: () => A2Window,
-    WindowManager: () => WindowManager,
-    configure: () => configure,
+    alert: () => alert,
+    animate: () => animate,
+    confirm: () => confirm,
     default: () => index_default,
-    ensureDefaults: () => ensureDefaults,
+    dialog: () => dialog,
     evaluate: () => evaluate,
-    getControl: () => getControl,
-    onContextChange: () => onContextChange,
-    setConfig: () => setConfig,
+    get: () => get,
+    keys: () => keys,
+    menu: () => menu,
+    onSettings: () => onSettings,
+    openMenu: () => openMenu,
+    panel: () => panel,
     setTheme: () => setTheme,
-    switchPage: () => switchPage,
+    settings: () => settings,
+    setup: () => setup,
+    themes: () => themes,
+    toast: () => toast,
     tooltip: () => tooltip,
-    tween: () => tween,
-    tweenColor: () => tweenColor,
-    tweenNumber: () => tweenNumber,
+    ui: () => ui,
     version: () => version
   });
 
-  // src/core/config.js
-  var Config = class _Config {
-    constructor(init = {}) {
-      this.uiScale = 0.6;
-      this.tooltipEnabled = true;
-      this.middleClickToDefault = true;
-      this.sliderSensitivity = 1;
-      this.animationSpeed = 1;
-      Object.assign(this, init);
-    }
-    with(over = {}) {
-      return new _Config({ ...this, ...over });
-    }
-    static get default() {
-      return DEFAULT;
-    }
-  };
-  var DEFAULT = new Config();
-
   // src/core/theme.js
-  var KEYS = {
-    // 색
-    panelBg: "panel-bg",
-    // 창 배경
-    topBar: "top-bar",
-    // 창 위쪽 막대
-    menuBg: "menu-bg",
-    // 옆 메뉴 배경
-    objectBg: "object-bg",
-    // 컨트롤 기본 배경
-    objectButton: "object-button",
-    // 버튼 배경
-    objectActive: "object-active",
-    // 켜짐·선택·포커스 강조
-    objectActiveBright: "object-active-bright",
-    objectHover: "object-hover",
-    objectOnActive: "object-on-active",
-    switchTrack: "switch-track",
-    menuHover: "menu-hover",
-    // 선택 영역(글자 선택 등)
-    cardHeader: "card-header",
-    cardPanel: "card-panel",
-    softRed: "soft-red",
-    // 삭제·오류
-    buttonHover: "button-hover",
-    buttonPressed: "button-pressed",
+  var VARS = {
+    bg: "bg",
+    surface: "surface",
+    surfaceHover: "surface-hover",
+    surfaceActive: "surface-active",
+    raised: "raised",
+    accent: "accent",
+    accentHover: "accent-hover",
+    accentPressed: "accent-pressed",
+    accentSoft: "accent-soft",
+    onAccent: "on-accent",
     text: "text",
-    tooltipBg: "tooltip-bg",
-    overlayScrim: "overlay-scrim",
-    outline: "outline",
-    // 창 테두리
-    controlOutlineIdle: "control-outline-idle",
-    controlOutlineHover: "control-outline-hover",
-    mathOk: "math-ok",
-    mathWarn: "math-warn",
-    mathErr: "math-err",
-    channelR: "channel-r",
-    channelG: "channel-g",
-    channelB: "channel-b",
-    channelA: "channel-a",
-    channelS: "channel-s",
-    channelV: "channel-v",
-    // 숫자
-    inactiveAlpha: "inactive-alpha",
-    textDimAlpha: "text-dim-alpha",
-    textFaintAlpha: "text-faint-alpha",
-    disabledContentAlpha: "disabled-alpha",
-    cornerRadius: "radius",
-    outlineWidth: "outline-width",
-    controlHeight: "control-height",
-    controlPaddingY: "control-pad-y",
-    lineHeight: "line-height",
-    fontSizeBody: "font-body",
-    fontSizeH1: "font-h1",
-    // 글꼴
+    textMuted: "text-muted",
+    textFaint: "text-faint",
+    danger: "danger",
+    success: "success",
+    warning: "warning",
+    shadow: "shadow",
+    scrim: "scrim",
+    tooltip: "tooltip",
+    radius: "radius",
+    radiusLarge: "radius-lg",
+    controlHeight: "ch",
+    fontSize: "fs",
+    fontSizeSmall: "fs-sm",
+    fontSizeTitle: "fs-title",
     font: "font",
-    fontMono: "font-mono",
-    fontWeight: "weight",
-    fontWeightStrong: "weight-strong"
+    weight: "weight",
+    weightStrong: "weight-strong"
   };
-  var UNITLESS = /* @__PURE__ */ new Set(["fontWeight", "fontWeightStrong", "inactiveAlpha", "textDimAlpha", "textFaintAlpha", "disabledContentAlpha", "lineHeight"]);
-  var SIZES = /* @__PURE__ */ new Set(["cornerRadius", "outlineWidth", "controlHeight", "controlPaddingY", "fontSizeBody", "fontSizeH1"]);
   var Theme = class _Theme {
-    constructor(values = {}) {
-      Object.assign(this, BASE, values);
+    constructor(values) {
+      Object.assign(this, values);
       Object.freeze(this);
     }
     /** 일부 값만 바꾼 새 테마 */
-    with(over = {}) {
-      return new _Theme({ ...this, ...over });
+    extend(over = {}) {
+      return new _Theme({ ...this, ...over, name: over.name || `${this.name}+` });
     }
-    /** 글꼴 크기에 맞는 줄 높이. controlHeight 보다 작아지지 않는다. */
-    controlHeightFor(fontSize) {
-      return Math.max(this.controlHeight, fontSize * this.lineHeight + this.controlPaddingY * 2);
-    }
-    /** CSS 변수로 요소에 적용한다 */
-    applyTo(el) {
-      for (const [k, v] of Object.entries(KEYS)) {
-        const val = this[k];
-        if (val === void 0) continue;
-        el.style.setProperty(`--a2-${v}`, SIZES.has(k) ? String(val) : UNITLESS.has(k) ? String(val) : val);
-      }
-      el.dataset.a2Theme = this.name || "custom";
-    }
-    static get Dark() {
-      return DARK;
-    }
-    static get Light() {
-      return LIGHT;
-    }
-    static get Ocean() {
-      return OCEAN;
+    /** 요소에 CSS 변수로 넣는다 */
+    apply(el) {
+      for (const [k, v] of Object.entries(VARS)) if (this[k] !== void 0) el.style.setProperty(`--a2-${v}`, String(this[k]));
+      el.dataset.a2Theme = this.name;
     }
   };
-  var BASE = {
+  var font = '"GmarketSans", "Pretendard", system-ui, -apple-system, "Malgun Gothic", sans-serif';
+  var sizes = { radius: 14, radiusLarge: 24, controlHeight: 52, fontSize: 24, fontSizeSmall: 20, fontSizeTitle: 32, font, weight: 300, weightStrong: 500 };
+  var dark = new Theme({
     name: "dark",
-    panelBg: "#1E1C1A",
-    // 창·패널
-    topBar: "#1E1C1A",
-    // 창 위쪽 (패널과 같은 색)
-    menuBg: "#3A3632",
-    objectBg: "#2C2926",
-    // 컨트롤 바탕
-    objectHover: "#36322E",
-    // 마우스를 올렸을 때 컨트롤 바탕
-    objectButton: "#FF793F",
-    // 버튼
-    objectActive: "#FF8A55",
-    // 켜짐·선택
-    objectActiveBright: "#FFB792",
-    objectOnActive: "#FFFFFF",
-    // 강조색 위의 글자
-    switchTrack: "#4A4540",
-    // 꺼진 스위치 바탕
-    menuHover: "rgba(255, 138, 85, 0.3)",
-    cardHeader: "#262320",
-    cardPanel: "#262320",
-    softRed: "#F0605D",
-    buttonHover: "#FF8C5A",
-    buttonPressed: "#E8662F",
-    text: "#F4EFEA",
-    tooltipBg: "rgba(12, 11, 10, 0.86)",
-    overlayScrim: "rgba(0, 0, 0, 0.5)",
-    outline: "rgba(255, 255, 255, 0.06)",
-    controlOutlineIdle: "rgba(255, 255, 255, 0)",
-    controlOutlineHover: "rgba(255, 255, 255, 0)",
-    mathOk: "#7EE08A",
-    mathWarn: "#FFD166",
-    mathErr: "#FF7A7A",
-    channelR: "#FF6B6B",
-    channelG: "#5FD38D",
-    channelB: "#5B8CFF",
-    channelA: "#8A847E",
-    channelS: "#4CC9F0",
-    channelV: "#FFC94D",
-    inactiveAlpha: 0.4,
-    textDimAlpha: 0.6,
-    textFaintAlpha: 0.3,
-    disabledContentAlpha: 0.42,
-    cornerRadius: 22,
-    outlineWidth: 2,
-    controlHeight: 52,
-    controlPaddingY: 8,
-    lineHeight: 1.4,
-    fontSizeBody: 23,
-    fontSizeH1: 32,
-    font: '"GmarketSans", "Pretendard", system-ui, -apple-system, "Malgun Gothic", sans-serif',
-    fontMono: '"GmarketSans", "Pretendard", system-ui, sans-serif',
-    fontWeight: 300,
-    // 본문 (지마켓 산스 Light)
-    fontWeightStrong: 500
-    // 제목·선택된 것 (Medium)
-  };
-  var DARK = new Theme();
-  var LIGHT = new Theme({
+    ...sizes,
+    bg: "#1B1917",
+    surface: "#272421",
+    surfaceHover: "#2F2B28",
+    surfaceActive: "#36312D",
+    raised: "#2C2825",
+    accent: "#FF7A45",
+    accentHover: "#FF8B5C",
+    accentPressed: "#EB6630",
+    accentSoft: "rgba(255, 122, 69, 0.16)",
+    onAccent: "#FFFFFF",
+    text: "#F3EEE9",
+    textMuted: "rgba(243, 238, 233, 0.58)",
+    textFaint: "rgba(243, 238, 233, 0.3)",
+    danger: "#F25F5C",
+    success: "#5CCB8A",
+    warning: "#F4B740",
+    shadow: "0 18px 50px rgba(0, 0, 0, 0.45)",
+    scrim: "rgba(10, 9, 8, 0.55)",
+    tooltip: "rgba(14, 13, 12, 0.92)"
+  });
+  var light = new Theme({
     name: "light",
-    panelBg: "#FBF8F5",
-    topBar: "#FBF8F5",
-    menuBg: "#E2DBD3",
-    objectBg: "#F0EBE5",
-    objectHover: "#E8E1D9",
-    objectButton: "#FF793F",
-    objectActive: "#FF6E2F",
-    objectActiveBright: "#FFA77E",
-    objectOnActive: "#FFFFFF",
-    switchTrack: "#D9D1C8",
-    menuHover: "rgba(255, 110, 47, 0.22)",
-    cardHeader: "#F5F0EA",
-    cardPanel: "#F5F0EA",
-    buttonHover: "#FF8A55",
-    buttonPressed: "#E8662F",
-    text: "#2A2420",
-    tooltipBg: "rgba(42, 36, 32, 0.92)",
-    outline: "rgba(0, 0, 0, 0.05)",
-    mathOk: "#1F9D4C",
-    mathWarn: "#B7791F",
-    mathErr: "#D64545"
+    ...sizes,
+    bg: "#FAF7F3",
+    surface: "#EFEAE4",
+    surfaceHover: "#E8E2DA",
+    surfaceActive: "#E0D9D0",
+    raised: "#FFFFFF",
+    accent: "#F26A32",
+    accentHover: "#FF7A45",
+    accentPressed: "#D9581F",
+    accentSoft: "rgba(242, 106, 50, 0.13)",
+    onAccent: "#FFFFFF",
+    text: "#29231F",
+    textMuted: "rgba(41, 35, 31, 0.58)",
+    textFaint: "rgba(41, 35, 31, 0.3)",
+    danger: "#D84542",
+    success: "#259B5A",
+    warning: "#C98A10",
+    shadow: "0 18px 50px rgba(60, 40, 20, 0.16)",
+    scrim: "rgba(40, 30, 20, 0.3)",
+    tooltip: "rgba(41, 35, 31, 0.94)"
   });
-  var OCEAN = new Theme({
+  var ocean = new Theme({
     name: "ocean",
-    panelBg: "#161A20",
-    topBar: "#161A20",
-    menuBg: "#2E3642",
-    objectBg: "#222831",
-    objectHover: "#2B323D",
-    objectButton: "#3D8BFF",
-    objectActive: "#4C95FF",
-    objectActiveBright: "#9CC3FF",
-    switchTrack: "#3A4350",
-    menuHover: "rgba(76, 149, 255, 0.3)",
-    cardHeader: "#1C2129",
-    cardPanel: "#1C2129",
-    buttonHover: "#5A9DFF",
-    buttonPressed: "#2C74E0",
-    text: "#EEF2F7"
+    ...sizes,
+    bg: "#14181E",
+    surface: "#1F252D",
+    surfaceHover: "#262D37",
+    surfaceActive: "#2D3540",
+    raised: "#232A33",
+    accent: "#4C8DFF",
+    accentHover: "#649CFF",
+    accentPressed: "#3676E6",
+    accentSoft: "rgba(76, 141, 255, 0.16)",
+    onAccent: "#FFFFFF",
+    text: "#EDF1F6",
+    textMuted: "rgba(237, 241, 246, 0.58)",
+    textFaint: "rgba(237, 241, 246, 0.3)",
+    danger: "#F2645F",
+    success: "#4FC68A",
+    warning: "#F1B643",
+    shadow: "0 18px 50px rgba(0, 0, 0, 0.5)",
+    scrim: "rgba(5, 8, 12, 0.55)",
+    tooltip: "rgba(10, 13, 17, 0.92)"
   });
+  var themes = Object.freeze({ dark, light, ocean });
 
-  // src/core/context.js
-  var ctx = {
-    config: Config.default,
-    theme: Theme.Dark,
+  // src/core/settings.js
+  var settings = {
+    theme: themes.dark,
+    /** 모든 치수에 곱하는 배율 (디자인 단위 × scale = px). 기본 0.6 */
+    scale: 0.6,
+    /** 애니메이션 속도. 2 = 두 배 빠르게, 0 = 끔 */
+    animation: 1,
+    tooltips: true,
     root: null,
     ready: false
   };
   var listeners = /* @__PURE__ */ new Set();
-  var onContextChange = (fn) => {
+  var onSettings = (fn) => {
     listeners.add(fn);
     return () => listeners.delete(fn);
   };
-  var notify = () => {
-    for (const fn of listeners) fn(ctx);
-  };
-  function applyRoot() {
-    const root = ctx.root || document.documentElement;
-    ctx.theme.applyTo(root);
-    root.style.setProperty("--a2-scale", String(ctx.config.uiScale));
-    const sp = ctx.config.animationSpeed;
-    root.style.setProperty("--a2-speed", String(sp > 0 ? sp : 1e4));
+  function apply() {
+    const root = settings.root || document.documentElement;
+    settings.theme.apply(root);
+    root.style.setProperty("--a2-scale", String(settings.scale));
+    root.style.setProperty("--a2-speed", String(settings.animation > 0 ? settings.animation : 1e4));
     root.classList.add("a2-root");
+    for (const fn of listeners) fn(settings);
   }
-  function configure({ config, theme, root } = {}) {
-    if (config) ctx.config = config instanceof Config ? config : new Config(config);
-    if (theme) ctx.theme = theme;
-    if (root) ctx.root = root;
-    ctx.ready = true;
-    applyRoot();
-    notify();
+  var pickTheme = (t) => t instanceof Theme ? t : themes[t] || settings.theme;
+  function setup(o = {}) {
+    if (o.theme) settings.theme = pickTheme(o.theme);
+    for (const k of ["scale", "animation", "tooltips"]) if (o[k] !== void 0) settings[k] = o[k];
+    if (o.root) settings.root = o.root;
+    settings.ready = true;
+    apply();
   }
-  function ensureDefaults() {
-    if (!ctx.ready) configure({});
+  function ensureSetup() {
+    if (!settings.ready) setup();
   }
-  function setTheme(theme) {
-    ctx.theme = theme;
-    ensureDefaults();
-    applyRoot();
-    notify();
-  }
-  function setConfig(over) {
-    ctx.config = ctx.config.with(over);
-    ensureDefaults();
-    applyRoot();
-    notify();
+  function setTheme(t) {
+    settings.theme = pickTheme(t);
+    ensureSetup();
+    apply();
   }
 
   // src/core/ease.js
@@ -402,7 +305,7 @@ var adas2 = (() => {
       this.ease = easeOf(ease);
       this.onUpdate = onUpdate;
       this.onDone = onDone;
-      const speed = ctx.config.animationSpeed;
+      const speed = settings.animation;
       this.duration = speed > 0 && !reduce.matches ? duration * 1e3 / speed : 0;
       this.start = performance.now();
       this.alive = true;
@@ -446,6 +349,10 @@ var adas2 = (() => {
   function tween(from, to, duration, ease, onUpdate, onDone) {
     return new TweenHandle(from, to, duration, ease, onUpdate, onDone);
   }
+  function animate(from, to, { duration = 0.3, ease = "OutCubic", onUpdate = () => {
+  }, onDone } = {}) {
+    return new TweenHandle(from, to, duration, ease, onUpdate, onDone);
+  }
   function tweenNumber(from, to, duration, ease, onUpdate, onDone) {
     return tween({ v: from }, { v: to }, duration, ease, (o) => onUpdate(o.v), onDone);
   }
@@ -460,18 +367,6 @@ var adas2 = (() => {
     const m = c.match(/[\d.]+/g) || [0, 0, 0, 1];
     return [+m[0], +m[1], +m[2], m[3] === void 0 ? 1 : +m[3]];
   }
-  var cssColor = ([r, g, b, a]) => `rgba(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)}, ${+a.toFixed(3)})`;
-  function tweenColor(get, set, target2, duration, ease = "OutCubic", onDone) {
-    const A = parseColor(get()), B = parseColor(target2);
-    return tween(
-      { r: A[0], g: A[1], b: A[2], a: A[3] },
-      { r: B[0], g: B[1], b: B[2], a: B[3] },
-      duration,
-      ease,
-      (o) => set(cssColor([o.r, o.g, o.b, o.a])),
-      onDone
-    );
-  }
 
   // src/core/dom.js
   function h(tag, cls, parent, text) {
@@ -484,21 +379,29 @@ var adas2 = (() => {
   function resolveParent(p) {
     if (!p) return null;
     if (typeof p === "string") return document.querySelector(p);
-    if (p.content instanceof Element) return p.content;
+    if (p.host instanceof Element) return p.host;
+    if (p.body instanceof Element) return p.body;
     if (p.el instanceof Element) return p.el;
     return p;
   }
   function scaleOf(el) {
     const v = parseFloat(getComputedStyle(el || document.documentElement).getPropertyValue("--a2-scale"));
-    return Number.isFinite(v) && v > 0 ? v : ctx.config.uiScale;
+    return Number.isFinite(v) && v > 0 ? v : settings.scale;
   }
   var px = (el, n) => n * scaleOf(el);
-  var themeVar = (el, name) => getComputedStyle(el || document.documentElement).getPropertyValue(`--a2-${name}`).trim();
+  var P = (d) => `<svg viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
+  var L = (d, w = 2.4) => P(`<path d="${d}" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`);
   var SVG = {
-    triangle: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 9.5l5.5 5.5 5.5-5.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>',
-    x: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" fill="none"/></svg>',
-    on: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="7" fill="currentColor"/><path d="M7.4 12.3l3.1 3 6-6.2" stroke="var(--a2-object-on-active)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>',
-    off: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="7" fill="currentColor" opacity=".35"/></svg>'
+    chevron: L("M6.5 9.5l5.5 5.5 5.5-5.5"),
+    check: L("M5.5 12.5l4.2 4.2L18.5 7.8", 2.8),
+    x: L("M7 7l10 10M17 7L7 17"),
+    reset: L("M5 12a7 7 0 1 0 2.2-5.1M5 4.5v3.4h3.4", 2.2),
+    minus: L("M6 12h12", 2.6),
+    plus: L("M12 6v12M6 12h12", 2.6),
+    info: P('<circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 11v6M12 7.6v.1" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>'),
+    ok: P('<circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M7.6 12.4l3 3 5.8-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>'),
+    warn: P('<path d="M10.3 3.6a2 2 0 0 1 3.4 0l8 14A2 2 0 0 1 20 20.6H4a2 2 0 0 1-1.7-3l8-14z" fill="currentColor"/><path d="M12 9v4.6M12 16.8v.1" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>'),
+    error: P('<circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M8.6 8.6l6.8 6.8M15.4 8.6l-6.8 6.8" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>')
   };
   function icon(name, cls, parent) {
     const el = h("span", `a2-icon ${cls || ""}`, parent);
@@ -514,12 +417,6 @@ var adas2 = (() => {
     } else el.appendChild(spec);
     return el;
   }
-  function resolveOptions(defaults, opts) {
-    const o = { ...defaults };
-    if (typeof opts === "function") opts(o);
-    else if (opts) Object.assign(o, opts);
-    return o;
-  }
 
   // src/core/tooltip.js
   var box = null;
@@ -534,7 +431,7 @@ var adas2 = (() => {
   }, { passive: true });
   function ensureBox() {
     if (box) return box;
-    ensureDefaults();
+    ensureSetup();
     box = h("div", "a2 a2-tooltip", document.body);
     box.setAttribute("role", "tooltip");
     box.style.opacity = "0";
@@ -570,7 +467,7 @@ var adas2 = (() => {
   var Tooltip = {
     /** 글자를 보여 준다 */
     show(text) {
-      if (!ctx.config.tooltipEnabled || !text) return;
+      if (!settings.tooltips || !text) return;
       ensureBox();
       current = text;
       box.textContent = text;
@@ -584,7 +481,7 @@ var adas2 = (() => {
         if (current !== text) return;
         fade(1);
         if (!follow) follow = requestAnimationFrame(loop);
-      }, 140 / Math.max(ctx.config.animationSpeed, 1e-3));
+      }, 140 / Math.max(settings.animation, 1e-3));
     },
     hide() {
       if (!box || !current) return;
@@ -596,259 +493,104 @@ var adas2 = (() => {
     }
   };
   function tooltip(el, text) {
-    const get = typeof text === "function" ? text : () => text;
+    const get2 = typeof text === "function" ? text : () => text;
     el.addEventListener("pointerenter", (e) => {
-      if (e.pointerType !== "touch") Tooltip.show(get());
+      if (e.pointerType !== "touch") Tooltip.show(get2());
     });
     el.addEventListener("pointerleave", () => Tooltip.hide());
     el.addEventListener("pointerdown", () => Tooltip.hide());
     return el;
   }
 
-  // src/core/window.js
-  var soloZ = 0;
-  var WindowOptions = {
-    id: null,
-    title: "Window",
-    size: [640, 480],
-    position: null,
-    icon: null,
-    iconSize: 40,
-    showCloseButton: true,
-    draggable: true,
-    resizable: false,
-    minSize: [900, 500],
-    showOutline: false,
-    clipContent: false,
-    topBarHeight: 72,
-    padding: 12,
-    panelColor: null,
-    topBarColor: null,
-    titleFontSize: null,
-    bringToFrontOnFocus: true
-  };
-  var A2Window = class {
-    constructor(manager, opts) {
-      ensureDefaults();
-      const o = this.opts = resolveOptions(WindowOptions, opts);
-      this.id = o.id || o.title;
-      this.manager = manager;
-      this.handlers = {};
-      const el = this.el = h("div", "a2 a2-window", manager ? manager.root : null);
-      el.setAttribute("role", "dialog");
-      el.setAttribute("aria-label", o.title);
-      el.style.setProperty("--a2-top", o.topBarHeight);
-      el.style.setProperty("--a2-pad", o.padding);
-      el.style.setProperty("--a2-icon", o.iconSize);
-      if (o.titleFontSize) el.style.setProperty("--a2-title-fs", o.titleFontSize);
-      if (o.panelColor) el.style.setProperty("--a2-panel-bg", o.panelColor);
-      if (o.topBarColor) el.style.setProperty("--a2-top-bar", o.topBarColor);
-      if (o.clipContent) el.classList.add("a2-clip");
-      this.topBar = h("div", "a2-win-top", el);
-      this.iconEl = null;
-      this.titleEl = h("div", "a2-win-title", this.topBar, o.title);
-      this.setIcon(o.icon);
-      if (o.showCloseButton) {
-        this.closeBtn = h("button", "a2-win-close", this.topBar);
-        this.closeBtn.type = "button";
-        this.closeBtn.setAttribute("aria-label", "닫기");
-        h("span", "a2-win-close-bg", this.closeBtn);
-        icon("x", "", this.closeBtn);
-        this.closeBtn.addEventListener("click", () => this.emit("closeRequested", this));
-        this.closeBtn.addEventListener("pointerdown", (e) => e.stopPropagation());
-      }
-      this.content = h("div", "a2-win-content", el);
-      if (o.showOutline) h("div", "a2-win-outline", el);
-      this.setSize(o.size[0], o.size[1]);
-      requestAnimationFrame(() => this.setPosition(o.position));
-      this.setPosition(o.position);
-      el.addEventListener("pointerdown", () => {
-        this.emit("focused", this);
-        if (o.bringToFrontOnFocus) this.bringToFront();
-      }, true);
-      if (o.draggable) this.wireDrag();
-      if (o.resizable) this.wireResize();
-    }
-    /** 이벤트: 'closeRequested', 'focused', 'moved', 'resized' */
-    on(name, fn) {
-      var _a;
-      ((_a = this.handlers)[name] || (_a[name] = /* @__PURE__ */ new Set())).add(fn);
-      return () => this.handlers[name].delete(fn);
-    }
-    emit(name, ...a) {
-      for (const fn of this.handlers[name] || []) fn(...a);
-    }
-    get scale() {
-      return scaleOf(this.el);
-    }
-    setTitle(t) {
-      this.titleEl.textContent = t;
-      this.el.setAttribute("aria-label", t);
-    }
-    setIcon(spec) {
-      if (this.iconEl) {
-        this.iconEl.remove();
-        this.iconEl = null;
-      }
-      if (spec) {
-        this.iconEl = userIcon(spec, "a2-win-icon", null);
-        this.topBar.prepend(this.iconEl);
-      }
-      this.el.classList.toggle("a2-has-icon", !!spec);
-    }
-    /** 디자인 단위로 크기 */
-    setSize(w, ht) {
-      w = Math.max(120, +w || 0);
-      ht = Math.max(this.opts.topBarHeight + 40, +ht || 0);
-      this.w = w;
-      this.h = ht;
-      this.el.style.setProperty("--a2-w", w);
-      this.el.style.setProperty("--a2-hh", ht);
-    }
-    /** 가운데 기준 위치(디자인 단위). null 이면 가운데 */
-    setPosition(p) {
-      const root = this.el.parentElement;
-      if (!root) return;
-      const s = this.scale, rw = root.clientWidth, rh = root.clientHeight;
-      const cx = rw / 2 + (p ? p[0] * s : 0), cy = rh / 2 + (p ? p[1] * s : 0);
-      this.x = cx - this.w * s / 2;
-      this.y = cy - this.h * s / 2;
-      this.applyPos();
-    }
-    applyPos() {
-      this.el.style.transform = `translate(${Math.round(this.x)}px, ${Math.round(this.y)}px)`;
-    }
-    // DOM 위치를 옮기지 않고 z-index 로 올린다. 누르는 도중에 요소를 옮기면 click 이 사라지기 때문.
-    bringToFront() {
-      if (this.manager) this.manager.bringToFront(this);
-      else this.el.style.zIndex = String(++soloZ);
-    }
-    show() {
-      this.el.hidden = false;
-      this.bringToFront();
-    }
-    hide() {
-      this.el.hidden = true;
-    }
-    get visible() {
-      return !this.el.hidden;
-    }
-    wireDrag() {
-      let d = null;
-      this.topBar.addEventListener("pointerdown", (e) => {
-        if (e.button !== 0) return;
-        d = { x: e.clientX, y: e.clientY, ox: this.x, oy: this.y };
-        try {
-          this.topBar.setPointerCapture(e.pointerId);
-        } catch (_) {
-        }
-        this.el.classList.add("a2-dragging");
-      });
-      this.topBar.addEventListener("pointermove", (e) => {
-        if (!d) return;
-        const root = this.el.parentElement, wpx = this.el.offsetWidth, hpx = this.el.offsetHeight;
-        const s = this.scale, keep = 60 * s;
-        this.x = Math.min(Math.max(d.ox + e.clientX - d.x, keep - wpx), root.clientWidth - keep);
-        this.y = Math.min(Math.max(d.oy + e.clientY - d.y, 0), root.clientHeight - keep);
-        this.applyPos();
-      });
-      const end = () => {
-        if (d) {
-          d = null;
-          this.el.classList.remove("a2-dragging");
-          this.emit("moved", this);
+  // src/core/keys.js
+  var MODS = ["Ctrl", "Alt", "Shift", "Meta"];
+  var MOD_CODES = { Ctrl: ["ControlLeft", "ControlRight"], Alt: ["AltLeft", "AltRight"], Shift: ["ShiftLeft", "ShiftRight"], Meta: ["MetaLeft", "MetaRight"] };
+  var down = /* @__PURE__ */ new Set();
+  var isDown = (k) => MOD_CODES[k] ? MOD_CODES[k].some((c) => down.has(c)) : down.has(k);
+  var modOf = (code) => MODS.find((m) => MOD_CODES[m].includes(code));
+  function parseCombo(s) {
+    const parts = String(s || "").split("+").map((x) => x.trim()).filter(Boolean);
+    const mods = MODS.filter((m) => parts.includes(m) || m === "Ctrl" && parts.includes("Control"));
+    const key = parts.filter((p) => !MODS.includes(p) && p !== "Control").pop() || "";
+    return { mods, key };
+  }
+  var comboToString = ({ mods, key }) => [...MODS.filter((m) => mods.includes(m)), key].filter(Boolean).join("+");
+  var NAMES = { Backquote: "`", Minus: "-", Equal: "=", BracketLeft: "[", BracketRight: "]", Backslash: "\\", Semicolon: ";", Quote: "'", Comma: ",", Period: ".", Slash: "/", Space: "Space", Enter: "Enter", Escape: "Esc", Backspace: "⌫", Tab: "Tab", ArrowUp: "↑", ArrowDown: "↓", ArrowLeft: "←", ArrowRight: "→", Delete: "Del" };
+  function keyNames(s) {
+    const { mods, key } = parseCombo(s);
+    const nm = (k) => NAMES[k] || k.replace(/^Key/, "").replace(/^Digit/, "").replace(/^Numpad/, "Num ");
+    return [...mods, ...key ? [nm(key)] : []];
+  }
+  var binds = /* @__PURE__ */ new Set();
+  var keys = {
+    /** 글자 입력 중에는 쉰다. 바꿔 끼울 수 있다 */
+    paused: () => {
+      const a = document.activeElement;
+      return !!a && (a.tagName === "INPUT" || a.tagName === "TEXTAREA" || a.isContentEditable);
+    },
+    /**
+     * @param {string} combo 'Alt+Backquote'
+     * @param {(e: KeyboardEvent) => void} fn 눌렀을 때
+     * @param {{ hold?: number, onHold?: Function, onRelease?: Function }} [o] hold 초만큼 누르고 있으면 onHold
+     * @returns {{ combo: string, rebind(c: string): void, unbind(): void }}
+     */
+    bind(combo, fn, o = {}) {
+      const b = { c: parseCombo(combo), fn, o, pressed: false, held: false, timer: 0 };
+      binds.add(b);
+      return {
+        get combo() {
+          return comboToString(b.c);
+        },
+        rebind(c) {
+          b.c = parseCombo(c);
+        },
+        unbind() {
+          clearTimeout(b.timer);
+          binds.delete(b);
         }
       };
-      this.topBar.addEventListener("pointerup", end);
-      this.topBar.addEventListener("pointercancel", end);
-    }
-    wireResize() {
-      this.el.classList.add("a2-resizable");
-      for (const dir of ["n", "s", "e", "w", "ne", "nw", "se", "sw"]) {
-        const hd = h("div", `a2-win-resize a2-rs-${dir}`, this.el);
-        let d = null;
-        hd.addEventListener("pointerdown", (e) => {
-          if (e.button !== 0) return;
-          e.stopPropagation();
-          d = { x: e.clientX, y: e.clientY, w: this.w, h: this.h, ox: this.x, oy: this.y };
-          try {
-            hd.setPointerCapture(e.pointerId);
-          } catch (_) {
-          }
-        });
-        hd.addEventListener("pointermove", (e) => {
-          if (!d) return;
-          const s = this.scale, dx = (e.clientX - d.x) / s, dy = (e.clientY - d.y) / s;
-          const [mw, mh] = this.opts.minSize;
-          let w = d.w, ht = d.h, x = d.ox, y = d.oy;
-          if (dir.includes("e")) w = Math.max(mw, d.w + dx);
-          if (dir.includes("s")) ht = Math.max(mh, d.h + dy);
-          if (dir.includes("w")) {
-            w = Math.max(mw, d.w - dx);
-            x = d.ox + (d.w - w) * s;
-          }
-          if (dir.includes("n")) {
-            ht = Math.max(mh, d.h - dy);
-            y = d.oy + (d.h - ht) * s;
-          }
-          this.setSize(w, ht);
-          this.x = x;
-          this.y = y;
-          this.applyPos();
-        });
-        const end = () => {
-          if (d) {
-            d = null;
-            this.emit("resized", this);
-          }
-        };
-        hd.addEventListener("pointerup", end);
-        hd.addEventListener("pointercancel", end);
-      }
-    }
-    dispose() {
-      this.el.remove();
-      if (this.manager) this.manager.windows.delete(this);
-    }
+    },
+    parse: parseCombo,
+    names: keyNames
   };
-  var WindowManager = class _WindowManager {
-    /** root 안에 창을 띄운다. root 는 position 이 정해진 요소(기본: 화면 전체 고정 레이어) */
-    static create(root) {
-      return new _WindowManager(root);
-    }
-    constructor(root) {
-      ensureDefaults();
-      let r = resolveParent(root);
-      if (!r) {
-        r = h("div", "a2-window-layer", document.body);
-      }
-      this.root = r;
-      r.classList.add("a2-window-root");
-      this.windows = /* @__PURE__ */ new Set();
-      this.z = 0;
-    }
-    create(opts) {
-      const w = new A2Window(this, opts);
-      this.windows.add(w);
-      this.bringToFront(w);
-      return w;
-    }
-    get(id) {
-      for (const w of this.windows) if (w.id === id) return w;
-      return null;
-    }
-    bringToFront(w) {
-      if (w.el.style.zIndex && +w.el.style.zIndex === this.z) return;
-      w.el.style.zIndex = String(++this.z);
-      this.order = [...this.windows].sort((a, b) => (+a.el.style.zIndex || 0) - (+b.el.style.zIndex || 0));
-    }
-    /** 맨 위 창 */
-    get top() {
-      let t = null;
-      for (const w of this.windows) if (!w.el.hidden && (!t || (+w.el.style.zIndex || 0) > (+t.el.style.zIndex || 0))) t = w;
-      return t;
-    }
+  var held = (c) => c.key && isDown(c.key) && c.mods.every(isDown) && MODS.filter((m) => !c.mods.includes(m)).every((m) => !isDown(m));
+  var reset = (b) => {
+    b.pressed = false;
+    b.held = false;
+    clearTimeout(b.timer);
   };
+  addEventListener("keydown", (e) => {
+    const first = !down.has(e.code);
+    down.add(e.code);
+    if (!first || modOf(e.code)) return;
+    if (keys.paused()) {
+      binds.forEach(reset);
+      return;
+    }
+    for (const b of binds) {
+      if (b.pressed || b.c.key !== e.code || !held(b.c)) continue;
+      b.pressed = true;
+      e.preventDefault();
+      b.fn && b.fn(e);
+      if (b.o.hold > 0) b.timer = setTimeout(() => {
+        if (b.pressed && held(b.c)) {
+          b.held = true;
+          b.o.onHold && b.o.onHold();
+        }
+      }, b.o.hold * 1e3);
+    }
+  }, true);
+  addEventListener("keyup", (e) => {
+    down.delete(e.code);
+    for (const b of binds) if (b.pressed && (b.c.key === e.code || !held(b.c))) {
+      if (b.c.key === e.code && b.o.onRelease) b.o.onRelease();
+      reset(b);
+    }
+  }, true);
+  addEventListener("blur", () => {
+    down.clear();
+    binds.forEach(reset);
+  });
 
   // src/eval/evaluator.js
   var FNS = {
@@ -996,917 +738,1134 @@ var adas2 = (() => {
     }
   }
 
-  // src/controls/control.js
-  var registry = /* @__PURE__ */ new Map();
-  var getControl = (id) => registry.get(id);
-  var Control = class {
-    constructor(parent, id, opts, kind) {
-      ensureDefaults();
-      this.id = id || null;
-      this.opts = opts;
-      this.kind = kind;
-      this.el = h("div", `a2 a2-ctl a2-${kind}`);
-      if (id) {
-        this.el.dataset.a2Id = id;
-        registry.set(id, this);
+  // src/core/panel.js
+  var layer = null;
+  var topZ = 10;
+  var getLayer = () => {
+    if (!layer || !layer.isConnected) layer = h("div", "a2-panel-layer", document.body);
+    return layer;
+  };
+  var Panel = class {
+    /**
+     * @param {{ title?: string, width?: number, height?: number, x?: number, y?: number, resizable?: boolean,
+     *           minWidth?: number, minHeight?: number, closable?: boolean, onClose?: 'hide'|'destroy'|'none', hidden?: boolean, root?: Element }} o
+     *   width·height·min* 는 디자인 단위(배율이 곱해짐), x·y 는 화면 px(없으면 가운데)
+     */
+    constructor(o = {}) {
+      ensureSetup();
+      this.opts = { width: 760, height: 900, minWidth: 480, minHeight: 360, closable: true, onClose: "hide", ...o };
+      this.handlers = {};
+      const root = o.root || getLayer();
+      const el = this.el = h("div", "a2 a2-panel", root);
+      el.setAttribute("role", "dialog");
+      this.head = h("div", "a2-panel-head", el);
+      this.titleEl = h("div", "a2-panel-title", this.head, o.title || "");
+      if (this.opts.closable) {
+        this.closeBtn = h("button", "a2-panel-close", this.head);
+        this.closeBtn.type = "button";
+        this.closeBtn.setAttribute("aria-label", "닫기");
+        icon("x", "", this.closeBtn);
+        this.closeBtn.addEventListener("pointerdown", (e) => e.stopPropagation());
+        this.closeBtn.addEventListener("click", () => this.close());
       }
-      this.blocked = false;
+      this.body = h("div", "a2-panel-body", el);
+      this.setSize(this.opts.width, this.opts.height);
+      el.addEventListener("pointerdown", () => this.focus(), true);
+      this.wireDrag();
+      if (this.opts.resizable) this.wireResize();
+      this.visible = !o.hidden;
+      el.hidden = !!o.hidden;
+      requestAnimationFrame(() => this.place(o.x, o.y));
+      this.place(o.x, o.y);
+      this.focus();
+    }
+    on(n, fn) {
+      var _a;
+      ((_a = this.handlers)[n] || (_a[n] = /* @__PURE__ */ new Set())).add(fn);
+      return this;
+    }
+    emit(n, ...a) {
+      for (const fn of this.handlers[n] || []) fn(...a, this);
+    }
+    get scale() {
+      return scaleOf(this.el);
+    }
+    setTitle(t) {
+      this.titleEl.textContent = t;
+      this.el.setAttribute("aria-label", t);
+      return this;
+    }
+    setSize(w, ht) {
+      this.w = Math.max(this.opts.minWidth, w);
+      this.h = Math.max(this.opts.minHeight, ht);
+      this.el.style.setProperty("--a2-pw", this.w);
+      this.el.style.setProperty("--a2-ph", this.h);
+      return this;
+    }
+    place(x, y) {
+      const p = this.el.parentElement;
+      if (!p) return this;
+      const W = p.clientWidth || innerWidth, H = p.clientHeight || innerHeight, w = this.el.offsetWidth, ht = this.el.offsetHeight;
+      this.x = x ?? Math.round((W - w) / 2);
+      this.y = y ?? Math.round(Math.max(8, (H - ht) / 2));
+      this.el.style.translate = `${this.x}px ${this.y}px`;
+      return this;
+    }
+    /** 맨 위로 (DOM 을 옮기지 않고 z-index 로) */
+    focus() {
+      if (+this.el.style.zIndex !== topZ) this.el.style.zIndex = String(++topZ);
+      return this;
+    }
+    show() {
+      if (this.visible) return this.focus();
+      this.visible = true;
+      this.el.hidden = false;
+      this.focus();
+      this._t && this._t.kill();
+      this._t = animate({ p: 0 }, { p: 1 }, { duration: 0.24, ease: "OutCubic", onUpdate: ({ p }) => {
+        this.el.style.opacity = p;
+        this.el.style.scale = 0.96 + 0.04 * p;
+      } });
+      this.emit("show");
+      return this;
+    }
+    hide() {
+      if (!this.visible) return this;
+      this.visible = false;
+      this._t && this._t.kill();
+      this._t = animate({ p: 1 }, { p: 0 }, { duration: 0.16, ease: "OutSine", onUpdate: ({ p }) => {
+        this.el.style.opacity = p;
+        this.el.style.scale = 0.97 + 0.03 * p;
+      }, onDone: () => {
+        if (!this.visible) this.el.hidden = true;
+      } });
+      this.emit("hide");
+      return this;
+    }
+    toggle() {
+      return this.visible ? this.hide() : this.show();
+    }
+    /** 닫기 버튼과 같다. onClose 옵션에 따라 숨기거나 없앤다 */
+    close() {
+      this.emit("close");
+      if (this.opts.onClose === "destroy") this.destroy();
+      else if (this.opts.onClose === "hide") this.hide();
+      return this;
+    }
+    destroy() {
+      this.el.remove();
+      this.emit("destroy");
+    }
+    wireDrag() {
+      let d = null;
+      this.head.addEventListener("pointerdown", (e) => {
+        if (e.button !== 0) return;
+        d = { x: e.clientX, y: e.clientY, ox: this.x, oy: this.y };
+        try {
+          this.head.setPointerCapture(e.pointerId);
+        } catch (_) {
+        }
+        this.el.classList.add("a2-moving");
+      });
+      this.head.addEventListener("pointermove", (e) => {
+        if (!d) return;
+        const p = this.el.parentElement, keep = 80;
+        this.x = Math.min(Math.max(d.ox + e.clientX - d.x, keep - this.el.offsetWidth), (p.clientWidth || innerWidth) - keep);
+        this.y = Math.min(Math.max(d.oy + e.clientY - d.y, 0), (p.clientHeight || innerHeight) - 40);
+        this.el.style.translate = `${this.x}px ${this.y}px`;
+      });
+      const end = () => {
+        if (d) {
+          d = null;
+          this.el.classList.remove("a2-moving");
+          this.emit("move", this.x, this.y);
+        }
+      };
+      this.head.addEventListener("pointerup", end);
+      this.head.addEventListener("pointercancel", end);
+    }
+    wireResize() {
+      for (const dir of ["e", "s", "se", "w", "sw"]) {
+        const g = h("div", `a2-grip a2-grip-${dir}`, this.el);
+        let d = null;
+        g.addEventListener("pointerdown", (e) => {
+          if (e.button) return;
+          e.stopPropagation();
+          d = { x: e.clientX, y: e.clientY, w: this.w, h: this.h, ox: this.x };
+          try {
+            g.setPointerCapture(e.pointerId);
+          } catch (_) {
+          }
+        });
+        g.addEventListener("pointermove", (e) => {
+          if (!d) return;
+          const s = this.scale, dx = (e.clientX - d.x) / s, dy = (e.clientY - d.y) / s;
+          let w = d.w, ht = d.h;
+          if (dir.includes("e")) w = d.w + dx;
+          if (dir.includes("w")) w = d.w - dx;
+          if (dir.includes("s")) ht = d.h + dy;
+          this.setSize(w, ht);
+          if (dir.includes("w")) {
+            this.x = d.ox + (d.w - this.w) * s;
+            this.el.style.translate = `${this.x}px ${this.y}px`;
+          }
+        });
+        const end = () => {
+          if (d) {
+            d = null;
+            this.emit("resize", this.w, this.h);
+          }
+        };
+        g.addEventListener("pointerup", end);
+        g.addEventListener("pointercancel", end);
+      }
+    }
+  };
+
+  // src/components/base.js
+  var registry = /* @__PURE__ */ new Map();
+  var get = (id) => registry.get(id);
+  var Component = class {
+    constructor(kind, opts = {}, tag = "div") {
+      ensureSetup();
+      this.kind = kind;
+      this.opts = opts;
+      this.handlers = {};
+      this.el = h(tag, `a2 a2-${kind}`);
+      this.disabled = false;
+      if (opts.id) {
+        this.id = opts.id;
+        this.el.dataset.a2Id = opts.id;
+        registry.set(opts.id, this);
+      }
+      if (opts.className) this.el.classList.add(...String(opts.className).split(/\s+/).filter(Boolean));
+      if (opts.tooltip) tooltip(this.el, opts.tooltip);
+      for (const [k, ev] of [["onChange", "change"], ["onCommit", "commit"], ["onClick", "click"]]) if (opts[k]) this.on(ev, opts[k]);
+      this._off = onSettings(() => {
+        if (!this.destroyed) requestAnimationFrame(() => this.render(true));
+      });
+    }
+    /** 부모(요소·선택자·빌더·패널·섹션)에 붙인다 */
+    mount(parent) {
       const host = resolveParent(parent);
       if (host) host.appendChild(this.el);
-      if (opts && opts.tooltip) tooltip(this.el, opts.tooltip);
-      this._unsub = onContextChange(() => {
-        if (!this.disposed) requestAnimationFrame(() => this.updateVisual(true));
-      });
+      return this;
     }
-    /** 테마의 줄 높이 */
-    get rowHeight() {
-      return this.opts.height ?? ctx.theme.controlHeightFor(ctx.theme.fontSizeBody);
+    /** 이벤트: 'change'(값이 바뀌는 중), 'commit'(값이 정해짐), 컴포넌트마다 더 있음 */
+    on(name, fn) {
+      var _a;
+      ((_a = this.handlers)[name] || (_a[name] = /* @__PURE__ */ new Set())).add(fn);
+      return this;
     }
-    /** 바깥 테두리(마우스를 올리면 보임) */
-    addHoverOutline(target2 = this.el) {
-      this.outline = h("div", "a2-hover-outline", null);
-      target2.prepend(this.outline);
-      return this.outline;
+    off(name, fn) {
+      this.handlers[name] && this.handlers[name].delete(fn);
+      return this;
     }
-    /** 왼쪽 위 작은 점: 기본값과 다를 때 보인다 */
-    addChangedDot(target2 = this.el, cls = "") {
-      const dot = h("span", `a2-dot ${cls}`, target2);
-      (this.dots || (this.dots = [])).push(dot);
-      return dot;
+    emit(name, ...args) {
+      for (const fn of this.handlers[name] || []) fn(...args, this);
     }
-    paintChangedDot(noAnimate) {
-      if (!this.dots) return;
-      const has = this.opts.defaultValue !== void 0 && this.opts.defaultValue !== null;
-      const on = has && !this.equals(this.value, this.opts.defaultValue);
-      for (const d of this.dots) {
-        d.classList.toggle("a2-no-anim", !!noAnimate);
-        d.classList.toggle("a2-on", on);
-      }
+    get value() {
+      return this._value;
     }
-    /** 가운데 버튼 클릭 → 기본값 */
-    enableMiddleReset(target2 = this.el, checkDiff = true) {
-      target2.addEventListener("mousedown", (e) => {
-        if (e.button === 1) e.preventDefault();
-      });
-      target2.addEventListener("auxclick", (e) => {
-        if (e.button !== 1 || this.blocked || !ctx.config.middleClickToDefault) return;
-        const d = this.opts.defaultValue;
-        if (d === void 0 || d === null) return;
-        if (checkDiff && this.equals(this.value, d)) return;
-        e.preventDefault();
-        this.reset(true);
-        this.afterReset && this.afterReset();
-      });
+    set value(v) {
+      this.set(v);
     }
     equals(a, b) {
       return a === b;
     }
-    /** 값을 바꾼다. notify 가 false 면 onChanged 를 부르지 않는다. */
-    set(v, notify2 = true) {
-      if (this.equals(v, this.value)) return;
-      this.value = v;
-      this.updateVisual(false);
-      if (notify2 && this.opts.onChanged) this.opts.onChanged(v, this);
+    /** 값을 바꾼다. { silent: true } 면 change 이벤트를 내지 않는다 */
+    set(v, { silent = false } = {}) {
+      v = this.normalize ? this.normalize(v) : v;
+      if (this.equals(v, this._value)) return this;
+      this._value = v;
+      this.render(false);
+      if (!silent) this.emit("change", v);
+      return this;
     }
-    /** 기본값으로 */
-    reset(notify2 = true) {
-      const d = this.opts.defaultValue;
-      if (d !== void 0 && d !== null) this.set(d, notify2);
+    get hasDefault() {
+      return this.opts.default !== void 0 && this.opts.default !== null;
     }
-    setDefaultValue(v, noAnimate) {
-      this.opts.defaultValue = v;
-      this.paintChangedDot(noAnimate);
+    get changed() {
+      return this.hasDefault && !this.equals(this._value, this.normalize ? this.normalize(this.opts.default) : this.opts.default);
     }
-    updateVisual() {
+    /** 기본값으로 되돌린다 */
+    reset() {
+      if (this.hasDefault) {
+        this.set(this.opts.default);
+        this.emit("commit", this._value);
+      }
+      return this;
     }
-    /** 막으면 흐려지고 누를 수 없다 */
-    setBlocked(blocked) {
-      this.blocked = !!blocked;
-      this.el.classList.toggle("a2-blocked", this.blocked);
-      this.el.inert = this.blocked;
+    render() {
     }
-    dispose() {
+    /** 제목 줄: 라벨 + 되돌리기 버튼 (+ 오른쪽 자리) */
+    header(parent, label) {
+      const head = h("div", "a2-head", parent);
+      this.labelEl = h("span", "a2-head-label", head, label || "");
+      if (this.hasDefault) {
+        this.resetBtn = h("button", "a2-reset", head);
+        this.resetBtn.type = "button";
+        this.resetBtn.setAttribute("aria-label", "기본값으로");
+        this.resetBtn.tabIndex = -1;
+        icon("reset", "", this.resetBtn);
+        this.resetBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          this.reset();
+        });
+      }
+      this.headSlot = h("span", "a2-head-slot", head);
+      return head;
+    }
+    paintReset() {
+      if (this.resetBtn) {
+        const on = this.changed;
+        this.resetBtn.classList.toggle("a2-show", on);
+        this.resetBtn.tabIndex = on ? 0 : -1;
+      }
+    }
+    /** 끄기: 흐려지고 누를 수 없다 */
+    disable(off = true) {
+      this.disabled = !!off;
+      this.el.classList.toggle("a2-disabled", this.disabled);
+      this.el.inert = this.disabled;
+      return this;
+    }
+    enable() {
+      return this.disable(false);
+    }
+    destroy() {
+      this.destroyed = true;
+      this._off && this._off();
       if (this.id && registry.get(this.id) === this) registry.delete(this.id);
-      this.disposed = true;
-      this._unsub && this._unsub();
       this.el.remove();
     }
   };
-
-  // src/controls/button.js
-  var ButtonOptions = { text: "", icon: null, iconPadding: 5, height: null, onClick: null, tooltip: null };
-  var Button = class extends Control {
-    constructor(parent, id, opts) {
-      super(parent, id, resolveOptions(ButtonOptions, opts), "button");
-      const o = this.opts, el = this.el;
-      el.setAttribute("role", "button");
-      el.tabIndex = 0;
-      if (o.height != null) el.style.setProperty("--a2-h", o.height);
-      this.addHoverOutline();
-      if (o.icon) {
-        el.classList.add("a2-icon-button");
-        el.style.setProperty("--a2-icon-pad", o.iconPadding);
-        this.iconEl = userIcon(o.icon, "a2-btn-icon", el);
-      } else {
-        this.label = h("span", "a2-btn-text", el, o.text);
+  function pressable(el, fn) {
+    el.addEventListener("keydown", (e) => {
+      if ((e.key === "Enter" || e.key === " ") && e.target === el) {
+        e.preventDefault();
+        fn(e);
       }
-      this._bg = () => themeVar(el, "object-button");
-      this.normalColor = null;
-      let hover = false, down2 = false;
-      const paint = (color, dur, clear) => {
-        this._t && this._t.kill();
-        this._t = tweenColor(() => el.style.backgroundColor || this.normal(), (c) => {
-          el.style.backgroundColor = c;
-        }, color, dur, "OutSine", clear ? () => {
-          el.style.backgroundColor = "";
-        } : null);
-      };
-      this._paint = paint;
-      el.addEventListener("pointerenter", () => {
-        hover = true;
-        if (!down2) paint(themeVar(el, "button-hover"), 0.12);
+    });
+  }
+
+  // src/components/button.js
+  var Button = class extends Component {
+    constructor(o = {}) {
+      super("btn", o, "button");
+      const el = this.el;
+      el.type = "button";
+      el.classList.add(`a2-btn-${o.variant || "primary"}`);
+      if (o.size === "sm") el.classList.add("a2-btn-sm");
+      if (o.block) el.classList.add("a2-btn-block");
+      if (o.icon) this.iconEl = userIcon(o.icon, "a2-btn-icon", el);
+      this.textEl = h("span", "a2-btn-text", el, o.text ?? "");
+      if (!o.text) el.classList.add("a2-btn-icon-only");
+      el.addEventListener("click", (e) => {
+        if (!this.disabled && !this.loading) this.emit("click", e);
       });
-      el.addEventListener("pointerleave", () => {
-        hover = false;
-        down2 = false;
-        paint(this.normal(), 0.12, true);
-      });
-      el.addEventListener("pointerdown", (e) => {
-        if (e.button === 0) {
-          down2 = true;
-          paint(themeVar(el, "button-pressed"), 0.08);
-        }
-      });
-      el.addEventListener("pointerup", () => {
-        if (!down2) return;
-        down2 = false;
-        paint(hover ? themeVar(el, "button-hover") : this.normal(), 0.12, !hover);
-      });
-      el.addEventListener("click", () => {
-        if (!this.blocked && o.onClick) o.onClick(this);
-      });
-      el.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          this.click(true);
-        }
-      });
-    }
-    normal() {
-      return this.normalColor || this._bg();
     }
     get text() {
-      return this.label ? this.label.textContent : "";
+      return this.textEl.textContent;
     }
     set text(t) {
-      if (this.label) this.label.textContent = t;
+      this.textEl.textContent = t;
     }
-    /** 코드로 누른다 */
-    click(notify2 = true) {
-      if (notify2 && this.opts.onClick) this.opts.onClick(this);
-      this._paint(themeVar(this.el, "button-pressed"), 0.06);
-      setTimeout(() => this._paint(this.el.matches(":hover") ? themeVar(this.el, "button-hover") : this.normal(), 0.12, !this.el.matches(":hover")), 60);
-    }
-    /** 테마가 바뀌었을 때 원래 색으로 */
-    updateVisual(noAnimate) {
-      if (noAnimate) {
-        this._t && this._t.kill();
-        this.el.style.backgroundColor = "";
-        return;
+    /** 처리 중: 글자 대신 도는 표시, 누를 수 없음 */
+    setLoading(on = true) {
+      this.loading = !!on;
+      this.el.classList.toggle("a2-loading", this.loading);
+      this.el.setAttribute("aria-busy", this.loading);
+      if (this.loading && !this.spin) {
+        this.spin = h("span", "a2-btn-spin", this.el);
       }
-      this._paint(this.normal(), 0.2, true);
+      return this;
     }
   };
 
-  // src/controls/toggle.js
-  var ToggleOptions = { value: false, defaultValue: null, text: "", onChanged: null, tooltip: null };
-  function makeSwitch(parent) {
-    const sw = h("span", "a2-switch", parent);
-    h("span", "a2-switch-knob", sw);
-    return sw;
-  }
-  var Toggle = class extends Control {
-    constructor(parent, id, opts) {
-      super(parent, id, resolveOptions(ToggleOptions, opts), "toggle");
-      const o = this.opts, el = this.el;
-      this.value = !!o.value;
+  // src/components/choice.js
+  var Switch = class extends Component {
+    constructor(o = {}) {
+      super("switch", o);
+      const el = this.el;
+      this._value = !!o.value;
+      el.tabIndex = 0;
       el.setAttribute("role", "switch");
+      const text = h("div", "a2-row-text", el);
+      this.header(text, o.label);
+      if (o.description) h("div", "a2-desc", text, o.description);
+      this.track = h("span", "a2-track", el);
+      h("span", "a2-thumb", this.track);
+      const flip = () => {
+        if (this.disabled) return;
+        this.set(!this._value);
+        this.emit("commit", this._value);
+      };
+      el.addEventListener("click", (e) => {
+        if (!e.target.closest(".a2-reset")) flip();
+      });
+      pressable(el, flip);
+      this.render(true);
+    }
+    normalize(v) {
+      return !!v;
+    }
+    toggle() {
+      this.set(!this._value);
+      return this;
+    }
+    render(instant) {
+      this.el.classList.toggle("a2-on", this._value);
+      this.el.setAttribute("aria-checked", this._value);
+      this.track.classList.toggle("a2-instant", !!instant);
+      this.paintReset();
+    }
+  };
+  var Checkbox = class extends Component {
+    constructor(o = {}) {
+      super("check", o);
+      const el = this.el;
+      this._value = !!o.value;
       el.tabIndex = 0;
-      this.addHoverOutline();
-      this.addChangedDot();
-      this.label = h("span", "a2-label", el, o.text);
-      this.sw = makeSwitch(el);
-      el.addEventListener("click", () => {
-        if (!this.blocked) this.toggle(true);
+      el.setAttribute("role", "checkbox");
+      this.box = h("span", "a2-box", el);
+      icon("check", "", this.box);
+      const text = h("div", "a2-row-text", el);
+      this.header(text, o.label);
+      if (o.description) h("div", "a2-desc", text, o.description);
+      const flip = () => {
+        if (this.disabled) return;
+        this.set(!this._value);
+        this.emit("commit", this._value);
+      };
+      el.addEventListener("click", (e) => {
+        if (!e.target.closest(".a2-reset")) flip();
       });
-      el.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
+      pressable(el, flip);
+      this.render(true);
+    }
+    normalize(v) {
+      return !!v;
+    }
+    render(instant) {
+      this.el.classList.toggle("a2-on", this._value);
+      this.el.setAttribute("aria-checked", this._value);
+      this.box.classList.toggle("a2-instant", !!instant);
+      this.paintReset();
+    }
+  };
+  var Radio = class extends Component {
+    constructor(o = {}) {
+      super("radio", o);
+      const el = this.el;
+      el.setAttribute("role", "radiogroup");
+      if (o.label) this.header(el, o.label);
+      this.list = h("div", "a2-radio-list", el);
+      this.items = (o.options || []).map((raw) => {
+        const opt2 = typeof raw === "object" && raw !== null ? raw : { value: raw, label: String(raw) };
+        const row = h("div", "a2-radio-item", this.list);
+        row.tabIndex = 0;
+        row.setAttribute("role", "radio");
+        h("span", "a2-dot", row);
+        const t = h("div", "a2-row-text", row);
+        h("span", "a2-radio-label", t, opt2.label ?? String(opt2.value));
+        if (opt2.description) h("div", "a2-desc", t, opt2.description);
+        const pick = () => {
+          if (this.disabled) return;
+          this.set(opt2.value);
+          this.emit("commit", this._value);
+        };
+        row.addEventListener("click", pick);
+        pressable(row, pick);
+        row.addEventListener("keydown", (e) => {
+          const d = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+          if (!d) return;
           e.preventDefault();
-          this.toggle(true);
-        }
+          const i = (this.items.findIndex((x) => x.row === row) + d + this.items.length) % this.items.length;
+          this.items[i].row.focus();
+          this.set(this.items[i].value);
+          this.emit("commit", this._value);
+        });
+        return { row, value: opt2.value };
       });
-      this.enableMiddleReset();
-      this.updateVisual(true);
+      this._value = o.value !== void 0 ? o.value : this.items[0] && this.items[0].value;
+      this.render(true);
     }
-    toggle(notify2 = true) {
-      this.set(!this.value, notify2);
-    }
-    updateVisual(noAnimate) {
-      const on = this.value;
-      this.el.setAttribute("aria-checked", on);
-      this.sw.classList.toggle("a2-no-anim", !!noAnimate);
-      this.el.classList.toggle("a2-on", on);
-      this.paintChangedDot(noAnimate);
+    render() {
+      for (const it of this.items) {
+        const on = this.equals(it.value, this._value);
+        it.row.classList.toggle("a2-on", on);
+        it.row.setAttribute("aria-checked", on);
+      }
+      this.paintReset();
     }
   };
 
-  // src/controls/slider.js
-  var SliderOptions = {
-    min: 0,
-    max: 100,
-    value: 0,
-    defaultValue: null,
-    /** 소수 자리 수(숫자) 또는 v => 문자열 */
-    format: 2,
-    label: "",
-    clampDrag: true,
-    clampInput: true,
-    inputMin: null,
-    inputMax: null,
-    dragFilter: null,
-    inputFilter: null,
-    /** 비선형 눈금: { normalize(min, v, max) → 0~1, denormalize(min, t, max) → v } */
-    scale: null,
-    onChanged: null,
-    onComplete: null,
-    showFill: true,
-    /** 1px 끌 때 바뀌는 값. 없으면 컨트롤 폭 = 전체 범위 */
-    dragStep: null,
-    tooltip: null
-  };
+  // src/components/slider.js
   var clamp = (v, a, b) => Math.min(Math.max(v, a), b);
-  var STATE = { normal: "ok", under: "warn", over: "warn", error: "err" };
-  var Slider = class extends Control {
-    constructor(parent, id, opts) {
-      super(parent, id, resolveOptions(SliderOptions, opts), "slider");
-      const o = this.opts, el = this.el;
-      this.value = clamp(+o.value, Math.min(o.min, o.max), Math.max(o.min, o.max));
-      el.setAttribute("role", "slider");
-      this.addHoverOutline();
-      this.addChangedDot();
-      this.fill = h("div", "a2-fill", el);
-      if (!o.showFill) this.fill.style.display = "none";
-      this.addChangedDot(this.fill, "a2-dot-in-fill");
-      this.label = h("span", "a2-label", el, o.label);
-      this.preview = h("span", "a2-preview", el);
-      this.input = h("input", "a2-value", el);
-      this.input.type = "text";
-      this.input.spellcheck = false;
-      this.input.setAttribute("aria-label", o.label || "value");
-      this.input.tabIndex = -1;
-      el.tabIndex = 0;
-      this._frac = this.normalize();
-      this.paintFill(this._frac);
-      this.input.value = this.fmt(this.value);
-      this.paintChangedDot(true);
-      this.wireDrag();
-      this.wireInput();
-      this.enableMiddleReset(el, false);
-      el.addEventListener("keydown", (e) => {
-        if (e.target !== el) return;
-        const step = o.dragStep || (o.max - o.min) / 100;
-        if (e.key === "ArrowRight" || e.key === "ArrowUp") {
-          e.preventDefault();
-          this.set(this.limit(this.value + step), true);
-        } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
-          e.preventDefault();
-          this.set(this.limit(this.value - step), true);
-        } else if (e.key === "Enter") {
-          e.preventDefault();
-          this.beginEdit();
-        }
-      });
+  var decimalsOf = (step) => {
+    const s = String(step);
+    return s.includes(".") ? s.split(".")[1].length : 0;
+  };
+  var NumberBase = class extends Component {
+    setupNumber(o) {
+      this.min = o.min ?? 0;
+      this.max = o.max ?? 100;
+      this.step = o.step ?? (this.max - this.min > 10 ? 1 : 0.01);
+      this.decimals = o.decimals ?? decimalsOf(this.step);
+      this._value = this.normalize(o.value ?? this.min);
     }
-    afterReset() {
-      this.opts.onComplete && this.opts.onComplete(this.value, this);
-    }
-    fmt(v) {
-      const f = this.opts.format;
-      return typeof f === "function" ? f(v) : (+v).toFixed(f);
-    }
-    limit(v) {
-      const o = this.opts;
-      return o.clampDrag ? clamp(v, Math.min(o.min, o.max), Math.max(o.min, o.max)) : v;
-    }
-    normalize(v = this.value) {
-      const o = this.opts;
-      if (o.scale) return o.scale.normalize(o.min, v, o.max);
-      return o.max === o.min ? 0 : (v - o.min) / (o.max - o.min);
-    }
-    denormalize(t) {
-      const o = this.opts;
-      return o.scale ? o.scale.denormalize(o.min, t, o.max) : o.min + t * (o.max - o.min);
-    }
-    setNormalized(t, notify2 = true) {
-      this.set(this.denormalize(t), notify2);
-    }
-    paintFill(frac) {
-      this.fill.style.width = `${clamp(frac, 0, 1) * 100}%`;
-    }
-    animateFill(to, dur) {
-      this._ft && this._ft.kill();
-      this._ft = tweenNumber(this._frac, to, dur, "OutExpo", (v) => {
-        this._frac = v;
-        this.paintFill(v);
-      });
-    }
-    set(v, notify2 = true) {
+    normalize(v) {
       v = +v;
-      if (Number.isNaN(v) || v === this.value) return;
-      this.value = v;
-      this.updateVisual(false);
-      if (notify2 && this.opts.onChanged) this.opts.onChanged(v, this);
+      if (!Number.isFinite(v)) return this._value ?? this.min;
+      if (this.step) v = Math.round((v - this.min) / this.step) * this.step + this.min;
+      return +clamp(v, this.min, this.max).toFixed(Math.min(10, this.decimals + 2));
     }
-    setDefaultValue(v, noAnimate) {
-      const o = this.opts;
-      if (v != null) {
-        if (o.dragFilter) v = o.dragFilter(v);
-        v = this.limit(v);
-      }
-      super.setDefaultValue(v, noAnimate);
+    format(v) {
+      const f = this.opts.format;
+      return typeof f === "function" ? f(v) : (+v).toFixed(this.decimals);
     }
-    updateVisual(noAnimate) {
-      this.el.setAttribute("aria-valuenow", this.value);
-      if (document.activeElement !== this.input) this.input.value = this.fmt(this.value);
-      const t = this.normalize();
-      if (noAnimate) {
-        this._ft && this._ft.kill();
-        this._frac = t;
-        this.paintFill(t);
-      } else this.animateFill(t, this._dragging ? 0.12 : 0.6);
-      this.paintChangedDot(noAnimate);
-    }
-    // ── 끌기: 포인터 잠금으로 화면 끝에 막히지 않게 한다
-    wireDrag() {
-      const el = this.el, o = this.opts;
-      let start = null, lastX = 0, cached = 0;
-      el.addEventListener("pointerdown", (e) => {
-        if (e.button !== 0 || this.blocked) return;
-        if (document.activeElement === this.input && e.target === this.input) return;
-        start = { x: e.clientX, y: e.clientY };
-        lastX = e.clientX;
-        cached = this.value;
-        try {
-          el.setPointerCapture(e.pointerId);
-        } catch (_) {
-        }
-      });
-      el.addEventListener("pointermove", (e) => {
-        if (!start) return;
-        if (!this._dragging) {
-          if (Math.abs(e.clientX - start.x) < 3) return;
-          this._dragging = true;
-          el.classList.add("a2-dragging");
-          if (document.activeElement === this.input) this.input.blur();
-          if (e.pointerType === "mouse" && el.requestPointerLock) {
-            try {
-              const p = el.requestPointerLock();
-              p && p.catch && p.catch(() => {
-              });
-            } catch (_) {
-            }
-          }
-        }
-        const locked = document.pointerLockElement === el;
-        const dx = locked ? e.movementX : e.clientX - lastX;
-        lastX = e.clientX;
-        if (!dx) return;
-        const w = this.input.getBoundingClientRect().width || el.getBoundingClientRect().width || 1;
-        const sens = ctx.config.sliderSensitivity;
-        if (o.dragStep) cached += dx * o.dragStep * sens;
-        else if (o.scale) cached = this.denormalize(this.normalize(cached) + dx / w * sens);
-        else cached += dx * (o.max - o.min) * sens / w;
-        cached = this.limit(cached);
-        this.set(o.dragFilter ? o.dragFilter(cached) : cached, true);
-      });
-      const end = (e) => {
-        if (!start) return;
-        const dragged = this._dragging;
-        start = null;
-        this._dragging = false;
-        el.classList.remove("a2-dragging");
-        if (document.pointerLockElement === el) document.exitPointerLock();
-        if (dragged) {
-          o.onComplete && o.onComplete(this.value, this);
+    /** 입력칸을 계산식 입력으로 만든다. hint 에 결과를 보여 준다 */
+    wireExpr(input, hint) {
+      const show = () => {
+        const r = evaluate(input.value, { x: this._value });
+        input.classList.toggle("a2-bad", !r.ok && input.value.trim() !== "");
+        if (!r.ok) {
+          hint.textContent = "";
           return;
         }
-        if (e.type === "pointerup") this.beginEdit();
+        const v = this.normalize(r.value), plain = /^\s*-?\d*\.?\d+\s*$/.test(input.value) && +input.value === v;
+        hint.textContent = plain ? "" : `= ${this.format(v)}`;
+        hint.classList.toggle("a2-clamped", v !== +r.value.toFixed(Math.min(10, this.decimals + 2)));
       };
-      el.addEventListener("pointerup", end);
-      el.addEventListener("pointercancel", end);
-    }
-    // ── 입력: 계산식 + 미리보기
-    beginEdit() {
-      if (this.blocked) return;
-      this.input.tabIndex = 0;
-      this.input.focus();
-      this.input.value = String(this.value);
-      this.input.select();
-    }
-    ranges() {
-      const o = this.opts;
-      const iLo = o.inputMin ?? o.min, iHi = o.inputMax ?? o.max;
-      let lo = Math.max(Math.min(o.min, o.max), iLo), hi = Math.min(Math.max(o.min, o.max), iHi);
-      if (lo > hi) {
-        lo = iLo;
-        hi = iHi;
-      }
-      return { iLo, iHi, lo, hi };
-    }
-    wireInput() {
-      const inp = this.input, o = this.opts;
-      inp.addEventListener("focus", () => {
+      input.addEventListener("input", show);
+      input.addEventListener("focus", () => {
+        input.value = String(this._value);
+        input.select();
+        show();
         this.el.classList.add("a2-editing");
-        this.onType();
       });
-      inp.addEventListener("input", () => this.onType());
-      inp.addEventListener("keydown", (e) => {
+      input.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
           e.preventDefault();
-          inp.blur();
+          input.blur();
         } else if (e.key === "Escape") {
           e.preventDefault();
           this._cancel = true;
-          inp.blur();
+          input.blur();
         }
         e.stopPropagation();
       });
-      inp.addEventListener("blur", () => {
-        const cancel = this._cancel;
+      input.addEventListener("blur", () => {
+        const r = this._cancel ? { ok: false } : evaluate(input.value, { x: this._value });
         this._cancel = false;
         this.el.classList.remove("a2-editing");
-        inp.tabIndex = -1;
-        const r = cancel ? { ok: false } : evaluate(inp.value, { x: this.value });
         if (r.ok) {
-          let v = r.value;
-          if (o.clampInput) {
-            const { iLo, iHi } = this.ranges();
-            v = clamp(v, iLo, iHi);
-          }
-          if (o.inputFilter) v = o.inputFilter(v);
-          this.set(v, true);
-          o.onComplete && o.onComplete(this.value, this);
+          this.set(r.value);
+          this.emit("commit", this._value);
         }
-        inp.value = this.fmt(this.value);
-        this.endStateVisuals();
+        input.value = this.format(this._value);
+        input.classList.remove("a2-bad");
+        hint.textContent = "";
+        this.afterEdit && this.afterEdit();
       });
     }
-    onType() {
-      const text = this.input.value, o = this.opts;
-      const r = evaluate(text, { x: this.value });
-      if (!r.ok) {
-        this.setStateVisuals("error", null);
-        this.preview.textContent = "";
-        return;
-      }
-      let shown = r.value, state = "normal";
-      if (o.clampInput) {
-        const { lo, hi } = this.ranges();
-        if (r.value < lo) {
-          shown = lo;
-          state = "under";
-        } else if (r.value > hi) {
-          shown = hi;
-          state = "over";
+  };
+  var Slider = class extends NumberBase {
+    constructor(o = {}) {
+      super("slider", o);
+      this.setupNumber(o);
+      const el = this.el;
+      this.header(el, o.label);
+      this.hint = h("span", "a2-expr-hint", this.headSlot);
+      this.input = h("input", "a2-num-input", this.headSlot);
+      this.input.type = "text";
+      this.input.inputMode = "decimal";
+      this.input.spellcheck = false;
+      this.input.setAttribute("aria-label", `${o.label || ""} 값`);
+      if (o.unit) h("span", "a2-unit", this.headSlot, o.unit);
+      this.track = h("div", "a2-track-area", el);
+      this.track.tabIndex = 0;
+      this.track.setAttribute("role", "slider");
+      this.track.setAttribute("aria-valuemin", this.min);
+      this.track.setAttribute("aria-valuemax", this.max);
+      const rail = h("div", "a2-rail", this.track);
+      this.fill = h("div", "a2-rail-fill", rail);
+      this.thumb = h("div", "a2-rail-thumb", this.track);
+      this._t = this.frac();
+      this.paint(this._t);
+      this.wireExpr(this.input, this.hint);
+      this.wirePointer();
+      this.track.addEventListener("keydown", (e) => {
+        const big = (this.max - this.min) / 10;
+        const d = { ArrowRight: this.step, ArrowUp: this.step, ArrowLeft: -this.step, ArrowDown: -this.step, PageUp: big, PageDown: -big }[e.key];
+        if (e.key === "Home") this.set(this.min);
+        else if (e.key === "End") this.set(this.max);
+        else if (d) this.set(this._value + d);
+        else return;
+        e.preventDefault();
+        this.emit("commit", this._value);
+      });
+      this.render(true);
+    }
+    frac(v = this._value) {
+      return this.max === this.min ? 0 : (v - this.min) / (this.max - this.min);
+    }
+    paint(t) {
+      t = clamp(t, 0, 1);
+      this.track.style.setProperty("--a2-t", t);
+    }
+    render(instant) {
+      const t = this.frac();
+      this.track.setAttribute("aria-valuenow", this._value);
+      if (document.activeElement !== this.input) this.input.value = this.format(this._value);
+      this._ft && this._ft.kill();
+      if (instant || this._dragging) {
+        this._t = t;
+        this.paint(t);
+      } else this._ft = tweenNumber(this._t, t, 0.28, "OutCubic", (v) => {
+        this._t = v;
+        this.paint(v);
+      });
+      this.paintReset();
+    }
+    wirePointer() {
+      const tr = this.track;
+      const at = (x) => {
+        const r = tr.getBoundingClientRect();
+        return this.min + clamp((x - r.left) / (r.width || 1), 0, 1) * (this.max - this.min);
+      };
+      let down2 = false;
+      tr.addEventListener("pointerdown", (e) => {
+        if (e.button !== 0 || this.disabled) return;
+        down2 = true;
+        this._moved = false;
+        try {
+          tr.setPointerCapture(e.pointerId);
+        } catch (_) {
         }
-      }
-      const plain = /^\s*[+-]?(\d+\.?\d*|\.\d+)(e[+-]?\d+)?\s*$/i.test(text) && Math.abs(parseFloat(text) - shown) < 1e-7;
-      this.preview.textContent = "";
-      if (!(plain && state === "normal")) {
-        const sym = state === "normal" ? "=" : state === "over" ? "<" : ">";
-        this.preview.append(`${this.fmt(shown)} ${sym} `);
-        h("span", "a2-ghost", this.preview, text);
-      }
-      this.setStateVisuals(state, shown);
+        this.el.classList.add("a2-active");
+        this.set(at(e.clientX));
+      });
+      tr.addEventListener("pointermove", (e) => {
+        if (!down2) return;
+        this._dragging = true;
+        this.set(at(e.clientX));
+      });
+      const end = () => {
+        if (!down2) return;
+        down2 = false;
+        this._dragging = false;
+        this.el.classList.remove("a2-active");
+        this.emit("commit", this._value);
+      };
+      tr.addEventListener("pointerup", end);
+      tr.addEventListener("pointercancel", end);
     }
-    setStateVisuals(state, value) {
-      const color = themeVar(this.el, `math-${STATE[state]}`);
-      this.el.style.setProperty("--a2-state", color);
-      const c = parseColor(color);
-      this.fill.style.backgroundColor = value == null ? "transparent" : cssColor([c[0], c[1], c[2], 0.3]);
-      this.el.classList.add("a2-stated");
-      if (value != null) this.animateFill(this.normalize(value), 0.4);
+  };
+  var Stepper = class extends NumberBase {
+    constructor(o = {}) {
+      super("stepper", o);
+      this.setupNumber({ step: 1, ...o });
+      const el = this.el;
+      const text = h("div", "a2-row-text", el);
+      this.header(text, o.label);
+      if (o.description) h("div", "a2-desc", text, o.description);
+      const box2 = h("div", "a2-stepper-box", el);
+      this.minus = h("button", "a2-step-btn", box2);
+      this.minus.type = "button";
+      this.minus.setAttribute("aria-label", "줄이기");
+      icon("minus", "", this.minus);
+      const mid = h("div", "a2-stepper-mid", box2);
+      this.hint = h("span", "a2-expr-hint", el);
+      this.input = h("input", "a2-num-input", mid);
+      this.input.type = "text";
+      this.input.inputMode = "decimal";
+      this.input.spellcheck = false;
+      if (o.unit) h("span", "a2-unit", mid, o.unit);
+      this.plus = h("button", "a2-step-btn", box2);
+      this.plus.type = "button";
+      this.plus.setAttribute("aria-label", "늘리기");
+      icon("plus", "", this.plus);
+      this.wireExpr(this.input, this.hint);
+      for (const [btn, d] of [[this.minus, -1], [this.plus, 1]]) {
+        let t1 = 0, t2 = 0;
+        const stop = () => {
+          clearTimeout(t1);
+          clearInterval(t2);
+          if (btn._held) {
+            btn._held = false;
+            this.emit("commit", this._value);
+          }
+        };
+        btn.addEventListener("pointerdown", (e) => {
+          if (e.button !== 0 || this.disabled) return;
+          btn._held = true;
+          this.set(this._value + d * this.step);
+          t1 = setTimeout(() => {
+            t2 = setInterval(() => this.set(this._value + d * this.step), 55);
+          }, 380);
+        });
+        for (const ev of ["pointerup", "pointerleave", "pointercancel"]) btn.addEventListener(ev, stop);
+        pressable(btn, () => {
+          this.set(this._value + d * this.step);
+          this.emit("commit", this._value);
+        });
+      }
+      this.render(true);
     }
-    endStateVisuals() {
-      this.preview.textContent = "";
-      this.el.classList.remove("a2-stated");
-      this.el.style.removeProperty("--a2-state");
-      this.fill.style.backgroundColor = "";
-      this.animateFill(this.normalize(), 0.4);
+    render() {
+      if (document.activeElement !== this.input) this.input.value = this.format(this._value);
+      this.minus.disabled = this._value <= this.min;
+      this.plus.disabled = this._value >= this.max;
+      this.paintReset();
     }
   };
 
-  // src/controls/input.js
-  var InputOptions = {
-    value: "",
-    defaultValue: null,
-    placeholder: "",
-    icon: null,
-    multiline: false,
-    monospace: false,
-    onChanged: null,
-    onEndEdit: null,
-    tooltip: null
-  };
-  var Input = class extends Control {
-    constructor(parent, id, opts) {
-      super(parent, id, resolveOptions(InputOptions, opts), "input");
-      const o = this.opts, el = this.el;
-      this.value = o.value ?? "";
-      if (o.multiline) el.classList.add("a2-multiline");
-      if (o.monospace) el.classList.add("a2-mono");
-      this.addHoverOutline();
-      this.addChangedDot();
-      this.field = h(o.multiline ? "textarea" : "input", "a2-field", el);
-      if (!o.multiline) this.field.type = "text";
-      this.field.placeholder = o.placeholder;
-      this.field.value = this.value;
-      this.field.spellcheck = false;
-      if (o.icon) this.iconEl = userIcon(o.icon, "a2-input-icon", el);
-      else el.classList.add("a2-no-icon");
-      el.addEventListener("pointerup", (e) => {
-        if (e.button === 0 && e.target !== this.field) this.field.focus();
+  // src/components/field.js
+  var Field = class extends Component {
+    constructor(o = {}) {
+      super("field", o);
+      const el = this.el;
+      this._value = o.value ?? "";
+      if (o.label) this.header(el, o.label);
+      this.box = h("label", "a2-field-box", el);
+      if (o.icon) userIcon(o.icon, "a2-field-icon", this.box);
+      this.input = h(o.multiline ? "textarea" : "input", "a2-field-input", this.box);
+      if (!o.multiline) this.input.type = o.type || "text";
+      if (o.multiline) {
+        this.box.classList.add("a2-multiline");
+        this.input.rows = o.rows || 3;
+      }
+      this.input.placeholder = o.placeholder || "";
+      this.input.value = this._value;
+      this.input.spellcheck = false;
+      if (o.maxLength) {
+        this.input.maxLength = o.maxLength;
+        this.counter = h("span", "a2-field-count", this.headSlot || el);
+      }
+      if (o.label) this.input.setAttribute("aria-label", o.label);
+      this.input.addEventListener("input", () => {
+        this._value = this.input.value;
+        this.render(false);
+        this.emit("change", this._value);
       });
-      this.field.addEventListener("focus", () => el.classList.add("a2-focus"));
-      this.field.addEventListener("blur", () => {
-        el.classList.remove("a2-focus");
-        o.onEndEdit && o.onEndEdit(this.value, this);
-      });
-      this.field.addEventListener("input", () => {
-        this.value = this.field.value;
-        this.paintChangedDot(false);
-        o.onChanged && o.onChanged(this.value, this);
-      });
-      this.enableMiddleReset();
-      this.paintChangedDot(true);
+      this.input.addEventListener("change", () => this.emit("commit", this._value));
+      this.input.addEventListener("focus", () => this.box.classList.add("a2-focus"));
+      this.input.addEventListener("blur", () => this.box.classList.remove("a2-focus"));
+      this.render(true);
     }
-    afterReset() {
-      this.opts.onEndEdit && this.opts.onEndEdit(this.value, this);
+    normalize(v) {
+      return v == null ? "" : String(v);
     }
-    updateVisual(noAnimate) {
-      if (this.field.value !== this.value) this.field.value = this.value;
-      this.paintChangedDot(noAnimate);
+    render() {
+      if (this.input.value !== this._value) this.input.value = this._value;
+      if (this.counter) this.counter.textContent = `${this._value.length}/${this.opts.maxLength}`;
+      this.paintReset();
     }
     focus() {
-      this.field.focus();
+      this.input.focus();
+      return this;
     }
   };
 
-  // src/controls/segmented.js
-  var SegmentedOptions = {
-    values: [],
-    value: void 0,
-    defaultValue: null,
-    display: (v) => String(v),
-    height: null,
-    fontSize: null,
-    normalColor: null,
-    activeColor: null,
-    borderColor: null,
-    onChanged: null,
-    tooltip: null
-  };
-  var Segmented = class extends Control {
-    constructor(parent, id, opts) {
-      super(parent, id, resolveOptions(SegmentedOptions, opts), "segmented");
-      const o = this.opts, el = this.el;
-      el.setAttribute("role", "radiogroup");
-      if (o.height != null) el.style.setProperty("--a2-h", o.height);
-      if (o.fontSize != null) el.style.setProperty("--a2-fs", o.fontSize);
-      this.mask = h("div", "a2-seg-mask", el);
-      this.addChangedDot();
-      this.value = o.value !== void 0 ? o.value : o.values[0];
-      this.build();
-      this.enableMiddleReset(el, false);
-      new ResizeObserver(() => this.moveIndicator(true)).observe(this.mask);
+  // src/core/float.js
+  function openFloat({ anchor, className = "", align = "start", gap = 8, onClose }) {
+    const el = h("div", `a2 a2-float ${className}`, document.body);
+    let up = null, alive = true, raf2 = 0, t = null;
+    const place = () => {
+      if (!alive) return;
+      const g = px(el, gap);
+      let r;
+      if (anchor instanceof Element) {
+        if (!anchor.isConnected) return close();
+        r = anchor.getBoundingClientRect();
+        if (align === "stretch") el.style.width = `${r.width}px`;
+      } else r = { left: anchor.x, right: anchor.x, top: anchor.y, bottom: anchor.y, width: 0 };
+      const w = el.offsetWidth, ht = el.offsetHeight;
+      if (up === null) up = r.bottom + g + ht > innerHeight && r.top - g - ht > 0;
+      let x = Math.min(Math.max(8, r.left), innerWidth - w - 8);
+      let y = up ? r.top - g - ht : r.bottom + g;
+      y = Math.min(Math.max(8, y), innerHeight - ht - 8);
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
+      el.classList.toggle("a2-up", up);
+      if (anchor instanceof Element) raf2 = requestAnimationFrame(place);
+    };
+    const outside = (e) => {
+      if (!el.contains(e.target) && !(anchor instanceof Element && anchor.contains(e.target))) close();
+    };
+    const key = (e) => {
+      if (e.key === "Escape") {
+        e.stopPropagation();
+        close();
+      }
+    };
+    function close() {
+      if (!alive) return;
+      alive = false;
+      cancelAnimationFrame(raf2);
+      document.removeEventListener("pointerdown", outside, true);
+      removeEventListener("keydown", key, true);
+      t && t.kill();
+      t = animate({ p: 1 }, { p: 0 }, { duration: 0.14, ease: "OutSine", onUpdate: (v) => paint(v.p), onDone: () => el.remove() });
+      onClose && onClose();
     }
-    set fontSize(v) {
-      this.el.style.setProperty("--a2-fs", v);
-    }
-    color(name) {
-      const o = this.opts;
-      if (name === "normal") return o.normalColor || themeVar(this.el, "object-button");
-      if (name === "active") return o.activeColor || themeVar(this.el, "object-active");
-      return themeVar(this.el, name);
-    }
-    build() {
-      this.mask.textContent = "";
-      this.ind = h("div", "a2-seg-ind", this.mask);
-      this.segs = this.opts.values.map((v) => {
-        const s = h("button", "a2-seg", this.mask, this.opts.display(v));
-        s.type = "button";
-        s.setAttribute("role", "radio");
-        s._v = v;
-        s.addEventListener("click", () => {
-          if (!this.blocked) this.set(v, true);
-        });
-        return s;
+    const paint = (p) => {
+      el.style.opacity = p;
+      el.style.transform = `translateY(${(1 - p) * (up ? 6 : -6) * px(el, 1)}px) scale(${0.97 + 0.03 * p})`;
+    };
+    paint(0);
+    requestAnimationFrame(() => {
+      place();
+      t = animate({ p: 0 }, { p: 1 }, { duration: 0.2, ease: "OutCubic", onUpdate: (v) => paint(v.p) });
+    });
+    setTimeout(() => {
+      if (alive) {
+        document.addEventListener("pointerdown", outside, true);
+        addEventListener("keydown", key, true);
+      }
+    }, 0);
+    return { el, close, get open() {
+      return alive;
+    }, place };
+  }
+
+  // src/components/select.js
+  var toOpt = (raw) => typeof raw === "object" && raw !== null ? { label: String(raw.value), ...raw } : { value: raw, label: String(raw) };
+  function listKeys(list, rows, onPick) {
+    let i = rows.findIndex((r) => r.classList.contains("a2-on"));
+    const focus = (n) => {
+      i = (n + rows.length) % rows.length;
+      rows.forEach((r, k) => r.classList.toggle("a2-kbd", k === i));
+      rows[i].scrollIntoView({ block: "nearest" });
+    };
+    list.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        focus(i + 1);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        focus(i - 1);
+      } else if ((e.key === "Enter" || e.key === " ") && i >= 0) {
+        e.preventDefault();
+        onPick(i);
+      }
+    });
+    list.tabIndex = -1;
+    setTimeout(() => list.focus({ preventScroll: true }), 0);
+  }
+  var Select = class extends Component {
+    constructor(o = {}, kind = "select") {
+      super(kind, o);
+      const el = this.el;
+      this.options = (o.options || []).map(toOpt);
+      if (o.label) this.header(el, o.label);
+      this.box = h("button", "a2-select-box", el);
+      this.box.type = "button";
+      this.box.setAttribute("aria-haspopup", "listbox");
+      this.text = h("span", "a2-select-text", this.box);
+      this.chev = icon("chevron", "a2-select-chev", this.box);
+      this._value = this.initial(o);
+      this.box.addEventListener("click", () => {
+        if (!this.disabled) this.toggle();
       });
-      this._placed = false;
-      this.updateVisual(true);
-      requestAnimationFrame(() => this.updateVisual(true));
+      this.box.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowDown" && !this.float) {
+          e.preventDefault();
+          this.open();
+        }
+      });
+      this.render(true);
     }
-    /** 알약을 고른 칸으로 옮긴다 */
-    moveIndicator(noAnimate) {
-      const seg = (this.segs || []).find((s) => this.equals(s._v, this.value));
-      if (!seg || !seg.offsetWidth) {
-        this.ind.style.opacity = seg ? "" : "0";
-        return;
-      }
-      const to = { x: seg.offsetLeft, w: seg.offsetWidth };
-      this._it && this._it.kill();
-      if (noAnimate || !this._placed) {
-        this._ind = to;
-        this.ind.style.transform = `translateX(${to.x}px)`;
-        this.ind.style.width = `${to.w}px`;
-        this._placed = true;
-        return;
-      }
-      const from = this._ind || to;
-      this._it = tween(from, to, 0.34, "OutExpo", (v) => {
-        this._ind = v;
-        this.ind.style.transform = `translateX(${v.x}px)`;
-        this.ind.style.width = `${v.w}px`;
+    initial(o) {
+      return o.value !== void 0 ? o.value : this.options[0] && this.options[0].value;
+    }
+    labelOf(v) {
+      const f = this.options.find((x) => this.equals(x.value, v));
+      return f ? f.label : v ?? "";
+    }
+    summary() {
+      return this.labelOf(this._value);
+    }
+    isOn(v) {
+      return this.equals(v, this._value);
+    }
+    get isOpen() {
+      return !!(this.float && this.float.open);
+    }
+    toggle() {
+      this.isOpen ? this.close() : this.open();
+    }
+    open() {
+      if (this.isOpen) return;
+      this.el.classList.add("a2-open");
+      this.box.setAttribute("aria-expanded", "true");
+      this.float = openFloat({ anchor: this.box, align: "stretch", className: "a2-menu a2-select-menu", onClose: () => {
+        this.el.classList.remove("a2-open");
+        this.box.setAttribute("aria-expanded", "false");
+        this.float = null;
+      } });
+      const list = this.float.el;
+      list.setAttribute("role", "listbox");
+      this.rows = this.options.map((opt2, i) => {
+        const r = h("div", "a2-menu-item", list);
+        r.setAttribute("role", "option");
+        h("span", "a2-menu-label", r, opt2.label);
+        icon("check", "a2-menu-check", r);
+        r.addEventListener("click", () => this.pick(i));
+        return r;
+      });
+      this.paintRows();
+      listKeys(list, this.rows, (i) => this.pick(i));
+    }
+    close() {
+      this.float && this.float.close();
+    }
+    pick(i) {
+      this.set(this.options[i].value);
+      this.emit("commit", this._value);
+      this.close();
+      this.box.focus({ preventScroll: true });
+    }
+    paintRows() {
+      (this.rows || []).forEach((r, i) => {
+        const on = this.isOn(this.options[i].value);
+        r.classList.toggle("a2-on", on);
+        r.setAttribute("aria-selected", on);
       });
     }
     /** 목록을 바꾼다. 지금 값이 없으면 첫 값으로 */
-    setValues(values, notify2 = false) {
-      this.opts.values = values;
-      if (!values.some((v) => this.equals(v, this.value))) {
-        const nv = values[0];
-        this.value = nv;
-        if (notify2 && this.opts.onChanged) this.opts.onChanged(nv, this);
-      }
-      this.build();
+    setOptions(options) {
+      this.options = options.map(toOpt);
+      if (!this.options.some((x) => this.isOn(x.value))) this.set(this.initial({}));
+      this.render(true);
+      return this;
     }
-    updateVisual(noAnimate) {
-      for (const s of this.segs || []) {
-        const sel = this.equals(s._v, this.value);
-        s.classList.toggle("a2-selected", sel);
-        s.setAttribute("aria-checked", sel);
-      }
-      this.moveIndicator(noAnimate);
-      this.paintChangedDot(true);
+    render() {
+      const s = this.summary();
+      this.text.textContent = s || this.opts.placeholder || "";
+      this.text.classList.toggle("a2-placeholder", !s);
+      this.paintRows();
+      this.paintReset();
     }
-  };
-
-  // src/controls/dropdown.js
-  var DropdownOptions = {
-    values: [],
-    value: void 0,
-    defaultValue: null,
-    display: (v) => String(v),
-    onChanged: null,
-    tooltip: null
-  };
-  var Dropdown = class extends Control {
-    constructor(parent, id, opts, kind = "dropdown") {
-      super(parent, id, resolveOptions(DropdownOptions, opts), kind);
-      const o = this.opts, el = this.el;
-      el.classList.add("a2-dd");
-      this.expanded = false;
-      this.header = h("div", "a2-dd-header", el);
-      this.header.tabIndex = 0;
-      this.header.setAttribute("role", "combobox");
-      this.header.setAttribute("aria-expanded", "false");
-      this.addHoverOutline(this.header);
-      this.addChangedDot(this.header);
-      this.label = h("span", "a2-label a2-dd-label", this.header);
-      this.tri = icon("triangle", "a2-dd-tri", this.header);
-      this.list = h("div", `a2 a2-dd-list a2-${kind}-list`, el);
-      this.list.setAttribute("role", "listbox");
-      this.initValue();
-      this.build();
-      this.header.addEventListener("click", () => {
-        if (!this.blocked) this.toggleExpanded();
-      });
-      this.header.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          this.toggleExpanded();
-        } else if (e.key === "Escape") this.setExpanded(false);
-      });
-      this.enableMiddleReset(this.header);
-      this.paintOpen(0, true);
-    }
-    initValue() {
-      const o = this.opts;
-      this.value = o.value !== void 0 ? o.value : o.values[0];
-    }
-    summary() {
-      return this.opts.display(this.value);
-    }
-    build() {
-      this.list.textContent = "";
-      this.rows = this.opts.values.map((v) => {
-        const r = h("div", "a2-dd-row", this.list);
-        r.setAttribute("role", "option");
-        r.tabIndex = -1;
-        r._v = v;
-        h("span", "a2-dd-row-text", r, this.opts.display(v));
-        this.decorateRow(r, v);
-        r.addEventListener("click", () => this.pick(v));
-        return r;
-      });
-      this.updateVisual(true);
-    }
-    decorateRow() {
-    }
-    pick(v) {
-      this.set(v, true);
-      this.setExpanded(false);
-    }
-    setValues(values, notify2 = false) {
-      this.opts.values = values;
-      if (!values.some((v) => this.equals(v, this.value))) {
-        this.value = values[0];
-        if (notify2 && this.opts.onChanged) this.opts.onChanged(this.value, this);
-      }
-      this.build();
-      if (this.expanded) this.paintOpen(1, true);
-    }
-    toggleExpanded() {
-      this.setExpanded(!this.expanded);
-    }
-    setExpanded(open) {
-      if (open === this.expanded) return;
-      this.expanded = open;
-      this.el.classList.toggle("a2-open", open);
-      this.header.setAttribute("aria-expanded", open);
-      const L = this.list;
-      this._lt && this._lt.kill();
-      this._rt && this._rt.kill();
-      if (open) {
-        if (L.parentNode !== document.body) document.body.appendChild(L);
-        L.hidden = false;
-        this._decided = false;
-        this.place();
-        const track = () => {
-          if (!this.expanded) return;
-          this.place();
-          this._track = requestAnimationFrame(track);
-        };
-        cancelAnimationFrame(this._track);
-        this._track = requestAnimationFrame(track);
-      }
-      const from = this._lp ?? 0;
-      this._lt = tween({ p: from }, { p: open ? 1 : 0 }, open ? 0.22 : 0.14, open ? "OutCubic" : "OutSine", (v) => {
-        this._lp = v.p;
-        L.style.opacity = v.p;
-        L.style.transform = `translateY(${(1 - v.p) * (this._up ? 8 : -8) * px(this.el, 1)}px) scale(${0.97 + 0.03 * v.p})`;
-      }, () => {
-        if (!this.expanded) L.hidden = true;
-      });
-      this._rt = tween({ r: this._rot || 0 }, { r: open ? 180 : 0 }, 0.3, "OutCubic", (v) => {
-        this._rot = v.r;
-        this.tri.style.transform = `rotate(${v.r}deg)`;
-      });
-      if (open) {
-        this._outside = (e) => {
-          if (!this.el.contains(e.target) && !L.contains(e.target)) this.setExpanded(false);
-        };
-        this._esc = (e) => {
-          if (e.key === "Escape") this.setExpanded(false);
-        };
-        setTimeout(() => {
-          document.addEventListener("pointerdown", this._outside);
-          addEventListener("keydown", this._esc);
-        }, 0);
-      } else {
-        if (this._outside) document.removeEventListener("pointerdown", this._outside);
-        if (this._esc) removeEventListener("keydown", this._esc);
-        cancelAnimationFrame(this._track);
-      }
-    }
-    /** 머리 바로 아래(공간이 모자라면 위)에 목록을 놓는다 */
-    place() {
-      const L = this.list, r = this.header.getBoundingClientRect(), gap = px(this.el, 8);
-      L.style.width = `${r.width}px`;
-      L.style.left = `${r.left}px`;
-      if (!this._decided) {
-        const need = L.scrollHeight + gap;
-        this._up = r.bottom + need > innerHeight && r.top - need > 0;
-        L.classList.toggle("a2-up", this._up);
-        this._decided = true;
-      }
-      if (this._up) {
-        L.style.top = "auto";
-        L.style.bottom = `${innerHeight - r.top + gap}px`;
-      } else {
-        L.style.bottom = "auto";
-        L.style.top = `${r.bottom + gap}px`;
-      }
-      if (r.bottom < 0 || r.top > innerHeight) this.setExpanded(false);
-    }
-    paintOpen() {
-      this.list.hidden = true;
-      this.list.style.opacity = 0;
-      this._lp = 0;
-      this._rot = 0;
-      this.tri.style.transform = "rotate(0deg)";
-    }
-    setBlocked(b) {
-      super.setBlocked(b);
-      if (b) this.setExpanded(false);
-    }
-    dispose() {
-      this.setExpanded(false);
-      this.list.remove();
-      super.dispose();
-    }
-    updateVisual(noAnimate) {
-      this.label.textContent = this.summary();
-      this.label.title = this.label.textContent;
-      for (const r of this.rows || []) {
-        const sel = this.isSelected(r._v);
-        r.classList.toggle("a2-selected", sel);
-        r.setAttribute("aria-selected", sel);
-      }
-      this.paintChangedDot(noAnimate);
-    }
-    isSelected(v) {
-      return this.equals(v, this.value);
+    destroy() {
+      this.close();
+      super.destroy();
     }
   };
-  var MultiDropdownOptions = { ...DropdownOptions, value: [], summary: null };
-  var MultiDropdown = class extends Dropdown {
-    constructor(parent, id, opts) {
-      super(parent, id, resolveOptions(MultiDropdownOptions, opts), "multidropdown");
-      this.el.classList.add("a2-dd");
+  var MultiSelect = class extends Select {
+    constructor(o = {}) {
+      super(o, "select");
+      this.el.classList.add("a2-multi");
     }
-    initValue() {
-      this.value = [...this.opts.value || []];
+    initial(o) {
+      return [...o.value || []];
+    }
+    normalize(v) {
+      return this.options ? this.options.map((x) => x.value).filter((x) => (v || []).includes(x)) : [...v || []];
     }
     equals(a, b) {
-      if (!Array.isArray(a) || !Array.isArray(b)) return a === b;
-      return a.length === b.length && a.every((x) => b.includes(x));
+      return Array.isArray(a) && Array.isArray(b) ? a.length === b.length && a.every((x, i) => x === b[i]) : a === b;
+    }
+    isOn(v) {
+      return (this._value || []).includes(v);
     }
     summary() {
-      const o = this.opts;
-      if (o.summary) return o.summary(this.value);
-      return this.value.length ? o.values.filter((v) => this.value.includes(v)).map(o.display).join(", ") : "없음";
+      if (this.opts.summary) return this.opts.summary(this._value);
+      const n = this._value.length;
+      if (!n) return "";
+      const labels = this._value.map((v) => this.labelOf(v));
+      return n <= 2 ? labels.join(", ") : `${labels.slice(0, 2).join(", ")} 외 ${n - 2}개`;
     }
-    decorateRow(r) {
-      r.classList.add("a2-dd-check-row");
-      icon("on", "a2-check-on", r);
-      icon("off", "a2-check-off", r);
-      r.prepend(h("div", "a2-hover-outline"));
+    pick(i) {
+      const v = this.options[i].value;
+      this.set(this.isOn(v) ? this._value.filter((x) => x !== v) : [...this._value, v]);
+      this.emit("commit", this._value);
     }
-    isSelected(v) {
-      return this.value.includes(v);
+    open() {
+      super.open();
+      this.float && this.float.el.classList.add("a2-multi-menu");
     }
-    pick(v) {
-      this.toggle(v);
+  };
+  function openMenu(x, y, items) {
+    ensureSetup();
+    const f = openFloat({ anchor: { x, y }, className: "a2-menu a2-context-menu", gap: 2 });
+    const rows = [];
+    for (const it of items) {
+      if (it === "-" || it === null) {
+        h("div", "a2-menu-sep", f.el);
+        continue;
+      }
+      const r = h("div", "a2-menu-item", f.el);
+      r.setAttribute("role", "menuitem");
+      if (it.danger) r.classList.add("a2-danger");
+      if (it.disabled) r.classList.add("a2-off");
+      if (it.icon) userIcon(it.icon, "a2-menu-icon", r);
+      h("span", "a2-menu-label", r, it.label);
+      if (it.shortcut) h("span", "a2-menu-key", r, it.shortcut);
+      r.addEventListener("click", () => {
+        if (it.disabled) return;
+        f.close();
+        it.onSelect && it.onSelect();
+      });
+      rows.push(r);
     }
-    /** 한 값을 넣었다 뺐다 한다 */
-    toggle(v, notify2 = true) {
-      const next = this.value.includes(v) ? this.value.filter((x) => x !== v) : this.opts.values.filter((x) => x === v || this.value.includes(x));
-      this.set(next, notify2);
+    listKeys(f.el, rows, (i) => rows[i].click());
+    return f;
+  }
+  function menu(target2, items) {
+    const el = typeof target2 === "string" ? document.querySelector(target2) : target2;
+    el.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+      openMenu(e.clientX, e.clientY, typeof items === "function" ? items(e) : items);
+    });
+    return el;
+  }
+
+  // src/components/segmented.js
+  var toOpt2 = (raw) => typeof raw === "object" && raw !== null ? { label: String(raw.value), ...raw } : { value: raw, label: String(raw) };
+  function pillBar(owner, parent, options, cls) {
+    const bar = h("div", cls, parent);
+    const ind = h("div", "a2-pill", bar);
+    const btns = options.map((opt2) => {
+      const b = h("button", "a2-pill-btn", bar, opt2.label);
+      b.type = "button";
+      b.addEventListener("click", () => owner.pickValue(opt2.value));
+      return b;
+    });
+    let cur = null, tw = null;
+    const move = (i, instant) => {
+      const b = btns[i];
+      if (!b || !b.offsetWidth) return;
+      const to = { x: b.offsetLeft, w: b.offsetWidth };
+      tw && tw.kill();
+      const put = (v) => {
+        cur = v;
+        ind.style.transform = `translateX(${v.x}px)`;
+        ind.style.width = `${v.w}px`;
+      };
+      if (instant || !cur) put(to);
+      else tw = tween(cur, to, 0.34, "OutExpo", put);
+    };
+    new ResizeObserver(() => owner.render(true)).observe(bar);
+    return { bar, btns, move };
+  }
+  var Segmented = class extends Component {
+    constructor(o = {}) {
+      super("segmented", o);
+      this.options = (o.options || []).map(toOpt2);
+      if (o.label) this.header(this.el, o.label);
+      this.p = pillBar(this, this.el, this.options, "a2-seg-bar");
+      this.p.bar.setAttribute("role", "radiogroup");
+      this._value = o.value !== void 0 ? o.value : this.options[0] && this.options[0].value;
+      this.render(true);
+      requestAnimationFrame(() => this.render(true));
     }
-    has(v) {
-      return this.value.includes(v);
+    pickValue(v) {
+      if (this.disabled) return;
+      this.set(v);
+      this.emit("commit", this._value);
     }
-    set(v, notify2 = true) {
-      if (this.equals(v, this.value)) return;
-      this.value = [...v];
-      this.updateVisual(false);
-      if (notify2 && this.opts.onChanged) this.opts.onChanged([...this.value], this);
+    render(instant) {
+      const i = this.options.findIndex((x) => this.equals(x.value, this._value));
+      this.p.btns.forEach((b, k) => {
+        b.classList.toggle("a2-on", k === i);
+        b.setAttribute("aria-checked", k === i);
+        b.setAttribute("role", "radio");
+      });
+      this.p.move(i, instant);
+      this.paintReset();
+    }
+  };
+  var Tabs = class extends Component {
+    constructor(o = {}) {
+      super("tabs", o);
+      this.options = (o.tabs || []).map((t, i2) => ({ value: t.value ?? i2, label: t.label ?? String(t.value ?? i2), build: t.build }));
+      this.p = pillBar(this, this.el, this.options, "a2-tab-bar");
+      this.p.bar.setAttribute("role", "tablist");
+      this.stage = h("div", "a2-tab-stage", this.el);
+      this.panes = this.options.map((t) => {
+        const pane = h("div", "a2 a2-tab-pane", this.stage);
+        pane.setAttribute("role", "tabpanel");
+        pane.hidden = true;
+        if (t.build) t.build(pane);
+        return pane;
+      });
+      this._value = o.value !== void 0 ? o.value : this.options[0] && this.options[0].value;
+      const i = this.index();
+      if (this.panes[i]) this.panes[i].hidden = false;
+      this.render(true);
+      requestAnimationFrame(() => this.render(true));
+    }
+    index(v = this._value) {
+      return this.options.findIndex((x) => this.equals(x.value, v));
+    }
+    /** 탭 내용 요소 */
+    pane(value) {
+      return this.panes[this.index(value)];
+    }
+    pickValue(v) {
+      if (this.disabled || this.equals(v, this._value)) return;
+      const from = this.index(), to = this.index(v);
+      this.set(v);
+      this.slide(from, to);
+      this.emit("commit", this._value);
+    }
+    slide(from, to) {
+      const a = this.panes[from], b = this.panes[to];
+      if (!a || !b) return;
+      this._tw && this._tw.kill();
+      for (const p of this.panes) if (p !== a && p !== b) p.hidden = true;
+      const dir = to > from ? 1 : -1, d = px(this.el, 60);
+      const H0 = this.stage.offsetHeight;
+      a.hidden = false;
+      b.hidden = false;
+      a.classList.add("a2-leaving");
+      const H1 = b.offsetHeight;
+      this.stage.style.height = `${H0}px`;
+      this._tw = animate({ p: 0 }, { p: 1 }, {
+        duration: 0.36,
+        ease: "OutCubic",
+        onUpdate: ({ p }) => {
+          a.style.transform = `translateX(${-dir * d * p}px)`;
+          a.style.opacity = 1 - p * 1.6;
+          b.style.transform = `translateX(${dir * d * (1 - p)}px)`;
+          b.style.opacity = Math.min(1, p * 1.4);
+          this.stage.style.height = `${H0 + (H1 - H0) * p}px`;
+        },
+        onDone: () => {
+          a.hidden = true;
+          a.classList.remove("a2-leaving");
+          a.style.transform = a.style.opacity = b.style.transform = b.style.opacity = "";
+          this.stage.style.height = "";
+        }
+      });
+    }
+    render(instant) {
+      const i = this.index();
+      this.p.btns.forEach((b, k) => {
+        b.classList.toggle("a2-on", k === i);
+        b.setAttribute("aria-selected", k === i);
+        b.setAttribute("role", "tab");
+      });
+      this.p.move(i, instant);
     }
   };
 
-  // src/controls/colorpicker.js
-  var ColorPickerOptions = {
-    value: "#FFFFFF",
-    defaultValue: null,
-    label: "",
-    onChanged: null,
-    onComplete: null,
-    tooltip: null
-  };
-  var clamp01 = (v) => Math.min(1, Math.max(0, v));
-  var hex2 = (v) => Math.round(clamp01(v) * 255).toString(16).padStart(2, "0").toUpperCase();
-  function toHex({ r, g, b, a }) {
-    return `#${hex2(r)}${hex2(g)}${hex2(b)}${a < 1 ? hex2(a) : ""}`;
-  }
+  // src/components/color.js
+  var c01 = (v) => Math.min(1, Math.max(0, v));
+  var hx = (v) => Math.round(c01(v) * 255).toString(16).padStart(2, "0").toUpperCase();
+  var toHex = ({ r, g, b, a = 1 }) => `#${hx(r)}${hx(g)}${hx(b)}${a < 1 ? hx(a) : ""}`;
   function fromAny(c) {
     const [r, g, b, a] = parseColor(c);
     return { r: r / 255, g: g / 255, b: b / 255, a: a ?? 1 };
   }
   function rgb2hsv({ r, g, b }) {
-    const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
+    const mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn;
     let hh = 0;
-    if (d) hh = max === r ? (g - b) / d % 6 : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
-    return { h: (hh / 6 + 1) % 1, s: max ? d / max : 0, v: max };
+    if (d) hh = mx === r ? (g - b) / d % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4;
+    return { h: (hh / 6 + 1) % 1, s: mx ? d / mx : 0, v: mx };
   }
   function hsv2rgb(hh, s, v) {
     const f = (n) => {
@@ -1915,728 +1874,670 @@ var adas2 = (() => {
     };
     return { r: f(5), g: f(3), b: f(1) };
   }
-  var lum = (c) => {
-    const t = (x) => x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4;
-    return 0.2126 * t(c.r) + 0.7152 * t(c.g) + 0.0722 * t(c.b);
-  };
-  var ColorPicker = class extends Control {
-    constructor(parent, id, opts) {
-      super(parent, id, resolveOptions(ColorPickerOptions, opts), "colorpicker");
-      const o = this.opts, el = this.el;
-      this.rgba = fromAny(o.value);
+  var PRESETS = ["#FF7A45", "#F4B740", "#5CCB8A", "#3FC1C9", "#4C8DFF", "#8E7CFF", "#F25F8A", "#F3EEE9", "#8A847E", "#1B1917"];
+  var ColorPicker = class extends Component {
+    constructor(o = {}) {
+      super("color", o);
+      if (o.label) this.header(this.el, o.label);
+      this.box = h("button", "a2-select-box a2-color-box", this.el);
+      this.box.type = "button";
+      this.sw = h("span", "a2-swatch", this.box);
+      this.swFill = h("span", "a2-swatch-fill", this.sw);
+      this.text = h("span", "a2-select-text a2-color-text", this.box);
+      this.rgba = fromAny(o.value || "#FF7A45");
       this.hsv = rgb2hsv(this.rgba);
-      this.useHsv = false;
-      el.tabIndex = 0;
-      el.setAttribute("role", "button");
-      this.addHoverOutline();
-      this.addChangedDot();
-      this.label = h("span", "a2-label", el, o.label);
-      this.swatch = h("span", "a2-swatch", el);
-      this.swatchFill = h("span", "a2-swatch-fill", this.swatch);
-      this.swatchText = h("span", "a2-swatch-text", this.swatch);
-      el.addEventListener("click", (e) => {
-        if (!this.blocked && !this.popup?.contains(e.target)) this.open();
+      this._value = toHex(this.rgba);
+      this.box.addEventListener("click", () => {
+        if (!this.disabled) this.float && this.float.open ? this.close() : this.open();
       });
-      el.addEventListener("keydown", (e) => {
-        if (e.target === el && (e.key === "Enter" || e.key === " ")) {
-          e.preventDefault();
-          this.open();
-        }
-      });
-      this.enableMiddleReset();
-      this.updateVisual(true);
+      this.render(true);
     }
-    get value() {
-      return toHex(this.rgba);
+    normalize(v) {
+      return typeof v === "string" ? toHex(fromAny(v)) : toHex(v);
     }
-    set value(v) {
-      this.set(v, false);
+    set(v, o) {
+      const hex = this.normalize(v);
+      if (hex === this._value) return this;
+      this.rgba = fromAny(hex);
+      const hsv = rgb2hsv(this.rgba);
+      this.hsv = { h: hsv.s > 0 && hsv.v > 0 ? hsv.h : this.hsv.h, s: hsv.v > 0 ? hsv.s : this.hsv.s, v: hsv.v };
+      return super.set(hex, o);
     }
-    equals(a, b) {
-      return a && b && toHex(fromAny(a)) === toHex(fromAny(b));
+    setHsv(hh, s, v, a = this.rgba.a) {
+      this.hsv = { h: c01(hh), s: c01(s), v: c01(v) };
+      this.rgba = { ...hsv2rgb(this.hsv.h, this.hsv.s, this.hsv.v), a: c01(a) };
+      const hex = toHex(this.rgba);
+      if (hex !== this._value) {
+        this._value = hex;
+        this.render(false);
+        this.emit("change", hex);
+      }
     }
-    afterReset() {
-      this.opts.onComplete && this.opts.onComplete(this.value, this);
-    }
-    set(v, notify2 = true) {
-      const c = typeof v === "string" ? fromAny(v) : { r: clamp01(v.r), g: clamp01(v.g), b: clamp01(v.b), a: clamp01(v.a ?? 1) };
-      if (toHex(c) === this.value) return;
-      this.rgba = c;
-      const hsv = rgb2hsv(c);
-      if (hsv.s > 0 && hsv.v > 0) this.hsv = hsv;
-      else this.hsv = { ...this.hsv, s: hsv.s, v: hsv.v };
-      this.updateVisual(false);
-      if (notify2 && this.opts.onChanged) this.opts.onChanged(this.value, this);
-    }
-    setHsv(hh, s, v, notify2 = true) {
-      this.hsv = { h: hh, s: clamp01(s), v: clamp01(v) };
-      const c = hsv2rgb(this.hsv.h, this.hsv.s, this.hsv.v);
-      this.rgba = { ...c, a: this.rgba.a };
-      this.updateVisual(false);
-      if (notify2 && this.opts.onChanged) this.opts.onChanged(this.value, this);
-    }
-    updateVisual(noAnimate) {
+    render() {
       const { r, g, b, a } = this.rgba;
-      const css = `rgba(${r * 255}, ${g * 255}, ${b * 255}, ${a})`;
-      this.swatchFill.style.background = css;
-      this.swatchText.textContent = this.value;
-      const bg = fromAny(themeVar(this.el, "panel-bg") || "#25242E");
-      const mixed = { r: r * a + bg.r * (1 - a), g: g * a + bg.g * (1 - a), b: b * a + bg.b * (1 - a) };
-      const L = lum(mixed);
-      this.swatchText.style.color = (L + 0.05) / 0.05 > 1.05 / (L + 0.05) ? "#000" : "#fff";
-      this.paintChangedDot(noAnimate);
-      if (this.popup) this.syncPopup();
+      this.swFill.style.background = `rgba(${r * 255}, ${g * 255}, ${b * 255}, ${a})`;
+      this.text.textContent = this._value;
+      this.paintReset();
+      this.paintPopup();
     }
-    // ── 창
     open() {
-      if (this.popup) return;
-      this.blocker = h("div", "a2-cp-blocker", document.body);
-      this.blocker.addEventListener("pointerdown", (e) => {
-        if (e.button === 0) this.close();
-      });
-      const p = this.popup = h("div", "a2 a2-cp-popup", document.body);
-      p.setAttribute("role", "dialog");
-      this.canvas = h("canvas", "a2-cp-wheel", p);
-      this.canvas.width = this.canvas.height = 256;
-      this.ringHandle = h("span", "a2-cp-handle a2-cp-ring-handle", p);
-      this.triHandle = h("span", "a2-cp-handle a2-cp-tri-handle", p);
-      const tabs = h("div", "a2-cp-tabs", p);
-      this.tabRgb = h("button", "a2-cp-tab", tabs, "RGB");
-      this.tabHsv = h("button", "a2-cp-tab", tabs, "HSV");
-      this.tabRgb.onclick = () => this.setMode(false);
-      this.tabHsv.onclick = () => this.setMode(true);
-      this.chanBox = h("div", "a2-cp-channels", p);
-      this.hexRow = h("div", "a2-ctl a2-input a2-cp-hex a2-no-icon", p);
-      h("div", "a2-hover-outline", this.hexRow);
-      this.hex = h("input", "a2-field", this.hexRow);
+      this.el.classList.add("a2-open");
+      this.float = openFloat({ anchor: this.box, className: "a2-color-pop", onClose: () => {
+        this.el.classList.remove("a2-open");
+        this.float = null;
+        this.emit("commit", this._value);
+      } });
+      const p = this.float.el;
+      this.sv = h("div", "a2-sv", p);
+      this.svDot = h("span", "a2-sv-dot", this.sv);
+      this.hue = h("div", "a2-bar a2-hue", p);
+      this.hueDot = h("span", "a2-bar-dot", this.hue);
+      this.alpha = h("div", "a2-bar a2-alpha", p);
+      this.alphaFill = h("span", "a2-alpha-fill", this.alpha);
+      this.alphaDot = h("span", "a2-bar-dot", this.alpha);
+      const row = h("div", "a2-color-row", p);
+      this.hex = h("input", "a2-field-input a2-hex", row);
       this.hex.spellcheck = false;
-      this.hex.addEventListener("input", () => this.onHexType());
-      this.hex.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") this.hex.blur();
-        if (e.key === "Escape") this.close();
-        e.stopPropagation();
-      });
-      this.hex.addEventListener("blur", () => this.commitHex());
-      this.buildChannels();
-      this.wireWheel();
-      this.drawWheel(true);
-      this.syncPopup();
-      this.place();
-      this._place = () => this.place();
-      addEventListener("resize", this._place);
-      addEventListener("scroll", this._place, true);
-      this._key = (e) => {
-        if (e.key === "Escape") this.close();
-      };
-      addEventListener("keydown", this._key);
-      p.style.opacity = "0";
-      this._pt && this._pt.kill();
-      this._pt = tween({ s: 0.96, o: 0 }, { s: 1, o: 1 }, 0.2, "OutBack", (v) => {
-        p.style.transform = `scale(${v.s})`;
-        p.style.opacity = Math.min(1, v.o * 1.25);
-      });
-    }
-    close() {
-      const p = this.popup;
-      if (!p) return;
-      removeEventListener("resize", this._place);
-      removeEventListener("scroll", this._place, true);
-      removeEventListener("keydown", this._key);
-      this.blocker.remove();
-      this.blocker = null;
-      this.popup = null;
-      this._pt && this._pt.kill();
-      this._pt = tween({ s: 1, o: 1 }, { s: 0.96, o: 0 }, 0.16, "OutSine", (v) => {
-        p.style.transform = `scale(${v.s})`;
-        p.style.opacity = v.o;
-      }, () => p.remove());
-      this.opts.onComplete && this.opts.onComplete(this.value, this);
-    }
-    place() {
-      const r = this.el.getBoundingClientRect(), p = this.popup, m = px(this.el, 8);
-      const w = p.offsetWidth, ht = p.offsetHeight;
-      let x = r.left, y = r.bottom + px(this.el, 6);
-      x = Math.min(Math.max(m, x), innerWidth - w - m);
-      if (y + ht > innerHeight - m) y = Math.max(m, r.top - ht - px(this.el, 6));
-      p.style.left = `${x}px`;
-      p.style.top = `${y}px`;
-    }
-    setMode(useHsv) {
-      this.useHsv = useHsv;
-      this.buildChannels();
-      this.syncPopup();
-    }
-    buildChannels() {
-      this.chanBox.textContent = "";
-      const names = this.useHsv ? ["H", "S", "V", "A"] : ["R", "G", "B", "A"];
-      const colors = this.useHsv ? [null, "channel-s", "channel-v", "channel-a"] : ["channel-r", "channel-g", "channel-b", "channel-a"];
-      const def = this.opts.defaultValue ? fromAny(this.opts.defaultValue) : null;
-      const defHsv = def ? rgb2hsv(def) : null;
-      this.chans = names.map((n, i) => {
-        const key = n.toLowerCase();
-        const dv = def ? this.useHsv ? key === "a" ? def.a : defHsv[key] : def[key] : null;
-        const s = new Slider(this.chanBox, null, {
-          label: n,
-          min: 0,
-          max: 1,
-          format: 3,
-          value: this.chan(i),
-          defaultValue: dv,
-          height: 40,
-          onChanged: (v) => this.setChannel(i, v)
+      this.hex.maxLength = 9;
+      this.preview = h("span", "a2-swatch a2-color-preview", row);
+      this.previewFill = h("span", "a2-swatch-fill", this.preview);
+      const pre = h("div", "a2-presets", p);
+      for (const c of this.opts.presets || PRESETS) {
+        const s = h("button", "a2-preset", pre);
+        s.type = "button";
+        s.style.background = c;
+        s.title = c;
+        s.addEventListener("click", () => {
+          this.set(c);
         });
-        if (colors[i]) s.fill.style.setProperty("--a2-fill", `var(--a2-${colors[i]})`);
-        s._ci = i;
-        return s;
-      });
-      this.tabRgb.classList.toggle("a2-on", !this.useHsv);
-      this.tabHsv.classList.toggle("a2-on", this.useHsv);
-    }
-    chan(i) {
-      if (i === 3) return this.rgba.a;
-      if (this.useHsv) return [this.hsv.h, this.hsv.s, this.hsv.v][i];
-      return [this.rgba.r, this.rgba.g, this.rgba.b][i];
-    }
-    /** 채널 하나를 0~1 로 바꾼다 (모드에 따라 RGB 또는 HSV) */
-    setChannel(i, v) {
-      v = clamp01(v);
-      if (i === 3) return this.set({ ...this.rgba, a: v });
-      if (this.useHsv) {
-        const hs = { ...this.hsv };
-        hs[["h", "s", "v"][i]] = v;
-        return this.setHsv(hs.h, hs.s, hs.v);
       }
-      const c = { ...this.rgba };
-      c[["r", "g", "b"][i]] = v;
-      this.set(c);
-    }
-    syncPopup() {
-      if (!this.popup) return;
-      for (const s of this.chans) s.set(this.chan(s._ci), false);
-      if (this.useHsv) this.chans[0].fill.style.setProperty("--a2-fill", toHex({ ...hsv2rgb(this.hsv.h, 1, 1), a: 1 }));
-      if (document.activeElement !== this.hex) {
-        this.hex.value = toHex({ ...this.rgba, a: this.rgba.a }).slice(1).padEnd(8, "F");
-        this.hexRow.style.removeProperty("--a2-state");
-      }
-      this.drawWheel();
-    }
-    onHexType() {
-      const t = this.hex.value.trim().replace(/^#/, "");
-      let state = "err";
-      if (/^[0-9a-f]{6}([0-9a-f]{2})?$/i.test(t)) state = "ok";
-      else if (/^[0-9a-f]{0,8}$/i.test(t)) state = "warn";
-      this.hexRow.classList.add("a2-stated");
-      this.hexRow.style.setProperty("--a2-state", `var(--a2-math-${state})`);
-      if (state === "ok") this.swatchFill.style.background = `#${t}`;
-    }
-    commitHex() {
-      const t = this.hex.value.trim().replace(/^#/, "");
-      this.hexRow.classList.remove("a2-stated");
-      if (/^[0-9a-f]{6}([0-9a-f]{2})?$/i.test(t)) {
-        this.set(`#${t}`);
-        this.opts.onComplete && this.opts.onComplete(this.value, this);
-      }
-      this.updateVisual(true);
-    }
-    // ── 색상환: 바깥 고리 = 색상, 안쪽 삼각형 = 채도·명도
-    geom() {
-      const a = this.hsv.h * Math.PI * 2, R = 0.32;
-      const pt = (ang) => ({ x: 0.5 + R * Math.cos(ang), y: 0.5 - R * Math.sin(ang) });
-      return { hue: pt(a), white: pt(a + 2 * Math.PI / 3), black: pt(a - 2 * Math.PI / 3), a };
-    }
-    drawWheel(force) {
-      const c = this.canvas, g = c.getContext("2d"), N = c.width;
-      if (force || this._drawnHue !== this.hsv.h) {
-        this._drawnHue = this.hsv.h;
-        const img = g.createImageData(N, N), d = img.data, G2 = this.geom();
-        const pure = hsv2rgb(this.hsv.h, 1, 1);
-        const P = [G2.hue, G2.white, G2.black].map((p) => ({ x: p.x * N, y: p.y * N }));
-        const det = (P[1].y - P[2].y) * (P[0].x - P[2].x) + (P[2].x - P[1].x) * (P[0].y - P[2].y);
-        for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
-          const dx = (x + 0.5) / N - 0.5, dy = (y + 0.5) / N - 0.5, dist = Math.hypot(dx, dy), i = (y * N + x) * 4;
-          let rgb = null, alpha = 255;
-          if (dist >= 0.37 && dist <= 0.49) {
-            const hh = (Math.atan2(-dy, dx) / (2 * Math.PI) + 1) % 1;
-            rgb = hsv2rgb(hh, 1, 1);
-            const edge = Math.min(dist - 0.37, 0.49 - dist) * N;
-            alpha = Math.min(255, edge * 255);
-          } else {
-            const X = x + 0.5, Y = y + 0.5;
-            const w0 = ((P[1].y - P[2].y) * (X - P[2].x) + (P[2].x - P[1].x) * (Y - P[2].y)) / det;
-            const w1 = ((P[2].y - P[0].y) * (X - P[2].x) + (P[0].x - P[2].x) * (Y - P[2].y)) / det;
-            const w2 = 1 - w0 - w1;
-            if (w0 >= -4e-3 && w1 >= -4e-3 && w2 >= -4e-3) rgb = { r: pure.r * w0 + w1, g: pure.g * w0 + w1, b: pure.b * w0 + w1 };
-          }
-          if (rgb) {
-            d[i] = rgb.r * 255;
-            d[i + 1] = rgb.g * 255;
-            d[i + 2] = rgb.b * 255;
-            d[i + 3] = alpha;
-          }
-        }
-        g.putImageData(img, 0, 0);
-      }
-      const G = this.geom(), { s, v } = this.hsv;
-      const wH = s * v, wW = v * (1 - s), wB = 1 - v;
-      const tx = G.hue.x * wH + G.white.x * wW + G.black.x * wB, ty = G.hue.y * wH + G.white.y * wW + G.black.y * wB;
-      const rx = 0.5 + 0.43 * Math.cos(G.a), ry = 0.5 - 0.43 * Math.sin(G.a);
-      const place = (el, x, y) => {
-        el.style.left = `calc(var(--a2-wheel-x) + ${x} * var(--a2-wheel))`;
-        el.style.top = `calc(var(--a2-wheel-y) + ${y} * var(--a2-wheel))`;
-      };
-      place(this.ringHandle, rx, ry);
-      place(this.triHandle, tx, ty);
-      this.triHandle.style.background = toHex({ ...this.rgba, a: 1 });
-      this.ringHandle.style.background = toHex({ ...hsv2rgb(this.hsv.h, 1, 1), a: 1 });
-    }
-    wireWheel() {
-      const c = this.canvas;
-      let mode = null;
-      const pos2 = (e) => {
-        const r = c.getBoundingClientRect();
-        return { x: (e.clientX - r.left) / r.width, y: (e.clientY - r.top) / r.height };
-      };
-      const apply = (e) => {
-        const p = pos2(e);
-        if (mode === "ring") {
-          const hh = (Math.atan2(-(p.y - 0.5), p.x - 0.5) / (2 * Math.PI) + 1) % 1;
-          this.setHsv(hh, this.hsv.s, this.hsv.v);
-        } else {
-          const G = this.geom(), P = [G.hue, G.white, G.black];
-          const det = (P[1].y - P[2].y) * (P[0].x - P[2].x) + (P[2].x - P[1].x) * (P[0].y - P[2].y);
-          let w0 = ((P[1].y - P[2].y) * (p.x - P[2].x) + (P[2].x - P[1].x) * (p.y - P[2].y)) / det;
-          let w1 = ((P[2].y - P[0].y) * (p.x - P[2].x) + (P[0].x - P[2].x) * (p.y - P[2].y)) / det;
-          let w2 = 1 - w0 - w1;
-          w0 = Math.max(0, w0);
-          w1 = Math.max(0, w1);
-          w2 = Math.max(0, w2);
-          const sum = w0 + w1 + w2 || 1;
-          w0 /= sum;
-          w1 /= sum;
-          const V = w0 + w1, S = V > 0 ? w0 / V : 0;
-          this.setHsv(this.hsv.h, S, V);
-        }
-      };
-      c.addEventListener("pointerdown", (e) => {
-        if (e.button !== 0) return;
-        const p = pos2(e), d = Math.hypot(p.x - 0.5, p.y - 0.5);
-        if (d > 0.56) return;
-        mode = d >= 0.34 ? "ring" : "tri";
-        try {
-          c.setPointerCapture(e.pointerId);
-        } catch (_) {
-        }
-        apply(e);
-      });
-      c.addEventListener("pointermove", (e) => {
-        if (mode) apply(e);
-      });
-      const end = () => {
-        if (mode) {
-          mode = null;
-          this.opts.onComplete && this.opts.onComplete(this.value, this);
-        }
-      };
-      c.addEventListener("pointerup", end);
-      c.addEventListener("pointercancel", end);
-    }
-    dispose() {
-      this.close();
-      super.dispose();
-    }
-  };
-
-  // src/controls/card.js
-  var CardOptions = {
-    title: "",
-    active: true,
-    onActiveChanged: null,
-    onDelete: null,
-    showDelete: true,
-    showActiveToggle: true,
-    collapsed: false
-  };
-  var Card = class {
-    constructor(parent, opts) {
-      ensureDefaults();
-      const o = this.opts = resolveOptions(CardOptions, opts);
-      this.el = h("div", "a2 a2-card", resolveParent(parent));
-      this.header = h("div", "a2-card-header", this.el);
-      this.active = !!o.active;
-      this.expanded = !o.collapsed;
-      if (o.showActiveToggle) {
-        this.check = h("button", "a2-card-check", this.header);
-        this.check.type = "button";
-        this.check.setAttribute("role", "switch");
-        this.check.setAttribute("aria-label", "켜기");
-        makeSwitch(this.check);
-        this.check.addEventListener("click", () => this.setActive(!this.active, true));
-      }
-      this.titleBtn = h("button", "a2-card-title", this.header);
-      this.titleBtn.type = "button";
-      this.titleText = h("span", "a2-card-title-text", this.titleBtn, o.title);
-      this.tri = icon("triangle", "a2-card-tri", this.titleBtn);
-      this.titleBtn.setAttribute("aria-expanded", this.expanded);
-      this.titleBtn.addEventListener("click", () => this.setExpanded(!this.expanded));
-      if (o.showDelete && o.onDelete) {
-        this.del = h("button", "a2-card-delete", this.header);
-        this.del.type = "button";
-        this.del.setAttribute("aria-label", "삭제");
-        h("div", "a2-hover-outline", this.del);
-        icon("x", "", this.del);
-        this.del.addEventListener("click", () => o.onDelete(this));
-      }
-      this.body = h("div", "a2-card-body", this.el);
-      this.content = h("div", "a2-card-content", this.body);
-      this._rot = this.expanded ? 180 : 0;
-      this.tri.style.transform = `rotate(${this._rot}deg)`;
-      this.tri.classList.toggle("a2-on", this.expanded);
-      if (!this.expanded) {
-        this.body.style.height = "0px";
-        this.body.hidden = true;
-      }
-      this.paintActive(true);
-    }
-    set title(t) {
-      this.titleText.textContent = t;
-    }
-    /** 켜기/끄기: 꺼지면 내용이 흐려지고 누를 수 없다 */
-    setActive(on, notify2 = true) {
-      this.active = !!on;
-      this.paintActive(false);
-      if (notify2 && this.opts.onActiveChanged) this.opts.onActiveChanged(this.active, this);
-    }
-    paintActive(noAnimate) {
-      if (!this.check) {
-        this.body.classList.toggle("a2-inactive", !this.active);
-        this.body.inert = !this.active;
-        return;
-      }
-      this.check.classList.toggle("a2-on", this.active);
-      this.check.setAttribute("aria-checked", this.active);
-      this.el.classList.toggle("a2-card-off", !this.active);
-      this.body.classList.toggle("a2-inactive", !this.active);
-      this.body.inert = !this.active;
-      this.check.querySelector(".a2-switch").classList.toggle("a2-no-anim", !!noAnimate);
-    }
-    /** 접기/펼치기 (0.18초 OutCubic) */
-    setExpanded(open) {
-      if (open === this.expanded) return;
-      this.expanded = open;
-      this.titleBtn.setAttribute("aria-expanded", open);
-      const b = this.body;
-      this._ht && this._ht.kill();
-      b.hidden = false;
-      const from = b.getBoundingClientRect().height;
-      b.style.height = "auto";
-      const full = b.getBoundingClientRect().height;
-      b.style.height = `${from}px`;
-      this._ht = tweenNumber(from, open ? full : 0, 0.18, "OutCubic", (v) => {
-        b.style.height = `${v}px`;
-      }, () => {
-        if (this.expanded) b.style.height = "";
-        else b.hidden = true;
-      });
-      this._rt && this._rt.kill();
-      this._rt = tween({ r: this._rot }, { r: open ? 180 : 0 }, 0.4, "OutBack", (v) => {
-        this._rot = v.r;
-        this.tri.style.transform = `rotate(${v.r}deg)`;
-      });
-      this.tri.classList.toggle("a2-on", open);
-    }
-    dispose() {
-      this.el.remove();
-    }
-  };
-  var ScrollView = class {
-    constructor(parent, { spacing = 12, padding = 0, expand = false } = {}) {
-      ensureDefaults();
-      this.el = h("div", "a2 a2-scroll", resolveParent(parent));
-      if (expand) this.el.classList.add("a2-expand");
-      this.viewport = h("div", "a2-scroll-viewport", this.el);
-      this.content = h("div", "a2-scroll-content", this.viewport);
-      this.viewport.style.setProperty("--a2-pad", padding);
-      this.content.style.setProperty("--a2-gap", spacing);
-      let target2 = 0, anim = 0;
-      const step = () => {
-        const vp = this.viewport, cur = vp.scrollTop, d = target2 - cur;
-        if (Math.abs(d) < 0.5) {
-          vp.scrollTop = target2;
-          anim = 0;
-          return;
-        }
-        vp.scrollTop = cur + d * 0.22;
-        anim = requestAnimationFrame(step);
-      };
-      this.viewport.addEventListener("wheel", (e) => {
-        if (e.ctrlKey) return;
-        const vp = this.viewport, max = vp.scrollHeight - vp.clientHeight;
-        if (max <= 0) return;
-        if (!anim) target2 = vp.scrollTop;
-        const next = Math.min(max, Math.max(0, target2 + e.deltaY * (e.deltaMode === 1 ? 32 : 1)));
-        if (next === target2 && (next === 0 || next === max)) return;
-        e.preventDefault();
-        target2 = next;
-        if (!anim) anim = requestAnimationFrame(step);
-      }, { passive: false });
-      let drag = null;
-      this.viewport.addEventListener("pointerdown", (e) => {
-        if (e.button === 2) {
-          drag = { y: e.clientY, top: this.viewport.scrollTop };
+      const drag = (el, fn) => {
+        let on = false;
+        const at = (e) => {
+          const r = el.getBoundingClientRect();
+          fn(c01((e.clientX - r.left) / r.width), c01((e.clientY - r.top) / r.height));
+        };
+        el.addEventListener("pointerdown", (e) => {
+          if (e.button) return;
+          on = true;
           try {
-            this.viewport.setPointerCapture(e.pointerId);
+            el.setPointerCapture(e.pointerId);
           } catch (_) {
           }
-        }
+          at(e);
+        });
+        el.addEventListener("pointermove", (e) => {
+          if (on) at(e);
+        });
+        el.addEventListener("pointerup", () => {
+          on = false;
+        });
+      };
+      drag(this.sv, (x, y) => this.setHsv(this.hsv.h, x, 1 - y));
+      drag(this.hue, (x) => this.setHsv(x, this.hsv.s, this.hsv.v));
+      drag(this.alpha, (x) => this.setHsv(this.hsv.h, this.hsv.s, this.hsv.v, x));
+      this.hex.addEventListener("input", () => {
+        const t = this.hex.value.trim().replace(/^#/, "");
+        const ok = /^([0-9a-f]{6}|[0-9a-f]{8})$/i.test(t);
+        this.hex.classList.toggle("a2-bad", !ok && !/^[0-9a-f]{0,8}$/i.test(t));
+        if (ok) this.set(`#${t}`);
       });
-      this.viewport.addEventListener("pointermove", (e) => {
-        if (drag) {
-          this.viewport.scrollTop = drag.top - (e.clientY - drag.y);
-          target2 = this.viewport.scrollTop;
-          drag.moved = true;
-        }
+      this.hex.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") this.close();
+        e.stopPropagation();
       });
-      this.viewport.addEventListener("pointerup", () => {
-        drag = null;
-      });
-      this.viewport.addEventListener("contextmenu", (e) => {
-        if (drag && drag.moved) e.preventDefault();
-      });
+      this.paintPopup();
     }
-  };
-
-  // src/factory/factory.js
-  var Factory = {
-    /**
-     * 버튼. Factory.button(parent, id, { text, onClick })
-     * 또는 짧게 Factory.button(parent, onClick, '글자', 'id')
-     */
-    button(parent, a, b, c) {
-      if (typeof a === "function") return new Button(parent, c || null, { onClick: a, text: b ?? "" });
-      return new Button(parent, a, b);
-    },
-    toggle: (parent, id, opts) => new Toggle(parent, id, opts),
-    slider: (parent, id, opts) => new Slider(parent, id, opts),
-    input: (parent, id, opts) => new Input(parent, id, opts),
-    segmented: (parent, id, opts) => new Segmented(parent, id, opts),
-    dropdown: (parent, id, opts) => new Dropdown(parent, id, opts),
-    multiDropdown: (parent, id, opts) => new MultiDropdown(parent, id, opts),
-    colorPicker: (parent, id, opts) => new ColorPicker(parent, id, opts),
-    card: (parent, opts) => new Card(parent, opts),
-    scrollView: (parent, opts) => new ScrollView(parent, opts),
-    /** 컨트롤 한 줄 높이의 빈 줄 (가로로 나란히 놓기) */
-    row(parent, height) {
-      ensureDefaults();
-      const el = h("div", "a2 a2-row", resolveParent(parent));
-      if (height != null) el.style.setProperty("--a2-h", height);
-      return el;
-    },
-    /** 세로로 쌓는 묶음 */
-    stack(parent, gap = 8) {
-      ensureDefaults();
-      const el = h("div", "a2 a2-stack", resolveParent(parent));
-      el.style.setProperty("--a2-gap", gap);
-      return el;
-    },
-    /** 글자. { h1: true } 면 제목, { dim: true } 면 흐린 글자 */
-    text(parent, text, { h1 = false, dim = false } = {}) {
-      ensureDefaults();
-      const el = h(h1 ? "h2" : "p", `a2 a2-text${h1 ? " a2-h1" : ""}${dim ? " a2-dim" : ""}`, resolveParent(parent), text);
-      return el;
-    },
-    tooltip
-  };
-
-  // src/transition/pageSwitcher.js
-  var running2 = [];
-  function switchPage(pages, from, to) {
-    const get = (k) => pages instanceof Map ? pages.get(k) : pages[k];
-    const keys = pages instanceof Map ? [...pages.keys()] : Object.keys(pages).map((k) => Array.isArray(pages) ? +k : k);
-    const a = get(from), b = get(to);
-    if (from === to || !a || !b) return false;
-    for (const t of running2) t.kill();
-    running2 = [];
-    const off = 1100 * scaleOf(b);
-    const put = (el, x, o, interactive) => {
-      el.style.transform = `translateX(${x}px)`;
-      el.style.opacity = o;
-      el.inert = !interactive;
-      el.style.pointerEvents = interactive ? "" : "none";
-    };
-    for (const k of keys) {
-      const el = get(k);
-      if (el && el !== a && el !== b) {
-        put(el, -off, 0, false);
-        el.hidden = true;
+    close() {
+      this.float && this.float.close();
+    }
+    paintPopup() {
+      if (!this.float || !this.sv) return;
+      const { h: hh, s, v } = this.hsv, pure = toHex({ ...hsv2rgb(hh, 1, 1), a: 1 }), solid = toHex({ ...this.rgba, a: 1 });
+      this.sv.style.setProperty("--a2-hue", pure);
+      this.svDot.style.left = `${s * 100}%`;
+      this.svDot.style.top = `${(1 - v) * 100}%`;
+      this.svDot.style.background = solid;
+      this.hueDot.style.left = `${hh * 100}%`;
+      this.hueDot.style.background = pure;
+      this.alphaFill.style.background = `linear-gradient(to right, transparent, ${solid})`;
+      this.alphaDot.style.left = `${this.rgba.a * 100}%`;
+      this.previewFill.style.background = this.swFill.style.background;
+      if (document.activeElement !== this.hex) {
+        this.hex.value = this._value;
+        this.hex.classList.remove("a2-bad");
       }
     }
-    a.hidden = false;
-    b.hidden = false;
-    put(a, 0, 1, false);
-    put(b, off, 0, false);
-    running2.push(
-      tween({ x: 0 }, { x: -off }, 0.45, "OutExpo", (v) => {
-        a.style.transform = `translateX(${v.x}px)`;
-      }, () => {
-        a.hidden = true;
-      }),
-      tween({ o: 1 }, { o: 0 }, 0.3, "OutSine", (v) => {
-        a.style.opacity = v.o;
-      }),
-      tween({ x: off }, { x: 0 }, 0.45, "OutExpo", (v) => {
-        b.style.transform = `translateX(${v.x}px)`;
-      }, () => {
-        b.style.transform = "";
-      }),
-      tween({ o: 0 }, { o: 1 }, 0.3, "OutSine", (v) => {
-        b.style.opacity = v.o;
-      })
-    );
-    setTimeout(() => {
-      b.inert = false;
-      b.style.pointerEvents = "";
-    }, 100);
-    return true;
-  }
-  var PageSwitcher = { switchPage };
+    destroy() {
+      this.close();
+      super.destroy();
+    }
+  };
 
-  // src/input/shortcut.js
-  var down = /* @__PURE__ */ new Set();
-  var ALIAS = { Alt: ["AltLeft", "AltRight"], Ctrl: ["ControlLeft", "ControlRight"], Control: ["ControlLeft", "ControlRight"], Shift: ["ShiftLeft", "ShiftRight"], Meta: ["MetaLeft", "MetaRight"] };
-  var isDown = (k) => ALIAS[k] ? ALIAS[k].some((x) => down.has(x)) : down.has(k);
-  var matches = (k, code) => ALIAS[k] ? ALIAS[k].includes(code) : k === code;
-  var KeyCombo = class _KeyCombo {
-    /** new KeyCombo('Backquote', 'Alt') */
-    constructor(main, ...modifiers) {
-      this.main = main;
-      this.modifiers = modifiers;
+  // src/components/keybind.js
+  var MOD_OF = { ControlLeft: "Ctrl", ControlRight: "Ctrl", AltLeft: "Alt", AltRight: "Alt", ShiftLeft: "Shift", ShiftRight: "Shift", MetaLeft: "Meta", MetaRight: "Meta" };
+  var KeyBind = class extends Component {
+    constructor(o = {}) {
+      super("keybind", o);
+      const el = this.el;
+      this._value = o.value ? comboToString(parseCombo(o.value)) : "";
+      const text = h("div", "a2-row-text", el);
+      this.header(text, o.label);
+      if (o.description) h("div", "a2-desc", text, o.description);
+      this.box = h("button", "a2-keys", el);
+      this.box.type = "button";
+      this.box.addEventListener("click", () => {
+        if (!this.disabled) this.recording ? this.stop() : this.record();
+      });
+      if (o.onPress) {
+        this.binding = keys.bind(this._value, o.onPress, { hold: o.hold, onHold: o.onHold });
+        this.on("change", (v) => this.binding.rebind(v));
+      }
+      this.render(true);
     }
-    get isHeld() {
-      return isDown(this.main) && this.modifiers.every(isDown);
+    normalize(v) {
+      return v ? comboToString(parseCombo(v)) : "";
     }
-    toString() {
-      return [...this.modifiers, this.main].join("+");
-    }
-    /** 'Alt+Backquote' 같은 글자에서 */
-    static parse(s) {
-      const parts = s.split("+").map((x) => x.trim());
-      return new _KeyCombo(parts.pop(), ...parts);
-    }
-  };
-  var shortcuts = /* @__PURE__ */ new Map();
-  var ShortcutManager = {
-    /** 글자 입력 중엔 단축키를 쉬게 한다. 바꿔 끼울 수 있다 */
-    isSuspended: () => {
-      const a = document.activeElement;
-      return !!a && (a.tagName === "INPUT" || a.tagName === "TEXTAREA" || a.isContentEditable);
-    },
-    /**
-     * @param {string} id 같은 id 로 다시 등록하면 바꿔친다
-     * @param {KeyCombo|string} combo
-     * @param {number} [holdSeconds] 이만큼 누르고 있으면 onHeld
-     */
-    register(id, combo, holdSeconds = 0, { onPressed, onHeld, onReleased } = {}) {
-      const s = { id, combo: typeof combo === "string" ? KeyCombo.parse(combo) : combo, holdSeconds, onPressed, onHeld, onReleased, pressed: false, held: false, timer: 0 };
-      shortcuts.set(id, s);
-      return s;
-    },
-    get: (id) => shortcuts.get(id),
-    unregister: (id) => {
-      const s = shortcuts.get(id);
-      if (s) clearTimeout(s.timer);
-      shortcuts.delete(id);
-    },
-    clear: () => {
-      for (const s of shortcuts.values()) clearTimeout(s.timer);
-      shortcuts.clear();
-    }
-  };
-  function reset(s) {
-    s.pressed = false;
-    s.held = false;
-    clearTimeout(s.timer);
-  }
-  addEventListener("keydown", (e) => {
-    const first = !down.has(e.code);
-    down.add(e.code);
-    if (!first) return;
-    if (ShortcutManager.isSuspended()) {
-      for (const s of shortcuts.values()) reset(s);
-      return;
-    }
-    for (const s of shortcuts.values()) {
-      const c = s.combo;
-      const involved = matches(c.main, e.code) || c.modifiers.some((m) => matches(m, e.code));
-      if (s.pressed || !involved || !c.isHeld) continue;
-      s.pressed = true;
-      s.held = false;
-      e.preventDefault();
-      s.onPressed && s.onPressed(s);
-      if (s.holdSeconds > 0) s.timer = setTimeout(() => {
-        if (s.pressed && c.isHeld && !s.held) {
-          s.held = true;
-          s.onHeld && s.onHeld(s);
+    record() {
+      this.recording = true;
+      this.el.classList.add("a2-recording");
+      this.live("누를 키 조합");
+      const mods = /* @__PURE__ */ new Set();
+      this._kd = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.code === "Escape") return this.stop();
+        if ((e.code === "Backspace" || e.code === "Delete") && !mods.size) {
+          this.set("");
+          this.emit("commit", "");
+          return this.stop();
         }
-      }, s.holdSeconds * 1e3);
+        const m = MOD_OF[e.code];
+        if (m) {
+          mods.add(m);
+          this.live([...mods].join("+") + "+…");
+          return;
+        }
+        this.set(comboToString({ mods: [...mods], key: e.code }));
+        this.emit("commit", this._value);
+        this.stop();
+      };
+      this._ku = (e) => {
+        const m = MOD_OF[e.code];
+        if (m) {
+          mods.delete(m);
+          this.live(mods.size ? [...mods].join("+") + "+…" : "누를 키 조합");
+        }
+      };
+      this._out = (e) => {
+        if (!this.el.contains(e.target)) this.stop();
+      };
+      addEventListener("keydown", this._kd, true);
+      addEventListener("keyup", this._ku, true);
+      setTimeout(() => document.addEventListener("pointerdown", this._out, true), 0);
     }
-  }, true);
-  addEventListener("keyup", (e) => {
-    down.delete(e.code);
-    for (const s of shortcuts.values()) {
-      if (!s.pressed) continue;
-      if (matches(s.combo.main, e.code)) {
-        s.onReleased && s.onReleased(s);
-        reset(s);
-      } else if (!s.combo.isHeld) reset(s);
+    stop() {
+      if (!this.recording) return;
+      this.recording = false;
+      this.el.classList.remove("a2-recording");
+      removeEventListener("keydown", this._kd, true);
+      removeEventListener("keyup", this._ku, true);
+      document.removeEventListener("pointerdown", this._out, true);
+      this.render(true);
     }
-  }, true);
-  addEventListener("blur", () => {
-    down.clear();
-    for (const s of shortcuts.values()) reset(s);
-  });
+    live(t) {
+      this.box.textContent = "";
+      h("span", "a2-keys-live", this.box, t);
+    }
+    render() {
+      if (this.recording) return;
+      this.box.textContent = "";
+      const names = keyNames(this._value);
+      if (!names.length) h("span", "a2-keys-empty", this.box, "없음");
+      for (const n of names) h("kbd", "a2-kbd", this.box, n);
+      this.paintReset();
+    }
+    destroy() {
+      this.stop();
+      this.binding && this.binding.unbind();
+      super.destroy();
+    }
+  };
+
+  // src/components/feedback.js
+  var Progress = class extends Component {
+    constructor(o = {}) {
+      super("progress", o);
+      if (o.label || o.showValue) {
+        this.header(this.el, o.label || "");
+        this.pct = h("span", "a2-progress-pct", this.headSlot);
+      }
+      this.track = h("div", "a2-progress-track", this.el);
+      this.track.setAttribute("role", "progressbar");
+      this.fill = h("div", "a2-progress-fill", this.track);
+      this._value = o.value === void 0 ? null : o.value;
+      this._shown = this._value ?? 0;
+      this.render(true);
+    }
+    normalize(v) {
+      return v === null || v === void 0 ? null : Math.min(1, Math.max(0, +v));
+    }
+    render(instant) {
+      const v = this._value, ind = v === null;
+      this.el.classList.toggle("a2-indeterminate", ind);
+      if (this.pct) this.pct.textContent = ind ? "" : `${Math.round(v * 100)}%`;
+      if (ind) {
+        this.track.removeAttribute("aria-valuenow");
+        this.fill.style.width = "";
+        return;
+      }
+      this.track.setAttribute("aria-valuenow", Math.round(v * 100));
+      this._t && this._t.kill();
+      if (instant) {
+        this._shown = v;
+        this.fill.style.width = `${v * 100}%`;
+      } else this._t = tweenNumber(this._shown, v, 0.45, "OutCubic", (x) => {
+        this._shown = x;
+        this.fill.style.width = `${x * 100}%`;
+      });
+    }
+  };
+  var Spinner = class extends Component {
+    constructor(o = {}) {
+      super("spinner", o, "span");
+      this.el.setAttribute("role", "status");
+      this.el.setAttribute("aria-label", o.label || "불러오는 중");
+      if (o.size) this.el.style.setProperty("--a2-spin", o.size);
+    }
+  };
+  var stack = null;
+  var TOAST_ICON = { info: "info", success: "ok", warning: "warn", error: "error" };
+  function toast(text, o = {}) {
+    ensureSetup();
+    if (!stack || !stack.isConnected) stack = h("div", "a2 a2-toasts", document.body);
+    const type = o.type || "info";
+    const el = h("div", `a2-toast a2-toast-${type}`, stack);
+    el.setAttribute("role", type === "error" ? "alert" : "status");
+    icon(TOAST_ICON[type] || "info", "a2-toast-icon", el);
+    h("span", "a2-toast-text", el, text);
+    let closed = false, timer = 0;
+    const close = () => {
+      if (closed) return;
+      closed = true;
+      clearTimeout(timer);
+      const hgt = el.offsetHeight;
+      animate({ p: 1 }, { p: 0 }, { duration: 0.22, ease: "InCubic", onUpdate: ({ p }) => {
+        el.style.opacity = p;
+        el.style.transform = `translateY(${(1 - p) * 12}px) scale(${0.96 + 0.04 * p})`;
+        el.style.marginTop = `${-(1 - p) * hgt}px`;
+      }, onDone: () => el.remove() });
+    };
+    if (o.action) {
+      const b = h("button", "a2-toast-action", el, o.action.label);
+      b.type = "button";
+      b.addEventListener("click", () => {
+        o.action.onClick && o.action.onClick();
+        close();
+      });
+    }
+    el.addEventListener("click", (e) => {
+      if (!e.target.closest(".a2-toast-action")) close();
+    });
+    animate({ p: 0 }, { p: 1 }, { duration: 0.32, ease: "OutBack", onUpdate: ({ p }) => {
+      el.style.opacity = Math.min(1, p * 1.4);
+      el.style.transform = `translateY(${(1 - p) * 18}px) scale(${0.94 + 0.06 * p})`;
+    } });
+    const dur = o.duration ?? 3;
+    if (dur > 0) {
+      timer = setTimeout(close, dur * 1e3);
+      el.addEventListener("pointerenter", () => clearTimeout(timer));
+      el.addEventListener("pointerleave", () => {
+        if (!closed) timer = setTimeout(close, 1200);
+      });
+    }
+    return { close };
+  }
+  function dialog(o = {}) {
+    ensureSetup();
+    return new Promise((resolve) => {
+      const layer2 = h("div", "a2 a2-dialog-layer", document.body);
+      const scrim = h("div", "a2-scrim", layer2);
+      const box2 = h("div", "a2-dialog", layer2);
+      box2.setAttribute("role", "dialog");
+      box2.setAttribute("aria-modal", "true");
+      if (o.title) {
+        const t = h("h2", "a2-dialog-title", box2, o.title);
+        box2.setAttribute("aria-label", o.title);
+        t.id = `a2d${Date.now()}`;
+      }
+      if (o.message) h("p", "a2-dialog-msg", box2, o.message);
+      if (o.content) o.content(h("div", "a2-dialog-body", box2));
+      const actions = h("div", "a2-dialog-actions", box2);
+      let done = false, prevFocus = document.activeElement;
+      const close = (v) => {
+        if (done) return;
+        done = true;
+        removeEventListener("keydown", key, true);
+        animate({ p: 1 }, { p: 0 }, { duration: 0.16, ease: "OutSine", onUpdate: ({ p }) => paint(p), onDone: () => {
+          layer2.remove();
+          prevFocus && prevFocus.focus && prevFocus.focus({ preventScroll: true });
+        } });
+        resolve(v);
+      };
+      const btns = (o.buttons || [{ label: "확인", value: true, variant: "primary" }]).map((b) => {
+        const btn = new Button({ text: b.label, variant: b.variant || "soft" }).mount(actions);
+        btn.on("click", () => close(b.value));
+        return btn;
+      });
+      const key = (e) => {
+        if (e.key === "Escape" && o.dismissable !== false) {
+          e.stopPropagation();
+          close(void 0);
+        }
+      };
+      addEventListener("keydown", key, true);
+      scrim.addEventListener("click", () => {
+        if (o.dismissable !== false) close(void 0);
+      });
+      const paint = (p) => {
+        scrim.style.opacity = p;
+        box2.style.opacity = Math.min(1, p * 1.3);
+        box2.style.transform = `translateY(${(1 - p) * 16}px) scale(${0.96 + 0.04 * p})`;
+      };
+      paint(0);
+      animate({ p: 0 }, { p: 1 }, { duration: 0.28, ease: "OutCubic", onUpdate: ({ p }) => paint(p) });
+      const primary = btns[btns.length - 1];
+      setTimeout(() => primary && primary.el.focus({ preventScroll: true }), 30);
+    });
+  }
+  var confirm = (message, o = {}) => dialog({
+    title: o.title,
+    message,
+    ...o,
+    buttons: [{ label: o.cancel || "취소", value: false, variant: "soft" }, { label: o.ok || "확인", value: true, variant: o.danger ? "danger" : "primary" }]
+  }).then((v) => v === true);
+  var alert = (message, o = {}) => dialog({ title: o.title, message, buttons: [{ label: o.ok || "확인", value: true, variant: "primary" }] }).then(() => void 0);
+
+  // src/components/layout.js
+  var Section = class extends Component {
+    constructor(o = {}) {
+      super("section", o, "section");
+      const el = this.el;
+      this._value = o.enabled !== false;
+      this.expanded = !o.collapsed;
+      const head = h("div", "a2-section-head", el);
+      this.titleBtn = h(o.collapsible ? "button" : "div", "a2-section-title", head);
+      if (o.collapsible) {
+        this.titleBtn.type = "button";
+        this.titleBtn.setAttribute("aria-expanded", this.expanded);
+      }
+      const tt = h("div", "a2-section-tt", this.titleBtn);
+      h("span", "a2-section-name", tt, o.title || "");
+      if (o.description) h("span", "a2-desc", tt, o.description);
+      if (o.collapsible) {
+        this.chev = icon("chevron", "a2-section-chev", this.titleBtn);
+        this.titleBtn.addEventListener("click", () => this.setExpanded(!this.expanded));
+      }
+      if (o.toggle) {
+        this.sw = h("button", "a2-section-switch", head);
+        this.sw.type = "button";
+        this.sw.setAttribute("role", "switch");
+        this.sw.setAttribute("aria-label", `${o.title || ""} 켜기`);
+        const tr = h("span", "a2-track", this.sw);
+        h("span", "a2-thumb", tr);
+        this.sw.addEventListener("click", () => {
+          this.set(!this._value);
+          this.emit("commit", this._value);
+        });
+      }
+      if (o.actions) for (const a of o.actions) {
+        const b = h("button", "a2-section-action", head);
+        b.type = "button";
+        b.title = a.label || "";
+        if (a.icon) {
+          const ic = h("span", "a2-uicon", b);
+          if (a.icon.startsWith("<")) ic.innerHTML = a.icon;
+          else h("i", a.icon, ic);
+        } else b.textContent = a.label;
+        if (a.danger) b.classList.add("a2-danger");
+        b.addEventListener("click", () => a.onClick && a.onClick(this));
+      }
+      this.wrap = h("div", "a2-section-wrap", el);
+      this.body = h("div", "a2-section-body", this.wrap);
+      if (!this.expanded) {
+        this.wrap.hidden = true;
+        el.classList.add("a2-collapsed");
+      }
+      this.render(true);
+    }
+    normalize(v) {
+      return !!v;
+    }
+    get enabled() {
+      return this._value;
+    }
+    render() {
+      this.el.classList.toggle("a2-section-off", !this._value);
+      this.body.inert = !this._value;
+      if (this.sw) {
+        this.sw.classList.toggle("a2-on", this._value);
+        this.sw.setAttribute("aria-checked", this._value);
+      }
+    }
+    setExpanded(open) {
+      if (open === this.expanded) return this;
+      this.expanded = open;
+      this.el.classList.toggle("a2-collapsed", !open);
+      if (this.titleBtn.tagName === "BUTTON") this.titleBtn.setAttribute("aria-expanded", open);
+      const w = this.wrap;
+      this._t && this._t.kill();
+      w.hidden = false;
+      const from = w.getBoundingClientRect().height;
+      w.style.height = "auto";
+      const to = open ? w.getBoundingClientRect().height : 0;
+      w.style.height = `${from}px`;
+      w.style.overflow = "hidden";
+      this._t = animate({ v: from }, { v: to }, { duration: 0.26, ease: "OutCubic", onUpdate: ({ v }) => {
+        w.style.height = `${v}px`;
+      }, onDone: () => {
+        w.style.height = "";
+        w.style.overflow = "";
+        if (!this.expanded) w.hidden = true;
+      } });
+      this.emit("toggle", open);
+      return this;
+    }
+  };
+  var ScrollArea = class extends Component {
+    constructor(o = {}) {
+      super("scroll", o);
+      this.body = h("div", "a2-scroll-body", this.el);
+      if (o.height) this.el.style.height = typeof o.height === "number" ? `${o.height}px` : o.height;
+      let target2 = 0, raf2 = 0;
+      const step = () => {
+        const d = target2 - this.el.scrollTop;
+        if (Math.abs(d) < 0.5) {
+          this.el.scrollTop = target2;
+          raf2 = 0;
+          return;
+        }
+        this.el.scrollTop += d * 0.2;
+        raf2 = requestAnimationFrame(step);
+      };
+      this.el.addEventListener("wheel", (e) => {
+        if (e.ctrlKey || e.deltaMode === 2) return;
+        const max = this.el.scrollHeight - this.el.clientHeight;
+        if (max <= 0) return;
+        if (!raf2) target2 = this.el.scrollTop;
+        const next = Math.min(max, Math.max(0, target2 + e.deltaY * (e.deltaMode === 1 ? 32 : 1)));
+        if (next === target2) return;
+        e.preventDefault();
+        target2 = next;
+        if (!raf2) raf2 = requestAnimationFrame(step);
+      }, { passive: false });
+    }
+  };
+
+  // src/ui.js
+  var opt = (label, o) => typeof label === "object" && label !== null && !Array.isArray(label) ? label : { ...o, label };
+  var Builder = class _Builder {
+    constructor(host) {
+      ensureSetup();
+      this.host = resolveParent(host);
+    }
+    add(c) {
+      c.mount(this.host);
+      return c;
+    }
+    /** ui.button('저장', onClick, { variant }) 또는 ui.button({ text, icon, variant, onClick }) */
+    button(text, onClick, o = {}) {
+      const p = typeof text === "object" && text !== null ? text : { ...o, text, onClick };
+      return this.add(new Button(p));
+    }
+    switch(label, o) {
+      return this.add(new Switch(opt(label, o)));
+    }
+    checkbox(label, o) {
+      return this.add(new Checkbox(opt(label, o)));
+    }
+    /** ui.radio('정렬', ['이름', '날짜'], { value }) */
+    radio(label, options, o = {}) {
+      return this.add(new Radio(typeof label === "object" ? label : { ...o, label, options }));
+    }
+    slider(label, o) {
+      return this.add(new Slider(opt(label, o)));
+    }
+    stepper(label, o) {
+      return this.add(new Stepper(opt(label, o)));
+    }
+    field(label, o) {
+      return this.add(new Field(opt(label, o)));
+    }
+    select(label, options, o = {}) {
+      return this.add(new Select(typeof label === "object" ? label : { ...o, label, options }));
+    }
+    multiSelect(label, options, o = {}) {
+      return this.add(new MultiSelect(typeof label === "object" ? label : { ...o, label, options }));
+    }
+    segmented(options, o = {}) {
+      return this.add(new Segmented(Array.isArray(options) ? { ...o, options } : options));
+    }
+    color(label, o) {
+      return this.add(new ColorPicker(opt(label, o)));
+    }
+    keybind(label, o) {
+      return this.add(new KeyBind(opt(label, o)));
+    }
+    progress(label, o) {
+      return this.add(new Progress(opt(label, o)));
+    }
+    spinner(o = {}) {
+      return this.add(new Spinner(o));
+    }
+    /** ui.tabs([{ label, build: tab => tab.slider(...) }]) — build 는 빌더를 받는다 */
+    tabs(tabs, o = {}) {
+      const t = new Tabs({ ...o, tabs: tabs.map((x) => ({ ...x, build: x.build ? (body) => x.build(new _Builder(body)) : null })) });
+      return this.add(t);
+    }
+    /** ui.section('제목', { toggle, collapsible, description }, s => { s.slider(...) }) */
+    section(title, o = {}, fill) {
+      if (typeof o === "function") {
+        fill = o;
+        o = {};
+      }
+      const s = this.add(new Section({ ...o, title }));
+      s.ui = new _Builder(s.body);
+      if (fill) fill(s.ui);
+      return s;
+    }
+    scroll(o = {}, fill) {
+      if (typeof o === "function") {
+        fill = o;
+        o = {};
+      }
+      const sc = this.add(new ScrollArea(o));
+      sc.ui = new _Builder(sc.body);
+      if (fill) fill(sc.ui);
+      return sc;
+    }
+    /** 가로로 나란히 */
+    row(fill, o = {}) {
+      const el = h("div", "a2 a2-row", this.host);
+      if (o.gap != null) el.style.setProperty("--a2-gap", o.gap);
+      if (fill) fill(new _Builder(el));
+      return el;
+    }
+    /** 세로로 쌓기 */
+    stack(fill, o = {}) {
+      const el = h("div", "a2 a2-stack", this.host);
+      if (o.gap != null) el.style.setProperty("--a2-gap", o.gap);
+      if (fill) fill(new _Builder(el));
+      return el;
+    }
+    text(t, o = {}) {
+      return h("p", `a2 a2-text${o.muted ? " a2-muted" : ""}${o.small ? " a2-small" : ""}`, this.host, t);
+    }
+    title(t) {
+      return h("h2", "a2 a2-title", this.host, t);
+    }
+    divider() {
+      return h("hr", "a2 a2-divider", this.host);
+    }
+  };
+  var ui = (host) => new Builder(host);
+  function panel(o = {}, fill) {
+    const p = new Panel(o);
+    p.ui = new Builder(p.body);
+    if (fill) fill(p.ui);
+    return p;
+  }
 
   // src/index.js
-  var version = true ? "2.0.2" : "dev";
-  var adas2 = {
+  var version = true ? "3.0.0" : "dev";
+  var api = {
     version,
-    get context() {
-      return ctx;
-    },
-    configure,
-    ensureDefaults,
+    setup,
     setTheme,
-    setConfig,
-    onContextChange,
-    Config,
+    settings,
+    onSettings,
     Theme,
+    themes,
     Ease,
-    tween,
-    tweenNumber,
-    tweenColor,
-    evaluate,
-    Tooltip,
+    animate,
     tooltip,
-    Window: A2Window,
-    WindowManager,
-    Control,
-    getControl,
+    keys,
+    evaluate,
+    ui,
+    panel,
+    Builder,
+    Panel,
+    get,
+    toast,
+    dialog,
+    confirm,
+    alert,
+    menu,
+    openMenu,
+    Component,
     Button,
-    Toggle,
+    Switch,
+    Checkbox,
+    Radio,
     Slider,
-    Input,
+    Stepper,
+    Field,
+    Select,
+    MultiSelect,
     Segmented,
-    Dropdown,
-    MultiDropdown,
+    Tabs,
     ColorPicker,
-    Card,
-    ScrollView,
-    Factory,
-    PageSwitcher,
-    switchPage,
-    KeyCombo,
-    ShortcutManager
+    KeyBind,
+    Progress,
+    Spinner,
+    Section,
+    ScrollArea
   };
-  var index_default = adas2;
+  var index_default = api;
   return __toCommonJS(index_exports);
 })();
 adas2=adas2.default||adas2;

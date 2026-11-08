@@ -1,5 +1,5 @@
 // DOM 도움 함수
-import { ctx } from './context.js';
+import { settings } from './settings.js';
 
 /** 요소를 만든다. h('div', 'a2-row', parent, '글자') */
 export function h(tag, cls, parent, text) {
@@ -14,15 +14,16 @@ export function h(tag, cls, parent, text) {
 export function resolveParent(p) {
   if (!p) return null;
   if (typeof p === 'string') return document.querySelector(p);
-  if (p.content instanceof Element) return p.content;   // 창·카드
-  if (p.el instanceof Element) return p.el;             // 컨트롤
+  if (p.host instanceof Element) return p.host;         // 빌더
+  if (p.body instanceof Element) return p.body;         // 패널·섹션
+  if (p.el instanceof Element) return p.el;             // 컴포넌트
   return p;
 }
 
 /** 요소에 적용된 UI 배율 */
 export function scaleOf(el) {
   const v = parseFloat(getComputedStyle(el || document.documentElement).getPropertyValue('--a2-scale'));
-  return Number.isFinite(v) && v > 0 ? v : ctx.config.uiScale;
+  return Number.isFinite(v) && v > 0 ? v : settings.scale;
 }
 /** 디자인 단위 → 실제 px */
 export const px = (el, n) => n * scaleOf(el);
@@ -31,11 +32,19 @@ export const px = (el, n) => n * scaleOf(el);
 export const themeVar = (el, name) => getComputedStyle(el || document.documentElement).getPropertyValue(`--a2-${name}`).trim();
 
 // 아이콘: 직접 그린 SVG (currentColor)
+const P = d => `<svg viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
+const L = (d, w = 2.4) => P(`<path d="${d}" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`);
 const SVG = {
-  triangle: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 9.5l5.5 5.5 5.5-5.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>',
-  x: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" fill="none"/></svg>',
-  on: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="7" fill="currentColor"/><path d="M7.4 12.3l3.1 3 6-6.2" stroke="var(--a2-object-on-active)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>',
-  off: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="7" fill="currentColor" opacity=".35"/></svg>',
+  chevron: L('M6.5 9.5l5.5 5.5 5.5-5.5'),
+  check: L('M5.5 12.5l4.2 4.2L18.5 7.8', 2.8),
+  x: L('M7 7l10 10M17 7L7 17'),
+  reset: L('M5 12a7 7 0 1 0 2.2-5.1M5 4.5v3.4h3.4', 2.2),
+  minus: L('M6 12h12', 2.6),
+  plus: L('M12 6v12M6 12h12', 2.6),
+  info: P('<circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 11v6M12 7.6v.1" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>'),
+  ok: P('<circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M7.6 12.4l3 3 5.8-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>'),
+  warn: P('<path d="M10.3 3.6a2 2 0 0 1 3.4 0l8 14A2 2 0 0 1 20 20.6H4a2 2 0 0 1-1.7-3l8-14z" fill="currentColor"/><path d="M12 9v4.6M12 16.8v.1" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>'),
+  error: P('<circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M8.6 8.6l6.8 6.8M15.4 8.6l-6.8 6.8" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>'),
 };
 export function icon(name, cls, parent) {
   const el = h('span', `a2-icon ${cls || ''}`, parent);
