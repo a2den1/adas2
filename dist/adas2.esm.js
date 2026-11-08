@@ -1,6 +1,6 @@
-/*! adas2 v1.0.0 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
+/*! adas2 v1.0.1 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
 /* adas2 — UI framework
-   요소가 끊기지 않고 이어지도록 모든 상태 변화는 스프링 하나로 위치·크기·모서리·색을 함께 옮긴다.
+   상태 변화는 스프링 애니메이션(adas2.Motion)으로 처리한다.
    <link rel="stylesheet" href="adas2.css"> + <script src="adas2.js"></script> 만 넣으면 a2-* 태그를 쓸 수 있다.
    아이콘은 Font Awesome 6 (fa-solid) 을 쓴다. */
 (() => {
@@ -9,10 +9,10 @@
   /* ───────────── 스프링 엔진 ───────────── */
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
   const SP = {
-    base: { k: 360, c: 26.6 },  // ζ≈0.7, 약 300ms
-    fast: { k: 620, c: 37 },    // 앞서 가는 쪽
-    slow: { k: 210, c: 21 },    // 따라오는 쪽
-    press: { k: 900, c: 30 },   // 누름 반응
+    base: { k: 380, c: 35 },    // ζ≈0.9, 약 300ms. 출렁임 거의 없음
+    fast: { k: 640, c: 46 },    // 앞쪽 끝
+    slow: { k: 220, c: 27 },    // 뒤쪽 끝
+    press: { k: 900, c: 54 },   // 누름 반응
   };
   const live = new Set();
   let raf = 0, last = 0;
@@ -145,12 +145,12 @@
       };
       this.addEventListener('pointerdown', e => {
         if (e.button !== 0) return;
-        drag = true; try { this.setPointerCapture(e.pointerId); } catch (_) {}
+        drag = this._drag = true; try { this.setPointerCapture(e.pointerId); } catch (_) {}
         this.m.to({ o: 1 }); fromX(e);
       });
       this.addEventListener('pointermove', e => { if (drag) fromX(e); });
       const end = () => {
-        if (!drag) return; drag = false;
+        if (!drag) return; drag = this._drag = false;
         if (!always()) this.m.to({ o: 0 });
         emit(this, 'change', { value: this._v });
       };
@@ -175,7 +175,7 @@
       if (nv === this._v && this.m) return;
       this._v = nv;
       if (!this.m) return;
-      this.m.to({ x: this.frac() });
+      this.m.to({ x: this.frac() }, { x: this._drag ? SP.fast : SP.base });
       this.paintText();
       if (user) emit(this, 'input', { value: nv });
     }
@@ -185,7 +185,7 @@
   }
 
   /* ───────────── 드롭다운 ─────────────
-     흰 면 아래로 늘어나며 목록이 드러나고, 고른 항목이 그대로 맨 위 자리로 미끄러져 커진다. */
+     펼치면 흰 면이 아래로 길어지며 목록이 보이고, 고른 항목이 맨 위 칸으로 옮겨진다. */
   const DD = { top: { x: 39.6, y: 55.3, s: 1 }, list: { x: 39.25, y: 155.85, s: 0.75 }, pitch: 62.1, pad: 20.8, gap: 12, padR: 50 };
   class A2Dropdown extends Base {
     build() {
@@ -242,6 +242,9 @@
     measure() {
       const k = unitOf(this.toggleEl, 170);
       this.widths = this.opts.map(o => { this.measureEl.textContent = o.label; return this.measureEl.getBoundingClientRect().width / k; });
+      // 겉 폭(레이아웃)은 가장 넓은 상태로 고정한다. 애니메이션 중 옆 요소가 밀리지 않도록.
+      const maxW = this.fit ? DD.top.x + Math.max(0, ...this.widths) + DD.padR : 363;
+      this.style.width = u(maxW + DD.gap + 170);
     }
     fieldW() {
       if (!this.fit) return 363;
@@ -256,7 +259,6 @@
       this.field.style.width = u(v.w);
       this.field.style.borderBottomRightRadius = u(40 * clamp(p));
       this.toggleEl.style.left = u(v.w + DD.gap);
-      this.style.width = u(v.w + DD.gap + 170);
       const cx = lerp(81.5, 82.5, p), cy = lerp(86.5, 83.5, p);
       this.chev.style.transform = `translate(${u(cx - 38.5)}, ${u(cy - 43.1)}) rotate(${180 * p}deg)`;
     }
@@ -293,7 +295,7 @@
 
   /* ───────────── 텍스트 필드 ─────────────
      제목이 위로 올라가며 작아지고 주황으로 바뀐다(플로팅 라벨). */
-  const TF = { rest: { x: 52.6, y: 61.8, s: 1 }, float: { x: 35.4, y: 34.4, s: 33 / 49.6 } };
+  const TF = { rest: { x: 52.6, y: 61.8, s: 1 }, float: { x: 35.4, y: 30.5, s: 38 / 49.6 } };
   class A2Textfield extends Base {
     build() {
       this.innerHTML = '<span class="a2-tf-label"></span><input class="a2-tf-input" type="text">';
@@ -548,14 +550,14 @@
       el.style.filter = o > 0.999 ? '' : `blur(${u((1 - o) * 10)})`;
       el.style.color = mix(el._base || C.date, C.white, v.p);
       b.style.fontWeight = v.p > 0.5 ? 800 : 400;
+      if (el._next != null && v.o < 0.15) { b.textContent = el._next; el._next = null; el._m.to({ o: 1, s: 1 }); }
       b.style.transform = `scale(${lerp(1, el._big || 1, clamp(v.p)) * v.s})`;
     });
     return el;
   }
 
   /* ───────────── 날짜 선택 ─────────────
-     요일에 맞춘 7칸 격자. 고른 날의 주황 칸이 앞쪽 끝부터 늘어나며 건너가고,
-     달을 바꾸면 같은 숫자들이 새 요일 칸으로 흘러간다. */
+     요일에 맞춘 7칸 격자. 선택 표시는 고른 날로 이동하고, 달을 바꾸면 숫자가 새 칸으로 옮겨진다. */
   const CAL = {
     x0: 28, cw: (555 - 56) / 7, wdY: 140, y0: 197, rh: 60,
     pill: { w: 64, h: 52 }, big: 1.12, wd: ['일', '월', '화', '수', '목', '금', '토'],
@@ -763,9 +765,7 @@
       if (mode === this.mode) return;
       this.mode = mode;
       // 숫자는 흐려졌다가 새 값으로 바뀌어 다시 또렷해진다 — 칩 자체는 제자리
-      this.chips.forEach((el, i) => {
-        el._m.to({ o: 0, s: 0.7 }, null, () => { el.firstChild.textContent = this.label(i); el._m.to({ o: 1, s: 1 }); });
-      });
+      this.chips.forEach((el, i) => { el._next = this.label(i); el._m.to({ o: 0, s: 0.8 }); });
       this.paint(true);
     }
     get value() { return `${String(this.h).padStart(2, '0')}:${String(this.mi).padStart(2, '0')}`; }
@@ -776,8 +776,23 @@
   }
 
   /* ───────────── 모달 ─────────────
-     <a2-button data-a2-modal="#id"> 를 누르면 그 버튼이 제자리에서 늘어나며 흰 판이 되고(색·모서리·크기 이어짐),
-     닫으면 다시 그 버튼 모양으로 줄어든다. 버튼 없이 open() 하면 가운데서 커진다. */
+     data-a2-modal="#id" 가 붙은 요소를 누르면 그 요소 위치·크기에서 모달 판으로 커지고, 닫으면 돌아간다.
+     여는 요소 없이 open() 하면 화면 가운데서 열린다. */
+  let locks = 0, saved = null;
+  function lockScroll(on) {
+    const html = document.documentElement, body = document.body;
+    if (on) {
+      if (locks++) return;
+      const bar = innerWidth - html.clientWidth;
+      const gutter = /stable/.test(getComputedStyle(html).scrollbarGutter || '');
+      saved = { o: html.style.overflow, p: body.style.paddingRight };
+      html.style.overflow = 'hidden';
+      if (bar > 0 && !gutter) body.style.paddingRight = `${(parseFloat(getComputedStyle(body).paddingRight) || 0) + bar}px`;
+    } else {
+      if (!locks || --locks) return;
+      html.style.overflow = saved.o; body.style.paddingRight = saved.p;
+    }
+  }
   class A2Modal extends Base {
     build() {
       const kids = [...this.childNodes];
@@ -799,7 +814,7 @@
       if (h) { this.titleEl.textContent = h; this.panel.setAttribute('aria-label', h); } else this.titleEl.remove();
       document.body.appendChild(layer);
       this.isOpen = false;
-      this.m = new Motion({ p: 0 }, v => this.paint(v.p), { k: 260, c: 24 });
+      this.m = new Motion({ p: 0 }, v => this.paint(v.p), { k: 300, c: 32 });
       this.back.addEventListener('click', () => this.close());
       layer.addEventListener('click', e => { if (e.target.closest('[data-a2-close]')) this.close(); });
       layer.addEventListener('keydown', e => { if (e.key === 'Escape') { e.stopPropagation(); this.close(); } });
@@ -852,8 +867,7 @@
       this.measure();
       this.m.set({ p: 0 });
       if (this.trigger) this.trigger.style.visibility = 'hidden';
-      this._overflow = document.documentElement.style.overflow;
-      document.documentElement.style.overflow = 'hidden';
+      if (!this._locked) { this._locked = true; lockScroll(true); }
       this.m.to({ p: 1 }, null, null);
       this.panel.focus({ preventScroll: true });
       emit(this, 'open');
@@ -866,7 +880,7 @@
         if (this.isOpen) return;
         this.layer.classList.remove('a2-on');
         if (this.trigger) { this.trigger.style.visibility = ''; this.trigger.focus && this.trigger.focus({ preventScroll: true }); }
-        document.documentElement.style.overflow = this._overflow || '';
+        if (this._locked) { this._locked = false; lockScroll(false); }
       });
       emit(this, 'close');
     }
@@ -887,7 +901,7 @@
   const define = () => { for (const [n, c] of Object.entries(defs)) if (!customElements.get(n)) customElements.define(n, c); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', define); else define();
 
-  window.adas2 = { Motion, springs: SP, version: '1.0.0' };
+  window.adas2 = { Motion, springs: SP, version: '1.0.1' };
 })();
 
 const adas2 = window.adas2;

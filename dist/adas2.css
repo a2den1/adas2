@@ -1,7 +1,7 @@
-/*! adas2 v1.0.0 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
+/*! adas2 v1.0.1 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
 /* adas2 — UI framework
    모든 치수는 Figma 시안(New Age Project)의 px 값을 그대로 쓰고, --a2-u 한 단위로 곱한다.
-   시안은 실제 화면보다 크게 그려져 있어서 기본값을 .36px 로 둔다 (버튼 406×215 → 146×77px).
+   기본값 .36px (버튼 406×170 → 146×61px).
    시안 크기 그대로 보려면 --a2-u: 1px. */
 
 :root {
@@ -34,11 +34,12 @@ a2-appbar, a2-checkbox, a2-datepicker, a2-timepicker {
 .a2 .fa-solid { display: block; position: absolute; left: 0; top: 0; line-height: 1; width: auto; text-align: left; }
 a2-split-item:not(.a2), a2-nav-item:not(.a2), a2-dropdown:not(.a2) option { display: none; }
 
-/* ───────── 버튼 406×215, r66 ───────── */
+/* ───────── 버튼: 다른 입력 요소(드롭다운·텍스트 필드 170)와 같은 높이 ───────── */
 a2-button {
   display: inline-flex; align-items: center; justify-content: center;
-  width: calc(var(--u) * 406); height: calc(var(--u) * 215);
-  border-radius: calc(var(--u) * 66);
+  min-width: calc(var(--u) * 406); height: calc(var(--u) * 170);
+  padding: 0 calc(var(--u) * 72); white-space: nowrap;
+  border-radius: calc(var(--u) * 52);
   background: var(--a2-orange); color: #fff;
   font-weight: 700; font-size: calc(var(--u) * 48.5);
   cursor: pointer; vertical-align: top;
@@ -247,7 +248,7 @@ a2-datepicker > .a2-pill { height: calc(var(--u) * 52); border-radius: calc(var(
 .a2-clock-read span { cursor: pointer; }
 
 /* ───────── 모달 ─────────
-   누른 요소(버튼)가 그 자리에서 늘어나 모달 판이 된다. 닫으면 다시 그 요소로 돌아간다. */
+   여는 요소의 위치·크기에서 열리고, 닫으면 그 자리로 돌아간다. */
 a2-modal { display: none; }
 .a2-modal-layer {
   --u: var(--a2-u);

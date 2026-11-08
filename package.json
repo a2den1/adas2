@@ -1,7 +1,7 @@
 {
   "name": "adas2",
-  "version": "1.0.0",
-  "description": "끊김 없이 이어지는 스프링 애니메이션의 웹 컴포넌트 UI 프레임워크 — 빌드 없이 <script> 하나로.",
+  "version": "1.0.1",
+  "description": "웹 컴포넌트로 만든 UI 프레임워크 (A UI framework built on Web Components)",
   "keywords": [
     "ui",
     "framework",
@@ -47,6 +47,7 @@
     "dist",
     "types",
     "README.md",
+    "README.en.md",
     "LICENSE"
   ],
   "scripts": {
