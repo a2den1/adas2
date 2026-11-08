@@ -1,4 +1,4 @@
-/*! adas2 v2.0.0 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
+/*! adas2 v2.0.1 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
 var adas2 = (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -134,9 +134,11 @@ var adas2 = (() => {
     fontSizeH1: "font-h1",
     // 글꼴
     font: "font",
-    fontMono: "font-mono"
+    fontMono: "font-mono",
+    fontWeight: "weight",
+    fontWeightStrong: "weight-strong"
   };
-  var UNITLESS = /* @__PURE__ */ new Set(["inactiveAlpha", "textDimAlpha", "textFaintAlpha", "disabledContentAlpha", "lineHeight"]);
+  var UNITLESS = /* @__PURE__ */ new Set(["fontWeight", "fontWeightStrong", "inactiveAlpha", "textDimAlpha", "textFaintAlpha", "disabledContentAlpha", "lineHeight"]);
   var SIZES = /* @__PURE__ */ new Set(["cornerRadius", "outlineWidth", "controlHeight", "controlPaddingY", "fontSizeBody", "fontSizeH1"]);
   var Theme = class _Theme {
     constructor(values = {}) {
@@ -223,7 +225,11 @@ var adas2 = (() => {
     fontSizeBody: 23,
     fontSizeH1: 32,
     font: '"GmarketSans", "Pretendard", system-ui, -apple-system, "Malgun Gothic", sans-serif',
-    fontMono: '"GmarketSans", "Pretendard", system-ui, sans-serif'
+    fontMono: '"GmarketSans", "Pretendard", system-ui, sans-serif',
+    fontWeight: 300,
+    // 본문 (지마켓 산스 Light)
+    fontWeightStrong: 500
+    // 제목·선택된 것 (Medium)
   };
   var DARK = new Theme();
   var LIGHT = new Theme({
@@ -2578,7 +2584,7 @@ var adas2 = (() => {
   });
 
   // src/index.js
-  var version = true ? "2.0.0" : "dev";
+  var version = true ? "2.0.1" : "dev";
   var adas2 = {
     version,
     get context() {

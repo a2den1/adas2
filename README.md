@@ -24,8 +24,8 @@
 ## 📦 CDN
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v2.0.0/dist/adas2.min.css">
-<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v2.0.0/dist/adas2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v2.0.1/dist/adas2.min.css">
+<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v2.0.1/dist/adas2.min.js"></script>
 ```
 
 글꼴은 [지마켓 산스](https://corp.gmarket.com/fonts/)를 씁니다. CSS 안에서 CDN 으로 불러오므로 따로 넣지 않아도 됩니다. 바꾸려면 테마의 `font` 값을 지정합니다.
@@ -81,7 +81,7 @@ npm run dev        # http://localhost:5880/docs/
   ```js
   adas2.setTheme(adas2.Theme.Dark.with({ panelBg: '#1A1A24', objectActive: '#7FD1AE' }));
   ```
-* 바꿀 수 있는 값: `panelBg` `topBar` `objectBg` `objectHover` `objectButton` `objectActive` `objectOnActive` `switchTrack` `buttonHover` `buttonPressed` `cardHeader` `cardPanel` `softRed` `text` `tooltipBg` `outline` `controlOutlineHover` `mathOk` `mathWarn` `mathErr` `cornerRadius` `controlHeight` `fontSizeBody` `fontSizeH1` `font` `fontMono` 등 ([theme.js](src/core/theme.js))
+* 바꿀 수 있는 값: `panelBg` `topBar` `objectBg` `objectHover` `objectButton` `objectActive` `objectOnActive` `switchTrack` `buttonHover` `buttonPressed` `cardHeader` `cardPanel` `softRed` `text` `tooltipBg` `outline` `controlOutlineHover` `mathOk` `mathWarn` `mathErr` `cornerRadius` `controlHeight` `fontSizeBody` `fontSizeH1` `font` `fontMono` `fontWeight` `fontWeightStrong` 등 ([theme.js](src/core/theme.js))
 
 ### 컨트롤 만들기
 

@@ -43,8 +43,10 @@ const KEYS = {
   // 글꼴
   font: 'font',
   fontMono: 'font-mono',
+  fontWeight: 'weight',
+  fontWeightStrong: 'weight-strong',
 };
-const UNITLESS = new Set(['inactiveAlpha', 'textDimAlpha', 'textFaintAlpha', 'disabledContentAlpha', 'lineHeight']);
+const UNITLESS = new Set(['fontWeight', 'fontWeightStrong', 'inactiveAlpha', 'textDimAlpha', 'textFaintAlpha', 'disabledContentAlpha', 'lineHeight']);
 const SIZES = new Set(['cornerRadius', 'outlineWidth', 'controlHeight', 'controlPaddingY', 'fontSizeBody', 'fontSizeH1']);
 
 export class Theme {
@@ -110,6 +112,8 @@ const BASE = {
   fontSizeH1: 32,
   font: '"GmarketSans", "Pretendard", system-ui, -apple-system, "Malgun Gothic", sans-serif',
   fontMono: '"GmarketSans", "Pretendard", system-ui, sans-serif',
+  fontWeight: 300,          // 본문 (지마켓 산스 Light)
+  fontWeightStrong: 500,    // 제목·선택된 것 (Medium)
 };
 
 const DARK = new Theme();

@@ -10,7 +10,7 @@
   transition: background-color calc(.15s / var(--a2-speed));
 }
 .a2-card-title:hover { background: color-mix(in srgb, var(--a2-text) 5%, transparent); }
-.a2-card-title-text { font-weight: 700; font-size: calc(24 * var(--a2-px)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -.02em; }
+.a2-card-title-text { font-weight: var(--a2-weight-strong); font-size: calc(24 * var(--a2-px)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -.02em; }
 .a2-card-tri { width: calc(24 * var(--a2-px)); height: calc(24 * var(--a2-px)); color: var(--a2-dim); margin-top: -.08em; transition: color calc(.2s / var(--a2-speed)); }
 .a2-card-tri.a2-on { color: var(--a2-dim); }
 .a2-card-check { order: 2; flex: none; border-radius: 999px; outline: none; }
@@ -43,7 +43,7 @@
   display: flex; flex-direction: column;
   background: var(--a2-panel-bg); border-radius: calc(30 * var(--a2-px));
   box-shadow: 0 calc(30 * var(--a2-px)) calc(80 * var(--a2-px)) rgba(0,0,0,.45), 0 0 0 1px var(--a2-outline);
-  font-size: calc(var(--a2-font-body) * var(--a2-px)); font-weight: 500;
+  font-size: calc(var(--a2-font-body) * var(--a2-px)); font-weight: var(--a2-weight);
 }
 .a2-window[hidden] { display: none; }
 .a2-win-top {
@@ -56,7 +56,7 @@
 .a2-window.a2-has-icon .a2-win-top { padding-left: calc(20 * var(--a2-px)); }
 .a2-win-icon { width: calc(var(--a2-icon, 40) * var(--a2-px)); height: calc(var(--a2-icon, 40) * var(--a2-px)); margin-right: calc(12 * var(--a2-px)); font-size: calc(var(--a2-icon, 40) * .7 * var(--a2-px)); }
 .a2-win-icon img, .a2-win-icon svg { width: 100%; height: 100%; object-fit: contain; }
-.a2-win-title { flex: 1; min-width: 0; padding-top: .08em; font-weight: 700; font-size: calc(var(--a2-title-fs, 26) * var(--a2-px)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -.02em; }
+.a2-win-title { flex: 1; min-width: 0; padding-top: .08em; font-weight: var(--a2-weight-strong); font-size: calc(var(--a2-title-fs, 26) * var(--a2-px)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -.02em; }
 .a2-win-close {
   position: absolute; right: calc(18 * var(--a2-px)); top: calc(50% - 20 * var(--a2-px));
   width: calc(40 * var(--a2-px)); height: calc(40 * var(--a2-px)); border-radius: 50%; display: grid; place-items: center;
@@ -82,6 +82,6 @@
   position: fixed; left: 0; top: 0; z-index: 3000; display: none; pointer-events: none;
   max-width: calc(520 * var(--a2-px)); padding: calc(12 * var(--a2-px)) calc(18 * var(--a2-px)) calc(10 * var(--a2-px));
   background: var(--a2-tooltip-bg); color: #fff; border-radius: calc(16 * var(--a2-px));
-  font-size: calc(19 * var(--a2-px)); font-weight: 500; line-height: 1.45; white-space: pre-line; letter-spacing: -.01em;
+  font-size: calc(19 * var(--a2-px)); font-weight: var(--a2-weight); line-height: 1.45; white-space: pre-line; letter-spacing: -.01em;
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
 }

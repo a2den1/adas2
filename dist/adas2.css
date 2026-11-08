@@ -1,4 +1,4 @@
-/*! adas2 v2.0.0 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
+/*! adas2 v2.0.1 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
 /* adas2 — 기본: 단위·공통 규칙
    모든 치수는 "디자인 단위 × --a2-px" 이다. --a2-px = --a2-scale(기본 0.6) px.
    색·크기는 adas2.setTheme() 이 --a2-* 변수로 루트에 넣는다. 아래 값은 설정 전 대비용 기본값. */
@@ -16,6 +16,7 @@
   --a2-inactive-alpha: .4; --a2-text-dim-alpha: .6; --a2-text-faint-alpha: .3; --a2-disabled-alpha: .42;
   --a2-radius: 22; --a2-outline-width: 2; --a2-control-height: 52; --a2-control-pad-y: 8; --a2-line-height: 1.4;
   --a2-font-body: 23; --a2-font-h1: 32;
+  --a2-weight: 300; --a2-weight-strong: 500;
   --a2-font: "GmarketSans", "Pretendard", system-ui, -apple-system, "Malgun Gothic", sans-serif;
   --a2-font-mono: "GmarketSans", "Pretendard", system-ui, sans-serif;
 }
@@ -50,7 +51,7 @@
   position: relative; display: flex; align-items: center;
   width: 100%; height: calc(var(--a2-h, var(--a2-control-height)) * var(--a2-px)); flex: none;
   background: var(--a2-object-bg); border-radius: calc(var(--a2-h, var(--a2-control-height)) * var(--a2-px) / 2);
-  font-size: calc(var(--a2-fs) * var(--a2-px)); font-weight: 500; letter-spacing: -.02em;
+  font-size: calc(var(--a2-fs) * var(--a2-px)); font-weight: var(--a2-weight); letter-spacing: -.02em;
   -webkit-user-select: none; user-select: none; outline: none;
   transition: background-color calc(.15s / var(--a2-speed));
 }
@@ -95,8 +96,8 @@
 .a2-row { display: flex; gap: calc(8 * var(--a2-px)); width: 100%; height: calc(var(--a2-h, var(--a2-control-height)) * var(--a2-px)); align-items: stretch; }
 .a2-row > .a2-ctl { flex: 1; width: auto; height: auto; }
 .a2-stack { display: flex; flex-direction: column; gap: calc(var(--a2-gap, 8) * var(--a2-px)); width: 100%; }
-.a2-text { margin: 0; font-size: calc(var(--a2-font-body) * var(--a2-px)); font-weight: 500; line-height: var(--a2-line-height); letter-spacing: -.02em; }
-.a2-text.a2-h1 { font-size: calc(var(--a2-font-h1) * var(--a2-px)); font-weight: 700; }
+.a2-text { margin: 0; font-size: calc(var(--a2-font-body) * var(--a2-px)); font-weight: var(--a2-weight); line-height: var(--a2-line-height); letter-spacing: -.02em; }
+.a2-text.a2-h1 { font-size: calc(var(--a2-font-h1) * var(--a2-px)); font-weight: var(--a2-weight-strong); }
 .a2-text.a2-dim { color: var(--a2-dim); }
 
 @media (prefers-reduced-motion: reduce) {
@@ -150,7 +151,7 @@
 .a2-value, .a2-preview {
   position: absolute; inset: 0; z-index: 2;
   padding: .08em calc(24 * var(--a2-px)) 0; text-align: right; white-space: pre; overflow: hidden;
-  font-family: var(--a2-font-mono); font-size: calc(var(--a2-fs) * var(--a2-px)); font-weight: 500; letter-spacing: 0;
+  font-family: var(--a2-font-mono); font-size: calc(var(--a2-fs) * var(--a2-px)); font-weight: var(--a2-weight); letter-spacing: 0;
   font-variant-numeric: tabular-nums;
   display: flex; align-items: center; justify-content: flex-end;
 }
@@ -170,7 +171,7 @@
 .a2-input .a2-field {
   position: absolute; z-index: 2; inset: calc(4 * var(--a2-px)) calc(56 * var(--a2-px)) calc(4 * var(--a2-px)) calc(24 * var(--a2-px));
   width: auto; height: auto; margin: 0; padding: .08em 0 0; border: 0; outline: 0; background: transparent; resize: none;
-  font: 500 calc(var(--a2-fs) * var(--a2-px)) / 1.4 var(--a2-font); letter-spacing: -.02em; color: var(--a2-text);
+  font: var(--a2-weight) calc(var(--a2-fs) * var(--a2-px)) / 1.4 var(--a2-font); letter-spacing: -.02em; color: var(--a2-text);
   caret-color: var(--a2-object-active);
 }
 .a2-input.a2-no-icon .a2-field { right: calc(20 * var(--a2-px)); }
@@ -199,11 +200,11 @@
 .a2 .a2-seg {
   position: relative; z-index: 1; flex: 1 1 0; min-width: 0; height: 100%; display: flex; align-items: center; justify-content: center;
   padding: .08em calc(10 * var(--a2-px)) 0; border-radius: 999px; outline: none;
-  color: var(--a2-dim); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  color: var(--a2-dim); font-weight: var(--a2-weight); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   transition: color calc(.2s / var(--a2-speed));
 }
 .a2 .a2-seg:hover { color: var(--a2-text); }
-.a2 .a2-seg.a2-selected { color: var(--a2-object-on-active); font-weight: 700; }
+.a2 .a2-seg.a2-selected { color: var(--a2-object-on-active); font-weight: var(--a2-weight-strong); }
 
 /* ───────── 드롭다운: 아래에 떠서 열리는 목록 ───────── */
 .a2-dd { display: block; background: transparent; height: var(--a2-row-h); position: relative; }
@@ -224,7 +225,7 @@
 .a2-open .a2-dd-tri { color: var(--a2-object-active); }
 .a2-dd-list {
   position: fixed; z-index: 1500;
-  font-size: calc(var(--a2-font-body) * var(--a2-px)); font-weight: 500; letter-spacing: -.02em;
+  font-size: calc(var(--a2-font-body) * var(--a2-px)); font-weight: var(--a2-weight); letter-spacing: -.02em;
   -webkit-user-select: none; user-select: none;
   display: flex; flex-direction: column; padding: calc(6 * var(--a2-px)); max-height: calc(420 * var(--a2-px)); overflow-y: auto;
   background: var(--a2-object-bg); border-radius: var(--a2-r); opacity: 0; transform-origin: top center;
@@ -239,7 +240,7 @@
 }
 .a2-dd-row:hover { background: var(--a2-object-hover); }
 .a2-dd-row-text { position: relative; z-index: 2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.a2-dd-row.a2-selected .a2-dd-row-text { color: var(--a2-object-active); font-weight: 700; }
+.a2-dd-row.a2-selected .a2-dd-row-text { color: var(--a2-object-active); font-weight: var(--a2-weight-strong); }
 .a2-dd-check-row { padding-right: calc(52 * var(--a2-px)); }
 .a2-dd-check-row .a2-icon {
   position: absolute; z-index: 2; right: calc(14 * var(--a2-px)); top: calc(50% - 12 * var(--a2-px));
@@ -249,7 +250,7 @@
 .a2-check-on { opacity: 0; color: var(--a2-object-active) !important; }
 .a2-dd-check-row.a2-selected .a2-check-on { opacity: 1; }
 .a2-dd-check-row.a2-selected .a2-check-off { opacity: 0; }
-.a2-dd-check-row.a2-selected .a2-dd-row-text { color: var(--a2-text); font-weight: 500; }
+.a2-dd-check-row.a2-selected .a2-dd-row-text { color: var(--a2-text); font-weight: var(--a2-weight); }
 
 /* ───────── 색 고르기 ───────── */
 .a2-colorpicker { cursor: pointer; }
@@ -259,7 +260,7 @@
   background: repeating-conic-gradient(#8a8a8a 0 25%, #c8c8c8 0 50%) 0 0 / calc(16 * var(--a2-px)) calc(16 * var(--a2-px));
 }
 .a2-swatch-fill { position: absolute; inset: 0; }
-.a2-swatch-text { position: absolute; inset: 0; display: grid; place-items: center; padding-top: .1em; font-family: var(--a2-font-mono); font-size: calc(18 * var(--a2-px)); font-weight: 500; letter-spacing: .02em; }
+.a2-swatch-text { position: absolute; inset: 0; display: grid; place-items: center; padding-top: .1em; font-family: var(--a2-font-mono); font-size: calc(18 * var(--a2-px)); font-weight: var(--a2-weight); letter-spacing: .02em; }
 .a2-cp-blocker { position: fixed; inset: 0; z-index: 1999; }
 .a2-cp-popup {
   --a2-wheel: calc(336 * var(--a2-px)); --a2-wheel-x: calc(16 * var(--a2-px)); --a2-wheel-y: calc(16 * var(--a2-px));
@@ -276,11 +277,11 @@
 }
 .a2-cp-tabs { position: relative; display: flex; gap: calc(4 * var(--a2-px)); height: calc(42 * var(--a2-px)); padding: calc(4 * var(--a2-px)); border-radius: 999px; background: var(--a2-object-bg); }
 .a2-cp-tab {
-  flex: 1; border-radius: 999px; font-size: calc(19 * var(--a2-px)); font-weight: 500; padding-top: .08em; color: var(--a2-dim) !important;
+  flex: 1; border-radius: 999px; font-size: calc(19 * var(--a2-px)); font-weight: var(--a2-weight); padding-top: .08em; color: var(--a2-dim) !important;
   transition: background-color calc(.18s / var(--a2-speed)), color calc(.18s / var(--a2-speed));
 }
 .a2-cp-tab:hover { color: var(--a2-text) !important; }
-.a2-cp-tab.a2-on { background: var(--a2-object-active) !important; color: var(--a2-object-on-active) !important; font-weight: 700; }
+.a2-cp-tab.a2-on { background: var(--a2-object-active) !important; color: var(--a2-object-on-active) !important; font-weight: var(--a2-weight-strong); }
 .a2-cp-channels { display: flex; flex-direction: column; gap: calc(8 * var(--a2-px)); }
 .a2-cp-channels .a2-slider { --a2-fs: 19; }
 .a2-cp-hex { height: calc(42 * var(--a2-px)); --a2-fs: 19; border-radius: 999px; }
@@ -298,7 +299,7 @@
   transition: background-color calc(.15s / var(--a2-speed));
 }
 .a2-card-title:hover { background: color-mix(in srgb, var(--a2-text) 5%, transparent); }
-.a2-card-title-text { font-weight: 700; font-size: calc(24 * var(--a2-px)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -.02em; }
+.a2-card-title-text { font-weight: var(--a2-weight-strong); font-size: calc(24 * var(--a2-px)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -.02em; }
 .a2-card-tri { width: calc(24 * var(--a2-px)); height: calc(24 * var(--a2-px)); color: var(--a2-dim); margin-top: -.08em; transition: color calc(.2s / var(--a2-speed)); }
 .a2-card-tri.a2-on { color: var(--a2-dim); }
 .a2-card-check { order: 2; flex: none; border-radius: 999px; outline: none; }
@@ -331,7 +332,7 @@
   display: flex; flex-direction: column;
   background: var(--a2-panel-bg); border-radius: calc(30 * var(--a2-px));
   box-shadow: 0 calc(30 * var(--a2-px)) calc(80 * var(--a2-px)) rgba(0,0,0,.45), 0 0 0 1px var(--a2-outline);
-  font-size: calc(var(--a2-font-body) * var(--a2-px)); font-weight: 500;
+  font-size: calc(var(--a2-font-body) * var(--a2-px)); font-weight: var(--a2-weight);
 }
 .a2-window[hidden] { display: none; }
 .a2-win-top {
@@ -344,7 +345,7 @@
 .a2-window.a2-has-icon .a2-win-top { padding-left: calc(20 * var(--a2-px)); }
 .a2-win-icon { width: calc(var(--a2-icon, 40) * var(--a2-px)); height: calc(var(--a2-icon, 40) * var(--a2-px)); margin-right: calc(12 * var(--a2-px)); font-size: calc(var(--a2-icon, 40) * .7 * var(--a2-px)); }
 .a2-win-icon img, .a2-win-icon svg { width: 100%; height: 100%; object-fit: contain; }
-.a2-win-title { flex: 1; min-width: 0; padding-top: .08em; font-weight: 700; font-size: calc(var(--a2-title-fs, 26) * var(--a2-px)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -.02em; }
+.a2-win-title { flex: 1; min-width: 0; padding-top: .08em; font-weight: var(--a2-weight-strong); font-size: calc(var(--a2-title-fs, 26) * var(--a2-px)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -.02em; }
 .a2-win-close {
   position: absolute; right: calc(18 * var(--a2-px)); top: calc(50% - 20 * var(--a2-px));
   width: calc(40 * var(--a2-px)); height: calc(40 * var(--a2-px)); border-radius: 50%; display: grid; place-items: center;
@@ -370,6 +371,6 @@
   position: fixed; left: 0; top: 0; z-index: 3000; display: none; pointer-events: none;
   max-width: calc(520 * var(--a2-px)); padding: calc(12 * var(--a2-px)) calc(18 * var(--a2-px)) calc(10 * var(--a2-px));
   background: var(--a2-tooltip-bg); color: #fff; border-radius: calc(16 * var(--a2-px));
-  font-size: calc(19 * var(--a2-px)); font-weight: 500; line-height: 1.45; white-space: pre-line; letter-spacing: -.01em;
+  font-size: calc(19 * var(--a2-px)); font-weight: var(--a2-weight); line-height: 1.45; white-space: pre-line; letter-spacing: -.01em;
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
 }
