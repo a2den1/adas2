@@ -10,13 +10,27 @@
 </p>
 
 <p align="center">
-  <a href="https://adas2-six.vercel.app"><b>데모</b></a> ·
+  <a href="https://github.com/a2den1/adas2/releases"><img src="https://img.shields.io/badge/version-1.0.0-FF793F?style=flat-square" alt="version"></a>
+  <img src="https://img.shields.io/badge/min-29KB%20JS%20%2B%2010KB%20CSS-3E3E3E?style=flat-square" alt="size">
+  <img src="https://img.shields.io/badge/dependencies-0-3E3E3E?style=flat-square" alt="dependencies">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-adas2%20License-FF9B70?style=flat-square" alt="license"></a>
+</p>
+
+<p align="center">
+  <a href="https://adas2-six.vercel.app"><b>데모 보기</b></a> ·
   <a href="#설치">설치</a> ·
   <a href="#컴포넌트">컴포넌트</a> ·
-  <a href="#스프링-엔진">스프링 엔진</a>
+  <a href="#스프링-엔진">스프링 엔진</a> ·
+  <a href="#라이선스">라이선스</a>
+</p>
+
+<p align="center">
+  <a href="https://adas2-six.vercel.app"><img src="docs/preview.png" width="800" alt="adas2 컴포넌트 미리보기"></a>
 </p>
 
 ---
+
+## 특징
 
 - **이어지는 움직임** — 상태가 바뀌면 컷이나 페이드 대신 위치·크기·모서리·색이 스프링 하나로 함께 옮겨 갑니다.
   드롭다운에서 고른 항목은 그대로 맨 위로 미끄러져 커지고, 모달은 누른 버튼이 늘어나서 판이 됩니다.
@@ -133,7 +147,13 @@ m.set({ x: 0, s: 1 });                                     // 애니메이션 �
 `adas2.springs` — `base`(기본) · `fast`(앞서 가는 쪽) · `slow`(따라오는 쪽) · `press`(누름 반응).
 숨은 탭처럼 `requestAnimationFrame` 이 멈춘 곳에서도 실제 시간에 맞춰 끝납니다.
 
+## 브라우저 지원
+
+커스텀 엘리먼트, CSS `color-mix()`, `translate` 개별 속성을 쓰는 최신 브라우저(Chrome·Edge 111+, Safari 16.4+, Firefox 113+).
+
 ## 개발
+
+라이선스상 수정본을 배포할 수는 없지만, 저장소를 받아 직접 빌드해 볼 수는 있습니다.
 
 ```bash
 npm install
@@ -148,6 +168,17 @@ npm run dev        # http://localhost:5880/docs/
 | `types/` | TypeScript 선언 (`HTMLElementTagNameMap` 포함) |
 | `docs/` | 데모 페이지 |
 
+버그나 제안은 [Issues](https://github.com/a2den1/adas2/issues)에 남겨 주세요.
+
 ## 라이선스
 
-[MIT](LICENSE)
+[adas2 라이선스 1.0](LICENSE) — 오픈소스 라이선스가 아닙니다.
+
+| 할 수 있어요 | 할 수 없어요 |
+|---|---|
+| 개인·상업 프로젝트에서 무료로 사용 | 소스나 배포 파일을 고치기 |
+| CDN·npm 으로 불러와 쓰기 | 포크·파생 프레임워크 등 2차적 저작물 만들기 |
+| 내 사이트·앱 안에 수정 없이 넣어 함께 배포 | 복제해서 별도 라이브러리·템플릿·UI 키트로 배포·판매 |
+| CSS 변수·속성·API·내 스타일시트로 모양 바꾸기 | 내가 만든 것처럼 표시하기 |
+
+이 밖의 사용은 저작권자에게 문의해 주세요. © 2026 a2den1

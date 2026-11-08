@@ -2,12 +2,25 @@
   "name": "adas2",
   "version": "1.0.0",
   "description": "끊김 없이 이어지는 스프링 애니메이션의 웹 컴포넌트 UI 프레임워크 — 빌드 없이 <script> 하나로.",
-  "keywords": ["ui", "framework", "web-components", "custom-elements", "spring-animation", "design-system", "korean"],
-  "license": "MIT",
+  "keywords": [
+    "ui",
+    "framework",
+    "web-components",
+    "custom-elements",
+    "spring-animation",
+    "design-system",
+    "korean"
+  ],
+  "license": "SEE LICENSE IN LICENSE",
   "author": "a2den1",
   "homepage": "https://adas2-six.vercel.app",
-  "repository": { "type": "git", "url": "git+https://github.com/a2den1/adas2.git" },
-  "bugs": { "url": "https://github.com/a2den1/adas2/issues" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a2den1/adas2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/a2den1/adas2/issues"
+  },
   "main": "dist/adas2.js",
   "module": "dist/adas2.esm.js",
   "types": "types/adas2.d.ts",
@@ -23,8 +36,19 @@
     "./css": "./dist/adas2.css",
     "./dist/*": "./dist/*"
   },
-  "sideEffects": ["*.css", "./dist/adas2.js", "./dist/adas2.esm.js", "./dist/adas2.min.js", "./dist/adas2.esm.min.js"],
-  "files": ["dist", "types", "README.md", "LICENSE"],
+  "sideEffects": [
+    "*.css",
+    "./dist/adas2.js",
+    "./dist/adas2.esm.js",
+    "./dist/adas2.min.js",
+    "./dist/adas2.esm.min.js"
+  ],
+  "files": [
+    "dist",
+    "types",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "node scripts/build.mjs",
     "dev": "python serve.py 5880"

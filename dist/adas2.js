@@ -1,4 +1,4 @@
-/*! adas2 v1.0.0 | MIT License | https://github.com/a2den1/adas2 */
+/*! adas2 v1.0.0 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
 /* adas2 — UI framework
    요소가 끊기지 않고 이어지도록 모든 상태 변화는 스프링 하나로 위치·크기·모서리·색을 함께 옮긴다.
    <link rel="stylesheet" href="adas2.css"> + <script src="adas2.js"></script> 만 넣으면 a2-* 태그를 쓸 수 있다.

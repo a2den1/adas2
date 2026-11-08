@@ -7,7 +7,7 @@ const read = p => readFileSync(new URL(p, root), 'utf8');
 const write = (p, s) => { writeFileSync(new URL(p, root), s); console.log(`  ${p.padEnd(24)} ${(Buffer.byteLength(s) / 1024).toFixed(1)} KB`); };
 
 const pkg = JSON.parse(read('package.json'));
-const banner = `/*! adas2 v${pkg.version} | MIT License | https://github.com/a2den1/adas2 */\n`;
+const banner = `/*! adas2 v${pkg.version} | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */\n`;
 
 mkdirSync(new URL('dist', root), { recursive: true });
 
