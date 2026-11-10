@@ -9,6 +9,7 @@ function frame(now) {
   if (running.size) raf = requestAnimationFrame(frame);
 }
 function wake() { if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); } }
+if (typeof document !== 'undefined') document.addEventListener('visibilitychange', () => { if (document.hidden) for (const a of [...running]) a.finish(); });
 setInterval(() => { if (running.size && performance.now() - last > 120) { cancelAnimationFrame(raf); raf = 0; frame(performance.now()); } }, 100);
 
 export function speed() {
@@ -32,7 +33,8 @@ export function animate(from, to, { duration = 0.3, ease = 'OutCubic', onUpdate 
     stop() { a.alive = false; running.delete(a); },
     finish() { if (a.alive) { a.apply(1); a.end(); } },
   };
-  if (ms < 16) { a.apply(1); a.end(); return a; }
+  // 화면이 가려진 탭에선 프레임이 돌지 않으므로 바로 끝낸다(닫기 같은 마무리가 멈추지 않게)
+  if (ms < 16 || (typeof document !== 'undefined' && document.hidden)) { a.apply(1); a.end(); return a; }
   running.add(a); wake();
   return a;
 }

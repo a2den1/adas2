@@ -89,7 +89,8 @@ export class A2Menu extends A2Element {
     this._active = -1;
     this._target?.setAttribute('aria-expanded', 'true');
     this._pop = openPopover(this.pop, at, { gap: 6, alignEnd: this.str('align') === 'end', closeOnOutside: this._target && at === this._target ? [this._target] : [], onClose: () => { this._target?.setAttribute('aria-expanded', 'false'); this.emit('a2-close'); } });
-    requestAnimationFrame(() => { this.list.focus({ preventScroll: true }); if (kb) this.step(1); });
+    this.list.focus({ preventScroll: true });
+    if (kb) this.step(1);
   }
   close() { if (this.isOpen) { this._pop.close(); this._target?.focus?.({ preventScroll: true }); } }
   mark(i) { this._active = i; this.list.querySelectorAll('.item').forEach(el => el.classList.toggle('active', +el.dataset.i === i)); }

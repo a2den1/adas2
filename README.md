@@ -8,7 +8,7 @@
 
 **한국어** · [English](README.en.md) · [데모](https://adas2-six.vercel.app)
 
-[![version](https://img.shields.io/badge/version-4.0.0-FF7A45?style=flat-square)](https://github.com/a2den1/adas2/releases)
+[![version](https://img.shields.io/badge/version-4.0.1-FF7A45?style=flat-square)](https://github.com/a2den1/adas2/releases)
 ![dependencies](https://img.shields.io/badge/dependencies-0-29231F?style=flat-square)
 [![license](https://img.shields.io/badge/license-adas2%20License-F26A32?style=flat-square)](LICENSE)
 
@@ -34,13 +34,13 @@
 ### CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v4.0.0/dist/adas2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v4.0.1/dist/adas2.min.js"></script>
 ```
 
 글꼴(지마켓 산스)과 색 변수는 스크립트가 넣습니다. 첫 화면이 깜빡이지 않게 하려면 CSS 를 `<head>` 에 먼저 넣으세요.
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v4.0.0/dist/adas2.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v4.0.1/dist/adas2.min.css">
 ```
 
 ### npm

@@ -8,7 +8,7 @@ A web component UI kit
 
 [한국어](README.md) · **English** · [Demo](https://adas2-six.vercel.app)
 
-[![version](https://img.shields.io/badge/version-4.0.0-FF7A45?style=flat-square)](https://github.com/a2den1/adas2/releases)
+[![version](https://img.shields.io/badge/version-4.0.1-FF7A45?style=flat-square)](https://github.com/a2den1/adas2/releases)
 ![dependencies](https://img.shields.io/badge/dependencies-0-29231F?style=flat-square)
 [![license](https://img.shields.io/badge/license-adas2%20License-F26A32?style=flat-square)](LICENSE)
 
@@ -34,13 +34,13 @@ UI components you use as HTML tags, such as `<a2-button>` and `<a2-select>`.
 ### CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v4.0.0/dist/adas2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v4.0.1/dist/adas2.min.js"></script>
 ```
 
 The script adds the font (Gmarket Sans) and the color variables. To avoid a flash on first paint, put the CSS in `<head>` as well.
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v4.0.0/dist/adas2.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v4.0.1/dist/adas2.min.css">
 ```
 
 ### npm

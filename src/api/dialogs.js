@@ -36,7 +36,7 @@ function build({ title, message, buttons, input, danger }) {
 const run = (o, pick) => new Promise(resolve => {
   const { d, field } = build(o);
   d.addEventListener('a2-close', e => { resolve(pick(e.detail.returnValue, field)); d.remove(); }, { once: true });
-  requestAnimationFrame(() => d.show());
+  d.show();
 });
 
 const norm = (a, b) => (typeof a === 'object' && a ? a : { message: a, ...b });

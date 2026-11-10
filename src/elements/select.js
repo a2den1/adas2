@@ -95,7 +95,7 @@ export class A2Select extends A2Element {
     this._active = Math.max(0, first);
     this.paintList();
     this._pop = openPopover(this.pop, this.box, { match: true, onClose: () => { this.setBool('open', false); this.box.setAttribute('aria-expanded', 'false'); } });
-    if (this.bool('searchable')) requestAnimationFrame(() => this.q.focus());
+    if (this.bool('searchable')) this.q.focus({ preventScroll: true });
     this.markActive(true);
   }
   close(refocus = true) {

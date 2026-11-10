@@ -1,4 +1,4 @@
-/*! adas2 v4.0.0 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
+/*! adas2 v4.0.1 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
 var adas2 = (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -1042,6 +1042,9 @@ svg { display: block; }
       raf = requestAnimationFrame(frame);
     }
   }
+  if (typeof document !== "undefined") document.addEventListener("visibilitychange", () => {
+    if (document.hidden) for (const a of [...running]) a.finish();
+  });
   setInterval(() => {
     if (running.size && performance.now() - last > 120) {
       cancelAnimationFrame(raf);
@@ -1088,7 +1091,7 @@ svg { display: block; }
         }
       }
     };
-    if (ms < 16) {
+    if (ms < 16 || typeof document !== "undefined" && document.hidden) {
       a.apply(1);
       a.end();
       return a;
@@ -1307,6 +1310,7 @@ svg { display: block; }
       pop.style.left = `${x}px`;
       pop.style.top = `${y}px`;
       pop.dataset.side = up ? "top" : "bottom";
+      cancelAnimationFrame(raf2);
       if (anchor instanceof Element) raf2 = requestAnimationFrame(place2);
     };
     const keep = [pop, ...o.closeOnOutside || [], ...anchor instanceof Element ? [anchor] : []];
@@ -1326,10 +1330,8 @@ svg { display: block; }
       pop.style.transform = `translateY(${(1 - p) * (up ? 6 : -6)}px) scale(${0.97 + 0.03 * p})`;
     };
     paint(0);
-    requestAnimationFrame(() => {
-      place2();
-      anim2 = animate({ p: 0 }, { p: 1 }, { duration: 0.18, ease: "OutCubic", onUpdate: (v) => paint(v.p) });
-    });
+    place2();
+    anim2 = animate({ p: 0 }, { p: 1 }, { duration: 0.18, ease: "OutCubic", onUpdate: (v) => paint(v.p) });
     setTimeout(() => {
       if (alive) {
         document.addEventListener("pointerdown", outside, true);
@@ -1467,7 +1469,7 @@ svg { display: block; }
         this.setBool("open", false);
         this.box.setAttribute("aria-expanded", "false");
       } });
-      if (this.bool("searchable")) requestAnimationFrame(() => this.q.focus());
+      if (this.bool("searchable")) this.q.focus({ preventScroll: true });
       this.markActive(true);
     }
     close(refocus = true) {
@@ -2626,10 +2628,8 @@ dialog::backdrop { background: none; }
         this._target?.setAttribute("aria-expanded", "false");
         this.emit("a2-close");
       } });
-      requestAnimationFrame(() => {
-        this.list.focus({ preventScroll: true });
-        if (kb) this.step(1);
-      });
+      this.list.focus({ preventScroll: true });
+      if (kb) this.step(1);
     }
     close() {
       if (this.isOpen) {
@@ -2825,7 +2825,7 @@ dialog::backdrop { background: none; }
       resolve(pick(e.detail.returnValue, field));
       d.remove();
     }, { once: true });
-    requestAnimationFrame(() => d.show());
+    d.show();
   });
   var norm = (a, b) => typeof a === "object" && a ? a : { message: a, ...b };
   var alert = (message, o = {}) => {
@@ -2970,7 +2970,7 @@ dialog::backdrop { background: none; }
   var themes = [...NAMES2];
 
   // src/index.js
-  var version = "4.0.0";
+  var version = "4.0.1";
   if (typeof document !== "undefined") {
     ensureGlobal();
     installTooltips();

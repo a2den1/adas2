@@ -26,6 +26,7 @@ export function openPopover(pop, anchor, o = {}) {
     const y = Math.min(Math.max(8, up ? r.top - gap - h : r.bottom + gap), innerHeight - h - 8);
     pop.style.left = `${x}px`; pop.style.top = `${y}px`;
     pop.dataset.side = up ? 'top' : 'bottom';
+    cancelAnimationFrame(raf);
     if (anchor instanceof Element) raf = requestAnimationFrame(place);
   };
   const keep = [pop, ...(o.closeOnOutside || []), ...(anchor instanceof Element ? [anchor] : [])];
@@ -34,7 +35,9 @@ export function openPopover(pop, anchor, o = {}) {
   let anim = null;
   const paint = p => { pop.style.opacity = p; pop.style.transform = `translateY(${(1 - p) * (up ? 6 : -6)}px) scale(${0.97 + 0.03 * p})`; };
   paint(0);
-  requestAnimationFrame(() => { place(); anim = animate({ p: 0 }, { p: 1 }, { duration: 0.18, ease: 'OutCubic', onUpdate: v => paint(v.p) }); });
+  // 첫 위치는 바로 잡는다(프레임을 기다리면 탭이 가려졌을 때 엉뚱한 곳에 남음). 그 뒤는 매 프레임 따라간다
+  place();
+  anim = animate({ p: 0 }, { p: 1 }, { duration: 0.18, ease: 'OutCubic', onUpdate: v => paint(v.p) });
   setTimeout(() => { if (alive) { document.addEventListener('pointerdown', outside, true); addEventListener('keydown', key, true); } }, 0);
   function close() {
     if (!alive) return;
