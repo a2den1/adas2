@@ -1,10 +1,11 @@
 {
   "name": "adas2",
-  "version": "3.0.0",
-  "description": "웹용 UI 툴킷 (A UI toolkit for the web)",
+  "version": "4.0.0",
+  "description": "웹 컴포넌트 UI 모음 (Web component UI kit)",
   "keywords": [
     "ui",
-    "toolkit",
+    "web-components",
+    "custom-elements",
     "components",
     "theme",
     "toast",
@@ -38,13 +39,7 @@
     "./css": "./dist/adas2.css",
     "./dist/*": "./dist/*"
   },
-  "sideEffects": [
-    "*.css",
-    "./dist/adas2.js",
-    "./dist/adas2.esm.js",
-    "./dist/adas2.min.js",
-    "./dist/adas2.esm.min.js"
-  ],
+  "sideEffects": true,
   "files": [
     "dist",
     "types",

@@ -1,38 +1,34 @@
-// adas2 — 웹용 UI 툴킷
-import { setup, setTheme, settings, onSettings } from './core/settings.js';
-import { Theme, themes } from './core/theme.js';
+// adas2 — 웹 컴포넌트 UI 모음. 스크립트 하나를 넣으면 <a2-*> 태그를 바로 쓸 수 있다.
+import { ensureGlobal } from './core/base.js';
+import './elements/button.js';
+import './elements/input.js';
+import './elements/number.js';
+import './elements/toggle.js';
+import './elements/radio.js';
+import './elements/slider.js';
+import './elements/select.js';
+import './elements/segmented.js';
+import './elements/tabs.js';
+import './elements/color.js';
+import './elements/keybind.js';
+import './elements/display.js';
+import './elements/overlay.js';
+import './elements/menu.js';
+import { toast } from './api/toast.js';
+import { alert, confirm, prompt } from './api/dialogs.js';
+import { installTooltips } from './api/tooltip.js';
+import { theme, themes } from './api/theme.js';
+import { animate } from './core/animate.js';
 import { Ease } from './core/ease.js';
-import { animate } from './core/tween.js';
-import { tooltip } from './core/tooltip.js';
-import { keys } from './core/keys.js';
-import { evaluate } from './eval/evaluator.js';
-import { Panel } from './core/panel.js';
-import { ui, panel, Builder } from './ui.js';
-import { Component, get } from './components/base.js';
-import { Button } from './components/button.js';
-import { Switch, Checkbox, Radio } from './components/choice.js';
-import { Slider, Stepper } from './components/slider.js';
-import { Field } from './components/field.js';
-import { Select, MultiSelect, menu, openMenu } from './components/select.js';
-import { Segmented, Tabs } from './components/segmented.js';
-import { ColorPicker } from './components/color.js';
-import { KeyBind } from './components/keybind.js';
-import { Progress, Spinner, toast, dialog, confirm, alert } from './components/feedback.js';
-import { Section, ScrollArea } from './components/layout.js';
+import { evaluate } from './core/evaluator.js';
+import { matches as matchKey, keyNames } from './core/keys.js';
 
-/* global __VERSION__ */
-export const version = typeof __VERSION__ !== 'undefined' ? __VERSION__ : 'dev';
+export const version = __VERSION__;
 
-const api = {
-  version, setup, setTheme, settings, onSettings, Theme, themes, Ease, animate, tooltip, keys, evaluate,
-  ui, panel, Builder, Panel, get, toast, dialog, confirm, alert, menu, openMenu,
-  Component, Button, Switch, Checkbox, Radio, Slider, Stepper, Field, Select, MultiSelect,
-  Segmented, Tabs, ColorPicker, KeyBind, Progress, Spinner, Section, ScrollArea,
-};
-export {
-  setup, setTheme, settings, onSettings, Theme, themes, Ease, animate, tooltip, keys, evaluate,
-  ui, panel, Builder, Panel, get, toast, dialog, confirm, alert, menu, openMenu,
-  Component, Button, Switch, Checkbox, Radio, Slider, Stepper, Field, Select, MultiSelect,
-  Segmented, Tabs, ColorPicker, KeyBind, Progress, Spinner, Section, ScrollArea,
-};
-export default api;
+if (typeof document !== 'undefined') {
+  ensureGlobal();
+  installTooltips();
+}
+
+export { toast, alert, confirm, prompt, theme, themes, animate, Ease, evaluate, matchKey, keyNames };
+export default { version, toast, alert, confirm, prompt, theme, themes, animate, Ease, evaluate, matchKey, keyNames };

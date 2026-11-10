@@ -1,159 +1,361 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" data-a2-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>adas2</title>
+<meta name="description" content="스크립트 하나로 쓰는 웹 컴포넌트 UI 모음">
 <link rel="icon" href="../docs/logo.svg" type="image/svg+xml">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <link rel="stylesheet" href="../dist/adas2.css">
 <style>
-  html { background: var(--a2-bg); color-scheme: dark; scrollbar-gutter: stable; }
-  html[data-a2-theme="light"] { color-scheme: light; }
-  body { margin: 0; background: var(--a2-bg); transition: background-color .3s; }
-  .page { max-width: 1120px; margin: 0 auto; padding: 40px 24px 120px; }
-  .top { display: flex; align-items: center; gap: 14px; margin-bottom: 36px; flex-wrap: wrap; }
-  .top img { width: 40px; height: 40px; }
-  .top h1 { margin: 0; font: 500 26px var(--a2-font); letter-spacing: -.02em; color: var(--a2-text); padding-top: 3px; }
-  .top .theme { margin-left: auto; width: 300px; max-width: 100%; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 20px; align-items: start; }
-  .card { background: var(--a2-raised); border-radius: 22px; padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 14px; }
-  .card.wide { grid-column: 1 / -1; }
-  .card > h3 { margin: 0 0 2px; font: 500 15px var(--a2-font); color: var(--a2-text-muted); letter-spacing: -.01em; }
-  .card .a2-switch, .card .a2-check, .card .a2-stepper, .card .a2-keybind, .card .a2-radio-list { margin-left: -8px; margin-right: -8px; padding-left: 8px; padding-right: 8px; }
-  .menu-target { display: grid; place-items: center; height: 96px; border-radius: 14px; background: var(--a2-surface); color: var(--a2-text-muted); font: 300 14px var(--a2-font); -webkit-user-select: none; user-select: none; }
-  @media (max-width: 720px) { .page { padding: 24px 16px 80px; } .top .theme { margin-left: 0; width: 100%; } }
+  body { margin: 0; background: var(--a2-bg); color: var(--a2-text); font-family: var(--a2-font); font-weight: var(--a2-weight); font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  header { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--a2-bg) 86%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+  header .wrap { display: flex; align-items: center; gap: 14px; height: 64px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: var(--a2-weight-strong); font-size: 17px; padding-top: .12em; }
+  .brand img { width: 28px; height: 28px; margin-top: -.12em; }
+  header nav { display: flex; gap: 4px; margin-left: auto; align-items: center; }
+  header nav > a { text-decoration: none; color: var(--a2-text-muted); padding: 8px 10px 6px; border-radius: 8px; font-size: 14px; }
+  header nav > a:hover { color: var(--a2-text); background: var(--a2-surface); }
+  .intro { padding: 64px 0 40px; }
+  .intro h1 { margin: 0; font-size: 44px; line-height: 1.15; font-weight: var(--a2-weight-strong); letter-spacing: -.02em; }
+  .intro p { margin: 14px 0 26px; color: var(--a2-text-muted); font-size: 17px; max-width: 560px; }
+  .install { box-sizing: border-box; display: flex; align-items: center; gap: 8px; max-width: 100%; width: fit-content; padding: 6px 6px 6px 16px; border-radius: 12px; background: var(--a2-surface); }
+  .install code { min-width: 0; font: 13px/1.5 ui-monospace, Consolas, monospace; color: var(--a2-text); white-space: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .actions { display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
+  h2 { font-size: 22px; font-weight: var(--a2-weight-strong); margin: 56px 0 18px; letter-spacing: -.01em; }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .grid .wide { grid-column: 1 / -1; }
+  .demo { display: flex; flex-direction: column; gap: 16px; }
+  .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .code { margin-top: 16px; }
+  .code summary { cursor: pointer; color: var(--a2-text-muted); font-size: 13px; list-style: none; display: inline-flex; gap: 6px; align-items: center; padding: 4px 0; }
+  .code summary::-webkit-details-marker { display: none; }
+  .code summary i { font-size: 11px; transition: transform .2s; }
+  .code[open] summary i { transform: rotate(90deg); }
+  .code pre { margin: 10px 0 0; padding: 14px 16px; border-radius: 10px; background: var(--a2-bg); font: 12.5px/1.65 ui-monospace, Consolas, monospace; color: var(--a2-text-muted); overflow-x: auto; white-space: pre; }
+  .muted { color: var(--a2-text-muted); font-size: 13.5px; }
+  .ctx { display: grid; place-items: center; height: 96px; border-radius: 10px; background: var(--a2-bg); color: var(--a2-text-muted); font-size: 13.5px; user-select: none; }
+  footer { margin: 72px 0 0; padding: 28px 0 40px; color: var(--a2-text-faint); font-size: 13px; }
+  footer .wrap { display: flex; gap: 16px; flex-wrap: wrap; justify-content: space-between; }
+  @media (max-width: 760px) {
+    .wrap { padding: 0 16px; }
+    .grid, .cols { grid-template-columns: minmax(0, 1fr); }
+    .intro { padding: 40px 0 28px; }
+    .intro h1 { font-size: 34px; }
+    header nav > a, #ver { display: none; }
+  }
 </style>
 </head>
 <body>
-<div class="page a2">
-  <div class="top">
-    <img src="../docs/logo.svg" alt="">
-    <h1>adas2</h1>
-    <div class="theme" id="theme"></div>
+<header>
+  <div class="wrap">
+    <a class="brand" href="#"><img src="../docs/logo.svg" alt="">adas2</a>
+    <a2-badge variant="accent" id="ver">v4</a2-badge>
+    <nav>
+      <a href="#start">시작하기</a>
+      <a href="#components">컴포넌트</a>
+      <a href="https://github.com/a2den1/adas2" target="_blank" rel="noopener">GitHub</a>
+      <a2-segmented id="theme" size="sm" value="dark" aria-label="테마">
+        <a2-segment value="dark">다크</a2-segment>
+        <a2-segment value="light">라이트</a2-segment>
+        <a2-segment value="ocean">오션</a2-segment>
+      </a2-segmented>
+    </nav>
   </div>
-  <div class="grid" id="grid"></div>
-</div>
+</header>
+
+<main class="wrap">
+  <section class="intro" id="start">
+    <h1>adas2</h1>
+    <p>스크립트 하나로 쓰는 웹 컴포넌트 UI 모음입니다. HTML 태그로 쓰고, 일반 폼과 함께 동작합니다.</p>
+    <div class="install">
+      <code id="cdn"></code>
+      <a2-button variant="ghost" size="sm" id="copy" a2-tip="복사"><i class="fa-regular fa-copy"></i></a2-button>
+    </div>
+    <div class="actions">
+      <a2-button variant="primary" onclick="location.hash='components'">컴포넌트 보기</a2-button>
+      <a2-button onclick="open('https://github.com/a2den1/adas2')"><i slot="prefix" class="fa-brands fa-github"></i>GitHub</a2-button>
+    </div>
+  </section>
+
+  <h2 id="components">컴포넌트</h2>
+  <div class="grid">
+
+    <a2-card heading="버튼" description="variant 로 모양을, size 로 크기를 정합니다.">
+      <div class="demo">
+        <div class="row">
+          <a2-button variant="primary">저장</a2-button>
+          <a2-button>취소</a2-button>
+          <a2-button variant="soft">공유</a2-button>
+          <a2-button variant="ghost">더 보기</a2-button>
+          <a2-button variant="danger">삭제</a2-button>
+        </div>
+        <div class="row">
+          <a2-button variant="primary" size="sm">작게</a2-button>
+          <a2-button size="lg"><i slot="prefix" class="fa-solid fa-plus"></i>크게</a2-button>
+          <a2-button variant="primary" loading id="loadBtn">보내기</a2-button>
+          <a2-button label="설정" a2-tip="설정"><i class="fa-solid fa-gear"></i></a2-button>
+          <a2-button disabled>꺼짐</a2-button>
+        </div>
+      </div>
+    </a2-card>
+
+    <a2-card heading="입력" description="label, hint, error, clearable 을 지원합니다.">
+      <div class="demo">
+        <a2-input label="이름" placeholder="홍길동" clearable hint="실명이 아니어도 됩니다."></a2-input>
+        <a2-input label="비밀번호" type="password" value="adas2-password"></a2-input>
+        <a2-input placeholder="검색" type="search"><i slot="prefix" class="fa-solid fa-magnifying-glass"></i></a2-input>
+      </div>
+    </a2-card>
+
+    <a2-card heading="여러 줄 입력" description="내용에 맞춰 높이가 늘어납니다.">
+      <div class="demo">
+        <a2-textarea label="메모" placeholder="적어 두세요" maxlength="200" rows="3"></a2-textarea>
+        <a2-input label="이메일" type="email" value="hello@" error="이메일 형식이 아닙니다."></a2-input>
+      </div>
+    </a2-card>
+
+    <a2-card heading="숫자" description="버튼을 누르고 있으면 계속 바뀝니다. 50*2 같은 계산식도 됩니다.">
+      <div class="demo">
+        <div class="cols">
+          <a2-number label="수량" value="3" min="0" max="99" unit="개"></a2-number>
+          <a2-number label="배율" value="1.5" min="0.1" max="4" step="0.1" unit="x"></a2-number>
+        </div>
+        <p class="muted" style="margin:0">입력칸에서 ↑↓ 키, Shift 와 함께 누르면 10배씩 바뀝니다. x 는 지금 값입니다.</p>
+      </div>
+    </a2-card>
+
+    <a2-card heading="체크박스 · 스위치 · 라디오">
+      <div class="demo">
+        <div class="cols">
+          <div class="demo" style="gap:12px">
+            <a2-checkbox checked>약관에 동의</a2-checkbox>
+            <a2-checkbox indeterminate>일부 선택</a2-checkbox>
+            <a2-checkbox disabled>꺼짐</a2-checkbox>
+          </div>
+          <div class="demo" style="gap:12px">
+            <a2-switch checked>알림</a2-switch>
+            <a2-switch>자동 저장</a2-switch>
+            <a2-switch disabled checked>꺼짐</a2-switch>
+          </div>
+        </div>
+        <a2-radio-group label="배송" value="normal" direction="row">
+          <a2-radio value="normal">일반</a2-radio>
+          <a2-radio value="fast">빠른</a2-radio>
+          <a2-radio value="pickup">직접 받기</a2-radio>
+        </a2-radio-group>
+      </div>
+    </a2-card>
+
+    <a2-card heading="슬라이더" description="트랙을 누르면 그 자리로 가고, 그대로 끌 수 있습니다.">
+      <div class="demo">
+        <a2-slider label="음량" value="40" show-value unit="%"></a2-slider>
+        <a2-slider label="밝기" min="0" max="10" step="0.5" value="6.5" show-value></a2-slider>
+      </div>
+    </a2-card>
+
+    <a2-card heading="고르기" description="키보드로 고르고, 글자를 치면 그 항목으로 갑니다.">
+      <div class="demo">
+        <a2-select label="과일" placeholder="고르세요" value="apple">
+          <a2-option value="apple">사과</a2-option>
+          <a2-option value="pear">배</a2-option>
+          <a2-option value="grape">포도</a2-option>
+          <a2-option value="peach">복숭아</a2-option>
+          <a2-option value="melon" disabled>멜론 (품절)</a2-option>
+        </a2-select>
+        <a2-select label="언어" multiple searchable value="ko,en" placeholder="여러 개 고르기">
+          <a2-option value="ko">한국어</a2-option>
+          <a2-option value="en">English</a2-option>
+          <a2-option value="ja">日本語</a2-option>
+          <a2-option value="zh">中文</a2-option>
+          <a2-option value="es">Español</a2-option>
+          <a2-option value="fr">Français</a2-option>
+          <a2-option value="de">Deutsch</a2-option>
+        </a2-select>
+      </div>
+    </a2-card>
+
+    <a2-card heading="세그먼트 · 탭">
+      <div class="demo">
+        <a2-segmented label="보기" value="week" block>
+          <a2-segment value="day">일</a2-segment>
+          <a2-segment value="week">주</a2-segment>
+          <a2-segment value="month">월</a2-segment>
+          <a2-segment value="year">연</a2-segment>
+        </a2-segmented>
+        <a2-tabs value="a">
+          <a2-tab-panel label="개요" value="a"><p class="muted" style="margin:0">탭 이름은 패널의 label 에서 가져옵니다.</p></a2-tab-panel>
+          <a2-tab-panel label="활동" value="b"><p class="muted" style="margin:0">←, → 키로 탭을 옮길 수 있습니다.</p></a2-tab-panel>
+          <a2-tab-panel label="설정" value="c"><a2-switch checked>공개 프로필</a2-switch></a2-tab-panel>
+        </a2-tabs>
+      </div>
+    </a2-card>
+
+    <a2-card heading="색 · 단축키">
+      <div class="demo">
+        <a2-color label="강조색" value="#FF7A45" id="accentPick"></a2-color>
+        <a2-color label="반투명" value="#4C8DFF99" alpha></a2-color>
+        <a2-keybind label="저장" value="Ctrl+KeyS" hint="눌러서 새 조합을 입력합니다. Esc 취소, Backspace 비우기"></a2-keybind>
+      </div>
+    </a2-card>
+
+    <a2-card heading="진행 · 뱃지 · 로딩">
+      <div class="demo">
+        <a2-progress label="올리는 중" value="64" show-value id="prog"></a2-progress>
+        <a2-progress label="준비 중"></a2-progress>
+        <div class="row">
+          <a2-badge>기본</a2-badge>
+          <a2-badge variant="accent">새 기능</a2-badge>
+          <a2-badge variant="success" dot>정상</a2-badge>
+          <a2-badge variant="warning">주의</a2-badge>
+          <a2-badge variant="danger">오류</a2-badge>
+          <a2-spinner></a2-spinner>
+        </div>
+      </div>
+    </a2-card>
+
+    <a2-card heading="대화상자 · 서랍 · 알림">
+      <div class="demo">
+        <div class="row">
+          <a2-button onclick="dlg.show()">대화상자</a2-button>
+          <a2-button onclick="drawer.show()">서랍</a2-button>
+          <a2-button onclick="sheet.show()">아래 서랍</a2-button>
+        </div>
+        <div class="row">
+          <a2-button variant="soft" id="tBtn">알림</a2-button>
+          <a2-button variant="soft" id="tUndo">되돌리기 알림</a2-button>
+          <a2-button variant="soft" id="cBtn">확인 창</a2-button>
+          <a2-button variant="soft" id="pBtn">입력 창</a2-button>
+        </div>
+      </div>
+    </a2-card>
+
+    <a2-card heading="메뉴" description="for 로 연결한 요소를 누르거나, 오른쪽 클릭하면 열립니다.">
+      <div class="demo">
+        <div class="row"><a2-button id="menuBtn"><i slot="suffix" class="fa-solid fa-chevron-down" style="font-size:11px"></i>파일</a2-button></div>
+        <a2-menu for="menuBtn">
+          <a2-menu-item value="new" shortcut="Ctrl+KeyN"><i slot="icon" class="fa-regular fa-file"></i>새로 만들기</a2-menu-item>
+          <a2-menu-item value="open" shortcut="Ctrl+KeyO"><i slot="icon" class="fa-regular fa-folder-open"></i>열기</a2-menu-item>
+          <a2-menu-item value="save" shortcut="Ctrl+KeyS"><i slot="icon" class="fa-regular fa-floppy-disk"></i>저장</a2-menu-item>
+          <hr>
+          <a2-menu-item value="delete" danger><i slot="icon" class="fa-regular fa-trash-can"></i>삭제</a2-menu-item>
+        </a2-menu>
+        <div class="ctx" id="ctxArea">여기를 오른쪽 클릭</div>
+        <a2-menu for="ctxArea" trigger="contextmenu">
+          <a2-menu-item value="copy">복사</a2-menu-item>
+          <a2-menu-item value="paste" disabled>붙여넣기</a2-menu-item>
+          <a2-menu-item value="rename">이름 바꾸기</a2-menu-item>
+        </a2-menu>
+      </div>
+    </a2-card>
+
+    <a2-card class="wide" heading="폼" description="모든 입력 요소는 일반 <form> 에 들어가고, 제출하면 FormData 로 값이 모입니다.">
+      <form id="form" class="demo">
+        <div class="cols">
+          <a2-input name="name" label="이름" required placeholder="필수"></a2-input>
+          <a2-select name="team" label="팀" required placeholder="고르세요">
+            <a2-option value="design">디자인</a2-option>
+            <a2-option value="dev">개발</a2-option>
+            <a2-option value="ops">운영</a2-option>
+          </a2-select>
+          <a2-number name="seats" label="자리" value="2" min="1" max="10"></a2-number>
+          <a2-slider name="level" label="숙련도" value="3" min="1" max="5" show-value></a2-slider>
+        </div>
+        <div class="row" style="gap:20px">
+          <a2-switch name="news" checked>소식 받기</a2-switch>
+          <a2-checkbox name="agree" required>개인정보 수집에 동의</a2-checkbox>
+        </div>
+        <div class="row">
+          <a2-button type="submit" variant="primary">제출</a2-button>
+          <a2-button type="reset" variant="ghost">처음으로</a2-button>
+        </div>
+      </form>
+    </a2-card>
+  </div>
+</main>
+
+<a2-dialog id="dlg" heading="변경 사항을 저장할까요?" description="저장하지 않으면 지금까지 바꾼 내용이 사라집니다.">
+  <div slot="footer" style="display:contents">
+    <a2-button data-close="discard" variant="ghost">저장 안 함</a2-button>
+    <a2-button data-close="save" variant="primary">저장</a2-button>
+  </div>
+</a2-dialog>
+
+<a2-drawer id="drawer" heading="설정">
+  <div class="demo">
+    <a2-switch checked>알림</a2-switch>
+    <a2-switch>소리</a2-switch>
+    <a2-select label="언어" value="ko"><a2-option value="ko">한국어</a2-option><a2-option value="en">English</a2-option></a2-select>
+    <a2-slider label="글자 크기" value="15" min="12" max="20" show-value unit="px"></a2-slider>
+  </div>
+  <div slot="footer" style="display:contents"><a2-button variant="primary" data-close="done" block style="flex:1">완료</a2-button></div>
+</a2-drawer>
+
+<a2-drawer id="sheet" side="bottom" heading="공유">
+  <div class="row">
+    <a2-button variant="soft"><i slot="prefix" class="fa-solid fa-link"></i>링크 복사</a2-button>
+    <a2-button variant="soft"><i slot="prefix" class="fa-regular fa-envelope"></i>메일</a2-button>
+    <a2-button variant="soft"><i slot="prefix" class="fa-solid fa-qrcode"></i>QR 코드</a2-button>
+  </div>
+</a2-drawer>
+
+<footer>
+  <div class="wrap">
+    <span>adas2 · adas2 License 1.0</span>
+    <a href="https://github.com/a2den1/adas2" target="_blank" rel="noopener">github.com/a2den1/adas2</a>
+  </div>
+</footer>
 
 <script src="../dist/adas2.js"></script>
 <script>
-const { ui, panel, toast, confirm, alert, menu } = adas2;
-adas2.setup({ theme: 'dark', scale: 0.62 });
+  const $ = id => document.getElementById(id);
+  $('ver').textContent = `v${adas2.version}`;
+  const cdn = `<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v${adas2.version}/dist/adas2.min.js"><\/script>`;
+  $('cdn').textContent = cdn;
+  $('copy').addEventListener('click', () => navigator.clipboard.writeText(cdn).then(() => adas2.toast('복사했습니다', { variant: 'success' }), () => adas2.toast('복사하지 못했습니다', { variant: 'danger' })));
 
-ui('#theme').segmented([{ value: 'dark', label: 'Dark' }, { value: 'light', label: 'Light' }, { value: 'ocean', label: 'Ocean' }],
-  { value: 'dark', onChange: v => adas2.setTheme(v) });
+  $('theme').addEventListener('change', e => adas2.theme(e.target.value));
+  document.addEventListener('a2-theme', e => { if (e.detail.theme !== 'auto') $('theme').value = e.detail.theme; });
 
-const grid = document.getElementById('grid');
-const card = (title, fill, wide) => {
-  const c = document.createElement('div'); c.className = 'card' + (wide ? ' wide' : '');
-  if (title) { const t = document.createElement('h3'); t.textContent = title; c.append(t); }
-  grid.append(c); fill(ui(c)); return c;
-};
+  // 각 카드 아래에 그 카드의 HTML 을 보여 준다
+  for (const card of document.querySelectorAll('.grid > a2-card')) {
+    const demo = card.querySelector('.demo');
+    if (!demo) continue;
+    const lines = demo.innerHTML.replace(/^\n+|\s+$/g, '').split('\n');
+    const ind = Math.min(...lines.filter(l => l.trim()).map(l => l.match(/^ */)[0].length));
+    const d = document.createElement('details');
+    d.className = 'code';
+    d.innerHTML = '<summary><i class="fa-solid fa-chevron-right"></i>HTML</summary><pre></pre>';
+    d.querySelector('pre').textContent = lines.map(l => l.slice(ind)).join('\n');
+    card.append(d);
+  }
 
-card('버튼', u => {
-  u.row(r => {
-    r.button('저장', () => toast('저장했어요', { type: 'success' }));
-    r.button({ text: '취소', variant: 'soft' });
+  setInterval(() => { const p = $('prog'); p.value = (p.value + 7) % 107; }, 1200);
+
+  dlg.addEventListener('a2-close', e => e.detail.returnValue && adas2.toast(e.detail.returnValue === 'save' ? '저장했습니다' : '저장하지 않았습니다', { variant: e.detail.returnValue === 'save' ? 'success' : 'default' }));
+  $('tBtn').addEventListener('click', () => adas2.toast('알림을 보냈습니다', { variant: 'info' }));
+  $('tUndo').addEventListener('click', () => adas2.toast('항목 1개를 지웠습니다', { action: { label: '되돌리기', onClick: () => adas2.toast('되돌렸습니다', { variant: 'success' }) } }));
+  $('cBtn').addEventListener('click', async () => {
+    const ok = await adas2.confirm('이 파일을 지울까요?', { title: '파일 삭제', okText: '삭제', danger: true });
+    adas2.toast(ok ? '지웠습니다' : '취소했습니다', { variant: ok ? 'danger' : 'default' });
   });
-  u.row(r => {
-    r.button({ text: '더 보기', variant: 'ghost', icon: 'fa-solid fa-ellipsis' });
-    const load = r.button({ text: '불러오기', variant: 'primary', icon: 'fa-solid fa-rotate' });
-    load.on('click', () => { load.setLoading(true); setTimeout(() => load.setLoading(false), 1400); });
+  $('pBtn').addEventListener('click', async () => {
+    const name = await adas2.prompt('새 이름을 입력하세요', { title: '이름 바꾸기', value: '문서 1' });
+    if (name != null) adas2.toast(`"${name}" 으로 바꿨습니다`);
   });
-});
+  document.addEventListener('a2-select', e => { if (e.target.closest('a2-menu')) adas2.toast(`${e.detail.value} 선택`); });
 
-card('켜고 끄기', u => {
-  u.switch('알림 받기', { value: true, default: true, description: '새 소식이 오면 알려 줘요' });
-  u.switch('자동 저장', { value: false, default: false });
-  u.checkbox('이용 약관에 동의', { value: true });
-  u.checkbox('광고 메일 받기', { value: false, default: false });
-});
+  $('accentPick').addEventListener('input', e => document.documentElement.style.setProperty('--a2-accent', e.target.value));
 
-card('슬라이더', u => {
-  u.slider('음량', { id: 'volume', min: 0, max: 100, value: 70, default: 70, unit: '%',
-    tooltip: '누르거나 끌어서 바꿔요.\n숫자를 누르면 직접 입력할 수 있고, 50+25 · x*2 같은 계산식도 돼요.' });
-  u.slider('밝기', { min: 0, max: 1, step: 0.01, value: 0.45, default: 0.5 });
-  u.stepper('수량', { id: 'qty', min: 1, max: 20, value: 3, default: 1 });
-});
-
-card('입력', u => {
-  u.field('이름', { placeholder: '홍길동', icon: 'fa-solid fa-user' });
-  u.field('메모', { placeholder: '여러 줄 입력', multiline: true, maxLength: 200 });
-});
-
-card('고르기', u => {
-  u.select('품질', ['낮음', '보통', '높음', '최고'], { id: 'quality', value: '보통', default: '보통' });
-  u.multiSelect('레이어', ['배경', '캐릭터', '효과', 'UI', '자막'], { id: 'layers', value: ['배경', 'UI'], default: ['배경', 'UI'] });
-  u.segmented(['왼쪽', '가운데', '오른쪽'], { id: 'align', value: '가운데', label: '정렬', default: '가운데' });
-  u.color('강조색', { id: 'accent', value: '#FF7A45', default: '#FF7A45' });
-});
-
-card('라디오', u => {
-  u.radio('정렬 기준', [
-    { value: 'name', label: '이름', description: '가나다 순' },
-    { value: 'date', label: '날짜', description: '최근 것부터' },
-    { value: 'size', label: '크기' },
-  ], { value: 'date', default: 'date' });
-});
-
-card('단축키', u => {
-  u.keybind('패널 열기·닫기', { id: 'kb', value: 'Alt+Backquote', default: 'Alt+Backquote', onPress: () => mainPanel.toggle(),
-    description: '눌러서 새 키 조합을 입력해요. Esc 취소, Backspace 지우기' });
-  u.keybind('스크린샷', { value: 'Ctrl+Shift+KeyS' });
-});
-
-card('진행', u => {
-  const p = u.progress('내려받기', { value: 0.35, showValue: true });
-  setInterval(() => p.set(p.value >= 1 ? 0 : Math.min(1, p.value + 0.13)), 1300);
-  u.progress('준비 중', { value: null });
-  u.row(r => { r.spinner(); r.spinner({ size: 24 }); r.text('불러오는 중', { muted: true, small: true }); });
-});
-
-card('알림·대화상자', u => {
-  u.row(r => {
-    r.button({ text: '토스트', variant: 'soft', onClick: () => toast('설정을 저장했어요', { type: 'success' }) });
-    r.button({ text: '되돌리기', variant: 'soft', onClick: () => toast('항목 3개를 지웠어요', { action: { label: '되돌리기', onClick: () => toast('되돌렸어요') } }) });
+  $('form').addEventListener('submit', e => {
+    e.preventDefault();
+    const data = [...new FormData(e.target)].map(([k, v]) => `${k}=${v}`).join(', ');
+    adas2.toast(`제출: ${data}`, { variant: 'success', duration: 5000 });
   });
-  u.row(r => {
-    r.button({ text: '확인 창', variant: 'soft', onClick: async () => { const ok = await confirm('이 항목을 지울까요? 되돌릴 수 없어요.', { title: '지우기', ok: '지우기', danger: true }); toast(ok ? '지웠어요' : '취소했어요', { type: ok ? 'error' : 'info' }); } });
-    r.button({ text: '알림 창', variant: 'soft', onClick: () => alert('업데이트를 마쳤어요.', { title: '완료' }) });
-  });
-});
-
-card('오른쪽 클릭 메뉴', u => {
-  const t = document.createElement('div'); t.className = 'menu-target'; t.textContent = '여기서 오른쪽 클릭';
-  u.host.append(t);
-  menu(t, [
-    { label: '복사', icon: 'fa-regular fa-copy', shortcut: 'Ctrl+C', onSelect: () => toast('복사했어요') },
-    { label: '붙여넣기', icon: 'fa-regular fa-paste', shortcut: 'Ctrl+V', disabled: true },
-    '-',
-    { label: '이름 바꾸기', icon: 'fa-regular fa-pen-to-square', onSelect: () => toast('이름 바꾸기') },
-    { label: '지우기', icon: 'fa-regular fa-trash-can', danger: true, onSelect: () => toast('지웠어요', { type: 'error' }) },
-  ]);
-});
-
-card('탭', u => {
-  u.tabs([
-    { label: '일반', build: t => { t.switch('시작할 때 열기', { value: true }); t.select('언어', ['한국어', 'English', '日本語'], { value: '한국어' }); } },
-    { label: '화면', build: t => { t.slider('글자 크기', { min: 12, max: 24, value: 16, unit: 'px' }); t.segmented(['작게', '보통', '크게'], { value: '보통' }); } },
-    { label: '정보', build: t => { t.text('adas2 · 웹용 UI 툴킷'); t.text('버전 ' + adas2.version, { muted: true, small: true }); } },
-  ], { id: 'tabs' });
-}, true);
-
-card('섹션·패널', u => {
-  u.section('효과', { id: 'fx', toggle: true, collapsible: true, description: '끄면 아래 설정이 흐려져요' }, s => {
-    s.slider('세기', { min: 0, max: 10, value: 6, step: 1 });
-    s.switch('반짝임', { value: false });
-  });
-  u.button({ text: '패널 열기', variant: 'soft', onClick: () => mainPanel.show() });
-});
-
-// 패널: 위쪽을 끌어 옮기고, 가장자리로 크기 조절. 닫기 버튼은 숨긴다
-const mainPanel = window.mainPanel = panel({ title: '설정', width: 640, height: 820, resizable: true, hidden: true }, p => {
-  p.text('위쪽을 끌어서 옮기고, 가장자리를 끌어서 크기를 바꿔요.', { muted: true, small: true });
-  p.section('표시', s => { s.switch('어두운 화면', { value: true }); s.slider('투명도', { min: 0, max: 100, value: 80, unit: '%' }); });
-  p.section('계정', { collapsible: true }, s => { s.field('이메일', { placeholder: 'name@example.com', icon: 'fa-regular fa-envelope' }); s.button({ text: '로그아웃', variant: 'ghost' }); });
-});
 </script>
 </body>
 </html>
