@@ -1,4 +1,4 @@
-/*! adas2 v4.2.0 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
+/*! adas2 v4.2.1 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
 // src/styles/global.css
 var global_default = '/* adas2 — 문서 전체에 한 번 들어가는 스타일: 글꼴, 색 토큰, 정의 전 깜빡임 막기 */\n\n@font-face { font-family: "GmarketSans"; font-weight: 300; font-display: swap; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff") format("woff"); }\n@font-face { font-family: "GmarketSans"; font-weight: 500; font-display: swap; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff") format("woff"); }\n@font-face { font-family: "GmarketSans"; font-weight: 700; font-display: swap; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff") format("woff"); }\n\n:root {\n  --a2-font: "GmarketSans", "Pretendard", system-ui, -apple-system, "Malgun Gothic", sans-serif;\n  --a2-weight: 300;\n  --a2-weight-strong: 500;\n  --a2-fs: 14px;\n  --a2-fs-sm: 12.5px;\n  --a2-fs-lg: 17px;\n  --a2-h: 44px;\n  --a2-radius: 14px;\n  --a2-ring: 2px;         /* 테 굵기 */\n  --a2-gap: 3px;          /* 테와 조각 사이 */\n  --a2-radius-lg: 20px;\n  --a2-speed: 1;\n}\n\n/* 어두운 화면 (기본) */\n:root, [data-a2-theme="dark"] {\n  --a2-line: rgba(243, 238, 233, 0.13); --a2-line-strong: rgba(243, 238, 233, 0.32);\n  --a2-fill: rgba(243, 238, 233, 0.07); --a2-fill-hover: rgba(243, 238, 233, 0.1); --a2-fill-active: rgba(243, 238, 233, 0.14);\n  color-scheme: dark;\n  --a2-bg: #1B1917;\n  --a2-surface: #272421;\n  --a2-surface-hover: #2F2B28;\n  --a2-surface-active: #36312D;\n  --a2-raised: #2C2825;\n  --a2-accent: #FF7A45;\n  --a2-accent-hover: #FF8B5C;\n  --a2-accent-pressed: #EB6630;\n  --a2-accent-soft: rgba(255, 122, 69, 0.16);\n  --a2-on-accent: #FFFFFF;\n  --a2-text: #F3EEE9;\n  --a2-text-muted: rgba(243, 238, 233, 0.58);\n  --a2-text-faint: rgba(243, 238, 233, 0.3);\n  --a2-danger: #F25F5C;\n  --a2-success: #5CCB8A;\n  --a2-warning: #F4B740;\n  --a2-shadow: 0 12px 36px rgba(0, 0, 0, 0.42), 0 2px 8px rgba(0, 0, 0, 0.25);\n  --a2-scrim: rgba(10, 9, 8, 0.55);\n  --a2-tip: #38332F;\n  --a2-on-tip: #F3EEE9;\n}\n\n/* 밝은 화면 */\n[data-a2-theme="light"] {\n  --a2-line: rgba(41, 35, 31, 0.15); --a2-line-strong: rgba(41, 35, 31, 0.36);\n  --a2-fill: rgba(41, 35, 31, 0.06); --a2-fill-hover: rgba(41, 35, 31, 0.09); --a2-fill-active: rgba(41, 35, 31, 0.13);\n  color-scheme: light;\n  --a2-bg: #FAF7F3;\n  --a2-surface: #EFEAE4;\n  --a2-surface-hover: #E8E2DA;\n  --a2-surface-active: #E0D9D0;\n  --a2-raised: #FFFFFF;\n  --a2-accent: #F26A32;\n  --a2-accent-hover: #FF7A45;\n  --a2-accent-pressed: #D9581F;\n  --a2-accent-soft: rgba(242, 106, 50, 0.13);\n  --a2-on-accent: #FFFFFF;\n  --a2-text: #29231F;\n  --a2-text-muted: rgba(41, 35, 31, 0.58);\n  --a2-text-faint: rgba(41, 35, 31, 0.3);\n  --a2-danger: #D84542;\n  --a2-success: #259B5A;\n  --a2-warning: #C98A10;\n  --a2-shadow: 0 12px 36px rgba(60, 40, 20, 0.14), 0 2px 8px rgba(60, 40, 20, 0.08);\n  --a2-scrim: rgba(40, 30, 20, 0.3);\n  --a2-tip: #2B2521;\n  --a2-on-tip: #FAF7F3;\n}\n\n/* 바다 */\n[data-a2-theme="ocean"] {\n  --a2-line: rgba(237, 241, 246, 0.13); --a2-line-strong: rgba(237, 241, 246, 0.32);\n  --a2-fill: rgba(237, 241, 246, 0.07); --a2-fill-hover: rgba(237, 241, 246, 0.1); --a2-fill-active: rgba(237, 241, 246, 0.14);\n  color-scheme: dark;\n  --a2-bg: #14181E;\n  --a2-surface: #1F252D;\n  --a2-surface-hover: #262D37;\n  --a2-surface-active: #2D3540;\n  --a2-raised: #232A33;\n  --a2-accent: #4C8DFF;\n  --a2-accent-hover: #649CFF;\n  --a2-accent-pressed: #3676E6;\n  --a2-accent-soft: rgba(76, 141, 255, 0.16);\n  --a2-on-accent: #FFFFFF;\n  --a2-text: #EDF1F6;\n  --a2-text-muted: rgba(237, 241, 246, 0.58);\n  --a2-text-faint: rgba(237, 241, 246, 0.3);\n  --a2-danger: #F2645F;\n  --a2-success: #4FC68A;\n  --a2-warning: #F1B643;\n  --a2-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);\n  --a2-scrim: rgba(5, 8, 12, 0.55);\n  --a2-tip: #2E3743;\n  --a2-on-tip: #EDF1F6;\n}\n\n/* 정의되기 전에는 숨겨서 깜빡임을 막는다 */\n:is(a2-button, a2-input, a2-textarea, a2-number, a2-select, a2-checkbox, a2-switch, a2-radio-group, a2-slider,\n    a2-segmented, a2-tabs, a2-color, a2-keybind, a2-card, a2-badge, a2-progress, a2-spinner, a2-dialog, a2-drawer, a2-menu):not(:defined) {\n  visibility: hidden;\n}\na2-option, a2-segment, a2-menu-item, a2-tab-panel { display: none; }\na2-tab-panel[data-on] { display: block; }\n\n@media (prefers-reduced-motion: reduce) { :root { --a2-speed: 1000; } }\n';
 
@@ -84,6 +84,7 @@ var A2Element = class extends HTMLElement {
   connectedCallback() {
     if (!this._rendered) {
       this._rendered = true;
+      customElements.upgrade(this);
       this.render();
     }
     this.update();
@@ -916,6 +917,11 @@ var A2RadioGroup = class extends A2Element {
     return this.radios.find((r) => r.checked)?.value ?? this.str("value") ?? "";
   }
   set value(v) {
+    v = String(v);
+    if (this._rendered) {
+      const r = this.radios.find((x) => x.value === v);
+      if (r) this.pick(r, false);
+    }
     this.setAttribute("value", v);
   }
   pick(radio, user) {
@@ -1735,6 +1741,11 @@ var A2Segmented = class extends A2Element {
     return this._v ?? "";
   }
   set value(v) {
+    v = String(v);
+    if (this._rendered && v !== this._v) {
+      this._v = v;
+      this.sync(false);
+    }
     this.setAttribute("value", v);
   }
   build() {
@@ -1860,6 +1871,11 @@ var A2Tabs = class extends A2Element {
     return this._v ?? "";
   }
   set value(v) {
+    v = String(v);
+    if (this._rendered && v !== this._v) {
+      this._v = v;
+      this.sync(false);
+    }
     this.setAttribute("value", v);
   }
   build() {
@@ -3068,7 +3084,7 @@ function theme(name) {
 var themes = [...NAMES2];
 
 // src/index.js
-var version = "4.2.0";
+var version = "4.2.1";
 if (typeof document !== "undefined") {
   ensureGlobal();
   installTooltips();

@@ -60,7 +60,7 @@ export class A2RadioGroup extends A2Element {
   }
   get radios() { return [...this.querySelectorAll('a2-radio')]; }
   get value() { return this.radios.find(r => r.checked)?.value ?? this.str('value') ?? ''; }
-  set value(v) { this.setAttribute('value', v); }
+  set value(v) { v = String(v); if (this._rendered) { const r = this.radios.find(x => x.value === v); if (r) this.pick(r, false); } this.setAttribute('value', v); }
   pick(radio, user) {
     if (radio.checked && !user) return;
     const changed = !radio.checked;

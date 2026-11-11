@@ -87,7 +87,7 @@ export class A2Element extends HTMLElement {
     if (this.constructor.formAssociated) this.internals = this.attachInternals();
   }
   connectedCallback() {
-    if (!this._rendered) { this._rendered = true; this.render(); }
+    if (!this._rendered) { this._rendered = true; customElements.upgrade(this); this.render(); }
     this.update();
   }
   attributeChangedCallback(name, oldV, newV) { if (this._rendered && oldV !== newV) this.attr(name, newV, oldV); }

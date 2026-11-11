@@ -53,7 +53,7 @@ export class A2Segmented extends A2Element {
   }
   get segments() { return [...this.querySelectorAll('a2-segment')]; }
   get value() { return this._v ?? ''; }
-  set value(v) { this.setAttribute('value', v); }
+  set value(v) { v = String(v); if (this._rendered && v !== this._v) { this._v = v; this.sync(false); } this.setAttribute('value', v); }
   build() {
     const segs = this.segments;
     if (this._v == null || !segs.some(s => s.value === this._v)) this._v = this.getAttribute('value') ?? segs.find(s => !s.disabled)?.value;

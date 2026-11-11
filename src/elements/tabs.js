@@ -55,7 +55,7 @@ export class A2Tabs extends A2Element {
   }
   get panels() { return [...this.children].filter(c => c.tagName === 'A2-TAB-PANEL'); }
   get value() { return this._v ?? ''; }
-  set value(v) { this.setAttribute('value', v); }
+  set value(v) { v = String(v); if (this._rendered && v !== this._v) { this._v = v; this.sync(false); } this.setAttribute('value', v); }
   build() {
     const ps = this.panels;
     if (this._v == null || !ps.some(p => p.value === this._v)) this._v = this.getAttribute('value') ?? ps.find(p => !p.hasAttribute('disabled'))?.value;

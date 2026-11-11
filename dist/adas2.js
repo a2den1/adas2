@@ -1,4 +1,4 @@
-/*! adas2 v4.2.0 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
+/*! adas2 v4.2.1 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
 var adas2 = (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -121,6 +121,7 @@ svg { display: block; }
     connectedCallback() {
       if (!this._rendered) {
         this._rendered = true;
+        customElements.upgrade(this);
         this.render();
       }
       this.update();
@@ -953,6 +954,11 @@ svg { display: block; }
       return this.radios.find((r) => r.checked)?.value ?? this.str("value") ?? "";
     }
     set value(v) {
+      v = String(v);
+      if (this._rendered) {
+        const r = this.radios.find((x) => x.value === v);
+        if (r) this.pick(r, false);
+      }
       this.setAttribute("value", v);
     }
     pick(radio, user) {
@@ -1772,6 +1778,11 @@ svg { display: block; }
       return this._v ?? "";
     }
     set value(v) {
+      v = String(v);
+      if (this._rendered && v !== this._v) {
+        this._v = v;
+        this.sync(false);
+      }
       this.setAttribute("value", v);
     }
     build() {
@@ -1897,6 +1908,11 @@ svg { display: block; }
       return this._v ?? "";
     }
     set value(v) {
+      v = String(v);
+      if (this._rendered && v !== this._v) {
+        this._v = v;
+        this.sync(false);
+      }
       this.setAttribute("value", v);
     }
     build() {
@@ -3105,7 +3121,7 @@ dialog::backdrop { background: none; }
   var themes = [...NAMES2];
 
   // src/index.js
-  var version = "4.2.0";
+  var version = "4.2.1";
   if (typeof document !== "undefined") {
     ensureGlobal();
     installTooltips();
