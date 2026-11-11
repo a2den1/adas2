@@ -36,29 +36,34 @@ export class A2Color extends A2Element {
   static observedAttributes = ['label', 'hint', 'value', 'disabled', 'alpha', 'presets'];
   static styles = `${POPOVER_CSS}
 :host { display: block; }
-.box { display: flex; align-items: center; gap: 10px; width: 100%; height: var(--a2-h); padding: 0 12px 0 6px; border-radius: var(--a2-radius); background: var(--a2-fill); border: 1px solid var(--a2-line); touch-action: manipulation; transition: background-color var(--t1), border-color var(--t1); text-align: left; }
-.box:hover { background: var(--a2-fill-hover); border-color: var(--a2-line-strong); }
-:host([open]) .box { background: var(--a2-fill-hover); border-color: var(--a2-accent); }
-.sw { position: relative; flex: none; width: calc(var(--a2-h) - 14px); height: calc(var(--a2-h) - 14px); box-shadow: 0 0 0 1px var(--a2-line); border-radius: calc(var(--a2-radius) - 4px); overflow: hidden; }
+.box {
+  display: flex; align-items: center; gap: 11px; width: 100%; height: var(--a2-h); padding: 0 14px 0 var(--a2-gap);
+  border-radius: var(--a2-radius); border: var(--a2-ring) solid var(--a2-line-strong); touch-action: manipulation; transition: border-color var(--t1); text-align: left;
+}
+:host([open]) .box { border-color: var(--a2-accent); }
+/* 고른 색이 조각으로 들어 있다 */
+.sw { position: relative; flex: none; width: calc(var(--a2-h) - var(--in) * 2); height: calc(var(--a2-h) - var(--in) * 2); border-radius: var(--ri); overflow: hidden; transition: transform var(--t2) var(--pop); }
+.box:active .sw { transform: scale(0.86); }
 .sw::before, .chk { content: ''; position: absolute; inset: 0; background: repeating-conic-gradient(#bbb 0 25%, #eee 0 50%) 0 0 / 8px 8px; }
 .sw i, .pv i { position: absolute; inset: 0; }
 .hex { flex: 1; font-variant-numeric: tabular-nums; padding-top: 0.12em; letter-spacing: 0.02em; }
-.menu { width: 248px; padding: 12px; display: flex; flex-direction: column; gap: 12px; max-height: none; overflow: visible; }
-.sv { position: relative; height: 150px; border-radius: 8px; cursor: crosshair; touch-action: none; }
-.sv .k { position: absolute; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; box-shadow: 0 0 0 2px #fff, 0 1px 4px rgba(0,0,0,.4); pointer-events: none; }
-.bar { position: relative; height: 12px; border-radius: 6px; cursor: pointer; touch-action: none; }
-.bar .k { position: absolute; top: 50%; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.4); pointer-events: none; }
+.menu { width: 256px; padding: 11px; display: flex; flex-direction: column; gap: 11px; max-height: none; overflow: visible; }
+.sv { position: relative; height: 150px; border-radius: var(--ri); cursor: crosshair; touch-action: none; }
+.sv .k { position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 6px; box-shadow: 0 0 0 2px #fff, 0 1px 4px rgba(0, 0, 0, 0.4); pointer-events: none; }
+.bar { position: relative; height: 14px; border-radius: 5px; cursor: pointer; touch-action: none; }
+.bar .k { position: absolute; top: 50%; width: 12px; height: 22px; margin: -11px 0 0 -6px; border-radius: 4px; background: #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 4px rgba(0, 0, 0, 0.4); pointer-events: none; }
 .hue { background: linear-gradient(to right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00); }
 .al { overflow: visible; }
-.al .chk { border-radius: 6px; background-size: 6px 6px; }
-.al .g { position: absolute; inset: 0; border-radius: 6px; }
+.al .chk { border-radius: 5px; background-size: 7px 7px; }
+.al .g { position: absolute; inset: 0; border-radius: 5px; }
 .row { display: flex; gap: 8px; align-items: center; }
-.pv { position: relative; flex: none; width: 34px; height: 34px; border-radius: 8px; overflow: hidden; box-shadow: 0 0 0 1px var(--a2-line); }
-.hx { flex: 1; min-width: 0; height: 34px; padding: 0.12em 10px 0; border: 1px solid var(--a2-line); outline: 0; border-radius: 8px; background: var(--a2-fill); color: var(--a2-text); font-variant-numeric: tabular-nums; }
+.pv { position: relative; flex: none; width: 38px; height: 38px; border-radius: var(--ri); overflow: hidden; }
+.hx { flex: 1; min-width: 0; height: 38px; padding: 0.12em 11px 0; border: var(--a2-ring) solid var(--a2-line-strong); outline: 0; border-radius: var(--ri); background: transparent; color: var(--a2-text); font-variant-numeric: tabular-nums; transition: border-color var(--t1); }
 .hx:focus { border-color: var(--a2-accent); }
 .ps { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; }
-.ps button { aspect-ratio: 1; border-radius: 6px; border: 1px solid var(--a2-line); transition: transform var(--t1) var(--spring); }
-.ps button:hover { transform: scale(1.15); }
+.ps button { aspect-ratio: 1; border-radius: 5px; transition: transform var(--t2) var(--pop); }
+.ps button:hover { transform: scale(1.16); }
+.ps button:active { transform: scale(0.84); }
 .ps:empty { display: none; }
 `;
   render() {

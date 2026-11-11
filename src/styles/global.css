@@ -11,9 +11,11 @@
   --a2-fs: 14px;
   --a2-fs-sm: 12.5px;
   --a2-fs-lg: 17px;
-  --a2-h: 40px;
-  --a2-radius: 10px;
-  --a2-radius-lg: 16px;
+  --a2-h: 44px;
+  --a2-radius: 14px;
+  --a2-ring: 2px;         /* 테 굵기 */
+  --a2-gap: 3px;          /* 테와 조각 사이 */
+  --a2-radius-lg: 20px;
   --a2-speed: 1;
 }
 

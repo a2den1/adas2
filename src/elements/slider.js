@@ -12,35 +12,35 @@ export class A2Slider extends A2Element {
   static delegatesFocus = true;
   static observedAttributes = ['label', 'hint', 'error', 'min', 'max', 'step', 'value', 'disabled', 'show-value', 'unit'];
   static styles = `
-:host { display: block; --thumb: 20px; }
+:host { display: block; --thumb: 28px; }
 .head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
 .head .label { flex: 1; }
 .out { font-size: var(--a2-fs-sm); color: var(--a2-text); font-variant-numeric: tabular-nums; margin-bottom: 7px; }
 .out:empty { display: none; }
 /* 손잡이와 채움은 --p(0~1) 하나로 transform 만 바꿔 옮긴다 */
 .s { position: relative; height: 32px; cursor: pointer; touch-action: none; user-select: none; container-type: inline-size; --p: 0; --x: calc(var(--thumb) / 2 + (100cqw - var(--thumb)) * var(--p)); }
-.rail { position: absolute; left: 0; right: 0; top: 50%; height: 6px; margin-top: -3px; border-radius: 3px; background: var(--a2-fill-active); box-shadow: inset 0 0 0 1px var(--a2-line); overflow: hidden; }
-.fill { position: absolute; inset: 0; background: var(--a2-accent); border-radius: 3px; transform: translateX(calc(var(--x) - 100%)); }
+.rail { position: absolute; left: 0; right: 0; top: 50%; height: 16px; margin-top: -8px; border-radius: 9px; border: var(--a2-ring) solid var(--a2-line-strong); }
+.in { position: absolute; inset: 3px; border-radius: 3px; overflow: hidden; }
+.fill { position: absolute; inset: 0; background: var(--a2-accent); border-radius: 3px; transform: translateX(calc(var(--x) - 5px - 100%)); }
 .pos { position: absolute; top: 50%; left: 0; width: 0; height: 0; transform: translateX(var(--x)); }
 .knob {
   position: absolute; left: calc(var(--thumb) / -2); top: calc(var(--thumb) / -2); width: var(--thumb); height: var(--thumb);
-  border-radius: 50%; background: #fff; border: 1px solid rgba(0, 0, 0, 0.14); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-  transition: transform var(--t2) var(--spring);
+  border-radius: 10px; border: var(--a2-ring) solid var(--a2-accent); background: var(--a2-knob-bg, var(--a2-bg));
 }
-.s:hover .knob { transform: scale(1.08); }
-.s.drag .knob { transform: scale(1.18); }
+.knob::after { content: ''; position: absolute; inset: 4px; border-radius: 4px; background: var(--a2-accent); transition: transform var(--t2) var(--pop); }
+.s.drag .knob::after { transform: scale(0.55); }
 .knob:focus-visible { outline: 2px solid var(--a2-accent); outline-offset: 3px; }
 /* 값 말풍선: 제자리의 틀 안에서 아래에서 위로 올라온다 */
-.tipf { position: absolute; bottom: calc(var(--thumb) / 2 + 8px); left: 0; translate: -50% 0; width: max-content; overflow: clip; border-radius: 8px; pointer-events: none; }
+.tipf { position: absolute; bottom: calc(var(--thumb) / 2 + 8px); left: 0; translate: -50% 0; width: max-content; overflow: clip; border-radius: 9px; pointer-events: none; }
 .tip {
-  padding: 5px 9px 4px; border-radius: 8px; background: var(--a2-tip); color: var(--a2-on-tip);
+  padding: 6px 10px 5px; border-radius: 9px; background: var(--a2-tip); color: var(--a2-on-tip);
   font-size: var(--a2-fs-sm); font-weight: var(--a2-weight-strong); white-space: nowrap; font-variant-numeric: tabular-nums;
   transform: translateY(102%); transition: transform var(--t2) var(--spring);
 }
 .s.drag .tip, .knob:focus-visible + .tipf .tip { transform: none; }
 `;
   render() {
-    this.root.innerHTML = `<div class="head"><div class="label t" part="label"></div><div class="out t"></div></div><div class="s" part="base"><div class="rail" part="track"><div class="fill" part="fill"></div></div><div class="pos"><div class="knob" part="thumb" role="slider" tabindex="0"></div><div class="tipf"><div class="tip t"></div></div></div></div><div class="hint t" part="hint"></div>`;
+    this.root.innerHTML = `<div class="head"><div class="label t" part="label"></div><div class="out t"></div></div><div class="s" part="base"><div class="rail" part="track"><div class="in"><div class="fill" part="fill"></div></div></div><div class="pos"><div class="knob" part="thumb" role="slider" tabindex="0"></div><div class="tipf"><div class="tip t"></div></div></div></div><div class="hint t" part="hint"></div>`;
     this.sEl = this.$('.s'); this.knob = this.$('.knob'); this.fill = this.$('.fill');
     this._v = this.clean(this.num('value', (this.min + this.max) / 2));
     this._init = this._v;

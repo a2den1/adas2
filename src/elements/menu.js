@@ -23,7 +23,8 @@ export class A2Menu extends A2Element {
 .item .ic { flex: none; width: 18px; display: grid; place-items: center; color: var(--a2-text-muted); }
 .item .ic:empty { display: none; }
 .item.danger, .item.danger .ic { color: var(--a2-danger); }
-.item.danger:hover, .item.danger.active { background: color-mix(in srgb, var(--a2-danger) 14%, transparent); }
+.item.danger:hover, .item.danger.active { background: var(--a2-danger); color: #fff; }
+.item.danger:hover .ic, .item.danger.active .ic { color: #fff; }
 .kb { flex: none; margin-left: 14px; color: var(--a2-text-faint); font-size: var(--a2-fs-sm); padding-top: 0.12em; }
 .head { padding: 8px 10px 4px; color: var(--a2-text-faint); font-size: var(--a2-fs-sm); }
 `;

@@ -8,7 +8,7 @@ A web component UI kit
 
 [한국어](README.md) · **English** · [Demo](https://adas2-six.vercel.app)
 
-[![version](https://img.shields.io/badge/version-4.1.1-FF7A45?style=flat-square)](https://github.com/a2den1/adas2/releases)
+[![version](https://img.shields.io/badge/version-4.2.0-FF7A45?style=flat-square)](https://github.com/a2den1/adas2/releases)
 ![dependencies](https://img.shields.io/badge/dependencies-0-29231F?style=flat-square)
 [![license](https://img.shields.io/badge/license-adas2%20License-F26A32?style=flat-square)](LICENSE)
 
@@ -28,19 +28,20 @@ UI components you use as HTML tags, such as `<a2-button>` and `<a2-select>`.
 - `.value` and the `input` / `change` events behave like built-in inputs.
 - Three themes (dark, light, ocean). Colors and sizes are CSS variables.
 - Each element uses Shadow DOM, so page CSS does not leak in.
+- The look comes from the logo: a thick ring with a block inside. The block fills when on and shrinks while pressed.
 
 ## Install
 
 ### CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v4.1.1/dist/adas2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v4.2.0/dist/adas2.min.js"></script>
 ```
 
 The script adds the font (Gmarket Sans) and the color variables. To avoid a flash on first paint, put the CSS in `<head>` as well.
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v4.1.1/dist/adas2.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v4.2.0/dist/adas2.min.css">
 ```
 
 ### npm
@@ -158,7 +159,8 @@ Built-in labels (cancel, OK, placeholders) are in Korean; pass `okText`, `cancel
 |---|---|
 | `--a2-bg` `--a2-surface` `--a2-raised` | Page, cards, floating panels |
 | `--a2-fill` `--a2-fill-hover` `--a2-fill-active` | Control background (translucent) |
-| `--a2-line` `--a2-line-strong` | Outlines |
+| `--a2-line` `--a2-line-strong` | Ring (outline) colors |
+| `--a2-ring` `--a2-gap` `--a2-radius` | Ring width, space between ring and block, outer corner radius |
 | `--a2-accent` `--a2-accent-hover` `--a2-accent-pressed` `--a2-accent-soft` `--a2-on-accent` | Accent and text on it |
 | `--a2-text` `--a2-text-muted` `--a2-text-faint` | Text |
 | `--a2-danger` `--a2-success` `--a2-warning` | Status colors |

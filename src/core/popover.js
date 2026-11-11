@@ -64,22 +64,25 @@ export function openPopover(pop, anchor, o = {}) {
 /** 같은 스타일의 떠 있는 판 CSS (목록·메뉴 공용) */
 export const POPOVER_CSS = `
 [popover] { position: fixed; inset: auto; margin: 0; padding: 0; border: 0; overflow: visible; background: none; color: inherit; }
+/* 떠 있는 판도 테이고, 항목 하나하나가 조각이다 */
 .menu {
-  min-width: 180px; max-height: min(360px, 60vh); overflow-y: auto; padding: 5px;
-  border-radius: 12px; background: var(--a2-raised); border: 1px solid var(--a2-line); box-shadow: var(--a2-shadow);
+  min-width: 180px; max-height: min(360px, 60vh); overflow-y: auto; padding: var(--a2-gap);
+  border-radius: var(--a2-radius); background: var(--a2-raised); border: var(--a2-ring) solid var(--a2-line-strong); box-shadow: var(--a2-shadow);
   font-family: var(--a2-font); font-size: var(--a2-fs); font-weight: var(--a2-weight); color: var(--a2-text);
   scrollbar-width: thin;
 }
 .item {
-  display: flex; align-items: center; gap: 10px; min-height: 36px; padding: 0 10px; border-radius: 8px;
+  display: flex; align-items: center; gap: 10px; min-height: 36px; padding: 0 11px; border-radius: var(--ri);
   cursor: pointer; user-select: none; white-space: nowrap; transition: background-color calc(0.12s / var(--a2-speed));
 }
 .item:hover, .item.active { background: var(--a2-fill-hover); }
 .item[aria-disabled="true"] { opacity: 0.4; pointer-events: none; }
 .item .grow { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; padding-top: 0.12em; }
-.item .mark { color: var(--a2-accent); visibility: hidden; }
+.item .mark { visibility: hidden; }
+.item[aria-selected="true"] { background: var(--a2-accent); color: var(--a2-on-accent); }
+.item[aria-selected="true"].active { background: var(--a2-accent-hover); }
 .item[aria-selected="true"] .mark { visibility: visible; }
-.item[aria-selected="true"] .grow { color: var(--a2-accent); font-weight: var(--a2-weight-strong); }
-.sep { height: 1px; margin: 5px 8px; background: var(--a2-fill-active); }
+.item[aria-selected="true"] .grow { font-weight: var(--a2-weight-strong); }
+.sep { height: 2px; margin: 4px 9px; border-radius: 1px; background: var(--a2-line); }
 .empty { padding: 10px; color: var(--a2-text-muted); font-size: var(--a2-fs-sm); }
 `;

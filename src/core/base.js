@@ -23,7 +23,9 @@ export function sheet(text) {
 /** 모든 요소에 공통인 그림자 안 스타일 */
 export const BASE_CSS = `
 :host { box-sizing: border-box; font-family: var(--a2-font); font-weight: var(--a2-weight); font-size: var(--a2-fs); color: var(--a2-text); letter-spacing: -0.01em; -webkit-tap-highlight-color: transparent;
-  --t1: calc(0.14s / var(--a2-speed)); --t2: calc(0.24s / var(--a2-speed)); --t3: calc(0.34s / var(--a2-speed)); --spring: cubic-bezier(0.3, 0.9, 0.25, 1); }
+  --t1: calc(0.14s / var(--a2-speed)); --t2: calc(0.24s / var(--a2-speed)); --t3: calc(0.34s / var(--a2-speed)); --spring: cubic-bezier(0.3, 0.9, 0.25, 1); --pop: cubic-bezier(0.3, 1.5, 0.5, 1);
+  /* 테와 조각: --in 은 바깥 가장자리에서 조각까지, --ri 는 조각의 모서리 */
+  --in: calc(var(--a2-ring) + var(--a2-gap)); --ri: calc(var(--a2-radius) - var(--a2-ring) - var(--a2-gap)); }
 :host([hidden]) { display: none !important; }
 *, *::before, *::after { box-sizing: border-box; }
 button { font: inherit; color: inherit; letter-spacing: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: pointer; }
@@ -42,8 +44,8 @@ svg { display: block; }
 .hint { margin-top: 6px; font-size: var(--a2-fs-sm); color: var(--a2-text-muted); line-height: 1.45; }
 .hint:empty { display: none; }
 .hint.error { color: var(--a2-danger); }
-:host([size="sm"]) { --a2-h: 32px; --a2-fs: 13px; }
-:host([size="lg"]) { --a2-h: 48px; --a2-fs: 16px; }
+:host([size="sm"]) { --a2-h: 36px; --a2-fs: 13px; --a2-radius: 12px; }
+:host([size="lg"]) { --a2-h: 52px; --a2-fs: 16px; --a2-radius: 17px; }
 :host([disabled]) { opacity: 0.45; pointer-events: none; }
 `;
 

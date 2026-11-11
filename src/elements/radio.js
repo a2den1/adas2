@@ -4,22 +4,17 @@ import { A2Element, define } from '../core/base.js';
 export class A2Radio extends A2Element {
   static observedAttributes = ['checked', 'disabled'];
   static styles = `
-:host { display: inline-flex; vertical-align: middle; border-radius: 12px; outline: none; }
+:host { display: inline-flex; vertical-align: middle; border-radius: 13px; outline: none; }
 :host(:focus-visible) .dot { outline: 2px solid var(--a2-accent); outline-offset: 2px; }
-.r { position: relative; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; min-height: 24px; touch-action: manipulation; }
+.r { position: relative; display: inline-flex; align-items: center; gap: 11px; cursor: pointer; user-select: none; min-height: 26px; touch-action: manipulation; }
 .r::before { content: ''; position: absolute; inset: -6px -5px; }
-.dot {
-  flex: none; position: relative; width: 20px; height: 20px; border-radius: 50%; background: var(--a2-fill); border: 1px solid var(--a2-line-strong);
-  transition: background-color var(--t2), border-color var(--t2), transform var(--t1) var(--spring);
-}
-.r:hover .dot { background: var(--a2-fill-active); border-color: var(--a2-text-muted); }
-.r:active .dot { transform: scale(0.88); }
-:host([checked]) .dot { background: var(--a2-accent); border-color: var(--a2-accent); }
-.dot::after {
-  content: ''; position: absolute; inset: 5px; border-radius: 50%; background: var(--a2-on-accent);
-  transform: scale(0); transition: transform var(--t3) var(--spring);
-}
+.dot { flex: none; position: relative; width: 24px; height: 24px; border-radius: 50%; border: var(--a2-ring) solid var(--a2-line-strong); transition: border-color var(--t2); }
+.dot::after { content: ''; position: absolute; inset: 3px; border-radius: 50%; background: var(--a2-accent); transform: scale(0); transition: transform var(--t3) var(--pop); }
+.r:hover .dot { border-color: var(--a2-text-muted); }
+.r:active .dot::after { transform: scale(0.42); }
+:host([checked]) .dot { border-color: var(--a2-accent); }
 :host([checked]) .dot::after { transform: scale(1); }
+:host([checked]) .r:active .dot::after { transform: scale(0.62); }
 .lbl:empty { display: none; }
 `;
   render() {

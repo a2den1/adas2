@@ -1,4 +1,4 @@
-/*! adas2 v4.1.1 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
+/*! adas2 v4.2.0 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
 /* adas2 — 문서 전체에 한 번 들어가는 스타일: 글꼴, 색 토큰, 정의 전 깜빡임 막기 */
 
 @font-face { font-family: "GmarketSans"; font-weight: 300; font-display: swap; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff") format("woff"); }
@@ -12,9 +12,11 @@
   --a2-fs: 14px;
   --a2-fs-sm: 12.5px;
   --a2-fs-lg: 17px;
-  --a2-h: 40px;
-  --a2-radius: 10px;
-  --a2-radius-lg: 16px;
+  --a2-h: 44px;
+  --a2-radius: 14px;
+  --a2-ring: 2px;         /* 테 굵기 */
+  --a2-gap: 3px;          /* 테와 조각 사이 */
+  --a2-radius-lg: 20px;
   --a2-speed: 1;
 }
 

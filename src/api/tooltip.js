@@ -4,9 +4,9 @@ import { ensureGlobal, sheet, BASE_CSS } from '../core/base.js';
 import { animate, reveal } from '../core/animate.js';
 
 const CSS = `
-.tip { position: fixed; inset: auto; margin: 0; padding: 6px 10px 5px; max-width: 260px; border-radius: 8px; overflow: visible;
+.tip { position: fixed; inset: auto; margin: 0; padding: 6px 10px 5px; max-width: 260px; border-radius: 9px; overflow: visible;
   background: var(--a2-tip); color: var(--a2-on-tip); font-family: var(--a2-font); font-size: var(--a2-fs-sm); font-weight: var(--a2-weight); line-height: 1.4;
-  border: 1px solid color-mix(in srgb, var(--a2-on-tip) 16%, transparent);
+  border: 2px solid color-mix(in srgb, var(--a2-on-tip) 26%, transparent);
   pointer-events: none; box-shadow: var(--a2-shadow); }
 `;
 

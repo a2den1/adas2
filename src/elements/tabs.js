@@ -17,13 +17,17 @@ export class A2Tabs extends A2Element {
   static styles = `
 :host { display: block; }
 .bar { position: relative; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; padding: 2px; margin: -2px -2px 14px; }
-.ind { position: absolute; left: 0; top: 0; border-radius: 999px; background: var(--a2-accent-soft); border: 1px solid color-mix(in srgb, var(--a2-accent) 38%, transparent); visibility: hidden; pointer-events: none; }
+.ind { position: absolute; left: 0; top: 0; border-radius: var(--a2-radius); border: var(--a2-ring) solid var(--a2-accent); visibility: hidden; pointer-events: none; }
 .tab {
-  position: relative; z-index: 1; flex: none; height: 36px; padding: 0.12em 16px 0; border-radius: 999px; touch-action: manipulation;
-  color: var(--a2-text-muted); white-space: nowrap; transition: color var(--t2), background-color var(--t1);
+  position: relative; z-index: 1; flex: none; height: var(--a2-h); padding: 0.12em calc(var(--in) + 13px) 0; border-radius: var(--a2-radius); touch-action: manipulation;
+  color: var(--a2-text-muted); white-space: nowrap; transition: color var(--t2);
 }
-.tab:hover { color: var(--a2-text); background: var(--a2-fill); }
-.tab[aria-selected="true"] { color: var(--a2-accent); font-weight: var(--a2-weight-strong); background: none; }
+.tab::before { content: ''; position: absolute; inset: var(--in); z-index: -1; border-radius: var(--ri); transition: background-color var(--t1), inset var(--t2) var(--pop); }
+.tab:hover { color: var(--a2-text); }
+.tab:hover::before { background: var(--a2-fill-hover); }
+.tab:active::before { inset: calc(var(--in) + 3px); }
+.tab[aria-selected="true"] { color: var(--a2-accent); font-weight: var(--a2-weight-strong); }
+.tab[aria-selected="true"]::before { background: var(--a2-accent-soft); }
 .tab:disabled { opacity: 0.4; cursor: default; }
 .body { position: relative; }
 ::slotted(a2-tab-panel) { display: block; }

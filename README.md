@@ -8,7 +8,7 @@
 
 **한국어** · [English](README.en.md) · [데모](https://adas2-six.vercel.app)
 
-[![version](https://img.shields.io/badge/version-4.1.1-FF7A45?style=flat-square)](https://github.com/a2den1/adas2/releases)
+[![version](https://img.shields.io/badge/version-4.2.0-FF7A45?style=flat-square)](https://github.com/a2den1/adas2/releases)
 ![dependencies](https://img.shields.io/badge/dependencies-0-29231F?style=flat-square)
 [![license](https://img.shields.io/badge/license-adas2%20License-F26A32?style=flat-square)](LICENSE)
 
@@ -28,19 +28,20 @@
 - `input`·`change` 이벤트와 `.value` 를 기본 입력 요소처럼 씁니다.
 - 테마 3종(dark·light·ocean)이 있고, CSS 변수로 색과 크기를 바꿀 수 있습니다.
 - 각 요소는 Shadow DOM 을 쓰므로 페이지의 CSS 와 섞이지 않습니다.
+- 모양은 로고에서 가져온 두 겹입니다. 굵은 테 안에 조각이 들어 있고, 켜지면 조각이 차고 누르면 줄어듭니다.
 
 ## 설치
 
 ### CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v4.1.1/dist/adas2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v4.2.0/dist/adas2.min.js"></script>
 ```
 
 글꼴(지마켓 산스)과 색 변수는 스크립트가 넣습니다. 첫 화면이 깜빡이지 않게 하려면 CSS 를 `<head>` 에 먼저 넣으세요.
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v4.1.1/dist/adas2.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v4.2.0/dist/adas2.min.css">
 ```
 
 ### npm
@@ -156,7 +157,8 @@ addEventListener('keydown', e => { if (adas2.matchKey(e, 'Ctrl+KeyS')) save(); }
 |---|---|
 | `--a2-bg` `--a2-surface` `--a2-raised` | 바탕, 카드, 떠 있는 판 |
 | `--a2-fill` `--a2-fill-hover` `--a2-fill-active` | 컨트롤 바탕(반투명) |
-| `--a2-line` `--a2-line-strong` | 외곽선 |
+| `--a2-line` `--a2-line-strong` | 테(외곽선) 색 |
+| `--a2-ring` `--a2-gap` `--a2-radius` | 테 굵기, 테와 조각 사이, 바깥 모서리 |
 | `--a2-accent` `--a2-accent-hover` `--a2-accent-pressed` `--a2-accent-soft` `--a2-on-accent` | 강조색과 그 위 글자 |
 | `--a2-text` `--a2-text-muted` `--a2-text-faint` | 글자 |
 | `--a2-danger` `--a2-success` `--a2-warning` | 상태 색 |

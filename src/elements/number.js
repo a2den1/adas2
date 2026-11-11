@@ -14,14 +14,18 @@ export class A2Number extends A2Element {
   static delegatesFocus = true;
   static observedAttributes = ['label', 'hint', 'error', 'disabled', 'required', 'min', 'max', 'step', 'unit', 'value', 'decimals'];
   static styles = `${FIELD_CSS}
-.box { padding: 0 4px; gap: 2px; }
+.box { padding: 0 var(--a2-gap); gap: 2px; }
 .ctl { text-align: center; font-variant-numeric: tabular-nums; }
-.step { flex: none; position: relative; width: calc(var(--a2-h) - 10px); height: calc(var(--a2-h) - 10px); touch-action: manipulation; border-radius: calc(var(--a2-radius) - 3px); display: grid; place-items: center; color: var(--a2-text-muted); transition: background-color var(--t1), color var(--t1), transform var(--t1); }
-.step:hover { background: var(--a2-fill-active); color: var(--a2-text); }
+.step {
+  flex: none; position: relative; width: calc(var(--a2-h) - var(--in) * 2); height: calc(var(--a2-h) - var(--in) * 2); touch-action: manipulation; border-radius: var(--ri);
+  display: grid; place-items: center; background: var(--a2-fill-hover); color: var(--a2-text-muted);
+  transition: background-color var(--t1), color var(--t1), transform var(--t2) var(--pop);
+}
 .step::before { content: ''; position: absolute; inset: -4px; }
-.step:active { background: var(--a2-fill-active); color: var(--a2-text); }
+.step:hover { background: var(--a2-fill-active); color: var(--a2-text); }
+.step:active { transform: scale(0.86); background: var(--a2-accent); color: var(--a2-on-accent); }
 .step:disabled { opacity: 0.3; pointer-events: none; }
-.unit { flex: none; color: var(--a2-text-muted); font-size: var(--a2-fs-sm); padding-top: 0.12em; }
+.unit { flex: none; color: var(--a2-text-muted); font-size: var(--a2-fs-sm); padding: 0.12em 6px 0 0; }
 .unit:empty, .calc:empty { display: none; }
 .calc { flex: none; color: var(--a2-text-muted); font-size: var(--a2-fs-sm); padding-top: 0.12em; white-space: nowrap; }
 .calc.bad { color: var(--a2-danger); }

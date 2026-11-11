@@ -16,18 +16,19 @@ function lockScroll(on) {
 }
 
 const OVERLAY_CSS = `
-:host { display: contents; }
+:host { display: contents; --a2-knob-bg: var(--a2-raised); }
 dialog { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: none; overflow: hidden; color: var(--a2-text); font: inherit; outline: none; }
 dialog::backdrop { background: none; }
 .scrim { position: absolute; inset: 0; background: var(--a2-scrim); opacity: 0; }
-.panel { position: absolute; display: flex; flex-direction: column; background: var(--a2-raised); border: 1px solid var(--a2-line); box-shadow: var(--a2-shadow); outline: none; }
+.panel { position: absolute; display: flex; flex-direction: column; background: var(--a2-raised); border: var(--a2-ring) solid var(--a2-line-strong); box-shadow: var(--a2-shadow); outline: none; }
 .head { display: flex; align-items: flex-start; gap: 12px; padding: 22px 22px 0; }
 .titles { flex: 1; min-width: 0; }
 .h { font-size: var(--a2-fs-lg); font-weight: var(--a2-weight-strong); line-height: 1.35; padding-top: 0.12em; }
 .d { margin-top: 6px; color: var(--a2-text-muted); font-size: var(--a2-fs-sm); line-height: 1.5; }
 .h:empty, .d:empty { display: none; }
-.x { flex: none; width: 32px; height: 32px; margin: -4px -6px 0 0; border-radius: 8px; display: grid; place-items: center; color: var(--a2-text-muted); transition: background-color var(--t1), color var(--t1); }
-.x:hover { background: var(--a2-fill-hover); color: var(--a2-text); }
+.x { flex: none; width: 34px; height: 34px; margin: -5px -7px 0 0; border-radius: 9px; display: grid; place-items: center; background: var(--a2-fill-hover); color: var(--a2-text-muted); transition: background-color var(--t1), color var(--t1), transform var(--t2) var(--pop); }
+.x:hover { background: var(--a2-fill-active); color: var(--a2-text); }
+.x:active { transform: scale(0.86); }
 :host([no-close]) .x { display: none; }
 .body { padding: 16px 22px 0; overflow: auto; line-height: 1.55; flex: 1 1 auto; min-height: 0; }
 .foot { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; padding: 22px; }
@@ -101,7 +102,7 @@ class OverlayBase extends A2Element {
  */
 export class A2Dialog extends OverlayBase {
   static styles = `${OVERLAY_CSS}
-.panel { left: 50%; top: 50%; width: min(var(--w, 440px), calc(100vw - 32px)); max-height: calc(100dvh - 48px); border-radius: 18px; translate: -50% -50%; }
+.panel { left: 50%; top: 50%; width: min(var(--w, 440px), calc(100vw - 32px)); max-height: calc(100dvh - 48px); border-radius: var(--a2-radius-lg); translate: -50% -50%; }
 :host([size="sm"]) { --w: 360px; }
 :host([size="lg"]) { --w: 640px; }
 `;
@@ -131,9 +132,9 @@ export class A2Dialog extends OverlayBase {
 /** <a2-drawer heading="설정" side="right|left|bottom"> */
 export class A2Drawer extends OverlayBase {
   static styles = `${OVERLAY_CSS}
-.panel { top: 0; bottom: 0; right: 0; width: min(var(--w, 380px), 100vw); }
-:host([side="left"]) .panel { right: auto; left: 0; }
-:host([side="bottom"]) .panel { top: auto; left: 0; right: 0; width: auto; max-height: 85dvh; border-radius: 20px 20px 0 0; }
+.panel { top: 0; bottom: 0; right: 0; width: min(var(--w, 380px), 100vw); border-width: 0 0 0 var(--a2-ring); }
+:host([side="left"]) .panel { right: auto; left: 0; border-width: 0 var(--a2-ring) 0 0; }
+:host([side="bottom"]) .panel { top: auto; left: 0; right: 0; width: auto; max-height: 85dvh; border-width: var(--a2-ring) 0 0; border-radius: var(--a2-radius-lg) var(--a2-radius-lg) 0 0; }
 :host([side="bottom"]) .panel::before { content: ''; align-self: center; width: 36px; height: 4px; margin-top: 10px; border-radius: 2px; background: var(--a2-fill-active); }
 :host([side="bottom"]) .head { padding-top: 14px; }
 `;

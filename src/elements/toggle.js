@@ -1,4 +1,4 @@
-import { A2Element, define, icon } from '../core/base.js';
+import { A2Element, define } from '../core/base.js';
 
 /** 체크박스·스위치 공통 */
 class CheckBase extends A2Element {
@@ -32,26 +32,22 @@ class CheckBase extends A2Element {
 export class A2Checkbox extends CheckBase {
   static styles = `
 :host { display: inline-flex; vertical-align: middle; }
-.c { position: relative; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; min-height: 24px; border-radius: 6px; touch-action: manipulation; }
+.c { position: relative; display: inline-flex; align-items: center; gap: 11px; cursor: pointer; user-select: none; min-height: 26px; touch-action: manipulation; }
 .c::before { content: ''; position: absolute; inset: -6px -5px; }
-.box {
-  flex: none; position: relative; width: 20px; height: 20px; border-radius: 6px; background: var(--a2-fill); border: 1px solid var(--a2-line-strong);
-  display: grid; place-items: center; color: var(--a2-on-accent);
-  transition: background-color var(--t2), border-color var(--t2), transform var(--t1) var(--spring);
-}
-.c:hover .box { background: var(--a2-fill-active); border-color: var(--a2-text-muted); }
-.c:active .box { transform: scale(0.88); }
-:host([checked]) .box, :host([indeterminate]) .box { background: var(--a2-accent); border-color: var(--a2-accent); }
-.mark { position: absolute; inset: -1px; display: grid; place-items: center; }
-/* 체크 표시는 왼쪽에서 오른쪽으로 드러난다 */
-.check { clip-path: inset(0 100% 0 0); transition: clip-path var(--t2) ease-out; }
-:host([checked]:not([indeterminate])) .check { clip-path: inset(0); }
-.dash { transform: scaleX(0); transition: transform var(--t2) var(--spring); }
-:host([indeterminate]) .dash { transform: none; }
 .lbl:empty { display: none; }
+.c { border-radius: 8px; }
+.box { flex: none; position: relative; width: 24px; height: 24px; border-radius: 8px; border: var(--a2-ring) solid var(--a2-line-strong); transition: border-color var(--t2); }
+.blk { position: absolute; inset: 3px; border-radius: 3px; background: var(--a2-accent); transform: scale(0); transition: transform var(--t3) var(--pop); }
+.c:hover .box { border-color: var(--a2-text-muted); }
+.c:active .blk { transform: scale(0.42); }
+:host([checked]) .box, :host([indeterminate]) .box { border-color: var(--a2-accent); }
+:host([checked]) .blk { transform: scale(1); }
+:host([checked]) .c:active .blk { transform: scale(0.62); }
+/* 일부만 고른 상태: 조각이 납작한 막대가 된다 */
+:host([indeterminate]) .blk { transform: scale(1, 0.3); }
 `;
   render() {
-    this.root.innerHTML = `<div class="c" part="base" role="checkbox" tabindex="0"><span class="box" part="box"><span class="mark check">${icon('check', 12)}</span><span class="mark dash"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="1" y="5" width="10" height="2.2" rx="1.1" fill="currentColor"/></svg></span></span><span class="lbl t"><slot></slot></span></div>`;
+    this.root.innerHTML = `<div class="c" part="base" role="checkbox" tabindex="0"><span class="box" part="box"><span class="blk" part="block"></span></span><span class="lbl t"><slot></slot></span></div>`;
     this.ctl = this.$('.c');
     this.bindToggle(this.ctl);
   }
@@ -70,24 +66,20 @@ export class A2Switch extends CheckBase {
   isSwitch = true;
   static styles = `
 :host { display: inline-flex; vertical-align: middle; }
-.c { position: relative; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; min-height: 24px; border-radius: 13px; touch-action: manipulation; }
+.c { position: relative; display: inline-flex; align-items: center; gap: 11px; cursor: pointer; user-select: none; min-height: 26px; touch-action: manipulation; }
 .c::before { content: ''; position: absolute; inset: -6px -5px; }
-.track {
-  flex: none; position: relative; width: 42px; height: 26px; border-radius: 13px; background: var(--a2-fill-active); border: 1px solid var(--a2-line-strong);
-  transition: background-color var(--t2), border-color var(--t2);
+.lbl:empty { display: none; }
+.c { border-radius: 11px; }
+.track { flex: none; position: relative; width: 52px; height: 30px; border-radius: 11px; border: var(--a2-ring) solid var(--a2-line-strong); transition: border-color var(--t2); }
+.thumb {
+  position: absolute; top: 3px; bottom: 3px; left: 3px; width: 20px; border-radius: 5px; background: var(--a2-text-muted);
+  transition: transform var(--t3) var(--pop), width var(--t2) var(--pop), background-color var(--t2);
 }
 .c:hover .track { border-color: var(--a2-text-muted); }
-:host([checked]) .track { background: var(--a2-accent); border-color: var(--a2-accent); }
-:host([checked]) .c:hover .track { background: var(--a2-accent-hover); border-color: var(--a2-accent-hover); }
-.thumb {
-  position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 9px; background: #fff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
-  transition: transform var(--t3) var(--spring), width var(--t2) var(--spring);
-}
-.c:active .thumb { width: 23px; }
-:host([checked]) .thumb { transform: translateX(16px); }
-:host([checked]) .c:active .thumb { transform: translateX(11px); }
-.lbl:empty { display: none; }
+.c:active .thumb { width: 26px; }
+:host([checked]) .track { border-color: var(--a2-accent); }
+:host([checked]) .thumb { transform: translateX(22px); background: var(--a2-accent); }
+:host([checked]) .c:active .thumb { transform: translateX(16px); }
 `;
   render() {
     this.root.innerHTML = `<div class="c" part="base" role="switch" tabindex="0"><span class="track" part="track"><span class="thumb" part="thumb"></span></span><span class="lbl t"><slot></slot></span></div>`;

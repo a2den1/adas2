@@ -18,15 +18,16 @@ export class A2Segmented extends A2Element {
   static styles = `
 :host { display: inline-block; vertical-align: middle; max-width: 100%; }
 :host([block]) { display: block; }
-.bar { position: relative; display: inline-flex; gap: 2px; padding: 3px; border-radius: var(--a2-radius); background: var(--a2-fill); border: 1px solid var(--a2-line); max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+.bar { position: relative; display: inline-flex; gap: var(--a2-gap); padding: var(--a2-gap); border-radius: var(--a2-radius); border: var(--a2-ring) solid var(--a2-line-strong); max-width: 100%; overflow-x: auto; scrollbar-width: none; }
 :host([block]) .bar { display: flex; }
-.ind { position: absolute; left: 0; top: 0; border-radius: calc(var(--a2-radius) - 3px); background: var(--a2-raised); border: 1px solid var(--a2-line-strong); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18); visibility: hidden; pointer-events: none; }
+.ind { position: absolute; left: 0; top: 0; border-radius: var(--ri); background: var(--a2-accent); visibility: hidden; pointer-events: none; }
 .seg {
-  position: relative; z-index: 1; flex: 1 0 auto; height: calc(var(--a2-h) - 8px); padding: 0.12em 14px 0; touch-action: manipulation; border-radius: calc(var(--a2-radius) - 3px);
-  color: var(--a2-text-muted); white-space: nowrap; transition: color var(--t2);
+  position: relative; z-index: 1; flex: 1 0 auto; height: calc(var(--a2-h) - var(--in) * 2); padding: 0.12em 15px 0; touch-action: manipulation; border-radius: var(--ri);
+  color: var(--a2-text-muted); white-space: nowrap; transition: color var(--t2), transform var(--t2) var(--pop);
 }
 .seg:hover { color: var(--a2-text); }
-.seg[aria-checked="true"] { color: var(--a2-text); font-weight: var(--a2-weight-strong); }
+.seg:active { transform: scale(0.93); }
+.seg[aria-checked="true"] { color: var(--a2-on-accent); font-weight: var(--a2-weight-strong); }
 .seg:disabled { opacity: 0.4; cursor: default; }
 .seg:focus-visible { outline-offset: -2px; }
 `;

@@ -1,4 +1,4 @@
-/*! adas2 v4.1.1 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
+/*! adas2 v4.2.0 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
 var adas2 = (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -37,7 +37,7 @@ var adas2 = (() => {
   });
 
   // src/styles/global.css
-  var global_default = '/* adas2 — 문서 전체에 한 번 들어가는 스타일: 글꼴, 색 토큰, 정의 전 깜빡임 막기 */\n\n@font-face { font-family: "GmarketSans"; font-weight: 300; font-display: swap; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff") format("woff"); }\n@font-face { font-family: "GmarketSans"; font-weight: 500; font-display: swap; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff") format("woff"); }\n@font-face { font-family: "GmarketSans"; font-weight: 700; font-display: swap; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff") format("woff"); }\n\n:root {\n  --a2-font: "GmarketSans", "Pretendard", system-ui, -apple-system, "Malgun Gothic", sans-serif;\n  --a2-weight: 300;\n  --a2-weight-strong: 500;\n  --a2-fs: 14px;\n  --a2-fs-sm: 12.5px;\n  --a2-fs-lg: 17px;\n  --a2-h: 40px;\n  --a2-radius: 10px;\n  --a2-radius-lg: 16px;\n  --a2-speed: 1;\n}\n\n/* 어두운 화면 (기본) */\n:root, [data-a2-theme="dark"] {\n  --a2-line: rgba(243, 238, 233, 0.13); --a2-line-strong: rgba(243, 238, 233, 0.32);\n  --a2-fill: rgba(243, 238, 233, 0.07); --a2-fill-hover: rgba(243, 238, 233, 0.1); --a2-fill-active: rgba(243, 238, 233, 0.14);\n  color-scheme: dark;\n  --a2-bg: #1B1917;\n  --a2-surface: #272421;\n  --a2-surface-hover: #2F2B28;\n  --a2-surface-active: #36312D;\n  --a2-raised: #2C2825;\n  --a2-accent: #FF7A45;\n  --a2-accent-hover: #FF8B5C;\n  --a2-accent-pressed: #EB6630;\n  --a2-accent-soft: rgba(255, 122, 69, 0.16);\n  --a2-on-accent: #FFFFFF;\n  --a2-text: #F3EEE9;\n  --a2-text-muted: rgba(243, 238, 233, 0.58);\n  --a2-text-faint: rgba(243, 238, 233, 0.3);\n  --a2-danger: #F25F5C;\n  --a2-success: #5CCB8A;\n  --a2-warning: #F4B740;\n  --a2-shadow: 0 12px 36px rgba(0, 0, 0, 0.42), 0 2px 8px rgba(0, 0, 0, 0.25);\n  --a2-scrim: rgba(10, 9, 8, 0.55);\n  --a2-tip: #38332F;\n  --a2-on-tip: #F3EEE9;\n}\n\n/* 밝은 화면 */\n[data-a2-theme="light"] {\n  --a2-line: rgba(41, 35, 31, 0.15); --a2-line-strong: rgba(41, 35, 31, 0.36);\n  --a2-fill: rgba(41, 35, 31, 0.06); --a2-fill-hover: rgba(41, 35, 31, 0.09); --a2-fill-active: rgba(41, 35, 31, 0.13);\n  color-scheme: light;\n  --a2-bg: #FAF7F3;\n  --a2-surface: #EFEAE4;\n  --a2-surface-hover: #E8E2DA;\n  --a2-surface-active: #E0D9D0;\n  --a2-raised: #FFFFFF;\n  --a2-accent: #F26A32;\n  --a2-accent-hover: #FF7A45;\n  --a2-accent-pressed: #D9581F;\n  --a2-accent-soft: rgba(242, 106, 50, 0.13);\n  --a2-on-accent: #FFFFFF;\n  --a2-text: #29231F;\n  --a2-text-muted: rgba(41, 35, 31, 0.58);\n  --a2-text-faint: rgba(41, 35, 31, 0.3);\n  --a2-danger: #D84542;\n  --a2-success: #259B5A;\n  --a2-warning: #C98A10;\n  --a2-shadow: 0 12px 36px rgba(60, 40, 20, 0.14), 0 2px 8px rgba(60, 40, 20, 0.08);\n  --a2-scrim: rgba(40, 30, 20, 0.3);\n  --a2-tip: #2B2521;\n  --a2-on-tip: #FAF7F3;\n}\n\n/* 바다 */\n[data-a2-theme="ocean"] {\n  --a2-line: rgba(237, 241, 246, 0.13); --a2-line-strong: rgba(237, 241, 246, 0.32);\n  --a2-fill: rgba(237, 241, 246, 0.07); --a2-fill-hover: rgba(237, 241, 246, 0.1); --a2-fill-active: rgba(237, 241, 246, 0.14);\n  color-scheme: dark;\n  --a2-bg: #14181E;\n  --a2-surface: #1F252D;\n  --a2-surface-hover: #262D37;\n  --a2-surface-active: #2D3540;\n  --a2-raised: #232A33;\n  --a2-accent: #4C8DFF;\n  --a2-accent-hover: #649CFF;\n  --a2-accent-pressed: #3676E6;\n  --a2-accent-soft: rgba(76, 141, 255, 0.16);\n  --a2-on-accent: #FFFFFF;\n  --a2-text: #EDF1F6;\n  --a2-text-muted: rgba(237, 241, 246, 0.58);\n  --a2-text-faint: rgba(237, 241, 246, 0.3);\n  --a2-danger: #F2645F;\n  --a2-success: #4FC68A;\n  --a2-warning: #F1B643;\n  --a2-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);\n  --a2-scrim: rgba(5, 8, 12, 0.55);\n  --a2-tip: #2E3743;\n  --a2-on-tip: #EDF1F6;\n}\n\n/* 정의되기 전에는 숨겨서 깜빡임을 막는다 */\n:is(a2-button, a2-input, a2-textarea, a2-number, a2-select, a2-checkbox, a2-switch, a2-radio-group, a2-slider,\n    a2-segmented, a2-tabs, a2-color, a2-keybind, a2-card, a2-badge, a2-progress, a2-spinner, a2-dialog, a2-drawer, a2-menu):not(:defined) {\n  visibility: hidden;\n}\na2-option, a2-segment, a2-menu-item, a2-tab-panel { display: none; }\na2-tab-panel[data-on] { display: block; }\n\n@media (prefers-reduced-motion: reduce) { :root { --a2-speed: 1000; } }\n';
+  var global_default = '/* adas2 — 문서 전체에 한 번 들어가는 스타일: 글꼴, 색 토큰, 정의 전 깜빡임 막기 */\n\n@font-face { font-family: "GmarketSans"; font-weight: 300; font-display: swap; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff") format("woff"); }\n@font-face { font-family: "GmarketSans"; font-weight: 500; font-display: swap; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff") format("woff"); }\n@font-face { font-family: "GmarketSans"; font-weight: 700; font-display: swap; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff") format("woff"); }\n\n:root {\n  --a2-font: "GmarketSans", "Pretendard", system-ui, -apple-system, "Malgun Gothic", sans-serif;\n  --a2-weight: 300;\n  --a2-weight-strong: 500;\n  --a2-fs: 14px;\n  --a2-fs-sm: 12.5px;\n  --a2-fs-lg: 17px;\n  --a2-h: 44px;\n  --a2-radius: 14px;\n  --a2-ring: 2px;         /* 테 굵기 */\n  --a2-gap: 3px;          /* 테와 조각 사이 */\n  --a2-radius-lg: 20px;\n  --a2-speed: 1;\n}\n\n/* 어두운 화면 (기본) */\n:root, [data-a2-theme="dark"] {\n  --a2-line: rgba(243, 238, 233, 0.13); --a2-line-strong: rgba(243, 238, 233, 0.32);\n  --a2-fill: rgba(243, 238, 233, 0.07); --a2-fill-hover: rgba(243, 238, 233, 0.1); --a2-fill-active: rgba(243, 238, 233, 0.14);\n  color-scheme: dark;\n  --a2-bg: #1B1917;\n  --a2-surface: #272421;\n  --a2-surface-hover: #2F2B28;\n  --a2-surface-active: #36312D;\n  --a2-raised: #2C2825;\n  --a2-accent: #FF7A45;\n  --a2-accent-hover: #FF8B5C;\n  --a2-accent-pressed: #EB6630;\n  --a2-accent-soft: rgba(255, 122, 69, 0.16);\n  --a2-on-accent: #FFFFFF;\n  --a2-text: #F3EEE9;\n  --a2-text-muted: rgba(243, 238, 233, 0.58);\n  --a2-text-faint: rgba(243, 238, 233, 0.3);\n  --a2-danger: #F25F5C;\n  --a2-success: #5CCB8A;\n  --a2-warning: #F4B740;\n  --a2-shadow: 0 12px 36px rgba(0, 0, 0, 0.42), 0 2px 8px rgba(0, 0, 0, 0.25);\n  --a2-scrim: rgba(10, 9, 8, 0.55);\n  --a2-tip: #38332F;\n  --a2-on-tip: #F3EEE9;\n}\n\n/* 밝은 화면 */\n[data-a2-theme="light"] {\n  --a2-line: rgba(41, 35, 31, 0.15); --a2-line-strong: rgba(41, 35, 31, 0.36);\n  --a2-fill: rgba(41, 35, 31, 0.06); --a2-fill-hover: rgba(41, 35, 31, 0.09); --a2-fill-active: rgba(41, 35, 31, 0.13);\n  color-scheme: light;\n  --a2-bg: #FAF7F3;\n  --a2-surface: #EFEAE4;\n  --a2-surface-hover: #E8E2DA;\n  --a2-surface-active: #E0D9D0;\n  --a2-raised: #FFFFFF;\n  --a2-accent: #F26A32;\n  --a2-accent-hover: #FF7A45;\n  --a2-accent-pressed: #D9581F;\n  --a2-accent-soft: rgba(242, 106, 50, 0.13);\n  --a2-on-accent: #FFFFFF;\n  --a2-text: #29231F;\n  --a2-text-muted: rgba(41, 35, 31, 0.58);\n  --a2-text-faint: rgba(41, 35, 31, 0.3);\n  --a2-danger: #D84542;\n  --a2-success: #259B5A;\n  --a2-warning: #C98A10;\n  --a2-shadow: 0 12px 36px rgba(60, 40, 20, 0.14), 0 2px 8px rgba(60, 40, 20, 0.08);\n  --a2-scrim: rgba(40, 30, 20, 0.3);\n  --a2-tip: #2B2521;\n  --a2-on-tip: #FAF7F3;\n}\n\n/* 바다 */\n[data-a2-theme="ocean"] {\n  --a2-line: rgba(237, 241, 246, 0.13); --a2-line-strong: rgba(237, 241, 246, 0.32);\n  --a2-fill: rgba(237, 241, 246, 0.07); --a2-fill-hover: rgba(237, 241, 246, 0.1); --a2-fill-active: rgba(237, 241, 246, 0.14);\n  color-scheme: dark;\n  --a2-bg: #14181E;\n  --a2-surface: #1F252D;\n  --a2-surface-hover: #262D37;\n  --a2-surface-active: #2D3540;\n  --a2-raised: #232A33;\n  --a2-accent: #4C8DFF;\n  --a2-accent-hover: #649CFF;\n  --a2-accent-pressed: #3676E6;\n  --a2-accent-soft: rgba(76, 141, 255, 0.16);\n  --a2-on-accent: #FFFFFF;\n  --a2-text: #EDF1F6;\n  --a2-text-muted: rgba(237, 241, 246, 0.58);\n  --a2-text-faint: rgba(237, 241, 246, 0.3);\n  --a2-danger: #F2645F;\n  --a2-success: #4FC68A;\n  --a2-warning: #F1B643;\n  --a2-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);\n  --a2-scrim: rgba(5, 8, 12, 0.55);\n  --a2-tip: #2E3743;\n  --a2-on-tip: #EDF1F6;\n}\n\n/* 정의되기 전에는 숨겨서 깜빡임을 막는다 */\n:is(a2-button, a2-input, a2-textarea, a2-number, a2-select, a2-checkbox, a2-switch, a2-radio-group, a2-slider,\n    a2-segmented, a2-tabs, a2-color, a2-keybind, a2-card, a2-badge, a2-progress, a2-spinner, a2-dialog, a2-drawer, a2-menu):not(:defined) {\n  visibility: hidden;\n}\na2-option, a2-segment, a2-menu-item, a2-tab-panel { display: none; }\na2-tab-panel[data-on] { display: block; }\n\n@media (prefers-reduced-motion: reduce) { :root { --a2-speed: 1000; } }\n';
 
   // src/core/base.js
   var globalDone = false;
@@ -62,7 +62,9 @@ var adas2 = (() => {
   }
   var BASE_CSS = `
 :host { box-sizing: border-box; font-family: var(--a2-font); font-weight: var(--a2-weight); font-size: var(--a2-fs); color: var(--a2-text); letter-spacing: -0.01em; -webkit-tap-highlight-color: transparent;
-  --t1: calc(0.14s / var(--a2-speed)); --t2: calc(0.24s / var(--a2-speed)); --t3: calc(0.34s / var(--a2-speed)); --spring: cubic-bezier(0.3, 0.9, 0.25, 1); }
+  --t1: calc(0.14s / var(--a2-speed)); --t2: calc(0.24s / var(--a2-speed)); --t3: calc(0.34s / var(--a2-speed)); --spring: cubic-bezier(0.3, 0.9, 0.25, 1); --pop: cubic-bezier(0.3, 1.5, 0.5, 1);
+  /* 테와 조각: --in 은 바깥 가장자리에서 조각까지, --ri 는 조각의 모서리 */
+  --in: calc(var(--a2-ring) + var(--a2-gap)); --ri: calc(var(--a2-radius) - var(--a2-ring) - var(--a2-gap)); }
 :host([hidden]) { display: none !important; }
 *, *::before, *::after { box-sizing: border-box; }
 button { font: inherit; color: inherit; letter-spacing: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: pointer; }
@@ -81,8 +83,8 @@ svg { display: block; }
 .hint { margin-top: 6px; font-size: var(--a2-fs-sm); color: var(--a2-text-muted); line-height: 1.45; }
 .hint:empty { display: none; }
 .hint.error { color: var(--a2-danger); }
-:host([size="sm"]) { --a2-h: 32px; --a2-fs: 13px; }
-:host([size="lg"]) { --a2-h: 48px; --a2-fs: 16px; }
+:host([size="sm"]) { --a2-h: 36px; --a2-fs: 13px; --a2-radius: 12px; }
+:host([size="lg"]) { --a2-h: 52px; --a2-fs: 16px; --a2-radius: 17px; }
 :host([disabled]) { opacity: 0.45; pointer-events: none; }
 `;
   var ICONS = {
@@ -207,27 +209,27 @@ svg { display: block; }
 :host([block]) { display: flex; }
 .b {
   position: relative; isolation: isolate; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  width: 100%; height: var(--a2-h); padding: 0 16px; border-radius: var(--a2-radius);
+  width: 100%; height: var(--a2-h); padding: 0 calc(var(--in) + 14px); border-radius: var(--a2-radius);
   font-weight: var(--a2-weight-strong); white-space: nowrap; user-select: none; touch-action: manipulation;
-  color: var(--a2-text); --bg: var(--a2-fill); --bd: var(--a2-line);
+  color: var(--fg); --fg: var(--a2-text); --bg: transparent; --bd: var(--a2-line-strong);
 }
-/* 누르는 범위는 보이는 면보다 사방으로 5px 넓고, 눌러도 줄어들지 않는다(줄어드는 것은 보이는 면뿐) */
+/* 누르는 범위는 보이는 테보다 사방으로 5px 넓고, 눌러도 줄어들지 않는다 */
 .b::before { content: ''; position: absolute; inset: -5px; z-index: -1; }
-.face {
-  position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--bg); border: 1px solid var(--bd); pointer-events: none;
-  transition: background-color var(--t1), border-color var(--t1), transform var(--t2) var(--spring);
+/* 테: 바깥 선 */
+.face { position: absolute; inset: 0; z-index: -1; border-radius: inherit; border: var(--a2-ring) solid var(--bd); pointer-events: none; transition: border-color var(--t1); }
+/* 조각: 테 안쪽 면. 누르면 안으로 줄어든다 */
+.face::after {
+  content: ''; position: absolute; inset: var(--a2-gap); border-radius: var(--ri); background: var(--bg);
+  transition: background-color var(--t1), inset var(--t2) var(--pop), border-radius var(--t2) var(--pop);
 }
-.b:hover { --bg: var(--a2-fill-hover); --bd: var(--a2-line-strong); }
-.b:active { --bg: var(--a2-fill-active); }
-.b:active .face { transform: scale(0.96); transition-duration: 0.05s; }
-:host([variant="primary"]) .b { color: var(--a2-on-accent); --bg: var(--a2-accent); --bd: color-mix(in srgb, var(--a2-accent) 76%, #000); }
+.b:hover { --bg: var(--a2-fill-hover); }
+.b:active .face::after { inset: calc(var(--a2-gap) + 3px); border-radius: calc(var(--ri) - 2px); transition-duration: var(--t1), 0.07s, 0.07s; }
+:host([variant="primary"]) .b { --fg: var(--a2-on-accent); --bg: var(--a2-accent); --bd: var(--a2-accent); }
 :host([variant="primary"]) .b:hover { --bg: var(--a2-accent-hover); }
-:host([variant="primary"]) .b:active { --bg: var(--a2-accent-pressed); }
-:host([variant="soft"]) .b { color: var(--a2-accent); --bg: var(--a2-accent-soft); --bd: color-mix(in srgb, var(--a2-accent) 34%, transparent); }
-:host([variant="soft"]) .b:hover { --bg: color-mix(in srgb, var(--a2-accent) 24%, transparent); --bd: color-mix(in srgb, var(--a2-accent) 55%, transparent); }
-:host([variant="ghost"]) .b { --bg: transparent; }
-:host([variant="ghost"]) .b:hover { --bg: var(--a2-fill-hover); }
-:host([variant="danger"]) .b { color: #fff; --bg: var(--a2-danger); --bd: color-mix(in srgb, var(--a2-danger) 76%, #000); }
+:host([variant="soft"]) .b { --fg: var(--a2-accent); --bg: var(--a2-accent-soft); --bd: color-mix(in srgb, var(--a2-accent) 55%, transparent); }
+:host([variant="soft"]) .b:hover { --bg: color-mix(in srgb, var(--a2-accent) 26%, transparent); }
+:host([variant="ghost"]) .b { --bd: transparent; }
+:host([variant="danger"]) .b { --fg: #fff; --bg: var(--a2-danger); --bd: var(--a2-danger); }
 :host([variant="danger"]) .b:hover { --bg: color-mix(in srgb, var(--a2-danger) 86%, #fff); }
 .b.square { width: var(--a2-h); padding: 0; }
 .lbl { display: inline-flex; align-items: center; gap: 8px; }
@@ -275,16 +277,20 @@ svg { display: block; }
   // src/elements/input.js
   var FIELD_CSS = `
 :host { display: block; }
+/* 테 안에 조각이 하나 들어 있고, 글자를 넣을 때 조각에 색이 찬다 */
 .box {
-  position: relative; display: flex; align-items: center; gap: 8px; min-height: var(--a2-h); padding: 0 12px;
-  border-radius: var(--a2-radius); background: var(--a2-fill); border: 1px solid var(--a2-line); cursor: text;
-  transition: background-color var(--t1), border-color var(--t1);
+  position: relative; isolation: isolate; display: flex; align-items: center; gap: 8px; min-height: var(--a2-h); padding: 0 calc(var(--in) + 9px);
+  border-radius: var(--a2-radius); border: var(--a2-ring) solid var(--a2-line-strong); cursor: text;
+  transition: border-color var(--t1);
 }
-.box:hover { background: var(--a2-fill-hover); border-color: var(--a2-line-strong); }
-.box:focus-within { background: var(--a2-fill-hover); border-color: var(--a2-accent); }
-:host([error]) .box { background: color-mix(in srgb, var(--a2-danger) 10%, transparent); border-color: var(--a2-danger); }
+.box::before { content: ''; position: absolute; inset: var(--a2-gap); z-index: -1; border-radius: var(--ri); transition: background-color var(--t1); }
+.box:hover::before { background: var(--a2-fill); }
+.box:focus-within { border-color: var(--a2-accent); }
+.box:focus-within::before { background: var(--a2-accent-soft); }
+:host([error]) .box { border-color: var(--a2-danger); }
+:host([error]) .box::before { background: color-mix(in srgb, var(--a2-danger) 13%, transparent); }
 .ctl {
-  flex: 1; min-width: 0; height: calc(var(--a2-h) - 2px); padding: 0.12em 0 0; border: 0; outline: 0; background: transparent;
+  flex: 1; min-width: 0; height: calc(var(--a2-h) - var(--a2-ring) * 2); padding: 0.12em 0 0; border: 0; outline: 0; background: transparent;
   color: var(--a2-text); caret-color: var(--a2-accent);
 }
 .ctl::placeholder { color: var(--a2-text-faint); }
@@ -292,10 +298,11 @@ svg { display: block; }
 .ctl:focus-visible { outline: 0; }
 ::slotted([slot="prefix"]), ::slotted([slot="suffix"]) { color: var(--a2-text-muted); flex: none; }
 .mini {
-  flex: none; width: 26px; height: 26px; border-radius: 6px; display: none; place-items: center; color: var(--a2-text-muted);
-  transition: background-color var(--t1), color var(--t1);
+  flex: none; width: 26px; height: 26px; border-radius: 7px; display: none; place-items: center; color: var(--a2-text-muted);
+  transition: background-color var(--t1), color var(--t1), transform var(--t2) var(--pop);
 }
 .mini:hover { background: var(--a2-fill-active); color: var(--a2-text); }
+.mini:active { transform: scale(0.86); }
 .count { flex: none; font-size: var(--a2-fs-sm); color: var(--a2-text-faint); padding-top: 0.12em; }
 .count:empty { display: none; }
 `;
@@ -398,7 +405,7 @@ svg { display: block; }
   var A2Textarea = class extends FieldBase {
     static observedAttributes = ["label", "hint", "error", "placeholder", "disabled", "readonly", "required", "maxlength", "rows", "value"];
     static styles = `${FIELD_CSS}
-.box { align-items: flex-start; padding: 10px 12px; }
+.box { align-items: flex-start; padding: 11px calc(var(--in) + 9px); }
 .ctl { height: auto; line-height: 1.6; resize: none; padding: 0; overflow: hidden; }
 .count { align-self: flex-end; }
 `;
@@ -606,14 +613,18 @@ svg { display: block; }
     static delegatesFocus = true;
     static observedAttributes = ["label", "hint", "error", "disabled", "required", "min", "max", "step", "unit", "value", "decimals"];
     static styles = `${FIELD_CSS}
-.box { padding: 0 4px; gap: 2px; }
+.box { padding: 0 var(--a2-gap); gap: 2px; }
 .ctl { text-align: center; font-variant-numeric: tabular-nums; }
-.step { flex: none; position: relative; width: calc(var(--a2-h) - 10px); height: calc(var(--a2-h) - 10px); touch-action: manipulation; border-radius: calc(var(--a2-radius) - 3px); display: grid; place-items: center; color: var(--a2-text-muted); transition: background-color var(--t1), color var(--t1), transform var(--t1); }
-.step:hover { background: var(--a2-fill-active); color: var(--a2-text); }
+.step {
+  flex: none; position: relative; width: calc(var(--a2-h) - var(--in) * 2); height: calc(var(--a2-h) - var(--in) * 2); touch-action: manipulation; border-radius: var(--ri);
+  display: grid; place-items: center; background: var(--a2-fill-hover); color: var(--a2-text-muted);
+  transition: background-color var(--t1), color var(--t1), transform var(--t2) var(--pop);
+}
 .step::before { content: ''; position: absolute; inset: -4px; }
-.step:active { background: var(--a2-fill-active); color: var(--a2-text); }
+.step:hover { background: var(--a2-fill-active); color: var(--a2-text); }
+.step:active { transform: scale(0.86); background: var(--a2-accent); color: var(--a2-on-accent); }
 .step:disabled { opacity: 0.3; pointer-events: none; }
-.unit { flex: none; color: var(--a2-text-muted); font-size: var(--a2-fs-sm); padding-top: 0.12em; }
+.unit { flex: none; color: var(--a2-text-muted); font-size: var(--a2-fs-sm); padding: 0.12em 6px 0 0; }
 .unit:empty, .calc:empty { display: none; }
 .calc { flex: none; color: var(--a2-text-muted); font-size: var(--a2-fs-sm); padding-top: 0.12em; white-space: nowrap; }
 .calc.bad { color: var(--a2-danger); }
@@ -794,26 +805,22 @@ svg { display: block; }
   var A2Checkbox = class extends CheckBase {
     static styles = `
 :host { display: inline-flex; vertical-align: middle; }
-.c { position: relative; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; min-height: 24px; border-radius: 6px; touch-action: manipulation; }
+.c { position: relative; display: inline-flex; align-items: center; gap: 11px; cursor: pointer; user-select: none; min-height: 26px; touch-action: manipulation; }
 .c::before { content: ''; position: absolute; inset: -6px -5px; }
-.box {
-  flex: none; position: relative; width: 20px; height: 20px; border-radius: 6px; background: var(--a2-fill); border: 1px solid var(--a2-line-strong);
-  display: grid; place-items: center; color: var(--a2-on-accent);
-  transition: background-color var(--t2), border-color var(--t2), transform var(--t1) var(--spring);
-}
-.c:hover .box { background: var(--a2-fill-active); border-color: var(--a2-text-muted); }
-.c:active .box { transform: scale(0.88); }
-:host([checked]) .box, :host([indeterminate]) .box { background: var(--a2-accent); border-color: var(--a2-accent); }
-.mark { position: absolute; inset: -1px; display: grid; place-items: center; }
-/* 체크 표시는 왼쪽에서 오른쪽으로 드러난다 */
-.check { clip-path: inset(0 100% 0 0); transition: clip-path var(--t2) ease-out; }
-:host([checked]:not([indeterminate])) .check { clip-path: inset(0); }
-.dash { transform: scaleX(0); transition: transform var(--t2) var(--spring); }
-:host([indeterminate]) .dash { transform: none; }
 .lbl:empty { display: none; }
+.c { border-radius: 8px; }
+.box { flex: none; position: relative; width: 24px; height: 24px; border-radius: 8px; border: var(--a2-ring) solid var(--a2-line-strong); transition: border-color var(--t2); }
+.blk { position: absolute; inset: 3px; border-radius: 3px; background: var(--a2-accent); transform: scale(0); transition: transform var(--t3) var(--pop); }
+.c:hover .box { border-color: var(--a2-text-muted); }
+.c:active .blk { transform: scale(0.42); }
+:host([checked]) .box, :host([indeterminate]) .box { border-color: var(--a2-accent); }
+:host([checked]) .blk { transform: scale(1); }
+:host([checked]) .c:active .blk { transform: scale(0.62); }
+/* 일부만 고른 상태: 조각이 납작한 막대가 된다 */
+:host([indeterminate]) .blk { transform: scale(1, 0.3); }
 `;
     render() {
-      this.root.innerHTML = `<div class="c" part="base" role="checkbox" tabindex="0"><span class="box" part="box"><span class="mark check">${icon("check", 12)}</span><span class="mark dash"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="1" y="5" width="10" height="2.2" rx="1.1" fill="currentColor"/></svg></span></span><span class="lbl t"><slot></slot></span></div>`;
+      this.root.innerHTML = `<div class="c" part="base" role="checkbox" tabindex="0"><span class="box" part="box"><span class="blk" part="block"></span></span><span class="lbl t"><slot></slot></span></div>`;
       this.ctl = this.$(".c");
       this.bindToggle(this.ctl);
     }
@@ -834,24 +841,20 @@ svg { display: block; }
     isSwitch = true;
     static styles = `
 :host { display: inline-flex; vertical-align: middle; }
-.c { position: relative; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; min-height: 24px; border-radius: 13px; touch-action: manipulation; }
+.c { position: relative; display: inline-flex; align-items: center; gap: 11px; cursor: pointer; user-select: none; min-height: 26px; touch-action: manipulation; }
 .c::before { content: ''; position: absolute; inset: -6px -5px; }
-.track {
-  flex: none; position: relative; width: 42px; height: 26px; border-radius: 13px; background: var(--a2-fill-active); border: 1px solid var(--a2-line-strong);
-  transition: background-color var(--t2), border-color var(--t2);
+.lbl:empty { display: none; }
+.c { border-radius: 11px; }
+.track { flex: none; position: relative; width: 52px; height: 30px; border-radius: 11px; border: var(--a2-ring) solid var(--a2-line-strong); transition: border-color var(--t2); }
+.thumb {
+  position: absolute; top: 3px; bottom: 3px; left: 3px; width: 20px; border-radius: 5px; background: var(--a2-text-muted);
+  transition: transform var(--t3) var(--pop), width var(--t2) var(--pop), background-color var(--t2);
 }
 .c:hover .track { border-color: var(--a2-text-muted); }
-:host([checked]) .track { background: var(--a2-accent); border-color: var(--a2-accent); }
-:host([checked]) .c:hover .track { background: var(--a2-accent-hover); border-color: var(--a2-accent-hover); }
-.thumb {
-  position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 9px; background: #fff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
-  transition: transform var(--t3) var(--spring), width var(--t2) var(--spring);
-}
-.c:active .thumb { width: 23px; }
-:host([checked]) .thumb { transform: translateX(16px); }
-:host([checked]) .c:active .thumb { transform: translateX(11px); }
-.lbl:empty { display: none; }
+.c:active .thumb { width: 26px; }
+:host([checked]) .track { border-color: var(--a2-accent); }
+:host([checked]) .thumb { transform: translateX(22px); background: var(--a2-accent); }
+:host([checked]) .c:active .thumb { transform: translateX(16px); }
 `;
     render() {
       this.root.innerHTML = `<div class="c" part="base" role="switch" tabindex="0"><span class="track" part="track"><span class="thumb" part="thumb"></span></span><span class="lbl t"><slot></slot></span></div>`;
@@ -872,22 +875,17 @@ svg { display: block; }
   var A2Radio = class extends A2Element {
     static observedAttributes = ["checked", "disabled"];
     static styles = `
-:host { display: inline-flex; vertical-align: middle; border-radius: 12px; outline: none; }
+:host { display: inline-flex; vertical-align: middle; border-radius: 13px; outline: none; }
 :host(:focus-visible) .dot { outline: 2px solid var(--a2-accent); outline-offset: 2px; }
-.r { position: relative; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; min-height: 24px; touch-action: manipulation; }
+.r { position: relative; display: inline-flex; align-items: center; gap: 11px; cursor: pointer; user-select: none; min-height: 26px; touch-action: manipulation; }
 .r::before { content: ''; position: absolute; inset: -6px -5px; }
-.dot {
-  flex: none; position: relative; width: 20px; height: 20px; border-radius: 50%; background: var(--a2-fill); border: 1px solid var(--a2-line-strong);
-  transition: background-color var(--t2), border-color var(--t2), transform var(--t1) var(--spring);
-}
-.r:hover .dot { background: var(--a2-fill-active); border-color: var(--a2-text-muted); }
-.r:active .dot { transform: scale(0.88); }
-:host([checked]) .dot { background: var(--a2-accent); border-color: var(--a2-accent); }
-.dot::after {
-  content: ''; position: absolute; inset: 5px; border-radius: 50%; background: var(--a2-on-accent);
-  transform: scale(0); transition: transform var(--t3) var(--spring);
-}
+.dot { flex: none; position: relative; width: 24px; height: 24px; border-radius: 50%; border: var(--a2-ring) solid var(--a2-line-strong); transition: border-color var(--t2); }
+.dot::after { content: ''; position: absolute; inset: 3px; border-radius: 50%; background: var(--a2-accent); transform: scale(0); transition: transform var(--t3) var(--pop); }
+.r:hover .dot { border-color: var(--a2-text-muted); }
+.r:active .dot::after { transform: scale(0.42); }
+:host([checked]) .dot { border-color: var(--a2-accent); }
 :host([checked]) .dot::after { transform: scale(1); }
+:host([checked]) .r:active .dot::after { transform: scale(0.62); }
 .lbl:empty { display: none; }
 `;
     render() {
@@ -1173,35 +1171,35 @@ svg { display: block; }
     static delegatesFocus = true;
     static observedAttributes = ["label", "hint", "error", "min", "max", "step", "value", "disabled", "show-value", "unit"];
     static styles = `
-:host { display: block; --thumb: 20px; }
+:host { display: block; --thumb: 28px; }
 .head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
 .head .label { flex: 1; }
 .out { font-size: var(--a2-fs-sm); color: var(--a2-text); font-variant-numeric: tabular-nums; margin-bottom: 7px; }
 .out:empty { display: none; }
 /* 손잡이와 채움은 --p(0~1) 하나로 transform 만 바꿔 옮긴다 */
 .s { position: relative; height: 32px; cursor: pointer; touch-action: none; user-select: none; container-type: inline-size; --p: 0; --x: calc(var(--thumb) / 2 + (100cqw - var(--thumb)) * var(--p)); }
-.rail { position: absolute; left: 0; right: 0; top: 50%; height: 6px; margin-top: -3px; border-radius: 3px; background: var(--a2-fill-active); box-shadow: inset 0 0 0 1px var(--a2-line); overflow: hidden; }
-.fill { position: absolute; inset: 0; background: var(--a2-accent); border-radius: 3px; transform: translateX(calc(var(--x) - 100%)); }
+.rail { position: absolute; left: 0; right: 0; top: 50%; height: 16px; margin-top: -8px; border-radius: 9px; border: var(--a2-ring) solid var(--a2-line-strong); }
+.in { position: absolute; inset: 3px; border-radius: 3px; overflow: hidden; }
+.fill { position: absolute; inset: 0; background: var(--a2-accent); border-radius: 3px; transform: translateX(calc(var(--x) - 5px - 100%)); }
 .pos { position: absolute; top: 50%; left: 0; width: 0; height: 0; transform: translateX(var(--x)); }
 .knob {
   position: absolute; left: calc(var(--thumb) / -2); top: calc(var(--thumb) / -2); width: var(--thumb); height: var(--thumb);
-  border-radius: 50%; background: #fff; border: 1px solid rgba(0, 0, 0, 0.14); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-  transition: transform var(--t2) var(--spring);
+  border-radius: 10px; border: var(--a2-ring) solid var(--a2-accent); background: var(--a2-knob-bg, var(--a2-bg));
 }
-.s:hover .knob { transform: scale(1.08); }
-.s.drag .knob { transform: scale(1.18); }
+.knob::after { content: ''; position: absolute; inset: 4px; border-radius: 4px; background: var(--a2-accent); transition: transform var(--t2) var(--pop); }
+.s.drag .knob::after { transform: scale(0.55); }
 .knob:focus-visible { outline: 2px solid var(--a2-accent); outline-offset: 3px; }
 /* 값 말풍선: 제자리의 틀 안에서 아래에서 위로 올라온다 */
-.tipf { position: absolute; bottom: calc(var(--thumb) / 2 + 8px); left: 0; translate: -50% 0; width: max-content; overflow: clip; border-radius: 8px; pointer-events: none; }
+.tipf { position: absolute; bottom: calc(var(--thumb) / 2 + 8px); left: 0; translate: -50% 0; width: max-content; overflow: clip; border-radius: 9px; pointer-events: none; }
 .tip {
-  padding: 5px 9px 4px; border-radius: 8px; background: var(--a2-tip); color: var(--a2-on-tip);
+  padding: 6px 10px 5px; border-radius: 9px; background: var(--a2-tip); color: var(--a2-on-tip);
   font-size: var(--a2-fs-sm); font-weight: var(--a2-weight-strong); white-space: nowrap; font-variant-numeric: tabular-nums;
   transform: translateY(102%); transition: transform var(--t2) var(--spring);
 }
 .s.drag .tip, .knob:focus-visible + .tipf .tip { transform: none; }
 `;
     render() {
-      this.root.innerHTML = `<div class="head"><div class="label t" part="label"></div><div class="out t"></div></div><div class="s" part="base"><div class="rail" part="track"><div class="fill" part="fill"></div></div><div class="pos"><div class="knob" part="thumb" role="slider" tabindex="0"></div><div class="tipf"><div class="tip t"></div></div></div></div><div class="hint t" part="hint"></div>`;
+      this.root.innerHTML = `<div class="head"><div class="label t" part="label"></div><div class="out t"></div></div><div class="s" part="base"><div class="rail" part="track"><div class="in"><div class="fill" part="fill"></div></div></div><div class="pos"><div class="knob" part="thumb" role="slider" tabindex="0"></div><div class="tipf"><div class="tip t"></div></div></div></div><div class="hint t" part="hint"></div>`;
       this.sEl = this.$(".s");
       this.knob = this.$(".knob");
       this.fill = this.$(".fill");
@@ -1432,23 +1430,26 @@ svg { display: block; }
   }
   var POPOVER_CSS = `
 [popover] { position: fixed; inset: auto; margin: 0; padding: 0; border: 0; overflow: visible; background: none; color: inherit; }
+/* 떠 있는 판도 테이고, 항목 하나하나가 조각이다 */
 .menu {
-  min-width: 180px; max-height: min(360px, 60vh); overflow-y: auto; padding: 5px;
-  border-radius: 12px; background: var(--a2-raised); border: 1px solid var(--a2-line); box-shadow: var(--a2-shadow);
+  min-width: 180px; max-height: min(360px, 60vh); overflow-y: auto; padding: var(--a2-gap);
+  border-radius: var(--a2-radius); background: var(--a2-raised); border: var(--a2-ring) solid var(--a2-line-strong); box-shadow: var(--a2-shadow);
   font-family: var(--a2-font); font-size: var(--a2-fs); font-weight: var(--a2-weight); color: var(--a2-text);
   scrollbar-width: thin;
 }
 .item {
-  display: flex; align-items: center; gap: 10px; min-height: 36px; padding: 0 10px; border-radius: 8px;
+  display: flex; align-items: center; gap: 10px; min-height: 36px; padding: 0 11px; border-radius: var(--ri);
   cursor: pointer; user-select: none; white-space: nowrap; transition: background-color calc(0.12s / var(--a2-speed));
 }
 .item:hover, .item.active { background: var(--a2-fill-hover); }
 .item[aria-disabled="true"] { opacity: 0.4; pointer-events: none; }
 .item .grow { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; padding-top: 0.12em; }
-.item .mark { color: var(--a2-accent); visibility: hidden; }
+.item .mark { visibility: hidden; }
+.item[aria-selected="true"] { background: var(--a2-accent); color: var(--a2-on-accent); }
+.item[aria-selected="true"].active { background: var(--a2-accent-hover); }
 .item[aria-selected="true"] .mark { visibility: visible; }
-.item[aria-selected="true"] .grow { color: var(--a2-accent); font-weight: var(--a2-weight-strong); }
-.sep { height: 1px; margin: 5px 8px; background: var(--a2-fill-active); }
+.item[aria-selected="true"] .grow { font-weight: var(--a2-weight-strong); }
+.sep { height: 2px; margin: 4px 9px; border-radius: 1px; background: var(--a2-line); }
 .empty { padding: 10px; color: var(--a2-text-muted); font-size: var(--a2-fs-sm); }
 `;
 
@@ -1471,30 +1472,39 @@ svg { display: block; }
     static styles = `${POPOVER_CSS}
 :host { display: block; }
 .box {
-  display: flex; align-items: center; gap: 8px; width: 100%; min-height: var(--a2-h); padding: 3px 10px 3px 12px; text-align: left;
-  border-radius: var(--a2-radius); background: var(--a2-fill); border: 1px solid var(--a2-line); touch-action: manipulation;
-  transition: background-color var(--t1), border-color var(--t1);
+  position: relative; isolation: isolate; display: flex; align-items: center; gap: 8px; width: 100%; min-height: var(--a2-h);
+  padding: var(--a2-gap) var(--a2-gap) var(--a2-gap) calc(var(--a2-gap) + 11px); text-align: left;
+  border-radius: var(--a2-radius); border: var(--a2-ring) solid var(--a2-line-strong); touch-action: manipulation;
+  transition: border-color var(--t1);
 }
-.box:hover { background: var(--a2-fill-hover); border-color: var(--a2-line-strong); }
-:host([open]) .box { background: var(--a2-fill-hover); border-color: var(--a2-accent); }
-:host([error]) .box { background: color-mix(in srgb, var(--a2-danger) 10%, transparent); border-color: var(--a2-danger); }
-.val { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+:host([open]) .box { border-color: var(--a2-accent); }
+:host([error]) .box { border-color: var(--a2-danger); }
+.val { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; padding: 2px 0; }
 .txt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-top: 0.12em; }
 .ph { color: var(--a2-text-faint); }
-.chev { flex: none; color: var(--a2-text-muted); transition: transform var(--t3) var(--spring); }
-:host([open]) .chev { transform: rotate(180deg); }
+/* 화살표가 든 조각 */
+.chev {
+  flex: none; align-self: stretch; display: grid; place-items: center; width: calc(var(--a2-h) - var(--in) * 2); min-height: calc(var(--a2-h) - var(--in) * 2);
+  border-radius: var(--ri); background: var(--a2-fill-hover); color: var(--a2-text);
+  transition: background-color var(--t1), color var(--t1), transform var(--t2) var(--pop);
+}
+.box:hover .chev { background: var(--a2-fill-active); }
+.box:active .chev { transform: scale(0.86); }
+.chev svg { transition: transform var(--t3) var(--spring); }
+:host([open]) .chev { background: var(--a2-accent); color: var(--a2-on-accent); }
+:host([open]) .chev svg { transform: rotate(180deg); }
 .chip {
-  display: inline-flex; align-items: center; gap: 2px; height: 26px; padding: 0 4px 0 9px; border-radius: 7px;
-  background: var(--a2-accent-soft); border: 1px solid color-mix(in srgb, var(--a2-accent) 34%, transparent); color: var(--a2-accent); font-size: var(--a2-fs-sm); font-weight: var(--a2-weight-strong);
+  display: inline-flex; align-items: center; gap: 2px; height: 28px; padding: 0 4px 0 10px; border-radius: 7px;
+  background: var(--a2-accent-soft); color: var(--a2-accent); font-size: var(--a2-fs-sm); font-weight: var(--a2-weight-strong);
 }
 .chip span { padding-top: 0.12em; }
-.chip i { position: relative; display: grid; place-items: center; width: 18px; height: 18px; border-radius: 5px; font-style: normal; cursor: pointer; }
+.chip i { position: relative; display: grid; place-items: center; width: 20px; height: 20px; border-radius: 5px; font-style: normal; cursor: pointer; }
 .chip i::before { content: ''; position: absolute; inset: -5px; }
-.chip i:hover { background: color-mix(in srgb, var(--a2-accent) 22%, transparent); }
-.search { display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 10px; margin-bottom: 4px; border-radius: 8px; background: var(--a2-fill); border: 1px solid var(--a2-line); color: var(--a2-text-muted); }
+.chip i:hover { background: color-mix(in srgb, var(--a2-accent) 24%, transparent); }
+.search { display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 11px; margin-bottom: var(--a2-gap); border-radius: var(--ri); background: var(--a2-fill-hover); color: var(--a2-text-muted); }
 .search input { flex: 1; min-width: 0; border: 0; outline: 0; background: none; color: var(--a2-text); padding-top: 0.12em; }
 .search input::placeholder { color: var(--a2-text-faint); }
-.list { display: flex; flex-direction: column; gap: 1px; }
+.list { display: flex; flex-direction: column; gap: 2px; }
 `;
     render() {
       this.root.innerHTML = `${this.fieldHead("")}<button class="box" part="box" type="button" aria-haspopup="listbox"><span class="val"></span><span class="chev">${icon("chevron", 12)}</span></button><div class="hint t" part="hint"></div>
@@ -1716,15 +1726,16 @@ svg { display: block; }
     static styles = `
 :host { display: inline-block; vertical-align: middle; max-width: 100%; }
 :host([block]) { display: block; }
-.bar { position: relative; display: inline-flex; gap: 2px; padding: 3px; border-radius: var(--a2-radius); background: var(--a2-fill); border: 1px solid var(--a2-line); max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+.bar { position: relative; display: inline-flex; gap: var(--a2-gap); padding: var(--a2-gap); border-radius: var(--a2-radius); border: var(--a2-ring) solid var(--a2-line-strong); max-width: 100%; overflow-x: auto; scrollbar-width: none; }
 :host([block]) .bar { display: flex; }
-.ind { position: absolute; left: 0; top: 0; border-radius: calc(var(--a2-radius) - 3px); background: var(--a2-raised); border: 1px solid var(--a2-line-strong); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18); visibility: hidden; pointer-events: none; }
+.ind { position: absolute; left: 0; top: 0; border-radius: var(--ri); background: var(--a2-accent); visibility: hidden; pointer-events: none; }
 .seg {
-  position: relative; z-index: 1; flex: 1 0 auto; height: calc(var(--a2-h) - 8px); padding: 0.12em 14px 0; touch-action: manipulation; border-radius: calc(var(--a2-radius) - 3px);
-  color: var(--a2-text-muted); white-space: nowrap; transition: color var(--t2);
+  position: relative; z-index: 1; flex: 1 0 auto; height: calc(var(--a2-h) - var(--in) * 2); padding: 0.12em 15px 0; touch-action: manipulation; border-radius: var(--ri);
+  color: var(--a2-text-muted); white-space: nowrap; transition: color var(--t2), transform var(--t2) var(--pop);
 }
 .seg:hover { color: var(--a2-text); }
-.seg[aria-checked="true"] { color: var(--a2-text); font-weight: var(--a2-weight-strong); }
+.seg:active { transform: scale(0.93); }
+.seg[aria-checked="true"] { color: var(--a2-on-accent); font-weight: var(--a2-weight-strong); }
 .seg:disabled { opacity: 0.4; cursor: default; }
 .seg:focus-visible { outline-offset: -2px; }
 `;
@@ -1837,13 +1848,17 @@ svg { display: block; }
     static styles = `
 :host { display: block; }
 .bar { position: relative; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; padding: 2px; margin: -2px -2px 14px; }
-.ind { position: absolute; left: 0; top: 0; border-radius: 999px; background: var(--a2-accent-soft); border: 1px solid color-mix(in srgb, var(--a2-accent) 38%, transparent); visibility: hidden; pointer-events: none; }
+.ind { position: absolute; left: 0; top: 0; border-radius: var(--a2-radius); border: var(--a2-ring) solid var(--a2-accent); visibility: hidden; pointer-events: none; }
 .tab {
-  position: relative; z-index: 1; flex: none; height: 36px; padding: 0.12em 16px 0; border-radius: 999px; touch-action: manipulation;
-  color: var(--a2-text-muted); white-space: nowrap; transition: color var(--t2), background-color var(--t1);
+  position: relative; z-index: 1; flex: none; height: var(--a2-h); padding: 0.12em calc(var(--in) + 13px) 0; border-radius: var(--a2-radius); touch-action: manipulation;
+  color: var(--a2-text-muted); white-space: nowrap; transition: color var(--t2);
 }
-.tab:hover { color: var(--a2-text); background: var(--a2-fill); }
-.tab[aria-selected="true"] { color: var(--a2-accent); font-weight: var(--a2-weight-strong); background: none; }
+.tab::before { content: ''; position: absolute; inset: var(--in); z-index: -1; border-radius: var(--ri); transition: background-color var(--t1), inset var(--t2) var(--pop); }
+.tab:hover { color: var(--a2-text); }
+.tab:hover::before { background: var(--a2-fill-hover); }
+.tab:active::before { inset: calc(var(--in) + 3px); }
+.tab[aria-selected="true"] { color: var(--a2-accent); font-weight: var(--a2-weight-strong); }
+.tab[aria-selected="true"]::before { background: var(--a2-accent-soft); }
 .tab:disabled { opacity: 0.4; cursor: default; }
 .body { position: relative; }
 ::slotted(a2-tab-panel) { display: block; }
@@ -1977,29 +1992,34 @@ svg { display: block; }
     static observedAttributes = ["label", "hint", "value", "disabled", "alpha", "presets"];
     static styles = `${POPOVER_CSS}
 :host { display: block; }
-.box { display: flex; align-items: center; gap: 10px; width: 100%; height: var(--a2-h); padding: 0 12px 0 6px; border-radius: var(--a2-radius); background: var(--a2-fill); border: 1px solid var(--a2-line); touch-action: manipulation; transition: background-color var(--t1), border-color var(--t1); text-align: left; }
-.box:hover { background: var(--a2-fill-hover); border-color: var(--a2-line-strong); }
-:host([open]) .box { background: var(--a2-fill-hover); border-color: var(--a2-accent); }
-.sw { position: relative; flex: none; width: calc(var(--a2-h) - 14px); height: calc(var(--a2-h) - 14px); box-shadow: 0 0 0 1px var(--a2-line); border-radius: calc(var(--a2-radius) - 4px); overflow: hidden; }
+.box {
+  display: flex; align-items: center; gap: 11px; width: 100%; height: var(--a2-h); padding: 0 14px 0 var(--a2-gap);
+  border-radius: var(--a2-radius); border: var(--a2-ring) solid var(--a2-line-strong); touch-action: manipulation; transition: border-color var(--t1); text-align: left;
+}
+:host([open]) .box { border-color: var(--a2-accent); }
+/* 고른 색이 조각으로 들어 있다 */
+.sw { position: relative; flex: none; width: calc(var(--a2-h) - var(--in) * 2); height: calc(var(--a2-h) - var(--in) * 2); border-radius: var(--ri); overflow: hidden; transition: transform var(--t2) var(--pop); }
+.box:active .sw { transform: scale(0.86); }
 .sw::before, .chk { content: ''; position: absolute; inset: 0; background: repeating-conic-gradient(#bbb 0 25%, #eee 0 50%) 0 0 / 8px 8px; }
 .sw i, .pv i { position: absolute; inset: 0; }
 .hex { flex: 1; font-variant-numeric: tabular-nums; padding-top: 0.12em; letter-spacing: 0.02em; }
-.menu { width: 248px; padding: 12px; display: flex; flex-direction: column; gap: 12px; max-height: none; overflow: visible; }
-.sv { position: relative; height: 150px; border-radius: 8px; cursor: crosshair; touch-action: none; }
-.sv .k { position: absolute; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; box-shadow: 0 0 0 2px #fff, 0 1px 4px rgba(0,0,0,.4); pointer-events: none; }
-.bar { position: relative; height: 12px; border-radius: 6px; cursor: pointer; touch-action: none; }
-.bar .k { position: absolute; top: 50%; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.4); pointer-events: none; }
+.menu { width: 256px; padding: 11px; display: flex; flex-direction: column; gap: 11px; max-height: none; overflow: visible; }
+.sv { position: relative; height: 150px; border-radius: var(--ri); cursor: crosshair; touch-action: none; }
+.sv .k { position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 6px; box-shadow: 0 0 0 2px #fff, 0 1px 4px rgba(0, 0, 0, 0.4); pointer-events: none; }
+.bar { position: relative; height: 14px; border-radius: 5px; cursor: pointer; touch-action: none; }
+.bar .k { position: absolute; top: 50%; width: 12px; height: 22px; margin: -11px 0 0 -6px; border-radius: 4px; background: #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 4px rgba(0, 0, 0, 0.4); pointer-events: none; }
 .hue { background: linear-gradient(to right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00); }
 .al { overflow: visible; }
-.al .chk { border-radius: 6px; background-size: 6px 6px; }
-.al .g { position: absolute; inset: 0; border-radius: 6px; }
+.al .chk { border-radius: 5px; background-size: 7px 7px; }
+.al .g { position: absolute; inset: 0; border-radius: 5px; }
 .row { display: flex; gap: 8px; align-items: center; }
-.pv { position: relative; flex: none; width: 34px; height: 34px; border-radius: 8px; overflow: hidden; box-shadow: 0 0 0 1px var(--a2-line); }
-.hx { flex: 1; min-width: 0; height: 34px; padding: 0.12em 10px 0; border: 1px solid var(--a2-line); outline: 0; border-radius: 8px; background: var(--a2-fill); color: var(--a2-text); font-variant-numeric: tabular-nums; }
+.pv { position: relative; flex: none; width: 38px; height: 38px; border-radius: var(--ri); overflow: hidden; }
+.hx { flex: 1; min-width: 0; height: 38px; padding: 0.12em 11px 0; border: var(--a2-ring) solid var(--a2-line-strong); outline: 0; border-radius: var(--ri); background: transparent; color: var(--a2-text); font-variant-numeric: tabular-nums; transition: border-color var(--t1); }
 .hx:focus { border-color: var(--a2-accent); }
 .ps { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; }
-.ps button { aspect-ratio: 1; border-radius: 6px; border: 1px solid var(--a2-line); transition: transform var(--t1) var(--spring); }
-.ps button:hover { transform: scale(1.15); }
+.ps button { aspect-ratio: 1; border-radius: 5px; transition: transform var(--t2) var(--pop); }
+.ps button:hover { transform: scale(1.16); }
+.ps button:active { transform: scale(0.84); }
 .ps:empty { display: none; }
 `;
     render() {
@@ -2194,24 +2214,28 @@ svg { display: block; }
     static observedAttributes = ["label", "hint", "value", "disabled", "placeholder"];
     static styles = `
 :host { display: block; }
-.box { display: flex; align-items: center; gap: 8px; width: 100%; height: var(--a2-h); padding: 0 6px 0 8px; border-radius: var(--a2-radius); background: var(--a2-fill); border: 1px solid var(--a2-line); touch-action: manipulation; transition: background-color var(--t1), border-color var(--t1); text-align: left; }
-.box:hover { background: var(--a2-fill-hover); border-color: var(--a2-line-strong); }
-.box.rec { background: var(--a2-accent-soft); border-color: var(--a2-accent); }
+.box {
+  position: relative; isolation: isolate; display: flex; align-items: center; gap: 8px; width: 100%; height: var(--a2-h); padding: 0 var(--a2-gap) 0 var(--a2-gap);
+  border-radius: var(--a2-radius); border: var(--a2-ring) solid var(--a2-line-strong); touch-action: manipulation; transition: border-color var(--t1); text-align: left;
+}
+.box::before { content: ''; position: absolute; inset: var(--a2-gap); z-index: -1; border-radius: var(--ri); transition: background-color var(--t1); }
+.box.rec { border-color: var(--a2-accent); }
+.box.rec::before { background: var(--a2-accent-soft); }
 .keys { flex: 1; min-width: 0; display: flex; align-items: center; gap: 4px; overflow: hidden; }
 kbd {
-  display: inline-grid; place-items: center; min-width: 26px; height: 26px; padding: 0.12em 7px 0; border-radius: 6px;
-  background: var(--a2-raised); border: 1px solid var(--a2-line); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.28); font: inherit; font-size: var(--a2-fs-sm); font-weight: var(--a2-weight-strong);
+  display: inline-grid; place-items: center; min-width: calc(var(--a2-h) - var(--in) * 2); height: calc(var(--a2-h) - var(--in) * 2); padding: 0.12em 10px 0; border-radius: var(--ri);
+  background: var(--a2-fill-active); font: inherit; font-size: var(--a2-fs-sm); font-weight: var(--a2-weight-strong);
 }
 /* 틀: 이 안에서만 보이고, 내용이 아래에서 올라온다(투명도는 쓰지 않는다) */
-.kf { display: inline-block; overflow: clip; border-radius: 6px; padding-bottom: 1px; }
+.kf { display: inline-block; overflow: clip; border-radius: var(--ri); }
 .kf.txt { border-radius: 0; }
 .kf > * { display: grid; }
 .kf.in > * { animation: rise var(--t3) cubic-bezier(0.2, 0.9, 0.2, 1) both; }
 @keyframes rise { from { transform: translateY(110%); } }
 .plus { color: var(--a2-text-faint); font-size: var(--a2-fs-sm); }
-.ph { padding: 0.12em 4px 0; color: var(--a2-text-faint); }
+.ph { padding: 0.12em 11px 0; color: var(--a2-text-faint); }
 .rec .ph { color: var(--a2-accent); }
-.x { flex: none; width: 26px; height: 26px; border-radius: 6px; display: grid; place-items: center; color: var(--a2-text-muted); }
+.x { flex: none; width: calc(var(--a2-h) - var(--in) * 2); height: calc(var(--a2-h) - var(--in) * 2); border-radius: var(--ri); display: grid; place-items: center; color: var(--a2-text-muted); transition: background-color var(--t1), color var(--t1); }
 .x:hover { background: var(--a2-fill-active); color: var(--a2-text); }
 `;
     render() {
@@ -2334,16 +2358,17 @@ kbd {
 .head .label { flex: 1; }
 .out { font-size: var(--a2-fs-sm); color: var(--a2-text-muted); font-variant-numeric: tabular-nums; margin-bottom: 7px; }
 .out:empty { display: none; }
-.track { position: relative; height: 6px; border-radius: 3px; background: var(--a2-fill-active); box-shadow: inset 0 0 0 1px var(--a2-line); overflow: hidden; }
-.fill { position: absolute; inset: 0 auto 0 0; width: 100%; border-radius: 3px; background: var(--a2-accent); transform-origin: left; transform: scaleX(0); transition: transform var(--t3) var(--spring); }
+.track { position: relative; height: 18px; border-radius: 10px; border: var(--a2-ring) solid var(--a2-line-strong); }
+.in { position: absolute; inset: 3px; border-radius: 4px; overflow: hidden; }
+.fill { position: absolute; inset: 0 auto 0 0; width: 100%; border-radius: 4px; background: var(--a2-accent); transform-origin: left; transform: scaleX(0); transition: transform var(--t3) var(--spring); }
 :host([variant="success"]) .fill { background: var(--a2-success); }
 :host([variant="danger"]) .fill { background: var(--a2-danger); }
-.ind .fill { width: 40%; transform: none; transition: none; animation: run calc(1.3s / var(--a2-speed)) cubic-bezier(0.6, 0.1, 0.4, 0.9) infinite; }
-@keyframes run { from { translate: -100% 0; } to { translate: 250% 0; } }
+.ind .fill { width: 36%; transform: none; transition: none; animation: run calc(1.3s / var(--a2-speed)) cubic-bezier(0.6, 0.1, 0.4, 0.9) infinite; }
+@keyframes run { from { translate: -100% 0; } to { translate: 280% 0; } }
 `;
     render() {
       this.setAttribute("role", "progressbar");
-      this.root.innerHTML = `<div class="head"><div class="label t" part="label"></div><div class="out t"></div></div><div class="track" part="track"><div class="fill" part="fill"></div></div>`;
+      this.root.innerHTML = `<div class="head"><div class="label t" part="label"></div><div class="out t"></div></div><div class="track" part="track"><div class="in"><div class="fill" part="fill"></div></div></div>`;
     }
     get value() {
       return this.num("value", null);
@@ -2367,11 +2392,15 @@ kbd {
   var A2Spinner = class extends A2Element {
     static observedAttributes = ["size"];
     static styles = `
-:host { display: inline-block; vertical-align: middle; color: var(--a2-accent); line-height: 0; }
-svg { animation: rot calc(0.9s / var(--a2-speed)) linear infinite; }
-circle { stroke-dasharray: 44 100; stroke-linecap: round; animation: dash calc(1.6s / var(--a2-speed)) ease-in-out infinite; }
-@keyframes rot { to { rotate: 360deg; } }
-@keyframes dash { 0% { stroke-dasharray: 6 100; } 50% { stroke-dasharray: 40 100; } 100% { stroke-dasharray: 6 100; stroke-dashoffset: -50; } }
+:host { display: inline-block; vertical-align: middle; line-height: 0; }
+.sp { display: block; position: relative; width: var(--s); height: var(--s); border-radius: 32%; border: var(--a2-ring) solid var(--a2-line-strong); }
+.sp i { position: absolute; left: 11%; top: 11%; width: 36%; height: 36%; border-radius: 26%; background: var(--a2-accent); animation: orbit calc(1.3s / var(--a2-speed)) infinite; }
+@keyframes orbit {
+  0%, 100% { translate: 0 0; animation-timing-function: cubic-bezier(0.6, 0, 0.2, 1); }
+  25% { translate: 117% 0; animation-timing-function: cubic-bezier(0.6, 0, 0.2, 1); }
+  50% { translate: 117% 117%; animation-timing-function: cubic-bezier(0.6, 0, 0.2, 1); }
+  75% { translate: 0 117%; animation-timing-function: cubic-bezier(0.6, 0, 0.2, 1); }
+}
 `;
     render() {
       this.setAttribute("role", "status");
@@ -2379,33 +2408,36 @@ circle { stroke-dasharray: 44 100; stroke-linecap: round; animation: dash calc(1
     }
     update() {
       const s = this.num("size", 22);
-      this.root.innerHTML = `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.6"/></svg>`;
+      this.root.innerHTML = `<span class="sp" part="base" style="--s:${s}px"><i></i></span>`;
     }
   };
   var A2Badge = class extends A2Element {
     static styles = `
 :host { display: inline-flex; vertical-align: middle; }
-.b { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0.12em 9px 0; border-radius: 7px; font-size: var(--a2-fs-sm); font-weight: var(--a2-weight-strong); white-space: nowrap; background: var(--a2-fill); border: 1px solid var(--a2-line); color: var(--a2-text-muted); --c: var(--a2-text-muted); }
-:host([variant="accent"]) .b { --c: var(--a2-accent); }
+.b { display: inline-flex; padding: 2px; border-radius: 9px; border: var(--a2-ring) solid var(--c); --c: var(--a2-line-strong); --f: var(--a2-fill-active); --t: var(--a2-text-muted); }
+.in { display: inline-flex; align-items: center; gap: 6px; height: 18px; padding: 0.12em 8px 0; border-radius: 5px; background: var(--f); color: var(--t); font-size: var(--a2-fs-sm); font-weight: var(--a2-weight-strong); white-space: nowrap; }
+:host([variant="accent"]) .b { --c: var(--a2-accent); --f: var(--a2-accent); --t: var(--a2-on-accent); }
 :host([variant="success"]) .b { --c: var(--a2-success); }
 :host([variant="warning"]) .b { --c: var(--a2-warning); }
 :host([variant="danger"]) .b { --c: var(--a2-danger); }
-:host([variant]:not([variant="neutral"])) .b { background: color-mix(in srgb, var(--c) 14%, transparent); border-color: color-mix(in srgb, var(--c) 36%, transparent); color: var(--c); }
-.dot { display: none; width: 6px; height: 6px; margin-top: -0.12em; border-radius: 50%; background: var(--c); }
+:host(:is([variant="success"], [variant="warning"], [variant="danger"])) .b { --f: color-mix(in srgb, var(--c) 20%, transparent); --t: var(--c); }
+.dot { display: none; width: 6px; height: 6px; margin-top: -0.12em; border-radius: 2px; background: currentColor; }
 :host([dot]) .dot { display: block; }
 `;
     render() {
-      this.root.innerHTML = `<span class="b" part="base"><span class="dot"></span><slot></slot></span>`;
+      this.root.innerHTML = `<span class="b" part="base"><span class="in"><span class="dot"></span><slot></slot></span></span>`;
     }
   };
   var A2Card = class extends A2Element {
     static observedAttributes = ["heading", "description"];
     static styles = `
 :host { display: block; }
-.c { border-radius: var(--a2-radius-lg); background: var(--a2-surface); border: 1px solid var(--a2-line); padding: 20px; }
-:host([interactive]) .c { cursor: pointer; transition: background-color var(--t1), transform var(--t2) var(--spring); }
-:host([interactive]) .c:hover { background: var(--a2-surface-hover); }
-:host([interactive]) .c:active { transform: scale(0.985); }
+.c { position: relative; isolation: isolate; border-radius: var(--a2-radius-lg); border: var(--a2-ring) solid var(--a2-line); padding: 20px; transition: border-color var(--t1); }
+.c::before { content: ''; position: absolute; inset: var(--a2-gap); z-index: -1; border-radius: calc(var(--a2-radius-lg) - var(--in)); transition: background-color var(--t1), inset var(--t2) var(--pop); }
+:host([interactive]) .c { cursor: pointer; }
+:host([interactive]) .c:hover { border-color: var(--a2-line-strong); }
+:host([interactive]) .c:hover::before { background: var(--a2-fill); }
+:host([interactive]) .c:active::before { inset: calc(var(--a2-gap) + 4px); background: var(--a2-fill-hover); }
 .h { font-size: var(--a2-fs-lg); font-weight: var(--a2-weight-strong); line-height: 1.35; padding-top: 0.12em; }
 .d { margin-top: 5px; color: var(--a2-text-muted); line-height: 1.5; font-size: var(--a2-fs-sm); }
 .h:empty, .d:empty { display: none; }
@@ -2446,18 +2478,19 @@ circle { stroke-dasharray: 44 100; stroke-linecap: round; animation: dash calc(1
     }
   }
   var OVERLAY_CSS = `
-:host { display: contents; }
+:host { display: contents; --a2-knob-bg: var(--a2-raised); }
 dialog { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: none; overflow: hidden; color: var(--a2-text); font: inherit; outline: none; }
 dialog::backdrop { background: none; }
 .scrim { position: absolute; inset: 0; background: var(--a2-scrim); opacity: 0; }
-.panel { position: absolute; display: flex; flex-direction: column; background: var(--a2-raised); border: 1px solid var(--a2-line); box-shadow: var(--a2-shadow); outline: none; }
+.panel { position: absolute; display: flex; flex-direction: column; background: var(--a2-raised); border: var(--a2-ring) solid var(--a2-line-strong); box-shadow: var(--a2-shadow); outline: none; }
 .head { display: flex; align-items: flex-start; gap: 12px; padding: 22px 22px 0; }
 .titles { flex: 1; min-width: 0; }
 .h { font-size: var(--a2-fs-lg); font-weight: var(--a2-weight-strong); line-height: 1.35; padding-top: 0.12em; }
 .d { margin-top: 6px; color: var(--a2-text-muted); font-size: var(--a2-fs-sm); line-height: 1.5; }
 .h:empty, .d:empty { display: none; }
-.x { flex: none; width: 32px; height: 32px; margin: -4px -6px 0 0; border-radius: 8px; display: grid; place-items: center; color: var(--a2-text-muted); transition: background-color var(--t1), color var(--t1); }
-.x:hover { background: var(--a2-fill-hover); color: var(--a2-text); }
+.x { flex: none; width: 34px; height: 34px; margin: -5px -7px 0 0; border-radius: 9px; display: grid; place-items: center; background: var(--a2-fill-hover); color: var(--a2-text-muted); transition: background-color var(--t1), color var(--t1), transform var(--t2) var(--pop); }
+.x:hover { background: var(--a2-fill-active); color: var(--a2-text); }
+.x:active { transform: scale(0.86); }
 :host([no-close]) .x { display: none; }
 .body { padding: 16px 22px 0; overflow: auto; line-height: 1.55; flex: 1 1 auto; min-height: 0; }
 .foot { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; padding: 22px; }
@@ -2567,7 +2600,7 @@ dialog::backdrop { background: none; }
   };
   var A2Dialog = class extends OverlayBase {
     static styles = `${OVERLAY_CSS}
-.panel { left: 50%; top: 50%; width: min(var(--w, 440px), calc(100vw - 32px)); max-height: calc(100dvh - 48px); border-radius: 18px; translate: -50% -50%; }
+.panel { left: 50%; top: 50%; width: min(var(--w, 440px), calc(100vw - 32px)); max-height: calc(100dvh - 48px); border-radius: var(--a2-radius-lg); translate: -50% -50%; }
 :host([size="sm"]) { --w: 360px; }
 :host([size="lg"]) { --w: 640px; }
 `;
@@ -2594,9 +2627,9 @@ dialog::backdrop { background: none; }
   };
   var A2Drawer = class extends OverlayBase {
     static styles = `${OVERLAY_CSS}
-.panel { top: 0; bottom: 0; right: 0; width: min(var(--w, 380px), 100vw); }
-:host([side="left"]) .panel { right: auto; left: 0; }
-:host([side="bottom"]) .panel { top: auto; left: 0; right: 0; width: auto; max-height: 85dvh; border-radius: 20px 20px 0 0; }
+.panel { top: 0; bottom: 0; right: 0; width: min(var(--w, 380px), 100vw); border-width: 0 0 0 var(--a2-ring); }
+:host([side="left"]) .panel { right: auto; left: 0; border-width: 0 var(--a2-ring) 0 0; }
+:host([side="bottom"]) .panel { top: auto; left: 0; right: 0; width: auto; max-height: 85dvh; border-width: var(--a2-ring) 0 0; border-radius: var(--a2-radius-lg) var(--a2-radius-lg) 0 0; }
 :host([side="bottom"]) .panel::before { content: ''; align-self: center; width: 36px; height: 4px; margin-top: 10px; border-radius: 2px; background: var(--a2-fill-active); }
 :host([side="bottom"]) .head { padding-top: 14px; }
 `;
@@ -2623,7 +2656,8 @@ dialog::backdrop { background: none; }
 .item .ic { flex: none; width: 18px; display: grid; place-items: center; color: var(--a2-text-muted); }
 .item .ic:empty { display: none; }
 .item.danger, .item.danger .ic { color: var(--a2-danger); }
-.item.danger:hover, .item.danger.active { background: color-mix(in srgb, var(--a2-danger) 14%, transparent); }
+.item.danger:hover, .item.danger.active { background: var(--a2-danger); color: #fff; }
+.item.danger:hover .ic, .item.danger.active .ic { color: #fff; }
 .kb { flex: none; margin-left: 14px; color: var(--a2-text-faint); font-size: var(--a2-fs-sm); padding-top: 0.12em; }
 .head { padding: 8px 10px 4px; color: var(--a2-text-faint); font-size: var(--a2-fs-sm); }
 `;
@@ -2777,16 +2811,17 @@ dialog::backdrop { background: none; }
   display: flex; flex-direction: column-reverse; align-items: center; gap: 8px; pointer-events: none; }
 :host([pos="top"]) .layer { inset: 0 0 auto 0; padding: 20px 16px 0; flex-direction: column; }
 .toast {
-  pointer-events: auto; display: flex; align-items: center; gap: 10px; max-width: min(460px, 100%); min-height: 44px; padding: 8px 8px 8px 14px;
-  border-radius: 14px; background: var(--a2-tip); border: 1px solid color-mix(in srgb, var(--a2-on-tip) 16%, transparent); color: var(--a2-on-tip); box-shadow: var(--a2-shadow);
+  pointer-events: auto; display: flex; align-items: center; gap: 10px; max-width: min(460px, 100%); min-height: 44px; padding: 4px 4px 4px 14px;
+  border-radius: 14px; background: var(--a2-tip); border: 2px solid color-mix(in srgb, var(--a2-on-tip) 26%, transparent); color: var(--a2-on-tip); box-shadow: var(--a2-shadow);
   font-family: var(--a2-font); font-size: var(--a2-fs); font-weight: var(--a2-weight);
 }
 .toast.plain { padding-right: 16px; }
 .ic { flex: none; }
 .ic.success { color: var(--a2-success); } .ic.warning { color: var(--a2-warning); } .ic.danger { color: var(--a2-danger); } .ic.info { color: var(--a2-accent); }
 .msg { flex: 1; min-width: 0; line-height: 1.45; padding-top: 0.12em; }
-.act { flex: none; height: 30px; padding: 0.12em 12px 0; border-radius: 9px; font-weight: var(--a2-weight-strong); color: var(--a2-accent); }
-.act:hover { background: color-mix(in srgb, var(--a2-on-tip) 12%, transparent); }
+.act { flex: none; height: 32px; padding: 0.12em 13px 0; border-radius: 9px; font-weight: var(--a2-weight-strong); color: var(--a2-on-accent); background: var(--a2-accent); transition: transform calc(0.22s / var(--a2-speed)) cubic-bezier(0.3, 1.5, 0.5, 1); }
+.act:hover { background: var(--a2-accent-hover); }
+.act:active { transform: scale(0.9); }
 `;
   var host = null;
   var layer = null;
@@ -2941,9 +2976,9 @@ dialog::backdrop { background: none; }
 
   // src/api/tooltip.js
   var CSS2 = `
-.tip { position: fixed; inset: auto; margin: 0; padding: 6px 10px 5px; max-width: 260px; border-radius: 8px; overflow: visible;
+.tip { position: fixed; inset: auto; margin: 0; padding: 6px 10px 5px; max-width: 260px; border-radius: 9px; overflow: visible;
   background: var(--a2-tip); color: var(--a2-on-tip); font-family: var(--a2-font); font-size: var(--a2-fs-sm); font-weight: var(--a2-weight); line-height: 1.4;
-  border: 1px solid color-mix(in srgb, var(--a2-on-tip) 16%, transparent);
+  border: 2px solid color-mix(in srgb, var(--a2-on-tip) 26%, transparent);
   pointer-events: none; box-shadow: var(--a2-shadow); }
 `;
   var tip = null;
@@ -3070,7 +3105,7 @@ dialog::backdrop { background: none; }
   var themes = [...NAMES2];
 
   // src/index.js
-  var version = "4.1.1";
+  var version = "4.2.0";
   if (typeof document !== "undefined") {
     ensureGlobal();
     installTooltips();

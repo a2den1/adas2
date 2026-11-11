@@ -12,27 +12,27 @@ export class A2Button extends A2Element {
 :host([block]) { display: flex; }
 .b {
   position: relative; isolation: isolate; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  width: 100%; height: var(--a2-h); padding: 0 16px; border-radius: var(--a2-radius);
+  width: 100%; height: var(--a2-h); padding: 0 calc(var(--in) + 14px); border-radius: var(--a2-radius);
   font-weight: var(--a2-weight-strong); white-space: nowrap; user-select: none; touch-action: manipulation;
-  color: var(--a2-text); --bg: var(--a2-fill); --bd: var(--a2-line);
+  color: var(--fg); --fg: var(--a2-text); --bg: transparent; --bd: var(--a2-line-strong);
 }
-/* 누르는 범위는 보이는 면보다 사방으로 5px 넓고, 눌러도 줄어들지 않는다(줄어드는 것은 보이는 면뿐) */
+/* 누르는 범위는 보이는 테보다 사방으로 5px 넓고, 눌러도 줄어들지 않는다 */
 .b::before { content: ''; position: absolute; inset: -5px; z-index: -1; }
-.face {
-  position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--bg); border: 1px solid var(--bd); pointer-events: none;
-  transition: background-color var(--t1), border-color var(--t1), transform var(--t2) var(--spring);
+/* 테: 바깥 선 */
+.face { position: absolute; inset: 0; z-index: -1; border-radius: inherit; border: var(--a2-ring) solid var(--bd); pointer-events: none; transition: border-color var(--t1); }
+/* 조각: 테 안쪽 면. 누르면 안으로 줄어든다 */
+.face::after {
+  content: ''; position: absolute; inset: var(--a2-gap); border-radius: var(--ri); background: var(--bg);
+  transition: background-color var(--t1), inset var(--t2) var(--pop), border-radius var(--t2) var(--pop);
 }
-.b:hover { --bg: var(--a2-fill-hover); --bd: var(--a2-line-strong); }
-.b:active { --bg: var(--a2-fill-active); }
-.b:active .face { transform: scale(0.96); transition-duration: 0.05s; }
-:host([variant="primary"]) .b { color: var(--a2-on-accent); --bg: var(--a2-accent); --bd: color-mix(in srgb, var(--a2-accent) 76%, #000); }
+.b:hover { --bg: var(--a2-fill-hover); }
+.b:active .face::after { inset: calc(var(--a2-gap) + 3px); border-radius: calc(var(--ri) - 2px); transition-duration: var(--t1), 0.07s, 0.07s; }
+:host([variant="primary"]) .b { --fg: var(--a2-on-accent); --bg: var(--a2-accent); --bd: var(--a2-accent); }
 :host([variant="primary"]) .b:hover { --bg: var(--a2-accent-hover); }
-:host([variant="primary"]) .b:active { --bg: var(--a2-accent-pressed); }
-:host([variant="soft"]) .b { color: var(--a2-accent); --bg: var(--a2-accent-soft); --bd: color-mix(in srgb, var(--a2-accent) 34%, transparent); }
-:host([variant="soft"]) .b:hover { --bg: color-mix(in srgb, var(--a2-accent) 24%, transparent); --bd: color-mix(in srgb, var(--a2-accent) 55%, transparent); }
-:host([variant="ghost"]) .b { --bg: transparent; }
-:host([variant="ghost"]) .b:hover { --bg: var(--a2-fill-hover); }
-:host([variant="danger"]) .b { color: #fff; --bg: var(--a2-danger); --bd: color-mix(in srgb, var(--a2-danger) 76%, #000); }
+:host([variant="soft"]) .b { --fg: var(--a2-accent); --bg: var(--a2-accent-soft); --bd: color-mix(in srgb, var(--a2-accent) 55%, transparent); }
+:host([variant="soft"]) .b:hover { --bg: color-mix(in srgb, var(--a2-accent) 26%, transparent); }
+:host([variant="ghost"]) .b { --bd: transparent; }
+:host([variant="danger"]) .b { --fg: #fff; --bg: var(--a2-danger); --bd: var(--a2-danger); }
 :host([variant="danger"]) .b:hover { --bg: color-mix(in srgb, var(--a2-danger) 86%, #fff); }
 .b.square { width: var(--a2-h); padding: 0; }
 .lbl { display: inline-flex; align-items: center; gap: 8px; }

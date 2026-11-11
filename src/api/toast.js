@@ -8,16 +8,17 @@ const CSS = `
   display: flex; flex-direction: column-reverse; align-items: center; gap: 8px; pointer-events: none; }
 :host([pos="top"]) .layer { inset: 0 0 auto 0; padding: 20px 16px 0; flex-direction: column; }
 .toast {
-  pointer-events: auto; display: flex; align-items: center; gap: 10px; max-width: min(460px, 100%); min-height: 44px; padding: 8px 8px 8px 14px;
-  border-radius: 14px; background: var(--a2-tip); border: 1px solid color-mix(in srgb, var(--a2-on-tip) 16%, transparent); color: var(--a2-on-tip); box-shadow: var(--a2-shadow);
+  pointer-events: auto; display: flex; align-items: center; gap: 10px; max-width: min(460px, 100%); min-height: 44px; padding: 4px 4px 4px 14px;
+  border-radius: 14px; background: var(--a2-tip); border: 2px solid color-mix(in srgb, var(--a2-on-tip) 26%, transparent); color: var(--a2-on-tip); box-shadow: var(--a2-shadow);
   font-family: var(--a2-font); font-size: var(--a2-fs); font-weight: var(--a2-weight);
 }
 .toast.plain { padding-right: 16px; }
 .ic { flex: none; }
 .ic.success { color: var(--a2-success); } .ic.warning { color: var(--a2-warning); } .ic.danger { color: var(--a2-danger); } .ic.info { color: var(--a2-accent); }
 .msg { flex: 1; min-width: 0; line-height: 1.45; padding-top: 0.12em; }
-.act { flex: none; height: 30px; padding: 0.12em 12px 0; border-radius: 9px; font-weight: var(--a2-weight-strong); color: var(--a2-accent); }
-.act:hover { background: color-mix(in srgb, var(--a2-on-tip) 12%, transparent); }
+.act { flex: none; height: 32px; padding: 0.12em 13px 0; border-radius: 9px; font-weight: var(--a2-weight-strong); color: var(--a2-on-accent); background: var(--a2-accent); transition: transform calc(0.22s / var(--a2-speed)) cubic-bezier(0.3, 1.5, 0.5, 1); }
+.act:hover { background: var(--a2-accent-hover); }
+.act:active { transform: scale(0.9); }
 `;
 
 let host = null, layer = null;

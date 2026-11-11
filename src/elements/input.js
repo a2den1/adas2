@@ -2,16 +2,20 @@ import { A2Element, define, icon } from '../core/base.js';
 
 const FIELD_CSS = `
 :host { display: block; }
+/* 테 안에 조각이 하나 들어 있고, 글자를 넣을 때 조각에 색이 찬다 */
 .box {
-  position: relative; display: flex; align-items: center; gap: 8px; min-height: var(--a2-h); padding: 0 12px;
-  border-radius: var(--a2-radius); background: var(--a2-fill); border: 1px solid var(--a2-line); cursor: text;
-  transition: background-color var(--t1), border-color var(--t1);
+  position: relative; isolation: isolate; display: flex; align-items: center; gap: 8px; min-height: var(--a2-h); padding: 0 calc(var(--in) + 9px);
+  border-radius: var(--a2-radius); border: var(--a2-ring) solid var(--a2-line-strong); cursor: text;
+  transition: border-color var(--t1);
 }
-.box:hover { background: var(--a2-fill-hover); border-color: var(--a2-line-strong); }
-.box:focus-within { background: var(--a2-fill-hover); border-color: var(--a2-accent); }
-:host([error]) .box { background: color-mix(in srgb, var(--a2-danger) 10%, transparent); border-color: var(--a2-danger); }
+.box::before { content: ''; position: absolute; inset: var(--a2-gap); z-index: -1; border-radius: var(--ri); transition: background-color var(--t1); }
+.box:hover::before { background: var(--a2-fill); }
+.box:focus-within { border-color: var(--a2-accent); }
+.box:focus-within::before { background: var(--a2-accent-soft); }
+:host([error]) .box { border-color: var(--a2-danger); }
+:host([error]) .box::before { background: color-mix(in srgb, var(--a2-danger) 13%, transparent); }
 .ctl {
-  flex: 1; min-width: 0; height: calc(var(--a2-h) - 2px); padding: 0.12em 0 0; border: 0; outline: 0; background: transparent;
+  flex: 1; min-width: 0; height: calc(var(--a2-h) - var(--a2-ring) * 2); padding: 0.12em 0 0; border: 0; outline: 0; background: transparent;
   color: var(--a2-text); caret-color: var(--a2-accent);
 }
 .ctl::placeholder { color: var(--a2-text-faint); }
@@ -19,10 +23,11 @@ const FIELD_CSS = `
 .ctl:focus-visible { outline: 0; }
 ::slotted([slot="prefix"]), ::slotted([slot="suffix"]) { color: var(--a2-text-muted); flex: none; }
 .mini {
-  flex: none; width: 26px; height: 26px; border-radius: 6px; display: none; place-items: center; color: var(--a2-text-muted);
-  transition: background-color var(--t1), color var(--t1);
+  flex: none; width: 26px; height: 26px; border-radius: 7px; display: none; place-items: center; color: var(--a2-text-muted);
+  transition: background-color var(--t1), color var(--t1), transform var(--t2) var(--pop);
 }
 .mini:hover { background: var(--a2-fill-active); color: var(--a2-text); }
+.mini:active { transform: scale(0.86); }
 .count { flex: none; font-size: var(--a2-fs-sm); color: var(--a2-text-faint); padding-top: 0.12em; }
 .count:empty { display: none; }
 `;
@@ -95,7 +100,7 @@ export class A2Input extends FieldBase {
 export class A2Textarea extends FieldBase {
   static observedAttributes = ['label', 'hint', 'error', 'placeholder', 'disabled', 'readonly', 'required', 'maxlength', 'rows', 'value'];
   static styles = `${FIELD_CSS}
-.box { align-items: flex-start; padding: 10px 12px; }
+.box { align-items: flex-start; padding: 11px calc(var(--in) + 9px); }
 .ctl { height: auto; line-height: 1.6; resize: none; padding: 0; overflow: hidden; }
 .count { align-self: flex-end; }
 `;

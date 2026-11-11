@@ -11,24 +11,28 @@ export class A2Keybind extends A2Element {
   static observedAttributes = ['label', 'hint', 'value', 'disabled', 'placeholder'];
   static styles = `
 :host { display: block; }
-.box { display: flex; align-items: center; gap: 8px; width: 100%; height: var(--a2-h); padding: 0 6px 0 8px; border-radius: var(--a2-radius); background: var(--a2-fill); border: 1px solid var(--a2-line); touch-action: manipulation; transition: background-color var(--t1), border-color var(--t1); text-align: left; }
-.box:hover { background: var(--a2-fill-hover); border-color: var(--a2-line-strong); }
-.box.rec { background: var(--a2-accent-soft); border-color: var(--a2-accent); }
+.box {
+  position: relative; isolation: isolate; display: flex; align-items: center; gap: 8px; width: 100%; height: var(--a2-h); padding: 0 var(--a2-gap) 0 var(--a2-gap);
+  border-radius: var(--a2-radius); border: var(--a2-ring) solid var(--a2-line-strong); touch-action: manipulation; transition: border-color var(--t1); text-align: left;
+}
+.box::before { content: ''; position: absolute; inset: var(--a2-gap); z-index: -1; border-radius: var(--ri); transition: background-color var(--t1); }
+.box.rec { border-color: var(--a2-accent); }
+.box.rec::before { background: var(--a2-accent-soft); }
 .keys { flex: 1; min-width: 0; display: flex; align-items: center; gap: 4px; overflow: hidden; }
 kbd {
-  display: inline-grid; place-items: center; min-width: 26px; height: 26px; padding: 0.12em 7px 0; border-radius: 6px;
-  background: var(--a2-raised); border: 1px solid var(--a2-line); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.28); font: inherit; font-size: var(--a2-fs-sm); font-weight: var(--a2-weight-strong);
+  display: inline-grid; place-items: center; min-width: calc(var(--a2-h) - var(--in) * 2); height: calc(var(--a2-h) - var(--in) * 2); padding: 0.12em 10px 0; border-radius: var(--ri);
+  background: var(--a2-fill-active); font: inherit; font-size: var(--a2-fs-sm); font-weight: var(--a2-weight-strong);
 }
 /* 틀: 이 안에서만 보이고, 내용이 아래에서 올라온다(투명도는 쓰지 않는다) */
-.kf { display: inline-block; overflow: clip; border-radius: 6px; padding-bottom: 1px; }
+.kf { display: inline-block; overflow: clip; border-radius: var(--ri); }
 .kf.txt { border-radius: 0; }
 .kf > * { display: grid; }
 .kf.in > * { animation: rise var(--t3) cubic-bezier(0.2, 0.9, 0.2, 1) both; }
 @keyframes rise { from { transform: translateY(110%); } }
 .plus { color: var(--a2-text-faint); font-size: var(--a2-fs-sm); }
-.ph { padding: 0.12em 4px 0; color: var(--a2-text-faint); }
+.ph { padding: 0.12em 11px 0; color: var(--a2-text-faint); }
 .rec .ph { color: var(--a2-accent); }
-.x { flex: none; width: 26px; height: 26px; border-radius: 6px; display: grid; place-items: center; color: var(--a2-text-muted); }
+.x { flex: none; width: calc(var(--a2-h) - var(--in) * 2); height: calc(var(--a2-h) - var(--in) * 2); border-radius: var(--ri); display: grid; place-items: center; color: var(--a2-text-muted); transition: background-color var(--t1), color var(--t1); }
 .x:hover { background: var(--a2-fill-active); color: var(--a2-text); }
 `;
   render() {

@@ -19,30 +19,39 @@ export class A2Select extends A2Element {
   static styles = `${POPOVER_CSS}
 :host { display: block; }
 .box {
-  display: flex; align-items: center; gap: 8px; width: 100%; min-height: var(--a2-h); padding: 3px 10px 3px 12px; text-align: left;
-  border-radius: var(--a2-radius); background: var(--a2-fill); border: 1px solid var(--a2-line); touch-action: manipulation;
-  transition: background-color var(--t1), border-color var(--t1);
+  position: relative; isolation: isolate; display: flex; align-items: center; gap: 8px; width: 100%; min-height: var(--a2-h);
+  padding: var(--a2-gap) var(--a2-gap) var(--a2-gap) calc(var(--a2-gap) + 11px); text-align: left;
+  border-radius: var(--a2-radius); border: var(--a2-ring) solid var(--a2-line-strong); touch-action: manipulation;
+  transition: border-color var(--t1);
 }
-.box:hover { background: var(--a2-fill-hover); border-color: var(--a2-line-strong); }
-:host([open]) .box { background: var(--a2-fill-hover); border-color: var(--a2-accent); }
-:host([error]) .box { background: color-mix(in srgb, var(--a2-danger) 10%, transparent); border-color: var(--a2-danger); }
-.val { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+:host([open]) .box { border-color: var(--a2-accent); }
+:host([error]) .box { border-color: var(--a2-danger); }
+.val { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; padding: 2px 0; }
 .txt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-top: 0.12em; }
 .ph { color: var(--a2-text-faint); }
-.chev { flex: none; color: var(--a2-text-muted); transition: transform var(--t3) var(--spring); }
-:host([open]) .chev { transform: rotate(180deg); }
+/* 화살표가 든 조각 */
+.chev {
+  flex: none; align-self: stretch; display: grid; place-items: center; width: calc(var(--a2-h) - var(--in) * 2); min-height: calc(var(--a2-h) - var(--in) * 2);
+  border-radius: var(--ri); background: var(--a2-fill-hover); color: var(--a2-text);
+  transition: background-color var(--t1), color var(--t1), transform var(--t2) var(--pop);
+}
+.box:hover .chev { background: var(--a2-fill-active); }
+.box:active .chev { transform: scale(0.86); }
+.chev svg { transition: transform var(--t3) var(--spring); }
+:host([open]) .chev { background: var(--a2-accent); color: var(--a2-on-accent); }
+:host([open]) .chev svg { transform: rotate(180deg); }
 .chip {
-  display: inline-flex; align-items: center; gap: 2px; height: 26px; padding: 0 4px 0 9px; border-radius: 7px;
-  background: var(--a2-accent-soft); border: 1px solid color-mix(in srgb, var(--a2-accent) 34%, transparent); color: var(--a2-accent); font-size: var(--a2-fs-sm); font-weight: var(--a2-weight-strong);
+  display: inline-flex; align-items: center; gap: 2px; height: 28px; padding: 0 4px 0 10px; border-radius: 7px;
+  background: var(--a2-accent-soft); color: var(--a2-accent); font-size: var(--a2-fs-sm); font-weight: var(--a2-weight-strong);
 }
 .chip span { padding-top: 0.12em; }
-.chip i { position: relative; display: grid; place-items: center; width: 18px; height: 18px; border-radius: 5px; font-style: normal; cursor: pointer; }
+.chip i { position: relative; display: grid; place-items: center; width: 20px; height: 20px; border-radius: 5px; font-style: normal; cursor: pointer; }
 .chip i::before { content: ''; position: absolute; inset: -5px; }
-.chip i:hover { background: color-mix(in srgb, var(--a2-accent) 22%, transparent); }
-.search { display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 10px; margin-bottom: 4px; border-radius: 8px; background: var(--a2-fill); border: 1px solid var(--a2-line); color: var(--a2-text-muted); }
+.chip i:hover { background: color-mix(in srgb, var(--a2-accent) 24%, transparent); }
+.search { display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 11px; margin-bottom: var(--a2-gap); border-radius: var(--ri); background: var(--a2-fill-hover); color: var(--a2-text-muted); }
 .search input { flex: 1; min-width: 0; border: 0; outline: 0; background: none; color: var(--a2-text); padding-top: 0.12em; }
 .search input::placeholder { color: var(--a2-text-faint); }
-.list { display: flex; flex-direction: column; gap: 1px; }
+.list { display: flex; flex-direction: column; gap: 2px; }
 `;
   render() {
     this.root.innerHTML = `${this.fieldHead('')}<button class="box" part="box" type="button" aria-haspopup="listbox"><span class="val"></span><span class="chev">${icon('chevron', 12)}</span></button><div class="hint t" part="hint"></div>
