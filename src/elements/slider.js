@@ -1,50 +1,56 @@
 import { A2Element, define } from '../core/base.js';
-import { animate } from '../core/animate.js';
+import { Spring } from '../core/spring.js';
 
 const clamp = (v, a, b) => Math.min(Math.max(v, a), b);
+const PAD = 6; // 손잡이 가운데가 닿는 양끝 여백(px)
 
 /**
- * <a2-slider label="음량" min="0" max="100" step="1" value="40" show-value unit="%">
- * 트랙 어디를 눌러도 그 자리로 가고, 그대로 끌 수 있다. 끄는 동안 값 말풍선이 뜬다.
+ * <a2-slider label="음량" min="0" max="100" step="1" value="40" show-value unit="%" size="sm|lg">
+ * 굵은 트랙 위를 가는 손잡이가 가른다. 트랙 어디를 눌러도 그 자리로 스프링처럼 가고, 그대로 끌 수 있다.
  */
 export class A2Slider extends A2Element {
   static formAssociated = true;
   static delegatesFocus = true;
   static observedAttributes = ['label', 'hint', 'error', 'min', 'max', 'step', 'value', 'disabled', 'show-value', 'unit'];
   static styles = `
-:host { display: block; --thumb: 20px; }
+:host { display: block; --track: 16px; }
+:host([size="sm"]) { --track: 8px; }
+:host([size="lg"]) { --track: 28px; }
 .head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
 .head .label { flex: 1; }
-.out { font-size: var(--a2-fs-sm); color: var(--a2-text); font-variant-numeric: tabular-nums; margin-bottom: 7px; }
+.hint { margin-left: 0; }
+.out { font-size: var(--a2-fs-sm); color: var(--a2-text); font-variant-numeric: tabular-nums; margin-bottom: 8px; }
 .out:empty { display: none; }
-/* 손잡이와 채움은 --p(0~1) 하나로 transform 만 바꿔 옮긴다 */
-.s { position: relative; height: 32px; cursor: pointer; touch-action: none; user-select: none; container-type: inline-size; --p: 0; --x: calc(var(--thumb) / 2 + (100cqw - var(--thumb)) * var(--p)); }
-.rail { position: absolute; left: 0; right: 0; top: 50%; height: 6px; margin-top: -3px; border-radius: 3px; background: var(--a2-fill-active); box-shadow: inset 0 0 0 1px var(--a2-line); overflow: hidden; }
-.fill { position: absolute; inset: 0; background: var(--a2-accent); border-radius: 3px; transform: translateX(calc(var(--x) - 100%)); }
+/* 모든 조각은 --p(0~1) 하나로 움직인다. 트랙 두 조각은 clip-path 로 잘라 레이아웃을 건드리지 않는다 */
+.s { position: relative; height: calc(var(--track) + 28px); cursor: pointer; touch-action: none; user-select: none; container-type: inline-size; --p: 0; --x: calc(${PAD}px + (100cqw - ${PAD * 2}px) * var(--p)); --gap: 6px; --o: calc(var(--track) / 2); }
+.tr { position: absolute; left: 0; right: 0; top: 50%; height: var(--track); margin-top: calc(var(--track) / -2); }
+.act { background: var(--a2-accent); clip-path: inset(0 calc(100% - var(--x) + var(--gap)) 0 0 round var(--o) 3px 3px var(--o)); }
+.inact { background: var(--a2-tonal); clip-path: inset(0 0 0 calc(var(--x) + var(--gap)) round 3px var(--o) var(--o) 3px); }
+.inact::after { content: ''; position: absolute; right: calc(var(--track) / 2 - 2px); top: 50%; width: 4px; height: 4px; margin-top: -2px; border-radius: 50%; background: var(--a2-on-tonal); opacity: 0.7; }
 .pos { position: absolute; top: 50%; left: 0; width: 0; height: 0; transform: translateX(var(--x)); }
 .knob {
-  position: absolute; left: calc(var(--thumb) / -2); top: calc(var(--thumb) / -2); width: var(--thumb); height: var(--thumb);
-  border-radius: 50%; background: #fff; border: 1px solid rgba(0, 0, 0, 0.14); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-  transition: transform var(--t2) var(--spring);
+  position: absolute; left: -2px; top: calc((var(--track) + 28px) / -2); width: 4px; height: calc(var(--track) + 28px); border-radius: 2px; background: var(--a2-accent);
+  transition: transform var(--snap);
 }
-.s:hover .knob { transform: scale(1.08); }
-.s.drag .knob { transform: scale(1.18); }
-.knob:focus-visible { outline: 2px solid var(--a2-accent); outline-offset: 3px; }
+.knob::before { content: ''; position: absolute; inset: 0 -12px; }
+.s:hover .knob { transform: scaleX(1.25); }
+.s.drag .knob { transform: scaleX(0.5); }
+.knob:focus-visible { outline: 2px solid var(--a2-accent); outline-offset: 4px; }
 /* 값 말풍선: 제자리의 틀 안에서 아래에서 위로 올라온다 */
-.tipf { position: absolute; bottom: calc(var(--thumb) / 2 + 8px); left: 0; translate: -50% 0; width: max-content; overflow: clip; border-radius: 8px; pointer-events: none; }
+.tipf { position: absolute; bottom: calc(var(--track) / 2 + 20px); left: 0; translate: -50% 0; width: max-content; overflow: clip; border-radius: 999px; pointer-events: none; }
 .tip {
-  padding: 5px 9px 4px; border-radius: 8px; background: var(--a2-tip); color: var(--a2-on-tip);
-  font-size: var(--a2-fs-sm); font-weight: var(--a2-weight-strong); white-space: nowrap; font-variant-numeric: tabular-nums;
-  transform: translateY(102%); transition: transform var(--t2) var(--spring);
+  min-width: 44px; padding: 9px 14px 7px; border-radius: 999px; background: var(--a2-tip); color: var(--a2-on-tip); text-align: center;
+  font-size: var(--a2-fs); font-weight: var(--a2-weight-strong); white-space: nowrap; font-variant-numeric: tabular-nums;
+  transform: translateY(102%); transition: transform var(--snap);
 }
 .s.drag .tip, .knob:focus-visible + .tipf .tip { transform: none; }
 `;
   render() {
-    this.root.innerHTML = `<div class="head"><div class="label t" part="label"></div><div class="out t"></div></div><div class="s" part="base"><div class="rail" part="track"><div class="fill" part="fill"></div></div><div class="pos"><div class="knob" part="thumb" role="slider" tabindex="0"></div><div class="tipf"><div class="tip t"></div></div></div></div><div class="hint t" part="hint"></div>`;
-    this.sEl = this.$('.s'); this.knob = this.$('.knob'); this.fill = this.$('.fill');
+    this.root.innerHTML = `<div class="head"><div class="label t" part="label"></div><div class="out t"></div></div><div class="s" part="base"><div class="tr act" part="fill"></div><div class="tr inact" part="track"></div><div class="pos"><div class="knob" part="thumb" role="slider" tabindex="0"></div><div class="tipf"><div class="tip t"></div></div></div></div><div class="hint t" part="hint"></div>`;
+    this.sEl = this.$('.s'); this.knob = this.$('.knob');
     this._v = this.clean(this.num('value', (this.min + this.max) / 2));
     this._init = this._v;
-    this._shown = this.ratio();
+    this.pos = new Spring(this.ratio(), 'snap', x => this.sEl.style.setProperty('--p', x.toFixed(4)), 0.0008);
     this.sEl.addEventListener('pointerdown', e => this.down(e));
     this.knob.addEventListener('keydown', e => this.key(e));
   }
@@ -58,12 +64,12 @@ export class A2Slider extends A2Element {
   }
   ratio(v = this._v) { return this.max === this.min ? 0 : (v - this.min) / (this.max - this.min); }
   get value() { return this._v; }
-  set value(v) { const nv = this.clean(v); if (nv !== this._v) { this._v = nv; if (this._rendered) this.move(false); } }
+  set value(v) { const nv = this.clean(v); if (nv !== this._v) { this._v = nv; if (this._rendered) { this.pos.set(this.ratio()); this.text(); } } }
 
-  /** 트랙 위 좌표 → 값. 손잡이 반지름만큼 양끝을 비워서 손잡이가 밖으로 나가지 않는다 */
+  /** 트랙 위 좌표 → 값 */
   at(x) {
-    const r = this.sEl.getBoundingClientRect(), pad = (this._thumb ||= this.knob.offsetWidth || 20) / 2, w = r.width - pad * 2;
-    return this.min + clamp((x - r.left - pad) / (w || 1), 0, 1) * (this.max - this.min);
+    const r = this.sEl.getBoundingClientRect(), w = r.width - PAD * 2;
+    return this.min + clamp((x - r.left - PAD) / (w || 1), 0, 1) * (this.max - this.min);
   }
   down(e) {
     if (e.button !== 0 || this.disabled) return;
@@ -72,9 +78,9 @@ export class A2Slider extends A2Element {
     this.sEl.setPointerCapture(e.pointerId);
     this.sEl.classList.add('drag');
     const start = this._v;
-    const onKnob = e.target === this.knob || this.knob.contains(e.target);
-    this.set(this.at(e.clientX), !onKnob);
-    const mv = ev => this.set(this.at(ev.clientX), false);
+    this.set(this.at(e.clientX));
+    // 끄는 동안은 튕기지 않고 바로 따라오게
+    const mv = ev => this.set(this.at(ev.clientX), 'fxFast');
     const up = () => {
       this.sEl.classList.remove('drag');
       this.sEl.removeEventListener('pointermove', mv);
@@ -96,25 +102,17 @@ export class A2Slider extends A2Element {
     else return;
     e.preventDefault();
     const before = this._v;
-    this.set(nv, true);
+    this.set(nv);
     if (this._v !== before) this.fire('change');
   }
-  set(v, smooth) {
+  set(v, cfg = 'snap') {
     const nv = this.clean(v);
     if (nv === this._v) return;
     this._v = nv;
-    this.move(smooth);
+    this.pos.set(this.ratio(), { cfg });
+    this.text();
     this.fire('input');
   }
-  /** 화면 위치만 옮긴다. 누른 자리로 갈 때는 부드럽게, 끄는 중에는 바로 */
-  move(smooth) {
-    const to = this.ratio();
-    this._anim?.stop();
-    if (!smooth) { this._shown = to; this.paint(); }
-    else this._anim = animate({ p: this._shown }, { p: to }, { duration: 0.22, ease: 'OutCubic', onUpdate: v => { this._shown = v.p; this.paint(); } });
-    this.text();
-  }
-  paint() { this.sEl.style.setProperty('--p', this._shown); }
   text() {
     const s = `${this._v}${this.str('unit')}`;
     this.$('.tip').textContent = s;
@@ -125,7 +123,7 @@ export class A2Slider extends A2Element {
   }
   attr(name, v) {
     if (name === 'value') { this.value = v; return; }
-    if (name === 'min' || name === 'max' || name === 'step') { this._v = this.clean(this._v); this._shown = this.ratio(); }
+    if (name === 'min' || name === 'max' || name === 'step') { this._v = this.clean(this._v); this.pos.jump(this.ratio()); }
     this.update();
   }
   update() {
@@ -134,9 +132,9 @@ export class A2Slider extends A2Element {
     this.knob.setAttribute('aria-valuemax', this.max);
     if (this.hasAttribute('label')) this.knob.setAttribute('aria-label', this.getAttribute('label'));
     this.knob.tabIndex = this.disabled ? -1 : 0;
-    this._shown = this.ratio();
-    this.paint(); this.text();
+    if (!this.pos.moving) this.pos.jump(this.ratio());
+    this.text();
   }
-  formResetCallback() { this._v = this._init; this.update(); }
+  formResetCallback() { this._v = this._init; this.pos.set(this.ratio()); this.text(); }
 }
 define('a2-slider', A2Slider);
