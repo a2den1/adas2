@@ -1,15 +1,17 @@
 // a2-tip="설명" 속성이 있는 아무 요소에 마우스를 올리거나 키보드로 가면 짧은 설명이 뜬다.
-// a2-tip-side="top|bottom|left|right" 로 방향을 바꾼다. 기준 요소 쪽에서 스프링으로 커지며 나온다.
+// a2-tip-side="top|bottom|left|right" 로 방향을 바꾼다.
 import { ensureGlobal, sheet, BASE_CSS } from '../core/base.js';
-import { Spring } from '../core/spring.js';
+import { animate, reveal } from '../core/animate.js';
 
 const CSS = `
-.tip { position: fixed; inset: auto; margin: 0; border: 0; padding: 7px 12px 6px; max-width: 260px; border-radius: 10px; overflow: visible;
+.tip { position: fixed; inset: auto; margin: 0; padding: 6px 10px 5px; max-width: 260px; border-radius: 8px; overflow: visible;
   background: var(--a2-tip); color: var(--a2-on-tip); font-family: var(--a2-font); font-size: var(--a2-fs-sm); font-weight: var(--a2-weight); line-height: 1.4;
-  pointer-events: none; box-shadow: var(--a2-shadow-sm); }
+  border: 1px solid color-mix(in srgb, var(--a2-on-tip) 16%, transparent);
+  pointer-events: none; box-shadow: var(--a2-shadow); }
 `;
 
-let tip = null, cur = null, timer = 0, shownAt = 0, sp = null;
+let tip = null, cur = null, timer = 0, anim = null, shownAt = 0, shown = 0, from = 'bottom';
+const paint = p => { shown = p; reveal(tip, p, from); };
 function ensure() {
   if (tip) return;
   ensureGlobal();
@@ -24,10 +26,6 @@ function ensure() {
   tip.id = 'a2-tooltip';
   root.append(tip);
   document.body.append(host);
-  sp = new Spring(0, 'snap', p => {
-    tip.style.transform = p === 1 ? '' : `scale(${0.5 + 0.5 * p})`;
-    tip.style.opacity = p >= 0.4 ? '' : Math.max(0, p / 0.4);
-  }, 0.002);
 }
 function place(el) {
   const r = el.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight, g = 8;
@@ -46,9 +44,11 @@ function show(el) {
   tip.textContent = el.getAttribute('a2-tip');
   try { if (tip.matches(':popover-open')) tip.hidePopover(); tip.showPopover(); } catch (_) {}
   const side = place(el);
-  tip.style.transformOrigin = { top: '50% 100%', bottom: '50% 0%', left: '100% 50%', right: '0% 50%' }[side];
-  sp.rest = null;
-  sp.jump(0); sp.set(1, { cfg: 'snap' });
+  // 틀 안에서 밀려 나온다: 아래쪽 설명은 위에서, 나머지는 아래에서
+  from = side === 'bottom' ? 'top' : 'bottom';
+  anim?.stop();
+  paint(0);
+  anim = animate({ p: 0 }, { p: 1 }, { duration: 0.2, ease: 'OutQuart', onUpdate: v => paint(v.p) });
   shownAt = performance.now();
   el.setAttribute('aria-describedby', 'a2-tooltip');
 }
@@ -58,8 +58,8 @@ function hide() {
   shownAt = performance.now();
   cur.removeAttribute('aria-describedby');
   cur = null;
-  sp.rest = () => { if (!cur) try { tip.hidePopover(); } catch (_) {} };
-  sp.set(0, { cfg: 'fxFast' });
+  anim?.stop();
+  anim = animate({ p: shown }, { p: 0 }, { duration: 0.12, ease: 'InQuad', onUpdate: v => paint(v.p), onDone: () => { if (!cur) try { tip.hidePopover(); } catch (_) {} } });
 }
 const target = e => e.composedPath().find(n => n instanceof Element && n.hasAttribute('a2-tip'));
 
@@ -76,13 +76,12 @@ export function installTooltips() {
     // 방금 다른 설명을 보고 있었다면 바로 보여 준다
     const quick = cur || performance.now() - shownAt < 300;
     timer = setTimeout(() => show(el), quick ? 0 : 450);
-  }, { passive: true });
+  });
   // 창 밖으로 나갈 때
-  document.addEventListener('pointerout', e => { if (!e.relatedTarget) hide(); }, { passive: true });
+  document.addEventListener('pointerout', e => { if (!e.relatedTarget) hide(); });
   document.addEventListener('focusin', e => { const el = target(e); if (el && el.matches(':focus-visible, :has(:focus-visible)')) show(el); });
   document.addEventListener('focusout', () => hide());
   document.addEventListener('pointerdown', () => hide(), true);
   addEventListener('keydown', e => { if (e.key === 'Escape') hide(); }, true);
-  // 스크롤하면 떠 있는 설명만 닫는다(뜨기를 기다리는 것은 그대로 둔다)
-  addEventListener('scroll', () => { if (cur) hide(); }, { capture: true, passive: true });
+  addEventListener('scroll', () => hide(), true);
 }

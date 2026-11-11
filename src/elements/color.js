@@ -1,6 +1,5 @@
 import { A2Element, define, esc } from '../core/base.js';
 import { openPopover, POPOVER_CSS } from '../core/popover.js';
-import { FIELD_CSS, BOX_CSS, boxShell, paintBox } from './field.js';
 
 const clamp = (v, a, b) => Math.min(Math.max(v, a), b);
 const hex2 = n => Math.round(n).toString(16).padStart(2, '0');
@@ -35,37 +34,35 @@ export class A2Color extends A2Element {
   static formAssociated = true;
   static delegatesFocus = true;
   static observedAttributes = ['label', 'hint', 'value', 'disabled', 'alpha', 'presets'];
-  static styles = `${POPOVER_CSS}${FIELD_CSS}${BOX_CSS}
-.sw { position: relative; flex: none; width: 30px; height: 30px; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 1px var(--a2-line); transition: border-radius var(--snap); }
-.box:active .sw, :host([open]) .sw { border-radius: 9px; }
+  static styles = `${POPOVER_CSS}
+:host { display: block; }
+.box { display: flex; align-items: center; gap: 10px; width: 100%; height: var(--a2-h); padding: 0 12px 0 6px; border-radius: var(--a2-radius); background: var(--a2-fill); border: 1px solid var(--a2-line); touch-action: manipulation; transition: background-color var(--t1), border-color var(--t1); text-align: left; }
+.box:hover { background: var(--a2-fill-hover); border-color: var(--a2-line-strong); }
+:host([open]) .box { background: var(--a2-fill-hover); border-color: var(--a2-accent); }
+.sw { position: relative; flex: none; width: calc(var(--a2-h) - 14px); height: calc(var(--a2-h) - 14px); box-shadow: 0 0 0 1px var(--a2-line); border-radius: calc(var(--a2-radius) - 4px); overflow: hidden; }
 .sw::before, .chk { content: ''; position: absolute; inset: 0; background: repeating-conic-gradient(#bbb 0 25%, #eee 0 50%) 0 0 / 8px 8px; }
 .sw i, .pv i { position: absolute; inset: 0; }
 .hex { flex: 1; font-variant-numeric: tabular-nums; padding-top: 0.12em; letter-spacing: 0.02em; }
-.menu { width: 264px; padding: 14px; display: flex; flex-direction: column; gap: 14px; max-height: none; overflow: visible; border-radius: var(--a2-r-lg); }
-.sv { position: relative; height: 156px; border-radius: var(--a2-r-sm); cursor: crosshair; touch-action: none; }
-.k { transition: width var(--snap), height var(--snap), margin var(--snap); }
-.sv .k { position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; box-shadow: 0 0 0 2px #fff, 0 1px 4px rgba(0, 0, 0, 0.4); pointer-events: none; }
-.sv:active .k { width: 26px; height: 26px; margin: -13px 0 0 -13px; }
-.bar { position: relative; height: 16px; border-radius: 8px; cursor: pointer; touch-action: none; }
-.bar .k { position: absolute; top: 50%; width: 6px; height: 28px; margin: -14px 0 0 -3px; border-radius: 3px; background: #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25), 0 1px 4px rgba(0, 0, 0, 0.4); pointer-events: none; }
-.bar:active .k { width: 4px; margin-left: -2px; }
-.bar:focus-visible { outline-offset: 4px; }
+.menu { width: 248px; padding: 12px; display: flex; flex-direction: column; gap: 12px; max-height: none; overflow: visible; }
+.sv { position: relative; height: 150px; border-radius: 8px; cursor: crosshair; touch-action: none; }
+.sv .k { position: absolute; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; box-shadow: 0 0 0 2px #fff, 0 1px 4px rgba(0,0,0,.4); pointer-events: none; }
+.bar { position: relative; height: 12px; border-radius: 6px; cursor: pointer; touch-action: none; }
+.bar .k { position: absolute; top: 50%; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.4); pointer-events: none; }
 .hue { background: linear-gradient(to right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00); }
 .al { overflow: visible; }
-.al .chk { border-radius: 8px; background-size: 8px 8px; }
-.al .g { position: absolute; inset: 0; border-radius: 8px; }
-.row { display: flex; gap: 10px; align-items: center; }
-.pv { position: relative; flex: none; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 1px var(--a2-line); }
-.hx { flex: 1; min-width: 0; height: 40px; padding: 0.12em 14px 0; border: 1px solid var(--a2-line-strong); outline: 0; border-radius: 20px; background: transparent; color: var(--a2-text); font-variant-numeric: tabular-nums; transition: border-color var(--fx); }
+.al .chk { border-radius: 6px; background-size: 6px 6px; }
+.al .g { position: absolute; inset: 0; border-radius: 6px; }
+.row { display: flex; gap: 8px; align-items: center; }
+.pv { position: relative; flex: none; width: 34px; height: 34px; border-radius: 8px; overflow: hidden; box-shadow: 0 0 0 1px var(--a2-line); }
+.hx { flex: 1; min-width: 0; height: 34px; padding: 0.12em 10px 0; border: 1px solid var(--a2-line); outline: 0; border-radius: 8px; background: var(--a2-fill); color: var(--a2-text); font-variant-numeric: tabular-nums; }
 .hx:focus { border-color: var(--a2-accent); }
-.ps { display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; }
-.ps button { aspect-ratio: 1; border-radius: 50%; box-shadow: inset 0 0 0 1px var(--a2-line); transition: transform var(--snap), border-radius var(--snap); }
-.ps button:hover { transform: scale(1.18); }
-.ps button:active { border-radius: 6px; }
+.ps { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; }
+.ps button { aspect-ratio: 1; border-radius: 6px; border: 1px solid var(--a2-line); transition: transform var(--t1) var(--spring); }
+.ps button:hover { transform: scale(1.15); }
 .ps:empty { display: none; }
 `;
   render() {
-    this.root.innerHTML = `${boxShell(`<button class="box" part="box" type="button" aria-haspopup="dialog"><span class="sw"><i></i></span><span class="hex"></span></button>`)}
+    this.root.innerHTML = `${this.fieldHead('')}<button class="box" part="box" type="button" aria-haspopup="dialog"><span class="sw"><i></i></span><span class="hex"></span></button><div class="hint t" part="hint"></div>
 <div class="pop" popover="manual"><div class="menu" part="menu" role="dialog" aria-label="색 고르기">
 <div class="sv"><span class="k"></span></div>
 <div class="bar hue" role="slider" tabindex="0" aria-label="색상"><span class="k"></span></div>
@@ -101,7 +98,7 @@ export class A2Color extends A2Element {
     if (this.disabled) return;
     this.setBool('open', true);
     this.paint();
-    this._pop = openPopover(this.pop, this.$('.f'), { closeOnOutside: [this], onClose: () => this.setBool('open', false) });
+    this._pop = openPopover(this.pop, this.box, { onClose: () => this.setBool('open', false) });
   }
   drag(el, set) {
     el.addEventListener('pointerdown', e => {
@@ -142,7 +139,7 @@ export class A2Color extends A2Element {
   }
   attr(name, v) { if (name === 'value') { if (v && parseHex(v) && v.toUpperCase() !== this.hexValue) this.value = v; } else this.update(); }
   update() {
-    paintBox(this, true);
+    this.paintField();
     this.box.disabled = this.disabled;
     if (this.hasAttribute('label')) this.box.setAttribute('aria-label', this.getAttribute('label'));
     const list = this.str('presets', PRESETS).split(',').map(s => s.trim()).filter(s => parseHex(s));

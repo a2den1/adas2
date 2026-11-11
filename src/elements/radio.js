@@ -1,23 +1,30 @@
 import { A2Element, define } from '../core/base.js';
-import { ROW_CSS } from './toggle.js';
 
 /** <a2-radio value="a">라벨</a2-radio> — a2-radio-group 안에서 쓴다 */
 export class A2Radio extends A2Element {
   static observedAttributes = ['checked', 'disabled'];
-  static styles = `${ROW_CSS}
-:host { outline: none; }
-:host(:focus-visible) .halo { opacity: 0.14; transform: scale(1); }
-.dot { flex: none; position: relative; width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--a2-line-strong); transition: border-color var(--fx), transform var(--snap); }
-.c:hover .dot { border-color: var(--a2-text); }
-.c:active .dot { transform: scale(0.84); }
-:host([checked]) .dot { border-color: var(--a2-accent); }
-:host([checked]) .halo { background: var(--a2-accent); }
-.dot::after { content: ''; position: absolute; inset: 3px; border-radius: 50%; background: var(--a2-accent); transform: scale(0); transition: transform var(--snap); }
+  static styles = `
+:host { display: inline-flex; vertical-align: middle; border-radius: 12px; outline: none; }
+:host(:focus-visible) .dot { outline: 2px solid var(--a2-accent); outline-offset: 2px; }
+.r { position: relative; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; min-height: 24px; touch-action: manipulation; }
+.r::before { content: ''; position: absolute; inset: -6px -5px; }
+.dot {
+  flex: none; position: relative; width: 20px; height: 20px; border-radius: 50%; background: var(--a2-fill); border: 1px solid var(--a2-line-strong);
+  transition: background-color var(--t2), border-color var(--t2), transform var(--t1) var(--spring);
+}
+.r:hover .dot { background: var(--a2-fill-active); border-color: var(--a2-text-muted); }
+.r:active .dot { transform: scale(0.88); }
+:host([checked]) .dot { background: var(--a2-accent); border-color: var(--a2-accent); }
+.dot::after {
+  content: ''; position: absolute; inset: 5px; border-radius: 50%; background: var(--a2-on-accent);
+  transform: scale(0); transition: transform var(--t3) var(--spring);
+}
 :host([checked]) .dot::after { transform: scale(1); }
+.lbl:empty { display: none; }
 `;
   render() {
     this.setAttribute('role', 'radio');
-    this.root.innerHTML = `<div class="c" part="base"><span class="dot" part="dot"><span class="halo"></span></span><span class="lbl t"><slot></slot></span></div>`;
+    this.root.innerHTML = `<div class="r" part="base"><span class="dot" part="dot"></span><span class="lbl t"><slot></slot></span></div>`;
     this.addEventListener('click', () => { if (!this.disabled) this.closest('a2-radio-group')?.pick(this, true); });
   }
   update() {
@@ -37,10 +44,8 @@ export class A2RadioGroup extends A2Element {
   static observedAttributes = ['label', 'hint', 'error', 'value', 'disabled', 'required', 'direction'];
   static styles = `
 :host { display: block; }
-.label { margin-bottom: 12px; }
-.hint { margin-left: 0; }
-.list { display: flex; flex-direction: column; gap: 14px; }
-:host([direction="row"]) .list { flex-direction: row; flex-wrap: wrap; gap: 14px 24px; }
+.list { display: flex; flex-direction: column; gap: 12px; }
+:host([direction="row"]) .list { flex-direction: row; flex-wrap: wrap; gap: 12px 20px; }
 `;
   render() {
     this.setAttribute('role', 'radiogroup');

@@ -23,62 +23,29 @@ export function sheet(text) {
 /** 모든 요소에 공통인 그림자 안 스타일 */
 export const BASE_CSS = `
 :host { box-sizing: border-box; font-family: var(--a2-font); font-weight: var(--a2-weight); font-size: var(--a2-fs); color: var(--a2-text); letter-spacing: -0.01em; -webkit-tap-highlight-color: transparent;
-  /* 스프링 전환: transition: transform var(--snap) 처럼 쓴다 */
-  --snap: calc(var(--a2-d-snap) / var(--a2-speed)) var(--a2-e-snap);
-  --move: calc(var(--a2-d-move) / var(--a2-speed)) var(--a2-e-move);
-  --slow: calc(var(--a2-d-slow) / var(--a2-speed)) var(--a2-e-slow);
-  --fx: calc(var(--a2-d-fx) / var(--a2-speed)) var(--a2-e-fx); }
+  --t1: calc(0.14s / var(--a2-speed)); --t2: calc(0.24s / var(--a2-speed)); --t3: calc(0.34s / var(--a2-speed)); --spring: cubic-bezier(0.3, 0.9, 0.25, 1); }
 :host([hidden]) { display: none !important; }
 *, *::before, *::after { box-sizing: border-box; }
-button { font: inherit; color: inherit; letter-spacing: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: pointer; touch-action: manipulation; }
+button { font: inherit; color: inherit; letter-spacing: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: pointer; }
 input, textarea { font: inherit; color: inherit; letter-spacing: inherit; }
 :focus { outline: none; }
-:focus-visible { outline: 2px solid var(--a2-accent); outline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--a2-accent); outline-offset: 2px; }
 svg { display: block; }
 /* 작은 버튼의 누르는 범위를 보이는 것보다 넓힌다 */
 .hit { position: relative; }
 .hit::before { content: ''; position: absolute; inset: -7px; }
 .t { padding-top: 0.12em; }   /* 지마켓 산스가 살짝 위로 떠 보이는 것 보정 */
 /* 라벨·도움말 */
-.label { display: flex; align-items: baseline; gap: 6px; margin-bottom: 8px; font-size: var(--a2-fs-sm); color: var(--a2-text-muted); }
+.label { display: flex; align-items: baseline; gap: 6px; margin-bottom: 7px; font-size: var(--a2-fs-sm); color: var(--a2-text-muted); }
 .label:empty { display: none; }
 .req { color: var(--a2-accent); }
-.hint { margin: 6px 14px 0; font-size: var(--a2-fs-sm); color: var(--a2-text-muted); line-height: 1.45; }
+.hint { margin-top: 6px; font-size: var(--a2-fs-sm); color: var(--a2-text-muted); line-height: 1.45; }
 .hint:empty { display: none; }
 .hint.error { color: var(--a2-danger); }
-:host([disabled]) { opacity: 0.42; pointer-events: none; }
-/* 누른 자리에서 퍼지는 물결 */
-.rp-box { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; pointer-events: none; }
-.rp { position: absolute; border-radius: 50%; background: currentColor; opacity: 0.14; pointer-events: none; }
+:host([size="sm"]) { --a2-h: 32px; --a2-fs: 13px; }
+:host([size="lg"]) { --a2-h: 48px; --a2-fs: 16px; }
+:host([disabled]) { opacity: 0.45; pointer-events: none; }
 `;
-
-/**
- * 누른 자리에서 퍼지는 물결. surface 는 position 이 잡힌 요소(안에 .rp-box 가 생긴다)
- */
-export function ripple(surface) {
-  let box = null;
-  surface.addEventListener('pointerdown', e => {
-    if (e.button !== 0) return;
-    if (!box) { box = document.createElement('span'); box.className = 'rp-box'; surface.prepend(box); }
-    const r = surface.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
-    const size = 2 * Math.hypot(Math.max(x, r.width - x), Math.max(y, r.height - y));
-    const dot = document.createElement('span');
-    dot.className = 'rp';
-    dot.style.cssText = `width:${size}px;height:${size}px;left:${x - size / 2}px;top:${y - size / 2}px`;
-    box.append(dot);
-    const grow = dot.animate([{ transform: 'scale(0.12)' }, { transform: 'scale(1)' }], { duration: 420, easing: 'cubic-bezier(0.2, 0, 0, 1)', fill: 'forwards' });
-    let gone = false;
-    const off = () => {
-      if (gone) return; gone = true;
-      removeEventListener('pointerup', off, true); removeEventListener('pointercancel', off, true);
-      const out = () => { const a = dot.animate([{ opacity: 0.14 }, { opacity: 0 }], { duration: 260, fill: 'forwards' }); a.onfinish = a.oncancel = () => dot.remove(); };
-      // 짧게 눌러도 물결이 어느 정도 퍼진 뒤에 사라지게
-      if (grow.currentTime != null && grow.currentTime < 180) setTimeout(out, 180 - grow.currentTime); else out();
-      setTimeout(() => dot.remove(), 900);
-    };
-    addEventListener('pointerup', off, true); addEventListener('pointercancel', off, true);
-  });
-}
 
 // 아이콘: Font Awesome Free 6.7.2 (https://fontawesome.com, 아이콘 CC BY 4.0) 의 solid 모양
 const ICONS = {
@@ -95,8 +62,6 @@ const ICONS = {
   warning: ['0 0 512 512', 'M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480L40 480c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24l0 112c0 13.3 10.7 24 24 24s24-10.7 24-24l0-112c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z'],
   danger: ['0 0 512 512', 'M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z'],
 };
-/** 아이콘을 더하거나 바꾼다: addIcon('star', '0 0 576 512', 'M…') */
-export const addIcon = (name, viewBox, d) => { ICONS[name] = [viewBox, d]; };
 /** 아이콘 SVG. size 는 한 변 크기(px) */
 export const icon = (name, size = 16) => {
   const [box, d] = ICONS[name] || ['0 0 16 16', ''];

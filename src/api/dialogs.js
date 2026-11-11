@@ -1,7 +1,7 @@
 // alert / confirm / prompt 를 adas2 대화상자로. 모두 Promise 를 돌려준다.
 import '../elements/overlay.js';
 import '../elements/button.js';
-import '../elements/field.js';
+import '../elements/input.js';
 
 function build({ title, message, buttons, input, danger }) {
   const d = document.createElement('a2-dialog');
@@ -24,7 +24,7 @@ function build({ title, message, buttons, input, danger }) {
     const el = document.createElement('a2-button');
     el.textContent = b.label;
     el.setAttribute('data-close', b.value);
-    el.setAttribute('variant', b.primary ? (danger ? 'danger' : 'primary') : 'ghost');
+    el.setAttribute('variant', b.primary ? (danger ? 'danger' : 'primary') : 'secondary');
     if (b.primary && !input) el.setAttribute('autofocus', '');
     foot.append(el);
   });

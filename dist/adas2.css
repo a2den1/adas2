@@ -1,5 +1,5 @@
-/*! adas2 v5.0.0 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
-/* adas2 — 문서 전체에 한 번 들어가는 스타일: 글꼴, 색·모양·움직임 토큰, 정의 전 깜빡임 막기 */
+/*! adas2 v4.1.0 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
+/* adas2 — 문서 전체에 한 번 들어가는 스타일: 글꼴, 색 토큰, 정의 전 깜빡임 막기 */
 
 @font-face { font-family: "GmarketSans"; font-weight: 300; font-display: swap; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff") format("woff"); }
 @font-face { font-family: "GmarketSans"; font-weight: 500; font-display: swap; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff") format("woff"); }
@@ -11,133 +11,100 @@
   --a2-weight-strong: 500;
   --a2-fs: 14px;
   --a2-fs-sm: 12.5px;
-  --a2-fs-lg: 18px;
-  /* 크기 */
-  --a2-h: 44px;          /* 버튼·세그먼트 높이 */
-  --a2-h-field: 52px;    /* 입력칸 높이 */
-  /* 모양: 값이 클수록 둥글다 */
-  --a2-r-xs: 8px;
-  --a2-r-sm: 12px;
-  --a2-r-md: 16px;
-  --a2-r-lg: 22px;
-  --a2-r-xl: 28px;
-  --a2-r-full: 999px;
-  /* 움직임: 스프링 곡선은 스크립트가 계산해 덮어쓴다(아래는 linear() 를 모르는 브라우저용) */
+  --a2-fs-lg: 17px;
+  --a2-h: 40px;
+  --a2-radius: 10px;
+  --a2-radius-lg: 16px;
   --a2-speed: 1;
-  --a2-e-snap: cubic-bezier(0.3, 1.5, 0.5, 1);  --a2-d-snap: 0.35s;
-  --a2-e-move: cubic-bezier(0.3, 1.25, 0.4, 1); --a2-d-move: 0.5s;
-  --a2-e-slow: cubic-bezier(0.3, 1.15, 0.4, 1); --a2-d-slow: 0.7s;
-  --a2-e-fx: cubic-bezier(0.2, 0, 0, 1);        --a2-d-fx: 0.2s;
 }
 
 /* 어두운 화면 (기본) */
 :root, [data-a2-theme="dark"] {
+  --a2-line: rgba(243, 238, 233, 0.13); --a2-line-strong: rgba(243, 238, 233, 0.32);
+  --a2-fill: rgba(243, 238, 233, 0.07); --a2-fill-hover: rgba(243, 238, 233, 0.1); --a2-fill-active: rgba(243, 238, 233, 0.14);
   color-scheme: dark;
   --a2-bg: #1B1917;
-  --a2-surface: #25221F;
-  --a2-surface-high: #2F2B27;
-  --a2-surface-highest: #3A3530;
-  --a2-raised: #2F2B27;
-  --a2-fill: rgba(243, 238, 233, 0.07); --a2-fill-hover: rgba(243, 238, 233, 0.11); --a2-fill-active: rgba(243, 238, 233, 0.16);
-  --a2-line: rgba(243, 238, 233, 0.16); --a2-line-strong: rgba(243, 238, 233, 0.38);
+  --a2-surface: #272421;
+  --a2-surface-hover: #2F2B28;
+  --a2-surface-active: #36312D;
+  --a2-raised: #2C2825;
   --a2-accent: #FF7A45;
   --a2-accent-hover: #FF8B5C;
   --a2-accent-pressed: #EB6630;
   --a2-accent-soft: rgba(255, 122, 69, 0.16);
-  --a2-on-accent: #2A1004;
-  --a2-accent-container: #5C2B14;
-  --a2-on-accent-container: #FFDCCD;
-  --a2-tonal: #473B33;
-  --a2-on-tonal: #F6E2D6;
+  --a2-on-accent: #FFFFFF;
   --a2-text: #F3EEE9;
-  --a2-text-muted: rgba(243, 238, 233, 0.62);
-  --a2-text-faint: rgba(243, 238, 233, 0.34);
-  --a2-danger: #FF6B66;
-  --a2-on-danger: #2D0706;
+  --a2-text-muted: rgba(243, 238, 233, 0.58);
+  --a2-text-faint: rgba(243, 238, 233, 0.3);
+  --a2-danger: #F25F5C;
   --a2-success: #5CCB8A;
   --a2-warning: #F4B740;
-  --a2-shadow: 0 14px 40px rgba(0, 0, 0, 0.45), 0 3px 10px rgba(0, 0, 0, 0.28);
-  --a2-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.24);
-  --a2-scrim: rgba(10, 9, 8, 0.58);
-  --a2-tip: #EDE6DF;
-  --a2-on-tip: #25201C;
-  --a2-tip-accent: #B8460F;
+  --a2-shadow: 0 12px 36px rgba(0, 0, 0, 0.42), 0 2px 8px rgba(0, 0, 0, 0.25);
+  --a2-scrim: rgba(10, 9, 8, 0.55);
+  --a2-tip: #38332F;
+  --a2-on-tip: #F3EEE9;
 }
 
 /* 밝은 화면 */
 [data-a2-theme="light"] {
+  --a2-line: rgba(41, 35, 31, 0.15); --a2-line-strong: rgba(41, 35, 31, 0.36);
+  --a2-fill: rgba(41, 35, 31, 0.06); --a2-fill-hover: rgba(41, 35, 31, 0.09); --a2-fill-active: rgba(41, 35, 31, 0.13);
   color-scheme: light;
-  --a2-bg: #FBF8F4;
-  --a2-surface: #F3EEE8;
-  --a2-surface-high: #ECE6DF;
-  --a2-surface-highest: #E4DDD5;
+  --a2-bg: #FAF7F3;
+  --a2-surface: #EFEAE4;
+  --a2-surface-hover: #E8E2DA;
+  --a2-surface-active: #E0D9D0;
   --a2-raised: #FFFFFF;
-  --a2-fill: rgba(41, 35, 31, 0.055); --a2-fill-hover: rgba(41, 35, 31, 0.09); --a2-fill-active: rgba(41, 35, 31, 0.14);
-  --a2-line: rgba(41, 35, 31, 0.18); --a2-line-strong: rgba(41, 35, 31, 0.44);
-  --a2-accent: #E65C22;
-  --a2-accent-hover: #F26A32;
-  --a2-accent-pressed: #CC4E18;
-  --a2-accent-soft: rgba(230, 92, 34, 0.13);
+  --a2-accent: #F26A32;
+  --a2-accent-hover: #FF7A45;
+  --a2-accent-pressed: #D9581F;
+  --a2-accent-soft: rgba(242, 106, 50, 0.13);
   --a2-on-accent: #FFFFFF;
-  --a2-accent-container: #FFDCCD;
-  --a2-on-accent-container: #3A1403;
-  --a2-tonal: #EFDDD2;
-  --a2-on-tonal: #2C1E16;
   --a2-text: #29231F;
-  --a2-text-muted: rgba(41, 35, 31, 0.64);
-  --a2-text-faint: rgba(41, 35, 31, 0.36);
-  --a2-danger: #D03A36;
-  --a2-on-danger: #FFFFFF;
-  --a2-success: #1F8F52;
-  --a2-warning: #B87A0A;
-  --a2-shadow: 0 14px 40px rgba(60, 40, 20, 0.16), 0 3px 10px rgba(60, 40, 20, 0.1);
-  --a2-shadow-sm: 0 2px 6px rgba(60, 40, 20, 0.12), 0 1px 2px rgba(60, 40, 20, 0.1);
-  --a2-scrim: rgba(40, 30, 20, 0.34);
-  --a2-tip: #322B26;
-  --a2-on-tip: #FBF8F4;
-  --a2-tip-accent: #FFA27A;
+  --a2-text-muted: rgba(41, 35, 31, 0.58);
+  --a2-text-faint: rgba(41, 35, 31, 0.3);
+  --a2-danger: #D84542;
+  --a2-success: #259B5A;
+  --a2-warning: #C98A10;
+  --a2-shadow: 0 12px 36px rgba(60, 40, 20, 0.14), 0 2px 8px rgba(60, 40, 20, 0.08);
+  --a2-scrim: rgba(40, 30, 20, 0.3);
+  --a2-tip: #2B2521;
+  --a2-on-tip: #FAF7F3;
 }
 
 /* 바다 */
 [data-a2-theme="ocean"] {
+  --a2-line: rgba(237, 241, 246, 0.13); --a2-line-strong: rgba(237, 241, 246, 0.32);
+  --a2-fill: rgba(237, 241, 246, 0.07); --a2-fill-hover: rgba(237, 241, 246, 0.1); --a2-fill-active: rgba(237, 241, 246, 0.14);
   color-scheme: dark;
   --a2-bg: #14181E;
-  --a2-surface: #1D232B;
-  --a2-surface-high: #262D37;
-  --a2-surface-highest: #303947;
-  --a2-raised: #262D37;
-  --a2-fill: rgba(237, 241, 246, 0.07); --a2-fill-hover: rgba(237, 241, 246, 0.11); --a2-fill-active: rgba(237, 241, 246, 0.16);
-  --a2-line: rgba(237, 241, 246, 0.16); --a2-line-strong: rgba(237, 241, 246, 0.38);
-  --a2-accent: #6FA5FF;
-  --a2-accent-hover: #86B3FF;
-  --a2-accent-pressed: #5890EE;
-  --a2-accent-soft: rgba(111, 165, 255, 0.17);
-  --a2-on-accent: #06203F;
-  --a2-accent-container: #1B3D6E;
-  --a2-on-accent-container: #D7E5FF;
-  --a2-tonal: #33404F;
-  --a2-on-tonal: #DCE7F5;
+  --a2-surface: #1F252D;
+  --a2-surface-hover: #262D37;
+  --a2-surface-active: #2D3540;
+  --a2-raised: #232A33;
+  --a2-accent: #4C8DFF;
+  --a2-accent-hover: #649CFF;
+  --a2-accent-pressed: #3676E6;
+  --a2-accent-soft: rgba(76, 141, 255, 0.16);
+  --a2-on-accent: #FFFFFF;
   --a2-text: #EDF1F6;
-  --a2-text-muted: rgba(237, 241, 246, 0.62);
-  --a2-text-faint: rgba(237, 241, 246, 0.34);
-  --a2-danger: #FF6F69;
-  --a2-on-danger: #2D0706;
+  --a2-text-muted: rgba(237, 241, 246, 0.58);
+  --a2-text-faint: rgba(237, 241, 246, 0.3);
+  --a2-danger: #F2645F;
   --a2-success: #4FC68A;
   --a2-warning: #F1B643;
-  --a2-shadow: 0 14px 40px rgba(0, 0, 0, 0.5), 0 3px 10px rgba(0, 0, 0, 0.32);
-  --a2-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.34), 0 1px 2px rgba(0, 0, 0, 0.26);
-  --a2-scrim: rgba(5, 8, 12, 0.58);
-  --a2-tip: #E3E9F1;
-  --a2-on-tip: #1A2029;
-  --a2-tip-accent: #2F62B8;
+  --a2-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
+  --a2-scrim: rgba(5, 8, 12, 0.55);
+  --a2-tip: #2E3743;
+  --a2-on-tip: #EDF1F6;
 }
 
 /* 정의되기 전에는 숨겨서 깜빡임을 막는다 */
-:is(a2-button, a2-split-button, a2-fab, a2-input, a2-textarea, a2-number, a2-select, a2-checkbox, a2-switch, a2-radio-group, a2-slider,
-    a2-segmented, a2-chip, a2-tabs, a2-color, a2-keybind, a2-card, a2-badge, a2-progress, a2-spinner, a2-dialog, a2-drawer, a2-menu):not(:defined) {
+:is(a2-button, a2-input, a2-textarea, a2-number, a2-select, a2-checkbox, a2-switch, a2-radio-group, a2-slider,
+    a2-segmented, a2-tabs, a2-color, a2-keybind, a2-card, a2-badge, a2-progress, a2-spinner, a2-dialog, a2-drawer, a2-menu):not(:defined) {
   visibility: hidden;
 }
-a2-option, a2-segment, a2-menu-item, a2-fab-item, a2-tab-panel { display: none; }
+a2-option, a2-segment, a2-menu-item, a2-tab-panel { display: none; }
 a2-tab-panel[data-on] { display: block; }
 
 @media (prefers-reduced-motion: reduce) { :root { --a2-speed: 1000; } }

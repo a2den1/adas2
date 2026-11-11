@@ -11,33 +11,30 @@
 <style>
   body { margin: 0; background: var(--a2-bg); color: var(--a2-text); font-family: var(--a2-font); font-weight: var(--a2-weight); font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
   a { color: inherit; }
-  .wrap { box-sizing: border-box; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
-  header { position: sticky; top: 0; z-index: 5; background: var(--a2-bg); }
-  header .wrap { display: flex; align-items: center; gap: 12px; height: 68px; }
-  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: var(--a2-weight-strong); font-size: 18px; padding-top: .12em; }
-  .brand img { width: 30px; height: 30px; margin-top: -.12em; }
+  .wrap { box-sizing: border-box; max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+  header { position: sticky; top: 0; z-index: 5; background: var(--a2-bg); border-bottom: 1px solid var(--a2-line); }
+  header .wrap { display: flex; align-items: center; gap: 12px; height: 60px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: var(--a2-weight-strong); font-size: 17px; padding-top: .12em; }
+  .brand img { width: 28px; height: 28px; margin-top: -.12em; }
   header nav { display: flex; gap: 8px; margin-left: auto; align-items: center; }
-  .intro { padding: 44px 0 0; }
-  .intro h1 { margin: 0 0 24px; font-size: 56px; line-height: 1.1; font-weight: var(--a2-weight-strong); letter-spacing: -.03em; }
-  .install { box-sizing: border-box; display: flex; align-items: center; gap: 8px; max-width: 100%; width: fit-content; padding: 6px 6px 6px 20px; border-radius: 999px; background: var(--a2-surface); }
+  .intro { padding: 56px 0 8px; }
+  .intro h1 { margin: 0 0 22px; font-size: 44px; line-height: 1.15; font-weight: var(--a2-weight-strong); letter-spacing: -.02em; }
+  .install { box-sizing: border-box; display: flex; align-items: center; gap: 8px; max-width: 100%; width: fit-content; padding: 5px 5px 5px 16px; border-radius: 12px; border: 1px solid var(--a2-line); background: var(--a2-fill); }
   .install code { min-width: 0; font: 13px/1.5 ui-monospace, Consolas, monospace; white-space: nowrap; overflow-x: auto; scrollbar-width: none; }
-  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px 48px; padding: 56px 0 0; }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 40px; padding: 48px 0 0; }
   .grid .wide { grid-column: 1 / -1; }
-  section h2 { margin: 0 0 20px; font-size: 20px; font-weight: var(--a2-weight-strong); letter-spacing: -.02em; }
-  .demo { display: flex; flex-direction: column; gap: 20px; }
+  section h2 { margin: 0 0 16px; font-size: 17px; font-weight: var(--a2-weight-strong); letter-spacing: -.01em; }
+  .demo { display: flex; flex-direction: column; gap: 16px; }
   .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-  .cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
-  .ctx { display: grid; place-items: center; height: 96px; border-radius: var(--a2-r-lg); border: 1px dashed var(--a2-line-strong); color: var(--a2-text-muted); font-size: 13.5px; user-select: none; }
-  .fabbox { position: relative; height: 250px; border-radius: var(--a2-r-xl); background: var(--a2-surface); }
-  .fabbox a2-fab { position: absolute; right: 18px; bottom: 18px; }
-  .fabbox a2-fab + a2-fab { right: auto; left: 18px; }
-  footer { margin-top: 88px; padding: 28px 0 44px; color: var(--a2-text-faint); font-size: 13px; }
+  .cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .ctx { display: grid; place-items: center; height: 88px; border-radius: 10px; border: 1px dashed var(--a2-line-strong); color: var(--a2-text-muted); font-size: 13.5px; user-select: none; }
+  footer { margin-top: 72px; padding: 24px 0 40px; border-top: 1px solid var(--a2-line); color: var(--a2-text-faint); font-size: 13px; }
   @media (max-width: 760px) {
     .wrap { padding: 0 16px; }
     .grid, .cols { grid-template-columns: minmax(0, 1fr); }
-    .grid { gap: 44px; padding-top: 40px; }
-    .intro { padding-top: 28px; }
-    .intro h1 { font-size: 40px; }
+    .grid { gap: 40px; padding-top: 36px; }
+    .intro { padding-top: 36px; }
+    .intro h1 { font-size: 34px; }
     #ver, #gh { display: none; }
   }
 </style>
@@ -45,7 +42,7 @@
 <body>
 <header>
   <div class="wrap">
-    <a class="brand" href="#"><img src="../docs/logo.svg" alt="" width="30" height="30">adas2</a>
+    <a class="brand" href="#"><img src="../docs/logo.svg" alt="" width="28" height="28">adas2</a>
     <a2-badge variant="accent" id="ver"></a2-badge>
     <nav>
       <a2-segmented id="theme" size="sm" value="dark">
@@ -63,7 +60,7 @@
     <h1>adas2</h1>
     <div class="install">
       <code id="cdn"></code>
-      <a2-button variant="tonal" size="sm" id="copy" label="복사" a2-tip="복사"><svg width="15" height="15" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M384 336l-192 0c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l140.1 0L400 115.9 400 320c0 8.8-7.2 16-16 16zM192 384l192 0c35.3 0 64-28.7 64-64l0-204.1c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1L192 0c-35.3 0-64 28.7-64 64l0 256c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-32-48 0 0 32c0 8.8-7.2 16-16 16L64 464c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l32 0 0-48-32 0z"/></svg></a2-button>
+      <a2-button variant="ghost" size="sm" id="copy" label="복사" a2-tip="복사"><svg width="14" height="14" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M384 336l-192 0c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l140.1 0L400 115.9 400 320c0 8.8-7.2 16-16 16zM192 384l192 0c35.3 0 64-28.7 64-64l0-204.1c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1L192 0c-35.3 0-64 28.7-64 64l0 256c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-32-48 0 0 32c0 8.8-7.2 16-16 16L64 464c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l32 0 0-48-32 0z"/></svg></a2-button>
     </div>
   </div>
 
@@ -74,29 +71,17 @@
       <div class="demo">
         <div class="row">
           <a2-button variant="primary">저장</a2-button>
-          <a2-button variant="tonal">공유</a2-button>
           <a2-button>취소</a2-button>
+          <a2-button variant="soft">공유</a2-button>
           <a2-button variant="ghost">더 보기</a2-button>
           <a2-button variant="danger">삭제</a2-button>
         </div>
         <div class="row">
           <a2-button variant="primary" size="sm">작게</a2-button>
-          <a2-button variant="tonal" size="lg"><svg slot="prefix" width="15" height="15" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"/></svg>크게</a2-button>
-          <a2-button variant="primary" shape="square">각진 모양</a2-button>
+          <a2-button size="lg"><svg slot="prefix" width="14" height="14" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"/></svg>크게</a2-button>
           <a2-button variant="primary" loading>보내기</a2-button>
-          <a2-button label="설정" a2-tip="설정"><svg width="15" height="15" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160z"/></svg></a2-button>
+          <a2-button label="설정" a2-tip="설정"><svg width="14" height="14" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160z"/></svg></a2-button>
           <a2-button disabled>꺼짐</a2-button>
-        </div>
-        <div class="row">
-          <a2-button toggle variant="tonal" label="굵게" a2-tip="굵게"><svg width="15" height="15" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M0 64C0 46.3 14.3 32 32 32l48 0 16 0 128 0c70.7 0 128 57.3 128 128c0 31.3-11.3 60.1-30 82.3c37.1 22.4 62 63.1 62 109.7c0 70.7-57.3 128-128 128L96 480l-16 0-48 0c-17.7 0-32-14.3-32-32s14.3-32 32-32l16 0 0-160L48 96 32 96C14.3 96 0 81.7 0 64zM224 224c35.3 0 64-28.7 64-64s-28.7-64-64-64L112 96l0 128 112 0zM112 288l0 128 144 0c35.3 0 64-28.7 64-64s-28.7-64-64-64l-32 0-112 0z"/></svg></a2-button>
-          <a2-button toggle selected variant="tonal" label="기울임" a2-tip="기울임"><svg width="15" height="15" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M128 64c0-17.7 14.3-32 32-32l192 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-58.7 0L160 416l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 480c-17.7 0-32-14.3-32-32s14.3-32 32-32l58.7 0L224 96l-64 0c-17.7 0-32-14.3-32-32z"/></svg></a2-button>
-          <a2-button toggle variant="tonal" label="밑줄" a2-tip="밑줄"><svg width="15" height="15" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M16 64c0-17.7 14.3-32 32-32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-16 0 0 128c0 53 43 96 96 96s96-43 96-96l0-128-16 0c-17.7 0-32-14.3-32-32s14.3-32 32-32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-16 0 0 128c0 88.4-71.6 160-160 160s-160-71.6-160-160L64 96 48 96C30.3 96 16 81.7 16 64zM0 448c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 480c-17.7 0-32-14.3-32-32z"/></svg></a2-button>
-          <a2-button toggle><svg slot="prefix" width="15" height="15" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8l0-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5l0 3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20-.1-.1s0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5l0 3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2l0-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z"/></svg>좋아요</a2-button>
-          <a2-split-button variant="primary" menu="saveMenu">저장</a2-split-button>
-          <a2-menu id="saveMenu" align="end">
-            <a2-menu-item value="saveas">다른 이름으로 저장</a2-menu-item>
-            <a2-menu-item value="saveall">모두 저장</a2-menu-item>
-          </a2-menu>
         </div>
       </div>
     </section>
@@ -104,28 +89,27 @@
     <section>
       <h2>입력</h2>
       <div class="demo">
-        <a2-input label="이름" clearable></a2-input>
+        <a2-input label="이름" placeholder="홍길동" clearable></a2-input>
         <a2-input label="비밀번호" type="password" value="비밀번호1234"></a2-input>
-        <a2-input placeholder="검색" type="search"><svg slot="prefix" width="15" height="15" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg></a2-input>
+        <a2-input placeholder="검색" type="search"><svg slot="prefix" width="14" height="14" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg></a2-input>
       </div>
     </section>
 
     <section>
       <h2>여러 줄 입력</h2>
       <div class="demo">
-        <a2-textarea label="메모" maxlength="200" rows="3"></a2-textarea>
+        <a2-textarea label="메모" placeholder="적어 두세요" maxlength="200" rows="3"></a2-textarea>
         <a2-input label="전화번호" type="tel" value="010-12" error="번호를 끝까지 입력해 주세요."></a2-input>
       </div>
     </section>
 
     <section>
-      <h2>숫자 · 단축키</h2>
+      <h2>숫자</h2>
       <div class="demo">
         <div class="cols">
           <a2-number label="수량" value="3" min="0" max="99" unit="개"></a2-number>
           <a2-number label="배율" value="1.5" min="0.1" max="4" step="0.1" unit="배"></a2-number>
         </div>
-        <a2-keybind label="저장 단축키" value="Ctrl+KeyS"></a2-keybind>
       </div>
     </section>
 
@@ -133,12 +117,12 @@
       <h2>체크박스 · 스위치 · 라디오</h2>
       <div class="demo">
         <div class="cols">
-          <div class="demo" style="gap:16px">
+          <div class="demo" style="gap:14px">
             <a2-checkbox checked>약관에 동의</a2-checkbox>
             <a2-checkbox indeterminate>일부 선택</a2-checkbox>
             <a2-checkbox disabled>꺼짐</a2-checkbox>
           </div>
-          <div class="demo" style="gap:16px">
+          <div class="demo" style="gap:14px">
             <a2-switch checked>알림</a2-switch>
             <a2-switch>자동 저장</a2-switch>
             <a2-switch disabled checked>꺼짐</a2-switch>
@@ -156,22 +140,21 @@
       <h2>슬라이더</h2>
       <div class="demo">
         <a2-slider label="음량" value="40" show-value unit="%"></a2-slider>
-        <a2-slider label="밝기" min="0" max="10" step="0.5" value="6.5" show-value size="sm"></a2-slider>
-        <a2-slider label="크기" min="1" max="5" value="2" size="lg"></a2-slider>
+        <a2-slider label="밝기" min="0" max="10" step="0.5" value="6.5" show-value></a2-slider>
       </div>
     </section>
 
     <section>
-      <h2>고르기 · 칩</h2>
+      <h2>고르기</h2>
       <div class="demo">
-        <a2-select label="과일" value="apple">
+        <a2-select label="과일" placeholder="고르세요" value="apple">
           <a2-option value="apple">사과</a2-option>
           <a2-option value="pear">배</a2-option>
           <a2-option value="grape">포도</a2-option>
           <a2-option value="peach">복숭아</a2-option>
           <a2-option value="melon" disabled>멜론 (품절)</a2-option>
         </a2-select>
-        <a2-select label="언어" multiple searchable value="ko,en">
+        <a2-select label="언어" multiple searchable value="ko,en" placeholder="여러 개 고르기">
           <a2-option value="ko">한국어</a2-option>
           <a2-option value="en">영어</a2-option>
           <a2-option value="ja">일본어</a2-option>
@@ -180,13 +163,6 @@
           <a2-option value="fr">프랑스어</a2-option>
           <a2-option value="de">독일어</a2-option>
         </a2-select>
-        <div class="row">
-          <a2-chip selected>전체</a2-chip>
-          <a2-chip>사진</a2-chip>
-          <a2-chip>영상</a2-chip>
-          <a2-chip>문서</a2-chip>
-          <a2-chip removable static>지울 수 있음</a2-chip>
-        </div>
       </div>
     </section>
 
@@ -208,31 +184,27 @@
     </section>
 
     <section>
+      <h2>색 · 단축키</h2>
+      <div class="demo">
+        <a2-color label="강조색" value="#FF7A45" id="accentPick"></a2-color>
+        <a2-color label="반투명" value="#4C8DFF99" alpha></a2-color>
+        <a2-keybind label="저장" value="Ctrl+KeyS"></a2-keybind>
+      </div>
+    </section>
+
+    <section>
       <h2>진행 · 뱃지 · 로딩</h2>
       <div class="demo">
         <a2-progress label="올리는 중" value="64" show-value id="prog"></a2-progress>
         <a2-progress label="준비 중"></a2-progress>
-        <div class="row" style="gap:14px">
-          <a2-spinner size="34"></a2-spinner>
-          <a2-spinner size="30" contained></a2-spinner>
+        <div class="row">
           <a2-badge>기본</a2-badge>
           <a2-badge variant="accent">새 기능</a2-badge>
           <a2-badge variant="success" dot>정상</a2-badge>
           <a2-badge variant="warning">주의</a2-badge>
           <a2-badge variant="danger">오류</a2-badge>
+          <a2-spinner></a2-spinner>
         </div>
-      </div>
-    </section>
-
-    <section>
-      <h2>떠 있는 버튼</h2>
-      <div class="fabbox">
-        <a2-fab label="새로 만들기" id="fab">
-          <a2-fab-item value="note"><svg width="15" height="15" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l224 0 0-80c0-17.7 14.3-32 32-32l80 0 0-224c0-8.8-7.2-16-16-16L64 80zM288 480L64 480c-35.3 0-64-28.7-64-64L0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 224 0 5.5c0 17-6.7 33.3-18.7 45.3l-90.5 90.5c-12 12-28.3 18.7-45.3 18.7l-5.5 0z"/></svg>메모</a2-fab-item>
-          <a2-fab-item value="photo"><svg width="15" height="15" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M448 80c8.8 0 16 7.2 16 16l0 319.8-5-6.5-136-176c-4.5-5.9-11.6-9.3-19-9.3s-14.4 3.4-19 9.3L202 340.7l-30.5-42.7C167 291.7 159.8 288 152 288s-15 3.7-19.5 10.1l-80 112L48 416.3l0-.3L48 96c0-8.8 7.2-16 16-16l384 0zM64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zm80 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"/></svg>사진</a2-fab-item>
-          <a2-fab-item value="file"><svg width="15" height="15" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M320 464c8.8 0 16-7.2 16-16l0-288-80 0c-17.7 0-32-14.3-32-32l0-80L64 48c-8.8 0-16 7.2-16 16l0 384c0 8.8 7.2 16 16 16l256 0zM0 64C0 28.7 28.7 0 64 0L229.5 0c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64z"/></svg>파일</a2-fab-item>
-        </a2-fab>
-        <a2-fab label="글쓰기" extended variant="tonal" id="fab2"><svg slot="icon" width="15" height="15" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/></svg></a2-fab>
       </div>
     </section>
 
@@ -240,29 +212,29 @@
       <h2>대화상자 · 서랍 · 알림</h2>
       <div class="demo">
         <div class="row">
-          <a2-button variant="tonal" onclick="dlg.show(this)">대화상자</a2-button>
-          <a2-button variant="tonal" onclick="drawer.show()">서랍</a2-button>
-          <a2-button variant="tonal" onclick="sheet.show()">아래 서랍</a2-button>
+          <a2-button onclick="dlg.show()">대화상자</a2-button>
+          <a2-button onclick="drawer.show()">서랍</a2-button>
+          <a2-button onclick="sheet.show()">아래 서랍</a2-button>
         </div>
         <div class="row">
-          <a2-button id="tBtn">알림</a2-button>
-          <a2-button id="tUndo">되돌리기 알림</a2-button>
-          <a2-button id="cBtn">확인 창</a2-button>
-          <a2-button id="pBtn">입력 창</a2-button>
+          <a2-button variant="soft" id="tBtn">알림</a2-button>
+          <a2-button variant="soft" id="tUndo">되돌리기 알림</a2-button>
+          <a2-button variant="soft" id="cBtn">확인 창</a2-button>
+          <a2-button variant="soft" id="pBtn">입력 창</a2-button>
         </div>
       </div>
     </section>
 
     <section>
-      <h2>메뉴 · 색</h2>
+      <h2>메뉴</h2>
       <div class="demo">
-        <div class="row"><a2-button id="menuBtn" variant="tonal"><svg slot="suffix" width="15" height="15" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>파일</a2-button></div>
+        <div class="row"><a2-button id="menuBtn"><svg slot="suffix" width="14" height="14" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>파일</a2-button></div>
         <a2-menu for="menuBtn">
-          <a2-menu-item value="new" shortcut="Ctrl+KeyN"><svg slot="icon" width="15" height="15" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M320 464c8.8 0 16-7.2 16-16l0-288-80 0c-17.7 0-32-14.3-32-32l0-80L64 48c-8.8 0-16 7.2-16 16l0 384c0 8.8 7.2 16 16 16l256 0zM0 64C0 28.7 28.7 0 64 0L229.5 0c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64z"/></svg>새로 만들기</a2-menu-item>
-          <a2-menu-item value="open" shortcut="Ctrl+KeyO"><svg slot="icon" width="15" height="15" viewBox="0 0 576 512" fill="currentColor" aria-hidden="true"><path d="M384 480l48 0c11.4 0 21.9-6 27.6-15.9l112-192c5.8-9.9 5.8-22.1 .1-32.1S555.5 224 544 224l-400 0c-11.4 0-21.9 6-27.6 15.9L48 357.1 48 96c0-8.8 7.2-16 16-16l117.5 0c4.2 0 8.3 1.7 11.3 4.7l26.5 26.5c21 21 49.5 32.8 79.2 32.8L416 144c8.8 0 16 7.2 16 16l0 32 48 0 0-32c0-35.3-28.7-64-64-64L298.5 96c-17 0-33.3-6.7-45.3-18.7L226.7 50.7c-12-12-28.3-18.7-45.3-18.7L64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l23.7 0L384 480z"/></svg>열기</a2-menu-item>
-          <a2-menu-item value="save" shortcut="Ctrl+KeyS"><svg slot="icon" width="15" height="15" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M48 96l0 320c0 8.8 7.2 16 16 16l320 0c8.8 0 16-7.2 16-16l0-245.5c0-4.2-1.7-8.3-4.7-11.3l33.9-33.9c12 12 18.7 28.3 18.7 45.3L448 416c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96C0 60.7 28.7 32 64 32l245.5 0c17 0 33.3 6.7 45.3 18.7l74.5 74.5-33.9 33.9L320.8 84.7c-.3-.3-.5-.5-.8-.8L320 184c0 13.3-10.7 24-24 24l-192 0c-13.3 0-24-10.7-24-24L80 80 64 80c-8.8 0-16 7.2-16 16zm80-16l0 80 144 0 0-80L128 80zm32 240a64 64 0 1 1 128 0 64 64 0 1 1 -128 0z"/></svg>저장</a2-menu-item>
+          <a2-menu-item value="new" shortcut="Ctrl+KeyN"><svg slot="icon" width="14" height="14" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M320 464c8.8 0 16-7.2 16-16l0-288-80 0c-17.7 0-32-14.3-32-32l0-80L64 48c-8.8 0-16 7.2-16 16l0 384c0 8.8 7.2 16 16 16l256 0zM0 64C0 28.7 28.7 0 64 0L229.5 0c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64z"/></svg>새로 만들기</a2-menu-item>
+          <a2-menu-item value="open" shortcut="Ctrl+KeyO"><svg slot="icon" width="14" height="14" viewBox="0 0 576 512" fill="currentColor" aria-hidden="true"><path d="M384 480l48 0c11.4 0 21.9-6 27.6-15.9l112-192c5.8-9.9 5.8-22.1 .1-32.1S555.5 224 544 224l-400 0c-11.4 0-21.9 6-27.6 15.9L48 357.1 48 96c0-8.8 7.2-16 16-16l117.5 0c4.2 0 8.3 1.7 11.3 4.7l26.5 26.5c21 21 49.5 32.8 79.2 32.8L416 144c8.8 0 16 7.2 16 16l0 32 48 0 0-32c0-35.3-28.7-64-64-64L298.5 96c-17 0-33.3-6.7-45.3-18.7L226.7 50.7c-12-12-28.3-18.7-45.3-18.7L64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l23.7 0L384 480z"/></svg>열기</a2-menu-item>
+          <a2-menu-item value="save" shortcut="Ctrl+KeyS"><svg slot="icon" width="14" height="14" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M48 96l0 320c0 8.8 7.2 16 16 16l320 0c8.8 0 16-7.2 16-16l0-245.5c0-4.2-1.7-8.3-4.7-11.3l33.9-33.9c12 12 18.7 28.3 18.7 45.3L448 416c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96C0 60.7 28.7 32 64 32l245.5 0c17 0 33.3 6.7 45.3 18.7l74.5 74.5-33.9 33.9L320.8 84.7c-.3-.3-.5-.5-.8-.8L320 184c0 13.3-10.7 24-24 24l-192 0c-13.3 0-24-10.7-24-24L80 80 64 80c-8.8 0-16 7.2-16 16zm80-16l0 80 144 0 0-80L128 80zm32 240a64 64 0 1 1 128 0 64 64 0 1 1 -128 0z"/></svg>저장</a2-menu-item>
           <hr>
-          <a2-menu-item value="delete" danger><svg slot="icon" width="15" height="15" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M170.5 51.6L151.5 80l145 0-19-28.4c-1.5-2.2-4-3.6-6.7-3.6l-93.7 0c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6L354.2 80 368 80l48 0 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-8 0 0 304c0 44.2-35.8 80-80 80l-224 0c-44.2 0-80-35.8-80-80l0-304-8 0c-13.3 0-24-10.7-24-24S10.7 80 24 80l8 0 48 0 13.8 0 36.7-55.1C140.9 9.4 158.4 0 177.1 0l93.7 0c18.7 0 36.2 9.4 46.6 24.9zM80 128l0 304c0 17.7 14.3 32 32 32l224 0c17.7 0 32-14.3 32-32l0-304L80 128zm80 64l0 208c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-208c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0l0 208c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-208c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0l0 208c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-208c0-8.8 7.2-16 16-16s16 7.2 16 16z"/></svg>삭제</a2-menu-item>
+          <a2-menu-item value="delete" danger><svg slot="icon" width="14" height="14" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M170.5 51.6L151.5 80l145 0-19-28.4c-1.5-2.2-4-3.6-6.7-3.6l-93.7 0c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6L354.2 80 368 80l48 0 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-8 0 0 304c0 44.2-35.8 80-80 80l-224 0c-44.2 0-80-35.8-80-80l0-304-8 0c-13.3 0-24-10.7-24-24S10.7 80 24 80l8 0 48 0 13.8 0 36.7-55.1C140.9 9.4 158.4 0 177.1 0l93.7 0c18.7 0 36.2 9.4 46.6 24.9zM80 128l0 304c0 17.7 14.3 32 32 32l224 0c17.7 0 32-14.3 32-32l0-304L80 128zm80 64l0 208c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-208c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0l0 208c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-208c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0l0 208c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-208c0-8.8 7.2-16 16-16s16 7.2 16 16z"/></svg>삭제</a2-menu-item>
         </a2-menu>
         <div class="ctx" id="ctxArea">여기를 오른쪽 클릭</div>
         <a2-menu for="ctxArea" trigger="contextmenu">
@@ -270,20 +242,6 @@
           <a2-menu-item value="paste" disabled>붙여넣기</a2-menu-item>
           <a2-menu-item value="rename">이름 바꾸기</a2-menu-item>
         </a2-menu>
-        <a2-color label="반투명 색" value="#4C8DFF99" alpha></a2-color>
-      </div>
-    </section>
-
-    <section>
-      <h2>바꿔 보기</h2>
-      <div class="demo">
-        <a2-color label="강조색으로 테마 만들기" value="#FF7A45" id="accentPick"></a2-color>
-        <a2-slider label="튕김" min="0" max="1.5" step="0.1" value="1" show-value id="bounce"></a2-slider>
-        <a2-segmented label="모서리" value="16" id="corner" block>
-          <a2-segment value="4">각지게</a2-segment>
-          <a2-segment value="16">기본</a2-segment>
-          <a2-segment value="26">둥글게</a2-segment>
-        </a2-segmented>
       </div>
     </section>
 
@@ -291,8 +249,8 @@
       <h2>폼</h2>
       <form id="form" class="demo">
         <div class="cols">
-          <a2-input name="name" label="이름" required></a2-input>
-          <a2-select name="team" label="팀" required>
+          <a2-input name="name" label="이름" required placeholder="필수"></a2-input>
+          <a2-select name="team" label="팀" required placeholder="고르세요">
             <a2-option value="design">디자인</a2-option>
             <a2-option value="dev">개발</a2-option>
             <a2-option value="ops">운영</a2-option>
@@ -300,7 +258,7 @@
           <a2-number name="seats" label="자리" value="2" min="1" max="10"></a2-number>
           <a2-slider name="level" label="숙련도" value="3" min="1" max="5" show-value></a2-slider>
         </div>
-        <div class="row" style="gap:26px">
+        <div class="row" style="gap:22px">
           <a2-switch name="news" checked>소식 받기</a2-switch>
           <a2-checkbox name="agree" required>개인정보 수집에 동의</a2-checkbox>
         </div>
@@ -332,9 +290,8 @@
 
 <a2-drawer id="sheet" side="bottom" heading="공유">
   <div class="row">
-    <a2-button variant="tonal"><svg slot="prefix" width="15" height="15" viewBox="0 0 640 512" fill="currentColor" aria-hidden="true"><path d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"/></svg>링크 복사</a2-button>
-    <a2-button variant="tonal"><svg slot="prefix" width="15" height="15" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"/></svg>메일</a2-button>
-    <a2-button variant="tonal"><svg slot="prefix" width="15" height="15" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 242.7-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7 288 32zM64 352c-35.3 0-64 28.7-64 64l0 32c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-32c0-35.3-28.7-64-64-64l-101.5 0-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352 64 352zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></svg>내려받기</a2-button>
+    <a2-button variant="soft"><svg slot="prefix" width="14" height="14" viewBox="0 0 640 512" fill="currentColor" aria-hidden="true"><path d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"/></svg>링크 복사</a2-button>
+    <a2-button variant="soft"><svg slot="prefix" width="14" height="14" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M64 112c-8.8 0-16 7.2-16 16l0 22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1l0-22.1c0-8.8-7.2-16-16-16L64 112zM48 212.2L48 384c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-171.8L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128z"/></svg>메일</a2-button>
   </div>
 </a2-drawer>
 
@@ -349,7 +306,7 @@
   $('copy').addEventListener('click', () => navigator.clipboard.writeText(cdn).then(() => adas2.toast('복사했습니다', { variant: 'success' }), () => adas2.toast('복사하지 못했습니다', { variant: 'danger' })));
 
   $('theme').addEventListener('change', e => adas2.theme(e.target.value));
-  document.addEventListener('a2-theme', e => { if (adas2.themes.slice(0, 3).includes(e.detail.theme)) $('theme').value = e.detail.theme; });
+  document.addEventListener('a2-theme', e => { if (e.detail.theme !== 'auto') $('theme').value = e.detail.theme; });
 
   // 보이는 동안만 진행 바를 움직인다
   setInterval(() => { if (!document.hidden) { const p = $('prog'); p.value = (p.value + 7) % 107; } }, 1200);
@@ -365,14 +322,10 @@
     const name = await adas2.prompt('새 이름을 입력하세요', { title: '이름 바꾸기', value: '문서 1' });
     if (name != null) adas2.toast(`"${name}" 으로 바꿨습니다`);
   });
-  const NAMES = { new: '새로 만들기', open: '열기', save: '저장', delete: '삭제', copy: '복사', rename: '이름 바꾸기', saveas: '다른 이름으로 저장', saveall: '모두 저장', note: '메모', photo: '사진', file: '파일' };
-  document.addEventListener('a2-select', e => adas2.toast(`${NAMES[e.detail.value] || e.detail.value} 선택`));
-  $('fab2').addEventListener('click', () => adas2.toast('글쓰기'));
+  const NAMES = { new: '새로 만들기', open: '열기', save: '저장', delete: '삭제', copy: '복사', rename: '이름 바꾸기' };
+  document.addEventListener('a2-select', e => { if (e.target.closest('a2-menu')) adas2.toast(`${NAMES[e.detail.value] || e.detail.value} 선택`); });
 
-  // 바꿔 보기: 강조색 하나로 테마를 만들고, 튕김과 모서리를 바꾼다
-  $('accentPick').addEventListener('change', e => { const base = adas2.theme(); adas2.defineTheme('custom', { base: base === 'custom' ? window.__base || 'dark' : (window.__base = base), accent: e.target.value }); adas2.theme('custom'); });
-  $('bounce').addEventListener('change', e => adas2.setMotion({ bounce: e.target.value }));
-  $('corner').addEventListener('change', e => { const r = +e.target.value, st = document.documentElement.style; st.setProperty('--a2-r-xs', `${r / 2}px`); st.setProperty('--a2-r-sm', `${r * 0.75}px`); st.setProperty('--a2-r-md', `${r}px`); st.setProperty('--a2-r-lg', `${r * 1.4}px`); st.setProperty('--a2-r-xl', `${r * 1.75}px`); });
+  $('accentPick').addEventListener('input', e => document.documentElement.style.setProperty('--a2-accent', e.target.value));
 
   $('form').addEventListener('submit', e => {
     e.preventDefault();

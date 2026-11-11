@@ -1,6 +1,5 @@
 import { A2Element, define, icon, esc } from '../core/base.js';
 import { openPopover, POPOVER_CSS } from '../core/popover.js';
-import { FIELD_CSS, BOX_CSS, boxShell, paintBox } from './field.js';
 
 /** <a2-option value="a" disabled>사과</a2-option> */
 export class A2Option extends HTMLElement {
@@ -17,30 +16,36 @@ export class A2Select extends A2Element {
   static formAssociated = true;
   static delegatesFocus = true;
   static observedAttributes = ['label', 'hint', 'error', 'placeholder', 'value', 'disabled', 'required', 'multiple', 'searchable'];
-  static styles = `${POPOVER_CSS}${FIELD_CSS}${BOX_CSS}
-.val { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+  static styles = `${POPOVER_CSS}
+:host { display: block; }
+.box {
+  display: flex; align-items: center; gap: 8px; width: 100%; min-height: var(--a2-h); padding: 3px 10px 3px 12px; text-align: left;
+  border-radius: var(--a2-radius); background: var(--a2-fill); border: 1px solid var(--a2-line); touch-action: manipulation;
+  transition: background-color var(--t1), border-color var(--t1);
+}
+.box:hover { background: var(--a2-fill-hover); border-color: var(--a2-line-strong); }
+:host([open]) .box { background: var(--a2-fill-hover); border-color: var(--a2-accent); }
+:host([error]) .box { background: color-mix(in srgb, var(--a2-danger) 10%, transparent); border-color: var(--a2-danger); }
+.val { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
 .txt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-top: 0.12em; }
 .ph { color: var(--a2-text-faint); }
-.has-label:not(.up) .ph { visibility: hidden; }
-.chev { flex: none; color: var(--a2-text-muted); transition: transform var(--move); }
+.chev { flex: none; color: var(--a2-text-muted); transition: transform var(--t3) var(--spring); }
 :host([open]) .chev { transform: rotate(180deg); }
 .chip {
-  display: inline-flex; align-items: center; gap: 3px; height: 30px; padding: 0 5px 0 11px; border-radius: 8px;
-  background: var(--a2-tonal); color: var(--a2-on-tonal); font-size: var(--a2-fs-sm); font-weight: var(--a2-weight-strong);
-  animation: chipIn calc(var(--a2-d-snap) / var(--a2-speed)) var(--a2-e-snap);
+  display: inline-flex; align-items: center; gap: 2px; height: 26px; padding: 0 4px 0 9px; border-radius: 7px;
+  background: var(--a2-accent-soft); border: 1px solid color-mix(in srgb, var(--a2-accent) 34%, transparent); color: var(--a2-accent); font-size: var(--a2-fs-sm); font-weight: var(--a2-weight-strong);
 }
-@keyframes chipIn { from { transform: scale(0.6); } }
 .chip span { padding-top: 0.12em; }
-.chip i { position: relative; display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; font-style: normal; cursor: pointer; }
+.chip i { position: relative; display: grid; place-items: center; width: 18px; height: 18px; border-radius: 5px; font-style: normal; cursor: pointer; }
 .chip i::before { content: ''; position: absolute; inset: -5px; }
-.chip i:hover { background: var(--a2-fill-active); }
-.search { display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 14px; margin-bottom: 6px; border-radius: 22px; background: var(--a2-fill); color: var(--a2-text-muted); }
+.chip i:hover { background: color-mix(in srgb, var(--a2-accent) 22%, transparent); }
+.search { display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 10px; margin-bottom: 4px; border-radius: 8px; background: var(--a2-fill); border: 1px solid var(--a2-line); color: var(--a2-text-muted); }
 .search input { flex: 1; min-width: 0; border: 0; outline: 0; background: none; color: var(--a2-text); padding-top: 0.12em; }
 .search input::placeholder { color: var(--a2-text-faint); }
-.list { display: flex; flex-direction: column; gap: 2px; }
+.list { display: flex; flex-direction: column; gap: 1px; }
 `;
   render() {
-    this.root.innerHTML = `${boxShell(`<button class="box" part="box" type="button" aria-haspopup="listbox"><span class="val"></span><span class="chev">${icon('chevron', 12)}</span></button>`)}
+    this.root.innerHTML = `${this.fieldHead('')}<button class="box" part="box" type="button" aria-haspopup="listbox"><span class="val"></span><span class="chev">${icon('chevron', 12)}</span></button><div class="hint t" part="hint"></div>
 <div class="pop" popover="manual"><div class="menu" part="menu" role="listbox"><label class="search">${icon('search', 13)}<input placeholder="검색" aria-label="검색"></label><div class="list"></div></div></div>`;
     this.box = this.$('.box'); this.pop = this.$('.pop'); this.listEl = this.$('.list'); this.q = this.$('.search input');
     this._sel = this.parseValue(this.getAttribute('value'));
@@ -89,8 +94,7 @@ export class A2Select extends A2Element {
     const first = this.options.findIndex(o => this._sel.includes(o.value));
     this._active = Math.max(0, first);
     this.paintList();
-    this._pop = openPopover(this.pop, this.$('.f'), { match: true, closeOnOutside: [this], onClose: () => { this.setBool('open', false); this.box.setAttribute('aria-expanded', 'false'); this.$('.f').classList.toggle('up', this._sel.length > 0); } });
-    this.$('.f').classList.add('up');
+    this._pop = openPopover(this.pop, this.box, { match: true, onClose: () => { this.setBool('open', false); this.box.setAttribute('aria-expanded', 'false'); } });
     if (this.bool('searchable')) this.q.focus({ preventScroll: true });
     this.markActive(true);
   }
@@ -165,7 +169,7 @@ export class A2Select extends A2Element {
   }
   attr(name, v) { if (name === 'value') this.value = v; else this.update(); }
   update() {
-    paintBox(this, this._sel.length > 0 || this.isOpen);
+    this.paintField();
     const sel = this.selectedOptions, val = this.$('.val');
     if (!sel.length) val.innerHTML = `<span class="txt ph">${esc(this.str('placeholder', '선택'))}</span>`;
     else if (this.multiple) val.innerHTML = sel.map(o => `<span class="chip"><span>${esc(o.label)}</span><i data-v="${esc(o.value)}" aria-label="빼기">${icon('x', 9)}</i></span>`).join('');

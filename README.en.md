@@ -8,7 +8,7 @@ A web component UI kit
 
 [한국어](README.md) · **English** · [Demo](https://adas2-six.vercel.app)
 
-[![version](https://img.shields.io/badge/version-5.0.0-FF7A45?style=flat-square)](https://github.com/a2den1/adas2/releases)
+[![version](https://img.shields.io/badge/version-4.1.0-FF7A45?style=flat-square)](https://github.com/a2den1/adas2/releases)
 ![dependencies](https://img.shields.io/badge/dependencies-0-29231F?style=flat-square)
 [![license](https://img.shields.io/badge/license-adas2%20License-F26A32?style=flat-square)](LICENSE)
 
@@ -26,8 +26,7 @@ UI components you use as HTML tags, such as `<a2-button>` and `<a2-select>`.
 - One script, no runtime dependencies.
 - Input elements work inside a regular `<form>`: values go into `FormData` on submit, and `required` validation and `reset` work.
 - `.value` and the `input` / `change` events behave like built-in inputs.
-- Three themes (dark, light, ocean), and you can make a new one from a single accent color.
-- Motion is computed with springs; the bounce amount is adjustable.
+- Three themes (dark, light, ocean). Colors and sizes are CSS variables.
 - Each element uses Shadow DOM, so page CSS does not leak in.
 
 ## Install
@@ -35,13 +34,13 @@ UI components you use as HTML tags, such as `<a2-button>` and `<a2-select>`.
 ### CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v5.0.0/dist/adas2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v4.1.0/dist/adas2.min.js"></script>
 ```
 
 The script adds the font (Gmarket Sans) and the color variables. To avoid a flash on first paint, put the CSS in `<head>` as well.
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v5.0.0/dist/adas2.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v4.1.0/dist/adas2.min.css">
 ```
 
 ### npm
@@ -79,40 +78,52 @@ import adas2 from 'adas2';   // importing registers the <a2-*> tags
 
 ## Components
 
-Common attributes: `label` `hint` `error` `disabled` `required` `name`. Inputs expose `.value` and fire `input` (while changing) and `change` (committed).
+Common attributes: `label` `hint` `error` `disabled` `required` `name` `size="sm|lg"`. Inputs expose `.value` and fire `input` (while changing) and `change` (committed).
 
 | Tag | Main attributes | Notes |
 |---|---|---|
-| `a2-button` | `variant` (primary, tonal, ghost, elevated, danger) `size` (xs, sm, lg, xl) `shape="square"` `toggle` `selected` `type` `loading` `block` | Button. Corners change shape while pressed. `toggle` makes it an on/off button |
-| `a2-split-button` | `variant` `menu="menu id"` | Leading button plus a trailing arrow that opens the linked `a2-menu` |
-| `a2-fab` · `a2-fab-item` | `label` `extended` `variant` `size` | Floating button. With items it expands upward on click and fires `a2-select` |
-| `a2-segmented` · `a2-segment` | `value` `block` `multiple` `size` | Connected button group. The pressed segment widens and its neighbors give way |
-| `a2-input` | `type` `placeholder` `clearable` `maxlength` `pattern` | Single line. The label starts inside and moves up onto the outline |
+| `a2-button` | `variant` (primary, soft, ghost, danger) `type` (submit, reset) `loading` `block` | Icons go in `slot="prefix"` / `slot="suffix"`; an icon with no text makes a square button |
+| `a2-input` | `type` `placeholder` `clearable` `maxlength` `pattern` | Single line. `type="password"` adds a show button |
 | `a2-textarea` | `rows` `maxlength` | Multi-line, grows with its content |
-| `a2-number` | `min` `max` `step` `unit` `decimals` | Minus / plus buttons and expressions (`50+25`, `x*2`). Changed digits roll |
+| `a2-number` | `min` `max` `step` `unit` `decimals` | − / + buttons that repeat while held. Accepts expressions like `50+25` or `x*2` (x is the current value) |
 | `a2-checkbox` | `checked` `indeterminate` `value` | Checkbox |
-| `a2-switch` | `checked` `value` | Switch. Click it or drag the thumb |
+| `a2-switch` | `checked` `value` | Switch |
 | `a2-radio-group` · `a2-radio` | `value` `direction="row"` | Pick one. Arrow keys move the selection |
-| `a2-slider` | `min` `max` `step` `show-value` `unit` `size` (sm, lg) | Click or drag the track; arrow keys, Home, End |
+| `a2-slider` | `min` `max` `step` `show-value` `unit` | Click or drag the track; arrow keys, Home, End |
 | `a2-select` · `a2-option` | `placeholder` `multiple` `searchable` | Popup list. With `multiple`, use `value="a,b"`; `.value` is an array |
-| `a2-chip` | `selected` `removable` `static` `value` | Small on/off pill. `removable` fires `a2-remove` |
-| `a2-tabs` · `a2-tab-panel` | `value` `fit`, `label` on panels | Tabs. Fires `a2-change` |
+| `a2-segmented` · `a2-segment` | `value` `block` | One of 2–5 options |
+| `a2-tabs` · `a2-tab-panel` | `value`, `label` on panels | Tabs. Fires `a2-change` |
 | `a2-color` | `alpha` `presets="#hex,…"` | Saturation/value area, hue and alpha bars, HEX input |
 | `a2-keybind` | `value="Ctrl+KeyS"` | Shortcut input. Click, then press keys; Esc cancels, Backspace clears |
-| `a2-progress` | `value` `max` `show-value` `variant` `flat` | Wavy progress bar. Without `value` it is indeterminate |
-| `a2-spinner` | `size` `contained` | Loading indicator that changes shape as it turns |
+| `a2-progress` | `value` `max` `show-value` `variant` | Progress bar. Without `value` it is indeterminate |
+| `a2-spinner` | `size` | Loading spinner |
 | `a2-badge` | `variant` (accent, success, warning, danger) `dot` | Small label |
-| `a2-card` | `heading` `description` `variant` (outlined, elevated) `interactive` | Card |
-| `a2-dialog` | `heading` `description` `size` `persistent` `no-close` | Dialog. `show(opener)` / `close(value)`, `a2-show` / `a2-close` events. Grows from the opener |
-| `a2-drawer` | `side` (right, left, bottom) | Side or bottom sheet. The bottom sheet can be dragged down to close |
+| `a2-card` | `heading` `description` `interactive` | Card. Buttons go in `slot="footer"` |
+| `a2-dialog` | `heading` `description` `size` `persistent` `no-close` | Dialog. `show()` / `close(value)`, `a2-show` / `a2-close` events |
+| `a2-drawer` | `side` (right, left, bottom) | Side or bottom sheet. Same API as the dialog |
 | `a2-menu` · `a2-menu-item` | `for` `trigger="contextmenu"` `align="end"`, `shortcut` `danger` on items | Menu. Fires `a2-select` (`detail.value`) |
 
-Inside a dialog, clicking an element with `data-close="value"` closes it with that value. For a tooltip, add `a2-tip="text"` to any element.
+Inside a dialog, clicking an element with `data-close="value"` closes it with that value.
+
+```html
+<a2-dialog id="save" heading="Save changes?">
+  <div slot="footer" style="display:contents">
+    <a2-button data-close="no" variant="ghost">No</a2-button>
+    <a2-button data-close="yes" variant="primary">Save</a2-button>
+  </div>
+</a2-dialog>
+<script>
+  save.show();
+  save.addEventListener('a2-close', e => console.log(e.detail.returnValue));
+</script>
+```
+
+For a tooltip, add `a2-tip="text"` to any element. Set the side with `a2-tip-side="top|bottom|left|right"`.
 
 ## Script API
 
 ```js
-adas2.toast('Saved', { variant: 'success' });                     // info, success, warning, danger. Swipe sideways to dismiss
+adas2.toast('Saved', { variant: 'success' });                     // info, success, warning, danger
 adas2.toast('Deleted 1 item', { action: { label: 'Undo', onClick: undo } });
 
 await adas2.alert('Update finished.');
@@ -120,68 +131,41 @@ if (await adas2.confirm('Delete this?', { title: 'Delete', okText: 'Delete', dan
 const name = await adas2.prompt('New name', { value: 'Document 1' }); // null when cancelled
 
 adas2.theme('light');                                             // 'dark', 'light', 'ocean', 'auto'
+adas2.animate({ x: 0 }, { x: 100 }, { duration: 0.3, ease: 'OutCubic', onUpdate: v => {} });
 adas2.evaluate('x*2', { x: 5 });                                  // { ok: true, value: 10 }
 addEventListener('keydown', e => { if (adas2.matchKey(e, 'Ctrl+KeyS')) save(); });
 ```
 
 Built-in labels (cancel, OK, placeholders) are in Korean; pass `okText`, `cancelText` and `placeholder` to change them.
 
-## Customizing and extending
+## Themes and styling
 
-```js
-// A theme from one accent color; the other colors are derived from it
-adas2.defineTheme('mint', { base: 'dark', accent: '#3FD0A5' });
-adas2.theme('mint');
-
-// Motion: bounce amount (0 turns overshoot off) and spring values
-adas2.setMotion({ bounce: 0.5 });
-adas2.setMotion({ springs: { snap: { k: 600, z: 0.7 } } });
-
-// Add an icon
-adas2.addIcon('star', '0 0 576 512', 'M316.9 18C311.6 7 300.4 0 288.1 0s…');
+```html
+<html data-a2-theme="light">
 ```
 
 ```css
 :root {
   --a2-accent: #4C8DFF;     /* accent color */
-  --a2-r-md: 10px;          /* corner radius (xs, sm, md, lg, xl) */
-  --a2-h: 40px;             /* button height */
-  --a2-h-field: 48px;       /* field height */
-  --a2-speed: 1.5;          /* motion speed (instant with reduced motion) */
+  --a2-radius: 8px;         /* corner radius */
+  --a2-h: 36px;             /* control height */
+  --a2-fs: 13px;            /* font size */
+  --a2-speed: 1.5;          /* animation speed (instant with reduced motion) */
 }
 ```
 
 | Variable | Meaning |
 |---|---|
-| `--a2-bg` `--a2-surface` `--a2-surface-high` `--a2-surface-highest` | Page and the surfaces on it |
-| `--a2-accent` `--a2-on-accent` `--a2-accent-container` `--a2-on-accent-container` | Accent, its soft container, and text on them |
-| `--a2-tonal` `--a2-on-tonal` | Lower-emphasis surface and its text |
-| `--a2-line` `--a2-line-strong` `--a2-fill` `--a2-fill-hover` | Outlines and hover overlay |
+| `--a2-bg` `--a2-surface` `--a2-raised` | Page, cards, floating panels |
+| `--a2-fill` `--a2-fill-hover` `--a2-fill-active` | Control background (translucent) |
+| `--a2-line` `--a2-line-strong` | Outlines |
+| `--a2-accent` `--a2-accent-hover` `--a2-accent-pressed` `--a2-accent-soft` `--a2-on-accent` | Accent and text on it |
 | `--a2-text` `--a2-text-muted` `--a2-text-faint` | Text |
 | `--a2-danger` `--a2-success` `--a2-warning` | Status colors |
 | `--a2-tip` `--a2-on-tip` | Toast and tooltip background and text |
-| `--a2-r-xs` … `--a2-r-xl` | Corner radii |
+| `--a2-font` `--a2-weight` `--a2-weight-strong` | Font and weights (300, 500) |
 
 Inner parts can be styled with `::part()`, for example `a2-input::part(box)`, `a2-button::part(base)`, `a2-slider::part(thumb)`.
-
-### Writing your own element
-
-The base class and the spring are exported.
-
-```js
-const { A2Element, define, Spring, drag, ripple } = adas2;
-
-class Knob extends A2Element {
-  static styles = `.k { width: 64px; height: 64px; border-radius: 50%; background: var(--a2-tonal); }`;
-  render() {
-    this.root.innerHTML = `<div class="k"></div>`;
-    const k = this.$('.k');
-    const turn = new Spring(0, 'snap', deg => { k.style.rotate = `${deg}deg`; });
-    drag(k, { move: ({ dx }) => turn.jump(dx), end: ({ vx }) => turn.set(0, { velocity: vx }) });   // springs back, keeping the release velocity
-  }
-}
-define('x-knob', Knob);
-```
 
 ## Development
 
@@ -193,13 +177,13 @@ npm run dev        # http://localhost:5880/docs/
 
 | Path | Contents |
 |---|---|
-| `src/core/` | Base class, springs, popovers, shortcuts, expression evaluator |
+| `src/core/` | Base class, animation, popovers, shortcuts, expression evaluator |
 | `src/elements/` | Components |
 | `src/api/` | Toast, dialog functions, tooltip, theme |
 | `src/styles/global.css` | Font and color variables |
 | `types/` | TypeScript declarations |
 
-Browsers: Chrome/Edge 114+, Safari 17.2+, Firefox 125+
+Browsers: Chrome/Edge 114+, Safari 17+, Firefox 125+
 
 ## License
 
