@@ -1,4 +1,4 @@
-/*! adas2 v4.1.0 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
+/*! adas2 v4.1.1 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
 var adas2 = (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -2202,6 +2202,12 @@ kbd {
   display: inline-grid; place-items: center; min-width: 26px; height: 26px; padding: 0.12em 7px 0; border-radius: 6px;
   background: var(--a2-raised); border: 1px solid var(--a2-line); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.28); font: inherit; font-size: var(--a2-fs-sm); font-weight: var(--a2-weight-strong);
 }
+/* 틀: 이 안에서만 보이고, 내용이 아래에서 올라온다(투명도는 쓰지 않는다) */
+.kf { display: inline-block; overflow: clip; border-radius: 6px; padding-bottom: 1px; }
+.kf.txt { border-radius: 0; }
+.kf > * { display: grid; }
+.kf.in > * { animation: rise var(--t3) cubic-bezier(0.2, 0.9, 0.2, 1) both; }
+@keyframes rise { from { transform: translateY(110%); } }
 .plus { color: var(--a2-text-faint); font-size: var(--a2-fs-sm); }
 .ph { padding: 0.12em 4px 0; color: var(--a2-text-faint); }
 .rec .ph { color: var(--a2-accent); }
@@ -2291,7 +2297,14 @@ kbd {
       const k = this.$(".keys");
       const names = mods ? mods : keyNames(this._v);
       const ph = this.rec && !(mods && mods.length) ? "키를 누르세요" : this.str("placeholder", "없음");
-      k.innerHTML = names.length ? names.map((n) => `<kbd>${esc(n)}</kbd>`).join('<span class="plus">+</span>') + (this.rec ? '<span class="plus">+</span>' : "") : `<span class="ph">${esc(ph)}</span>`;
+      const parts = names.length ? names.map((n) => ["k", n]) : [["t", ph]], old = this._shown || [];
+      k.innerHTML = parts.map(([type, text], i) => {
+        const fresh = this._painted && (!old[i] || old[i][0] !== type || old[i][1] !== text);
+        const body = type === "k" ? `<kbd>${esc(text)}</kbd>` : `<span class="ph">${esc(text)}</span>`;
+        return `${i ? '<span class="plus">+</span>' : ""}<span class="kf${type === "t" ? " txt" : ""}${fresh ? " in" : ""}">${body}</span>`;
+      }).join("") + (this.rec && names.length ? '<span class="plus">+</span>' : "");
+      this._shown = parts;
+      this._painted = true;
       this.$(".x").style.visibility = this._v && !this.rec ? "visible" : "hidden";
     }
     attr(name, v) {
@@ -2477,7 +2490,9 @@ dialog::backdrop { background: none; }
     set open(v) {
       this.setBool("open", v);
     }
-    show() {
+    /** from: 이 요소 자리에서 펼쳐진다(주지 않으면 방금 초점이 있던 요소, 보통 누른 버튼) */
+    show(from2) {
+      this._from = from2 instanceof Element ? from2 : null;
       this.open = true;
       return this;
     }
@@ -2512,6 +2527,7 @@ dialog::backdrop { background: none; }
       this.returnValue = "";
       this._ret = document.activeElement;
       this.dlg.showModal();
+      this.origin(this._from || this._ret);
       if (!this._locked) {
         this._locked = true;
         lockScroll(true);
@@ -2521,7 +2537,7 @@ dialog::backdrop { background: none; }
       else this.panel.focus({ preventScroll: true });
       this._anim?.stop();
       const from2 = this._p ?? 0;
-      this._anim = animate({ p: from2 }, { p: 1 }, { duration: 0.42, ease: "OutQuart", onUpdate: (v) => this.paint(v.p) });
+      this._anim = animate({ p: from2 }, { p: 1 }, { duration: 0.46, ease: "OutExpo", onUpdate: (v) => this.paint(v.p) });
       this.emit("a2-show");
     }
     doClose() {
@@ -2542,6 +2558,8 @@ dialog::backdrop { background: none; }
         }
       });
     }
+    origin() {
+    }
     paint(p) {
       this._p = p;
       this.scrim.style.opacity = p;
@@ -2553,9 +2571,25 @@ dialog::backdrop { background: none; }
 :host([size="sm"]) { --w: 360px; }
 :host([size="lg"]) { --w: 640px; }
 `;
+    /** 펼쳐지기 시작할 자리: 연 요소의 가운데와 너비. 화면에 없으면 제자리에서 조금 작게 */
+    origin(from2) {
+      this.panel.style.transform = "";
+      const pr = this.panel.getBoundingClientRect();
+      let o = { x: 0, y: 0, s: 0.9 };
+      if (from2 && from2 !== document.body && from2.getBoundingClientRect) {
+        const r = from2.getBoundingClientRect();
+        if (r.width && r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth) {
+          o = { x: r.left + r.width / 2 - (pr.left + pr.width / 2), y: r.top + r.height / 2 - (pr.top + pr.height / 2), s: Math.min(0.9, Math.max(0.25, r.width / pr.width)) };
+        }
+      }
+      this.o = o;
+      this.paint(this._p ?? 0);
+    }
     paint(p) {
       super.paint(p);
-      reveal(this.panel, p);
+      const o = this.o || { x: 0, y: 0, s: 0.9 }, q = 1 - p;
+      this.panel.style.transform = p >= 1 ? "" : `translate(${o.x * q}px, ${o.y * q}px) scale(${o.s + (1 - o.s) * p})`;
+      this.panel.style.opacity = p >= 0.3 ? "" : Math.max(0, p / 0.3);
     }
   };
   var A2Drawer = class extends OverlayBase {
@@ -3036,7 +3070,7 @@ dialog::backdrop { background: none; }
   var themes = [...NAMES2];
 
   // src/index.js
-  var version = "4.1.0";
+  var version = "4.1.1";
   if (typeof document !== "undefined") {
     ensureGlobal();
     installTooltips();

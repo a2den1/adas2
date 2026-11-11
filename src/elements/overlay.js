@@ -1,5 +1,5 @@
 import { A2Element, define, icon } from '../core/base.js';
-import { animate, reveal } from '../core/animate.js';
+import { animate } from '../core/animate.js';
 
 // 열린 창이 하나라도 있으면 문서 스크롤을 막는다. 스크롤바가 사라져도 화면이 옆으로 밀리지 않게 그만큼 채운다.
 let locks = 0, saved = null;
@@ -48,7 +48,8 @@ class OverlayBase extends A2Element {
   }
   get open() { return this.bool('open'); }
   set open(v) { this.setBool('open', v); }
-  show() { this.open = true; return this; }
+  /** from: 이 요소 자리에서 펼쳐진다(주지 않으면 방금 초점이 있던 요소, 보통 누른 버튼) */
+  show(from) { this._from = from instanceof Element ? from : null; this.open = true; return this; }
   close(returnValue) { if (returnValue !== undefined) this.returnValue = returnValue; this.open = false; return this; }
   attr(name, v, old) {
     if (name === 'open') (v != null) === (old != null) || (v != null ? this.doOpen() : this.doClose());
@@ -67,12 +68,13 @@ class OverlayBase extends A2Element {
     this.returnValue = '';
     this._ret = document.activeElement;
     this.dlg.showModal();
+    this.origin(this._from || this._ret);
     if (!this._locked) { this._locked = true; lockScroll(true); }
     const auto = this.querySelector('[autofocus]');
     if (auto) auto.focus(); else this.panel.focus({ preventScroll: true });
     this._anim?.stop();
     const from = this._p ?? 0;
-    this._anim = animate({ p: from }, { p: 1 }, { duration: 0.42, ease: 'OutQuart', onUpdate: v => this.paint(v.p) });
+    this._anim = animate({ p: from }, { p: 1 }, { duration: 0.46, ease: 'OutExpo', onUpdate: v => this.paint(v.p) });
     this.emit('a2-show');
   }
   doClose() {
@@ -88,6 +90,7 @@ class OverlayBase extends A2Element {
       },
     });
   }
+  origin() {}
   paint(p) { this._p = p; this.scrim.style.opacity = p; }
 }
 
@@ -102,10 +105,26 @@ export class A2Dialog extends OverlayBase {
 :host([size="sm"]) { --w: 360px; }
 :host([size="lg"]) { --w: 640px; }
 `;
+  /** 펼쳐지기 시작할 자리: 연 요소의 가운데와 너비. 화면에 없으면 제자리에서 조금 작게 */
+  origin(from) {
+    this.panel.style.transform = '';
+    const pr = this.panel.getBoundingClientRect();
+    let o = { x: 0, y: 0, s: 0.9 };
+    if (from && from !== document.body && from.getBoundingClientRect) {
+      const r = from.getBoundingClientRect();
+      if (r.width && r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth) {
+        o = { x: r.left + r.width / 2 - (pr.left + pr.width / 2), y: r.top + r.height / 2 - (pr.top + pr.height / 2), s: Math.min(0.9, Math.max(0.25, r.width / pr.width)) };
+      }
+    }
+    this.o = o;
+    this.paint(this._p ?? 0);
+  }
   paint(p) {
     super.paint(p);
-    // 제자리의 틀 안에서 아래에서 위로 올라온다
-    reveal(this.panel, p);
+    const o = this.o || { x: 0, y: 0, s: 0.9 }, q = 1 - p;
+    this.panel.style.transform = p >= 1 ? '' : `translate(${o.x * q}px, ${o.y * q}px) scale(${o.s + (1 - o.s) * p})`;
+    // 처음 잠깐만 흐리게: 버튼에서 떨어져 나오는 순간이 튀어 보이지 않게
+    this.panel.style.opacity = p >= 0.3 ? '' : Math.max(0, p / 0.3);
   }
 }
 

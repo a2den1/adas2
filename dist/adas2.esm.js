@@ -1,4 +1,4 @@
-/*! adas2 v4.1.0 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
+/*! adas2 v4.1.1 | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */
 // src/styles/global.css
 var global_default = '/* adas2 — 문서 전체에 한 번 들어가는 스타일: 글꼴, 색 토큰, 정의 전 깜빡임 막기 */\n\n@font-face { font-family: "GmarketSans"; font-weight: 300; font-display: swap; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff") format("woff"); }\n@font-face { font-family: "GmarketSans"; font-weight: 500; font-display: swap; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff") format("woff"); }\n@font-face { font-family: "GmarketSans"; font-weight: 700; font-display: swap; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff") format("woff"); }\n\n:root {\n  --a2-font: "GmarketSans", "Pretendard", system-ui, -apple-system, "Malgun Gothic", sans-serif;\n  --a2-weight: 300;\n  --a2-weight-strong: 500;\n  --a2-fs: 14px;\n  --a2-fs-sm: 12.5px;\n  --a2-fs-lg: 17px;\n  --a2-h: 40px;\n  --a2-radius: 10px;\n  --a2-radius-lg: 16px;\n  --a2-speed: 1;\n}\n\n/* 어두운 화면 (기본) */\n:root, [data-a2-theme="dark"] {\n  --a2-line: rgba(243, 238, 233, 0.13); --a2-line-strong: rgba(243, 238, 233, 0.32);\n  --a2-fill: rgba(243, 238, 233, 0.07); --a2-fill-hover: rgba(243, 238, 233, 0.1); --a2-fill-active: rgba(243, 238, 233, 0.14);\n  color-scheme: dark;\n  --a2-bg: #1B1917;\n  --a2-surface: #272421;\n  --a2-surface-hover: #2F2B28;\n  --a2-surface-active: #36312D;\n  --a2-raised: #2C2825;\n  --a2-accent: #FF7A45;\n  --a2-accent-hover: #FF8B5C;\n  --a2-accent-pressed: #EB6630;\n  --a2-accent-soft: rgba(255, 122, 69, 0.16);\n  --a2-on-accent: #FFFFFF;\n  --a2-text: #F3EEE9;\n  --a2-text-muted: rgba(243, 238, 233, 0.58);\n  --a2-text-faint: rgba(243, 238, 233, 0.3);\n  --a2-danger: #F25F5C;\n  --a2-success: #5CCB8A;\n  --a2-warning: #F4B740;\n  --a2-shadow: 0 12px 36px rgba(0, 0, 0, 0.42), 0 2px 8px rgba(0, 0, 0, 0.25);\n  --a2-scrim: rgba(10, 9, 8, 0.55);\n  --a2-tip: #38332F;\n  --a2-on-tip: #F3EEE9;\n}\n\n/* 밝은 화면 */\n[data-a2-theme="light"] {\n  --a2-line: rgba(41, 35, 31, 0.15); --a2-line-strong: rgba(41, 35, 31, 0.36);\n  --a2-fill: rgba(41, 35, 31, 0.06); --a2-fill-hover: rgba(41, 35, 31, 0.09); --a2-fill-active: rgba(41, 35, 31, 0.13);\n  color-scheme: light;\n  --a2-bg: #FAF7F3;\n  --a2-surface: #EFEAE4;\n  --a2-surface-hover: #E8E2DA;\n  --a2-surface-active: #E0D9D0;\n  --a2-raised: #FFFFFF;\n  --a2-accent: #F26A32;\n  --a2-accent-hover: #FF7A45;\n  --a2-accent-pressed: #D9581F;\n  --a2-accent-soft: rgba(242, 106, 50, 0.13);\n  --a2-on-accent: #FFFFFF;\n  --a2-text: #29231F;\n  --a2-text-muted: rgba(41, 35, 31, 0.58);\n  --a2-text-faint: rgba(41, 35, 31, 0.3);\n  --a2-danger: #D84542;\n  --a2-success: #259B5A;\n  --a2-warning: #C98A10;\n  --a2-shadow: 0 12px 36px rgba(60, 40, 20, 0.14), 0 2px 8px rgba(60, 40, 20, 0.08);\n  --a2-scrim: rgba(40, 30, 20, 0.3);\n  --a2-tip: #2B2521;\n  --a2-on-tip: #FAF7F3;\n}\n\n/* 바다 */\n[data-a2-theme="ocean"] {\n  --a2-line: rgba(237, 241, 246, 0.13); --a2-line-strong: rgba(237, 241, 246, 0.32);\n  --a2-fill: rgba(237, 241, 246, 0.07); --a2-fill-hover: rgba(237, 241, 246, 0.1); --a2-fill-active: rgba(237, 241, 246, 0.14);\n  color-scheme: dark;\n  --a2-bg: #14181E;\n  --a2-surface: #1F252D;\n  --a2-surface-hover: #262D37;\n  --a2-surface-active: #2D3540;\n  --a2-raised: #232A33;\n  --a2-accent: #4C8DFF;\n  --a2-accent-hover: #649CFF;\n  --a2-accent-pressed: #3676E6;\n  --a2-accent-soft: rgba(76, 141, 255, 0.16);\n  --a2-on-accent: #FFFFFF;\n  --a2-text: #EDF1F6;\n  --a2-text-muted: rgba(237, 241, 246, 0.58);\n  --a2-text-faint: rgba(237, 241, 246, 0.3);\n  --a2-danger: #F2645F;\n  --a2-success: #4FC68A;\n  --a2-warning: #F1B643;\n  --a2-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);\n  --a2-scrim: rgba(5, 8, 12, 0.55);\n  --a2-tip: #2E3743;\n  --a2-on-tip: #EDF1F6;\n}\n\n/* 정의되기 전에는 숨겨서 깜빡임을 막는다 */\n:is(a2-button, a2-input, a2-textarea, a2-number, a2-select, a2-checkbox, a2-switch, a2-radio-group, a2-slider,\n    a2-segmented, a2-tabs, a2-color, a2-keybind, a2-card, a2-badge, a2-progress, a2-spinner, a2-dialog, a2-drawer, a2-menu):not(:defined) {\n  visibility: hidden;\n}\na2-option, a2-segment, a2-menu-item, a2-tab-panel { display: none; }\na2-tab-panel[data-on] { display: block; }\n\n@media (prefers-reduced-motion: reduce) { :root { --a2-speed: 1000; } }\n';
 
@@ -2165,6 +2165,12 @@ kbd {
   display: inline-grid; place-items: center; min-width: 26px; height: 26px; padding: 0.12em 7px 0; border-radius: 6px;
   background: var(--a2-raised); border: 1px solid var(--a2-line); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.28); font: inherit; font-size: var(--a2-fs-sm); font-weight: var(--a2-weight-strong);
 }
+/* 틀: 이 안에서만 보이고, 내용이 아래에서 올라온다(투명도는 쓰지 않는다) */
+.kf { display: inline-block; overflow: clip; border-radius: 6px; padding-bottom: 1px; }
+.kf.txt { border-radius: 0; }
+.kf > * { display: grid; }
+.kf.in > * { animation: rise var(--t3) cubic-bezier(0.2, 0.9, 0.2, 1) both; }
+@keyframes rise { from { transform: translateY(110%); } }
 .plus { color: var(--a2-text-faint); font-size: var(--a2-fs-sm); }
 .ph { padding: 0.12em 4px 0; color: var(--a2-text-faint); }
 .rec .ph { color: var(--a2-accent); }
@@ -2254,7 +2260,14 @@ kbd {
     const k = this.$(".keys");
     const names = mods ? mods : keyNames(this._v);
     const ph = this.rec && !(mods && mods.length) ? "키를 누르세요" : this.str("placeholder", "없음");
-    k.innerHTML = names.length ? names.map((n) => `<kbd>${esc(n)}</kbd>`).join('<span class="plus">+</span>') + (this.rec ? '<span class="plus">+</span>' : "") : `<span class="ph">${esc(ph)}</span>`;
+    const parts = names.length ? names.map((n) => ["k", n]) : [["t", ph]], old = this._shown || [];
+    k.innerHTML = parts.map(([type, text], i) => {
+      const fresh = this._painted && (!old[i] || old[i][0] !== type || old[i][1] !== text);
+      const body = type === "k" ? `<kbd>${esc(text)}</kbd>` : `<span class="ph">${esc(text)}</span>`;
+      return `${i ? '<span class="plus">+</span>' : ""}<span class="kf${type === "t" ? " txt" : ""}${fresh ? " in" : ""}">${body}</span>`;
+    }).join("") + (this.rec && names.length ? '<span class="plus">+</span>' : "");
+    this._shown = parts;
+    this._painted = true;
     this.$(".x").style.visibility = this._v && !this.rec ? "visible" : "hidden";
   }
   attr(name, v) {
@@ -2440,7 +2453,9 @@ var OverlayBase = class extends A2Element {
   set open(v) {
     this.setBool("open", v);
   }
-  show() {
+  /** from: 이 요소 자리에서 펼쳐진다(주지 않으면 방금 초점이 있던 요소, 보통 누른 버튼) */
+  show(from2) {
+    this._from = from2 instanceof Element ? from2 : null;
     this.open = true;
     return this;
   }
@@ -2475,6 +2490,7 @@ var OverlayBase = class extends A2Element {
     this.returnValue = "";
     this._ret = document.activeElement;
     this.dlg.showModal();
+    this.origin(this._from || this._ret);
     if (!this._locked) {
       this._locked = true;
       lockScroll(true);
@@ -2484,7 +2500,7 @@ var OverlayBase = class extends A2Element {
     else this.panel.focus({ preventScroll: true });
     this._anim?.stop();
     const from2 = this._p ?? 0;
-    this._anim = animate({ p: from2 }, { p: 1 }, { duration: 0.42, ease: "OutQuart", onUpdate: (v) => this.paint(v.p) });
+    this._anim = animate({ p: from2 }, { p: 1 }, { duration: 0.46, ease: "OutExpo", onUpdate: (v) => this.paint(v.p) });
     this.emit("a2-show");
   }
   doClose() {
@@ -2505,6 +2521,8 @@ var OverlayBase = class extends A2Element {
       }
     });
   }
+  origin() {
+  }
   paint(p) {
     this._p = p;
     this.scrim.style.opacity = p;
@@ -2516,9 +2534,25 @@ var A2Dialog = class extends OverlayBase {
 :host([size="sm"]) { --w: 360px; }
 :host([size="lg"]) { --w: 640px; }
 `;
+  /** 펼쳐지기 시작할 자리: 연 요소의 가운데와 너비. 화면에 없으면 제자리에서 조금 작게 */
+  origin(from2) {
+    this.panel.style.transform = "";
+    const pr = this.panel.getBoundingClientRect();
+    let o = { x: 0, y: 0, s: 0.9 };
+    if (from2 && from2 !== document.body && from2.getBoundingClientRect) {
+      const r = from2.getBoundingClientRect();
+      if (r.width && r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth) {
+        o = { x: r.left + r.width / 2 - (pr.left + pr.width / 2), y: r.top + r.height / 2 - (pr.top + pr.height / 2), s: Math.min(0.9, Math.max(0.25, r.width / pr.width)) };
+      }
+    }
+    this.o = o;
+    this.paint(this._p ?? 0);
+  }
   paint(p) {
     super.paint(p);
-    reveal(this.panel, p);
+    const o = this.o || { x: 0, y: 0, s: 0.9 }, q = 1 - p;
+    this.panel.style.transform = p >= 1 ? "" : `translate(${o.x * q}px, ${o.y * q}px) scale(${o.s + (1 - o.s) * p})`;
+    this.panel.style.opacity = p >= 0.3 ? "" : Math.max(0, p / 0.3);
   }
 };
 var A2Drawer = class extends OverlayBase {
@@ -2999,7 +3033,7 @@ function theme(name) {
 var themes = [...NAMES2];
 
 // src/index.js
-var version = "4.1.0";
+var version = "4.1.1";
 if (typeof document !== "undefined") {
   ensureGlobal();
   installTooltips();

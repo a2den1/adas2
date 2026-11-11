@@ -19,6 +19,12 @@ kbd {
   display: inline-grid; place-items: center; min-width: 26px; height: 26px; padding: 0.12em 7px 0; border-radius: 6px;
   background: var(--a2-raised); border: 1px solid var(--a2-line); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.28); font: inherit; font-size: var(--a2-fs-sm); font-weight: var(--a2-weight-strong);
 }
+/* 틀: 이 안에서만 보이고, 내용이 아래에서 올라온다(투명도는 쓰지 않는다) */
+.kf { display: inline-block; overflow: clip; border-radius: 6px; padding-bottom: 1px; }
+.kf.txt { border-radius: 0; }
+.kf > * { display: grid; }
+.kf.in > * { animation: rise var(--t3) cubic-bezier(0.2, 0.9, 0.2, 1) both; }
+@keyframes rise { from { transform: translateY(110%); } }
 .plus { color: var(--a2-text-faint); font-size: var(--a2-fs-sm); }
 .ph { padding: 0.12em 4px 0; color: var(--a2-text-faint); }
 .rec .ph { color: var(--a2-accent); }
@@ -71,7 +77,14 @@ kbd {
     const k = this.$('.keys');
     const names = mods ? mods : keyNames(this._v);
     const ph = this.rec && !(mods && mods.length) ? '키를 누르세요' : this.str('placeholder', '없음');
-    k.innerHTML = names.length ? names.map(n => `<kbd>${esc(n)}</kbd>`).join('<span class="plus">+</span>') + (this.rec ? '<span class="plus">+</span>' : '') : `<span class="ph">${esc(ph)}</span>`;
+    // 새로 생기거나 바뀐 조각만 올라온다(처음 그릴 때는 그대로 둔다)
+    const parts = names.length ? names.map(n => ['k', n]) : [['t', ph]], old = this._shown || [];
+    k.innerHTML = parts.map(([type, text], i) => {
+      const fresh = this._painted && (!old[i] || old[i][0] !== type || old[i][1] !== text);
+      const body = type === 'k' ? `<kbd>${esc(text)}</kbd>` : `<span class="ph">${esc(text)}</span>`;
+      return `${i ? '<span class="plus">+</span>' : ''}<span class="kf${type === 't' ? ' txt' : ''}${fresh ? ' in' : ''}">${body}</span>`;
+    }).join('') + (this.rec && names.length ? '<span class="plus">+</span>' : '');
+    this._shown = parts; this._painted = true;
     this.$('.x').style.visibility = this._v && !this.rec ? 'visible' : 'hidden';
   }
   attr(name, v) { if (name === 'value') this.value = v; else this.update(); }
