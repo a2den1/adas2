@@ -10,13 +10,31 @@ const pkg = JSON.parse(read('package.json'));
 const banner = `/*! adas2 v${pkg.version} | (c) 2026 a2den1 | adas2 License: 사용 자유, 수정·2차 배포 금지 | https://github.com/a2den1/adas2 */\n`;
 mkdirSync(new URL('dist', root), { recursive: true });
 
+// 요소 안 CSS(`static styles = \`…\``, `…CSS = \`…\``)의 줄바꿈·공백·주석을 줄인다. 압축본에만 쓴다.
+const squeeze = css => css
+  .replace(/\/\*[\s\S]*?\*\//g, '')
+  .replace(/\s+/g, ' ')
+  .replace(/ ?([{};,]) ?/g, '$1')
+  .replace(/: /g, ':')
+  .replace(/;}/g, '}')
+  .trim();
+const cssMin = {
+  name: 'adas2-css-min',
+  setup(b) {
+    b.onLoad({ filter: /src[\\/](elements|core|api)[\\/].*\.js$/ }, async args => {
+      const src = readFileSync(args.path, 'utf8');
+      return { loader: 'js', contents: src.replace(/((?:static styles|[A-Z_]*CSS) = `)([\s\S]*?)(`;)/g, (_, a, body, z) => a + squeeze(body) + z) };
+    });
+  },
+};
+
 const common = {
   entryPoints: [new URL('src/index.js', root).pathname.replace(/^\/([A-Za-z]:)/, '$1')],
-  bundle: true, write: false, target: 'es2020', legalComments: 'none', charset: 'utf8',
+  bundle: true, write: false, target: 'es2022', legalComments: 'none', charset: 'utf8',
   define: { __VERSION__: JSON.stringify(pkg.version) },
   loader: { '.css': 'text' },
 };
-const out = async (format, minify) => (await build({ ...common, format, minify, ...(format === 'iife' ? { globalName: 'adas2', footer: { js: 'adas2=adas2.default||adas2;' } } : {}) })).outputFiles[0].text;
+const out = async (format, minify) => (await build({ ...common, format, minify, plugins: minify ? [cssMin] : [], ...(format === 'iife' ? { globalName: 'adas2', footer: { js: 'adas2=adas2.default||adas2;' } } : {}) })).outputFiles[0].text;
 
 console.log(`adas2 v${pkg.version}`);
 write('dist/adas2.js', banner + await out('iife', false));

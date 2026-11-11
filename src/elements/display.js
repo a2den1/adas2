@@ -9,7 +9,7 @@ export class A2Progress extends A2Element {
 .head .label { flex: 1; }
 .out { font-size: var(--a2-fs-sm); color: var(--a2-text-muted); font-variant-numeric: tabular-nums; margin-bottom: 7px; }
 .out:empty { display: none; }
-.track { position: relative; height: 6px; border-radius: 3px; background: var(--a2-fill-active); overflow: hidden; }
+.track { position: relative; height: 6px; border-radius: 3px; background: var(--a2-fill-active); box-shadow: inset 0 0 0 1px var(--a2-line); overflow: hidden; }
 .fill { position: absolute; inset: 0 auto 0 0; width: 100%; border-radius: 3px; background: var(--a2-accent); transform-origin: left; transform: scaleX(0); transition: transform var(--t3) var(--spring); }
 :host([variant="success"]) .fill { background: var(--a2-success); }
 :host([variant="danger"]) .fill { background: var(--a2-danger); }
@@ -55,12 +55,12 @@ circle { stroke-dasharray: 44 100; stroke-linecap: round; animation: dash calc(1
 export class A2Badge extends A2Element {
   static styles = `
 :host { display: inline-flex; vertical-align: middle; }
-.b { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0.12em 9px 0; border-radius: 7px; font-size: var(--a2-fs-sm); font-weight: var(--a2-weight-strong); white-space: nowrap; background: var(--a2-fill-active); color: var(--a2-text-muted); --c: var(--a2-text-muted); }
+.b { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0.12em 9px 0; border-radius: 7px; font-size: var(--a2-fs-sm); font-weight: var(--a2-weight-strong); white-space: nowrap; background: var(--a2-fill); border: 1px solid var(--a2-line); color: var(--a2-text-muted); --c: var(--a2-text-muted); }
 :host([variant="accent"]) .b { --c: var(--a2-accent); }
 :host([variant="success"]) .b { --c: var(--a2-success); }
 :host([variant="warning"]) .b { --c: var(--a2-warning); }
 :host([variant="danger"]) .b { --c: var(--a2-danger); }
-:host([variant]:not([variant="neutral"])) .b { background: color-mix(in srgb, var(--c) 16%, transparent); color: var(--c); }
+:host([variant]:not([variant="neutral"])) .b { background: color-mix(in srgb, var(--c) 14%, transparent); border-color: color-mix(in srgb, var(--c) 36%, transparent); color: var(--c); }
 .dot { display: none; width: 6px; height: 6px; margin-top: -0.12em; border-radius: 50%; background: var(--c); }
 :host([dot]) .dot { display: block; }
 `;
@@ -72,7 +72,7 @@ export class A2Card extends A2Element {
   static observedAttributes = ['heading', 'description'];
   static styles = `
 :host { display: block; }
-.c { border-radius: var(--a2-radius-lg); background: var(--a2-surface); padding: 20px; }
+.c { border-radius: var(--a2-radius-lg); background: var(--a2-surface); border: 1px solid var(--a2-line); padding: 20px; }
 :host([interactive]) .c { cursor: pointer; transition: background-color var(--t1), transform var(--t2) var(--spring); }
 :host([interactive]) .c:hover { background: var(--a2-surface-hover); }
 :host([interactive]) .c:active { transform: scale(0.985); }

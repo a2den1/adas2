@@ -19,12 +19,13 @@ export class A2Select extends A2Element {
   static styles = `${POPOVER_CSS}
 :host { display: block; }
 .box {
-  display: flex; align-items: center; gap: 8px; width: 100%; min-height: var(--a2-h); padding: 4px 10px 4px 12px; text-align: left;
-  border-radius: var(--a2-radius); background: var(--a2-fill); transition: background-color var(--t1);
+  display: flex; align-items: center; gap: 8px; width: 100%; min-height: var(--a2-h); padding: 3px 10px 3px 12px; text-align: left;
+  border-radius: var(--a2-radius); background: var(--a2-fill); border: 1px solid var(--a2-line); touch-action: manipulation;
+  transition: background-color var(--t1), border-color var(--t1);
 }
-.box:hover { background: var(--a2-fill-hover); }
-:host([open]) .box { background: var(--a2-fill-active); }
-:host([error]) .box { background: color-mix(in srgb, var(--a2-danger) 14%, var(--a2-fill)); }
+.box:hover { background: var(--a2-fill-hover); border-color: var(--a2-line-strong); }
+:host([open]) .box { background: var(--a2-fill-hover); border-color: var(--a2-accent); }
+:host([error]) .box { background: color-mix(in srgb, var(--a2-danger) 10%, transparent); border-color: var(--a2-danger); }
 .val { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
 .txt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-top: 0.12em; }
 .ph { color: var(--a2-text-faint); }
@@ -32,21 +33,20 @@ export class A2Select extends A2Element {
 :host([open]) .chev { transform: rotate(180deg); }
 .chip {
   display: inline-flex; align-items: center; gap: 2px; height: 26px; padding: 0 4px 0 9px; border-radius: 7px;
-  background: var(--a2-accent-soft); color: var(--a2-accent); font-size: var(--a2-fs-sm); font-weight: var(--a2-weight-strong);
-  animation: chipIn var(--t2) var(--spring);
+  background: var(--a2-accent-soft); border: 1px solid color-mix(in srgb, var(--a2-accent) 34%, transparent); color: var(--a2-accent); font-size: var(--a2-fs-sm); font-weight: var(--a2-weight-strong);
 }
 .chip span { padding-top: 0.12em; }
-.chip i { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 5px; font-style: normal; cursor: pointer; }
+.chip i { position: relative; display: grid; place-items: center; width: 18px; height: 18px; border-radius: 5px; font-style: normal; cursor: pointer; }
+.chip i::before { content: ''; position: absolute; inset: -5px; }
 .chip i:hover { background: color-mix(in srgb, var(--a2-accent) 22%, transparent); }
-@keyframes chipIn { from { transform: scale(0.7); opacity: 0; } }
-.search { display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 10px; margin-bottom: 4px; border-radius: 8px; background: var(--a2-fill); color: var(--a2-text-muted); }
+.search { display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 10px; margin-bottom: 4px; border-radius: 8px; background: var(--a2-fill); border: 1px solid var(--a2-line); color: var(--a2-text-muted); }
 .search input { flex: 1; min-width: 0; border: 0; outline: 0; background: none; color: var(--a2-text); padding-top: 0.12em; }
 .search input::placeholder { color: var(--a2-text-faint); }
 .list { display: flex; flex-direction: column; gap: 1px; }
 `;
   render() {
-    this.root.innerHTML = `${this.fieldHead('')}<button class="box" part="box" type="button" aria-haspopup="listbox"><span class="val"></span><span class="chev">${icon('chevron', 16)}</span></button><div class="hint t" part="hint"></div>
-<div class="pop" popover="manual"><div class="menu" part="menu" role="listbox"><label class="search">${icon('search', 15)}<input placeholder="검색" aria-label="검색"></label><div class="list"></div></div></div>`;
+    this.root.innerHTML = `${this.fieldHead('')}<button class="box" part="box" type="button" aria-haspopup="listbox"><span class="val"></span><span class="chev">${icon('chevron', 12)}</span></button><div class="hint t" part="hint"></div>
+<div class="pop" popover="manual"><div class="menu" part="menu" role="listbox"><label class="search">${icon('search', 13)}<input placeholder="검색" aria-label="검색"></label><div class="list"></div></div></div>`;
     this.box = this.$('.box'); this.pop = this.$('.pop'); this.listEl = this.$('.list'); this.q = this.$('.search input');
     this._sel = this.parseValue(this.getAttribute('value'));
     this._init = [...this._sel];
@@ -110,7 +110,7 @@ export class A2Select extends A2Element {
   paintList() {
     const list = this.shown;
     this.listEl.innerHTML = list.length
-      ? list.map((o, i) => `<div class="item" role="option" data-i="${i}" aria-selected="${this._sel.includes(o.value)}" aria-disabled="${o.disabled}"><span class="grow">${esc(o.label)}</span><span class="mark">${icon('check', 16)}</span></div>`).join('')
+      ? list.map((o, i) => `<div class="item" role="option" data-i="${i}" aria-selected="${this._sel.includes(o.value)}" aria-disabled="${o.disabled}"><span class="grow">${esc(o.label)}</span><span class="mark">${icon('check', 13)}</span></div>`).join('')
       : `<div class="empty t">결과 없음</div>`;
     this.markActive(false);
   }
@@ -172,7 +172,7 @@ export class A2Select extends A2Element {
     this.paintField();
     const sel = this.selectedOptions, val = this.$('.val');
     if (!sel.length) val.innerHTML = `<span class="txt ph">${esc(this.str('placeholder', '선택'))}</span>`;
-    else if (this.multiple) val.innerHTML = sel.map(o => `<span class="chip"><span>${esc(o.label)}</span><i data-v="${esc(o.value)}" aria-label="빼기">${icon('x', 12)}</i></span>`).join('');
+    else if (this.multiple) val.innerHTML = sel.map(o => `<span class="chip"><span>${esc(o.label)}</span><i data-v="${esc(o.value)}" aria-label="빼기">${icon('x', 9)}</i></span>`).join('');
     else val.innerHTML = `<span class="txt">${esc(sel[0].label)}</span>`;
     this.box.disabled = this.disabled;
     if (this.hasAttribute('label')) this.box.setAttribute('aria-label', this.getAttribute('label'));

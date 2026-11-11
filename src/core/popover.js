@@ -1,6 +1,6 @@
 // 떠 있는 판(목록·메뉴·색 고르기): 브라우저 맨 위 층(popover)에 띄워 어디에도 잘리지 않게 한다.
-// 기준 요소를 매 프레임 따라가고, 아래 공간이 모자라면 위로 연다.
-import { animate } from './animate.js';
+// 기준 요소 옆에 자리를 잡고, 아래 공간이 모자라면 위로 연다.
+import { animate, reveal } from './animate.js';
 
 /**
  * @param {HTMLElement} pop popover 속성을 가진 요소
@@ -11,42 +11,51 @@ export function openPopover(pop, anchor, o = {}) {
   const gap = o.gap ?? 6;
   if (!pop.hasAttribute('popover')) pop.setAttribute('popover', 'manual');
   try { pop.showPopover(); } catch (_) { /* 이미 열림 */ }
-  let up = null, raf = 0, alive = true;
+  let up = null, alive = true, lx, ly, lw;
+  const isEl = anchor instanceof Element;
   const place = () => {
     if (!alive) return;
     let r;
-    if (anchor instanceof Element) {
+    if (isEl) {
       if (!anchor.isConnected) return close();
       r = anchor.getBoundingClientRect();
-      if (o.match) pop.style.minWidth = `${r.width}px`;
+      if (o.match && lw !== r.width) { lw = r.width; pop.style.minWidth = `${r.width}px`; }
     } else r = { left: anchor.x, right: anchor.x, top: anchor.y, bottom: anchor.y, width: 0 };
     const w = pop.offsetWidth, h = pop.offsetHeight;
     if (up === null) up = r.bottom + gap + h > innerHeight - 8 && r.top - gap - h > 8;
-    const x = Math.min(Math.max(8, o.alignEnd ? r.right - w : r.left), innerWidth - w - 8);
-    const y = Math.min(Math.max(8, up ? r.top - gap - h : r.bottom + gap), innerHeight - h - 8);
-    pop.style.left = `${x}px`; pop.style.top = `${y}px`;
+    const x = Math.round(Math.min(Math.max(8, o.alignEnd ? r.right - w : r.left), innerWidth - w - 8));
+    const y = Math.round(Math.min(Math.max(8, up ? r.top - gap - h : r.bottom + gap), innerHeight - h - 8));
+    if (x !== lx) { lx = x; pop.style.left = `${x}px`; }
+    if (y !== ly) { ly = y; pop.style.top = `${y}px`; }
     pop.dataset.side = up ? 'top' : 'bottom';
-    cancelAnimationFrame(raf);
-    if (anchor instanceof Element) raf = requestAnimationFrame(place);
   };
-  const keep = [pop, ...(o.closeOnOutside || []), ...(anchor instanceof Element ? [anchor] : [])];
+  // 매 프레임 따라가지 않고, 자리가 바뀔 수 있는 때(스크롤·창 크기·내용 크기)에만 다시 잡는다
+  let queued = 0;
+  const later = () => { if (!queued) queued = requestAnimationFrame(() => { queued = 0; place(); }); };
+  const ro = new ResizeObserver(later);
+  const keep = [pop, ...(o.closeOnOutside || []), ...(isEl ? [anchor] : [])];
   const outside = e => { const path = e.composedPath(); if (!keep.some(k => path.includes(k))) close(); };
   const key = e => { if (e.key === 'Escape') { e.stopPropagation(); close(); } };
-  let anim = null;
-  const paint = p => { pop.style.opacity = p; pop.style.transform = `translateY(${(1 - p) * (up ? 6 : -6)}px) scale(${0.97 + 0.03 * p})`; };
-  paint(0);
-  // 첫 위치는 바로 잡는다(프레임을 기다리면 탭이 가려졌을 때 엉뚱한 곳에 남음). 그 뒤는 매 프레임 따라간다
+  let anim = null, shown = 0;
+  // 기준 요소 쪽에서 틀 안으로 밀려 나온다(아래로 열리면 위에서, 위로 열리면 아래에서)
+  const paint = p => { shown = p; reveal(pop, p, up ? 'bottom' : 'top'); };
   place();
-  anim = animate({ p: 0 }, { p: 1 }, { duration: 0.18, ease: 'OutCubic', onUpdate: v => paint(v.p) });
+  paint(0);
+  anim = animate({ p: 0 }, { p: 1 }, { duration: 0.26, ease: 'OutQuart', onUpdate: v => paint(v.p) });
+  ro.observe(pop); if (isEl) ro.observe(anchor);
+  addEventListener('scroll', later, { capture: true, passive: true });
+  addEventListener('resize', later, { passive: true });
   setTimeout(() => { if (alive) { document.addEventListener('pointerdown', outside, true); addEventListener('keydown', key, true); } }, 0);
   function close() {
     if (!alive) return;
     alive = false;
-    cancelAnimationFrame(raf);
+    cancelAnimationFrame(queued); ro.disconnect();
+    removeEventListener('scroll', later, { capture: true });
+    removeEventListener('resize', later);
     document.removeEventListener('pointerdown', outside, true);
     removeEventListener('keydown', key, true);
     anim && anim.stop();
-    animate({ p: Number(pop.style.opacity) || 1 }, { p: 0 }, { duration: 0.12, ease: 'OutSine', onUpdate: v => paint(v.p), onDone: () => { try { pop.hidePopover(); } catch (_) {} } });
+    animate({ p: shown }, { p: 0 }, { duration: 0.14, ease: 'InQuad', onUpdate: v => paint(v.p), onDone: () => { try { pop.hidePopover(); } catch (_) {} } });
     o.onClose && o.onClose();
   }
   return { close, get open() { return alive; } };
@@ -57,11 +66,10 @@ export const POPOVER_CSS = `
 [popover] { position: fixed; inset: auto; margin: 0; padding: 0; border: 0; overflow: visible; background: none; color: inherit; }
 .menu {
   min-width: 180px; max-height: min(360px, 60vh); overflow-y: auto; padding: 5px;
-  border-radius: 12px; background: var(--a2-raised); box-shadow: var(--a2-shadow);
+  border-radius: 12px; background: var(--a2-raised); border: 1px solid var(--a2-line); box-shadow: var(--a2-shadow);
   font-family: var(--a2-font); font-size: var(--a2-fs); font-weight: var(--a2-weight); color: var(--a2-text);
-  scrollbar-width: thin; transform-origin: top center;
+  scrollbar-width: thin;
 }
-[data-side="top"] .menu, .menu[data-side="top"] { transform-origin: bottom center; }
 .item {
   display: flex; align-items: center; gap: 10px; min-height: 36px; padding: 0 10px; border-radius: 8px;
   cursor: pointer; user-select: none; white-space: nowrap; transition: background-color calc(0.12s / var(--a2-speed));
@@ -69,8 +77,8 @@ export const POPOVER_CSS = `
 .item:hover, .item.active { background: var(--a2-fill-hover); }
 .item[aria-disabled="true"] { opacity: 0.4; pointer-events: none; }
 .item .grow { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; padding-top: 0.12em; }
-.item .mark { color: var(--a2-accent); opacity: 0; transition: opacity calc(0.12s / var(--a2-speed)); }
-.item[aria-selected="true"] .mark { opacity: 1; }
+.item .mark { color: var(--a2-accent); visibility: hidden; }
+.item[aria-selected="true"] .mark { visibility: visible; }
 .item[aria-selected="true"] .grow { color: var(--a2-accent); font-weight: var(--a2-weight-strong); }
 .sep { height: 1px; margin: 5px 8px; background: var(--a2-fill-active); }
 .empty { padding: 10px; color: var(--a2-text-muted); font-size: var(--a2-fs-sm); }

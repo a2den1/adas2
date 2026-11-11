@@ -8,7 +8,7 @@
 
 **한국어** · [English](README.en.md) · [데모](https://adas2-six.vercel.app)
 
-[![version](https://img.shields.io/badge/version-4.0.1-FF7A45?style=flat-square)](https://github.com/a2den1/adas2/releases)
+[![version](https://img.shields.io/badge/version-4.1.0-FF7A45?style=flat-square)](https://github.com/a2den1/adas2/releases)
 ![dependencies](https://img.shields.io/badge/dependencies-0-29231F?style=flat-square)
 [![license](https://img.shields.io/badge/license-adas2%20License-F26A32?style=flat-square)](LICENSE)
 
@@ -34,13 +34,13 @@
 ### CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v4.0.1/dist/adas2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/a2den1/adas2@v4.1.0/dist/adas2.min.js"></script>
 ```
 
 글꼴(지마켓 산스)과 색 변수는 스크립트가 넣습니다. 첫 화면이 깜빡이지 않게 하려면 CSS 를 `<head>` 에 먼저 넣으세요.
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v4.0.1/dist/adas2.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2den1/adas2@v4.1.0/dist/adas2.min.css">
 ```
 
 ### npm
@@ -156,9 +156,11 @@ addEventListener('keydown', e => { if (adas2.matchKey(e, 'Ctrl+KeyS')) save(); }
 |---|---|
 | `--a2-bg` `--a2-surface` `--a2-raised` | 바탕, 카드, 떠 있는 판 |
 | `--a2-fill` `--a2-fill-hover` `--a2-fill-active` | 컨트롤 바탕(반투명) |
+| `--a2-line` `--a2-line-strong` | 외곽선 |
 | `--a2-accent` `--a2-accent-hover` `--a2-accent-pressed` `--a2-accent-soft` `--a2-on-accent` | 강조색과 그 위 글자 |
 | `--a2-text` `--a2-text-muted` `--a2-text-faint` | 글자 |
 | `--a2-danger` `--a2-success` `--a2-warning` | 상태 색 |
+| `--a2-tip` `--a2-on-tip` | 알림·툴팁 바탕과 글자 |
 | `--a2-font` `--a2-weight` `--a2-weight-strong` | 글꼴과 굵기(300, 500) |
 
 요소 안쪽은 `::part()` 로 꾸밀 수 있습니다. 예: `a2-input::part(box)`, `a2-button::part(base)`, `a2-slider::part(thumb)`.
@@ -192,4 +194,4 @@ npm run dev        # http://localhost:5880/docs/
 | 수정하지 않은 파일을 내 서비스에 포함해 배포 | 복제해서 별도 라이브러리·템플릿으로 배포·판매 |
 | 속성·CSS 변수·`::part()` 로 모양 바꾸기 | 자신이 만든 것처럼 표시 |
 
-글꼴(지마켓 산스)은 이 저장소에 들어 있지 않고 CDN 에서 불러오며, 저작권은 G마켓에 있습니다. © 2026 a2den1
+글꼴(지마켓 산스)은 이 저장소에 들어 있지 않고 CDN 에서 불러오며, 저작권은 G마켓에 있습니다. 아이콘은 [Font Awesome Free](https://fontawesome.com)(CC BY 4.0)입니다. © 2026 a2den1

@@ -6,16 +6,17 @@ export class A2Radio extends A2Element {
   static styles = `
 :host { display: inline-flex; vertical-align: middle; border-radius: 12px; outline: none; }
 :host(:focus-visible) .dot { outline: 2px solid var(--a2-accent); outline-offset: 2px; }
-.r { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; min-height: 24px; }
+.r { position: relative; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; min-height: 24px; touch-action: manipulation; }
+.r::before { content: ''; position: absolute; inset: -6px -5px; }
 .dot {
-  flex: none; position: relative; width: 20px; height: 20px; border-radius: 50%; background: var(--a2-fill-active);
-  transition: background-color var(--t2), transform var(--t1) var(--spring);
+  flex: none; position: relative; width: 20px; height: 20px; border-radius: 50%; background: var(--a2-fill); border: 1px solid var(--a2-line-strong);
+  transition: background-color var(--t2), border-color var(--t2), transform var(--t1) var(--spring);
 }
-.r:hover .dot { background: color-mix(in srgb, var(--a2-text) 16%, var(--a2-fill)); }
+.r:hover .dot { background: var(--a2-fill-active); border-color: var(--a2-text-muted); }
 .r:active .dot { transform: scale(0.88); }
-:host([checked]) .dot { background: var(--a2-accent); }
+:host([checked]) .dot { background: var(--a2-accent); border-color: var(--a2-accent); }
 .dot::after {
-  content: ''; position: absolute; inset: 6px; border-radius: 50%; background: var(--a2-on-accent);
+  content: ''; position: absolute; inset: 5px; border-radius: 50%; background: var(--a2-on-accent);
   transform: scale(0); transition: transform var(--t3) var(--spring);
 }
 :host([checked]) .dot::after { transform: scale(1); }

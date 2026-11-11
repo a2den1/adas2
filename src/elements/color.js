@@ -36,10 +36,10 @@ export class A2Color extends A2Element {
   static observedAttributes = ['label', 'hint', 'value', 'disabled', 'alpha', 'presets'];
   static styles = `${POPOVER_CSS}
 :host { display: block; }
-.box { display: flex; align-items: center; gap: 10px; width: 100%; height: var(--a2-h); padding: 0 12px 0 6px; border-radius: var(--a2-radius); background: var(--a2-fill); transition: background-color var(--t1); text-align: left; }
-.box:hover { background: var(--a2-fill-hover); }
-:host([open]) .box { background: var(--a2-fill-active); }
-.sw { position: relative; flex: none; width: calc(var(--a2-h) - 12px); height: calc(var(--a2-h) - 12px); border-radius: calc(var(--a2-radius) - 4px); overflow: hidden; }
+.box { display: flex; align-items: center; gap: 10px; width: 100%; height: var(--a2-h); padding: 0 12px 0 6px; border-radius: var(--a2-radius); background: var(--a2-fill); border: 1px solid var(--a2-line); touch-action: manipulation; transition: background-color var(--t1), border-color var(--t1); text-align: left; }
+.box:hover { background: var(--a2-fill-hover); border-color: var(--a2-line-strong); }
+:host([open]) .box { background: var(--a2-fill-hover); border-color: var(--a2-accent); }
+.sw { position: relative; flex: none; width: calc(var(--a2-h) - 14px); height: calc(var(--a2-h) - 14px); box-shadow: 0 0 0 1px var(--a2-line); border-radius: calc(var(--a2-radius) - 4px); overflow: hidden; }
 .sw::before, .chk { content: ''; position: absolute; inset: 0; background: repeating-conic-gradient(#bbb 0 25%, #eee 0 50%) 0 0 / 8px 8px; }
 .sw i, .pv i { position: absolute; inset: 0; }
 .hex { flex: 1; font-variant-numeric: tabular-nums; padding-top: 0.12em; letter-spacing: 0.02em; }
@@ -53,11 +53,11 @@ export class A2Color extends A2Element {
 .al .chk { border-radius: 6px; background-size: 6px 6px; }
 .al .g { position: absolute; inset: 0; border-radius: 6px; }
 .row { display: flex; gap: 8px; align-items: center; }
-.pv { position: relative; flex: none; width: 34px; height: 34px; border-radius: 8px; overflow: hidden; }
-.hx { flex: 1; min-width: 0; height: 34px; padding: 0.12em 10px 0; border: 0; outline: 0; border-radius: 8px; background: var(--a2-fill); color: var(--a2-text); font-variant-numeric: tabular-nums; }
-.hx:focus { background: var(--a2-fill-active); }
+.pv { position: relative; flex: none; width: 34px; height: 34px; border-radius: 8px; overflow: hidden; box-shadow: 0 0 0 1px var(--a2-line); }
+.hx { flex: 1; min-width: 0; height: 34px; padding: 0.12em 10px 0; border: 1px solid var(--a2-line); outline: 0; border-radius: 8px; background: var(--a2-fill); color: var(--a2-text); font-variant-numeric: tabular-nums; }
+.hx:focus { border-color: var(--a2-accent); }
 .ps { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; }
-.ps button { aspect-ratio: 1; border-radius: 6px; transition: transform var(--t1) var(--spring); }
+.ps button { aspect-ratio: 1; border-radius: 6px; border: 1px solid var(--a2-line); transition: transform var(--t1) var(--spring); }
 .ps button:hover { transform: scale(1.15); }
 .ps:empty { display: none; }
 `;

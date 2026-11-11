@@ -1,5 +1,5 @@
 import { A2Element, define } from '../core/base.js';
-import { slideIndicator, animate } from '../core/animate.js';
+import { slideIndicator, animate, reveal } from '../core/animate.js';
 
 /** <a2-tab-panel label="개요" value="overview">내용</a2-tab-panel> */
 export class A2TabPanel extends HTMLElement {
@@ -17,9 +17,9 @@ export class A2Tabs extends A2Element {
   static styles = `
 :host { display: block; }
 .bar { position: relative; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; padding: 2px; margin: -2px -2px 14px; }
-.ind { position: absolute; left: 0; top: 0; border-radius: 999px; background: var(--a2-accent-soft); opacity: 0; pointer-events: none; }
+.ind { position: absolute; left: 0; top: 0; border-radius: 999px; background: var(--a2-accent-soft); border: 1px solid color-mix(in srgb, var(--a2-accent) 38%, transparent); visibility: hidden; pointer-events: none; }
 .tab {
-  position: relative; z-index: 1; flex: none; height: 36px; padding: 0.12em 16px 0; border-radius: 999px;
+  position: relative; z-index: 1; flex: none; height: 36px; padding: 0.12em 16px 0; border-radius: 999px; touch-action: manipulation;
   color: var(--a2-text-muted); white-space: nowrap; transition: color var(--t2), background-color var(--t1);
 }
 .tab:hover { color: var(--a2-text); background: var(--a2-fill); }
@@ -46,6 +46,7 @@ export class A2Tabs extends A2Element {
     });
     new MutationObserver(() => this.build()).observe(this, { childList: true, attributes: true, subtree: true, attributeFilter: ['label', 'value', 'disabled'] });
     new ResizeObserver(() => this.place(true)).observe(this.bar);
+    document.fonts?.ready.then(() => this.place(true));
     this.build();
   }
   get panels() { return [...this.children].filter(c => c.tagName === 'A2-TAB-PANEL'); }
@@ -81,8 +82,9 @@ export class A2Tabs extends A2Element {
       const on = p.value === this._v, was = p.hasAttribute('data-on');
       p.toggleAttribute('data-on', on);
       if (on && !was && !instant) {
-        p.style.opacity = '0';
-        animate({ p: 0 }, { p: 1 }, { duration: 0.22, ease: 'OutCubic', onUpdate: v => { p.style.opacity = v.p; p.style.transform = `translateY(${(1 - v.p) * 6}px)`; }, onDone: () => { p.style.opacity = ''; p.style.transform = ''; } });
+        // 새 패널은 제자리의 틀 안에서 아래에서 위로 올라온다
+        p._a2?.stop();
+        p._a2 = animate({ p: 0 }, { p: 1 }, { duration: 0.34, ease: 'OutQuart', onUpdate: v => reveal(p, v.p) });
       }
     }
     const b = [...this.bar.querySelectorAll('.tab')].find(x => x.dataset.v === this._v);
@@ -91,10 +93,10 @@ export class A2Tabs extends A2Element {
   }
   place(instant) {
     const b = [...this.bar.querySelectorAll('.tab')].find(x => x.dataset.v === this._v);
-    if (b) slideIndicator(this.ind, b, this._state, instant); else this.ind.style.opacity = '0';
+    if (b) slideIndicator(this.ind, b, this._state, instant); else this.ind.style.visibility = 'hidden';
   }
   attr(name, v) { if (name === 'value' && v !== this._v) { this._v = v; this.sync(false); } }
-  update() { document.fonts?.ready.then(() => this.place(true)); }
+  update() {}
 }
 
 define('a2-tab-panel', A2TabPanel);

@@ -18,11 +18,11 @@ export class A2Segmented extends A2Element {
   static styles = `
 :host { display: inline-block; vertical-align: middle; max-width: 100%; }
 :host([block]) { display: block; }
-.bar { position: relative; display: inline-flex; gap: 2px; padding: 3px; border-radius: var(--a2-radius); background: var(--a2-fill); max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+.bar { position: relative; display: inline-flex; gap: 2px; padding: 3px; border-radius: var(--a2-radius); background: var(--a2-fill); border: 1px solid var(--a2-line); max-width: 100%; overflow-x: auto; scrollbar-width: none; }
 :host([block]) .bar { display: flex; }
-.ind { position: absolute; left: 0; top: 0; border-radius: calc(var(--a2-radius) - 3px); background: var(--a2-raised); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18); opacity: 0; pointer-events: none; }
+.ind { position: absolute; left: 0; top: 0; border-radius: calc(var(--a2-radius) - 3px); background: var(--a2-raised); border: 1px solid var(--a2-line-strong); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18); visibility: hidden; pointer-events: none; }
 .seg {
-  position: relative; z-index: 1; flex: 1 0 auto; height: calc(var(--a2-h) - 6px); padding: 0.12em 14px 0; border-radius: calc(var(--a2-radius) - 3px);
+  position: relative; z-index: 1; flex: 1 0 auto; height: calc(var(--a2-h) - 8px); padding: 0.12em 14px 0; touch-action: manipulation; border-radius: calc(var(--a2-radius) - 3px);
   color: var(--a2-text-muted); white-space: nowrap; transition: color var(--t2);
 }
 .seg:hover { color: var(--a2-text); }
@@ -46,6 +46,8 @@ export class A2Segmented extends A2Element {
     });
     new MutationObserver(() => this.build()).observe(this, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['disabled', 'value'] });
     new ResizeObserver(() => this.place(true)).observe(this.bar);
+    // 글꼴이 늦게 오면 칸 너비가 바뀐다
+    document.fonts?.ready.then(() => this.place(true));
     this.build();
   }
   get segments() { return [...this.querySelectorAll('a2-segment')]; }
@@ -81,15 +83,13 @@ export class A2Segmented extends A2Element {
   place(instant) {
     const b = [...this.bar.querySelectorAll('.seg')].find(x => x.dataset.v === this._v);
     if (b) slideIndicator(this.ind, b, this._state, instant);
-    else this.ind.style.opacity = '0';
+    else this.ind.style.visibility = 'hidden';
   }
   attr(name, v) { if (name === 'value') { if (v !== this._v) { this._v = v; this.sync(false); } } else this.update(); }
   update() {
     this.paintField();
     this.bar.setAttribute('aria-label', this.str('label'));
     for (const b of this.bar.querySelectorAll('.seg')) if (this.disabled) b.disabled = true;
-    // 글꼴이 늦게 오면 칸 너비가 바뀐다
-    document.fonts?.ready.then(() => this.place(true));
   }
   formResetCallback() { this._v = this._init ?? this.segments[0]?.value; this.sync(true); }
 }

@@ -1,15 +1,17 @@
 // a2-tip="설명" 속성이 있는 아무 요소에 마우스를 올리거나 키보드로 가면 짧은 설명이 뜬다.
 // a2-tip-side="top|bottom|left|right" 로 방향을 바꾼다.
 import { ensureGlobal, sheet, BASE_CSS } from '../core/base.js';
-import { animate } from '../core/animate.js';
+import { animate, reveal } from '../core/animate.js';
 
 const CSS = `
-.tip { position: fixed; inset: auto; margin: 0; border: 0; padding: 6px 10px 5px; max-width: 260px; border-radius: 8px; overflow: visible;
-  background: var(--a2-tip); color: var(--a2-bg); font-family: var(--a2-font); font-size: var(--a2-fs-sm); font-weight: var(--a2-weight); line-height: 1.4;
+.tip { position: fixed; inset: auto; margin: 0; padding: 6px 10px 5px; max-width: 260px; border-radius: 8px; overflow: visible;
+  background: var(--a2-tip); color: var(--a2-on-tip); font-family: var(--a2-font); font-size: var(--a2-fs-sm); font-weight: var(--a2-weight); line-height: 1.4;
+  border: 1px solid color-mix(in srgb, var(--a2-on-tip) 16%, transparent);
   pointer-events: none; box-shadow: var(--a2-shadow); }
 `;
 
-let tip = null, cur = null, timer = 0, anim = null, shownAt = 0;
+let tip = null, cur = null, timer = 0, anim = null, shownAt = 0, shown = 0, from = 'bottom';
+const paint = p => { shown = p; reveal(tip, p, from); };
 function ensure() {
   if (tip) return;
   ensureGlobal();
@@ -42,9 +44,11 @@ function show(el) {
   tip.textContent = el.getAttribute('a2-tip');
   try { if (tip.matches(':popover-open')) tip.hidePopover(); tip.showPopover(); } catch (_) {}
   const side = place(el);
-  const dx = side === 'left' ? 4 : side === 'right' ? -4 : 0, dy = side === 'top' ? 4 : side === 'bottom' ? -4 : 0;
+  // 틀 안에서 밀려 나온다: 아래쪽 설명은 위에서, 나머지는 아래에서
+  from = side === 'bottom' ? 'top' : 'bottom';
   anim?.stop();
-  anim = animate({ p: 0 }, { p: 1 }, { duration: 0.16, ease: 'OutCubic', onUpdate: v => { tip.style.opacity = v.p; tip.style.transform = `translate(${dx * (1 - v.p)}px, ${dy * (1 - v.p)}px)`; } });
+  paint(0);
+  anim = animate({ p: 0 }, { p: 1 }, { duration: 0.2, ease: 'OutQuart', onUpdate: v => paint(v.p) });
   shownAt = performance.now();
   el.setAttribute('aria-describedby', 'a2-tooltip');
 }
@@ -55,7 +59,7 @@ function hide() {
   cur.removeAttribute('aria-describedby');
   cur = null;
   anim?.stop();
-  anim = animate({ p: Number(tip.style.opacity) || 1 }, { p: 0 }, { duration: 0.1, ease: 'Linear', onUpdate: v => { tip.style.opacity = v.p; }, onDone: () => { if (!cur) try { tip.hidePopover(); } catch (_) {} } });
+  anim = animate({ p: shown }, { p: 0 }, { duration: 0.12, ease: 'InQuad', onUpdate: v => paint(v.p), onDone: () => { if (!cur) try { tip.hidePopover(); } catch (_) {} } });
 }
 const target = e => e.composedPath().find(n => n instanceof Element && n.hasAttribute('a2-tip'));
 

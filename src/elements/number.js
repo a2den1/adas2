@@ -16,9 +16,10 @@ export class A2Number extends A2Element {
   static styles = `${FIELD_CSS}
 .box { padding: 0 4px; gap: 2px; }
 .ctl { text-align: center; font-variant-numeric: tabular-nums; }
-.step { flex: none; width: calc(var(--a2-h) - 8px); height: calc(var(--a2-h) - 8px); border-radius: calc(var(--a2-radius) - 3px); display: grid; place-items: center; color: var(--a2-text-muted); transition: background-color var(--t1), color var(--t1), transform var(--t1); }
+.step { flex: none; position: relative; width: calc(var(--a2-h) - 10px); height: calc(var(--a2-h) - 10px); touch-action: manipulation; border-radius: calc(var(--a2-radius) - 3px); display: grid; place-items: center; color: var(--a2-text-muted); transition: background-color var(--t1), color var(--t1), transform var(--t1); }
 .step:hover { background: var(--a2-fill-active); color: var(--a2-text); }
-.step:active { transform: scale(0.9); }
+.step::before { content: ''; position: absolute; inset: -4px; }
+.step:active { background: var(--a2-fill-active); color: var(--a2-text); }
 .step:disabled { opacity: 0.3; pointer-events: none; }
 .unit { flex: none; color: var(--a2-text-muted); font-size: var(--a2-fs-sm); padding-top: 0.12em; }
 .unit:empty, .calc:empty { display: none; }
@@ -26,7 +27,7 @@ export class A2Number extends A2Element {
 .calc.bad { color: var(--a2-danger); }
 `;
   render() {
-    this.root.innerHTML = `${this.fieldHead('f')}<div class="box" part="box"><button class="step dec" type="button" tabindex="-1" aria-label="줄이기">${icon('minus', 16)}</button><input id="f" class="ctl" part="input" inputmode="decimal" autocomplete="off"><span class="calc"></span><span class="unit"></span><button class="step inc" type="button" tabindex="-1" aria-label="늘리기">${icon('plus', 16)}</button></div><div class="hint t" part="hint"></div>`;
+    this.root.innerHTML = `${this.fieldHead('f')}<div class="box" part="box"><button class="step dec" type="button" tabindex="-1" aria-label="줄이기">${icon('minus', 12)}</button><input id="f" class="ctl" part="input" inputmode="decimal" autocomplete="off"><span class="calc"></span><span class="unit"></span><button class="step inc" type="button" tabindex="-1" aria-label="늘리기">${icon('plus', 12)}</button></div><div class="hint t" part="hint"></div>`;
     this.ctl = this.$('input');
     this._v = this.clean(this.num('value', this.num('min', 0) > 0 ? this.num('min', 0) : 0));
     this.ctl.addEventListener('input', () => this.preview());

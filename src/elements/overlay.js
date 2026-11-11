@@ -1,5 +1,5 @@
 import { A2Element, define, icon } from '../core/base.js';
-import { animate } from '../core/animate.js';
+import { animate, reveal } from '../core/animate.js';
 
 // 열린 창이 하나라도 있으면 문서 스크롤을 막는다. 스크롤바가 사라져도 화면이 옆으로 밀리지 않게 그만큼 채운다.
 let locks = 0, saved = null;
@@ -20,7 +20,7 @@ const OVERLAY_CSS = `
 dialog { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: none; overflow: hidden; color: var(--a2-text); font: inherit; outline: none; }
 dialog::backdrop { background: none; }
 .scrim { position: absolute; inset: 0; background: var(--a2-scrim); opacity: 0; }
-.panel { position: absolute; display: flex; flex-direction: column; background: var(--a2-raised); box-shadow: var(--a2-shadow); outline: none; }
+.panel { position: absolute; display: flex; flex-direction: column; background: var(--a2-raised); border: 1px solid var(--a2-line); box-shadow: var(--a2-shadow); outline: none; }
 .head { display: flex; align-items: flex-start; gap: 12px; padding: 22px 22px 0; }
 .titles { flex: 1; min-width: 0; }
 .h { font-size: var(--a2-fs-lg); font-weight: var(--a2-weight-strong); line-height: 1.35; padding-top: 0.12em; }
@@ -37,7 +37,7 @@ dialog::backdrop { background: none; }
 class OverlayBase extends A2Element {
   static observedAttributes = ['open', 'heading', 'description'];
   render() {
-    this.root.innerHTML = `<dialog part="dialog"><div class="scrim" part="scrim"></div><div class="panel" part="panel" tabindex="-1" role="document"><div class="head"><div class="titles"><div class="h" part="heading"></div><div class="d" part="description"></div></div><button class="x" type="button" aria-label="닫기">${icon('x', 16)}</button></div><div class="body" part="body"><slot></slot></div><div class="foot" part="footer"><slot name="footer"></slot></div></div></dialog>`;
+    this.root.innerHTML = `<dialog part="dialog"><div class="scrim" part="scrim"></div><div class="panel" part="panel" tabindex="-1" role="document"><div class="head"><div class="titles"><div class="h" part="heading"></div><div class="d" part="description"></div></div><button class="x hit" type="button" aria-label="닫기">${icon('x', 14)}</button></div><div class="body" part="body"><slot></slot></div><div class="foot" part="footer"><slot name="footer"></slot></div></div></dialog>`;
     this.dlg = this.$('dialog'); this.panel = this.$('.panel'); this.scrim = this.$('.scrim');
     this.$('.x').addEventListener('click', () => this.close());
     this.scrim.addEventListener('click', () => { if (!this.bool('persistent')) this.close(); });
@@ -72,14 +72,14 @@ class OverlayBase extends A2Element {
     if (auto) auto.focus(); else this.panel.focus({ preventScroll: true });
     this._anim?.stop();
     const from = this._p ?? 0;
-    this._anim = animate({ p: from }, { p: 1 }, { duration: 0.36, ease: 'OutExpo', onUpdate: v => this.paint(v.p) });
+    this._anim = animate({ p: from }, { p: 1 }, { duration: 0.42, ease: 'OutQuart', onUpdate: v => this.paint(v.p) });
     this.emit('a2-show');
   }
   doClose() {
     if (!this.dlg.open) return;
     this._anim?.stop();
     this._anim = animate({ p: this._p ?? 1 }, { p: 0 }, {
-      duration: 0.2, ease: 'OutCubic', onUpdate: v => this.paint(v.p),
+      duration: 0.2, ease: 'InQuad', onUpdate: v => this.paint(v.p),
       onDone: () => {
         this.dlg.close();
         if (this._locked) { this._locked = false; lockScroll(false); }
@@ -104,8 +104,8 @@ export class A2Dialog extends OverlayBase {
 `;
   paint(p) {
     super.paint(p);
-    this.panel.style.opacity = Math.min(1, p * 1.6);
-    this.panel.style.transform = `scale(${0.94 + 0.06 * p}) translateY(${(1 - p) * 10}px)`;
+    // 제자리의 틀 안에서 아래에서 위로 올라온다
+    reveal(this.panel, p);
   }
 }
 

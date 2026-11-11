@@ -4,14 +4,14 @@ const FIELD_CSS = `
 :host { display: block; }
 .box {
   position: relative; display: flex; align-items: center; gap: 8px; min-height: var(--a2-h); padding: 0 12px;
-  border-radius: var(--a2-radius); background: var(--a2-fill); cursor: text;
-  transition: background-color var(--t1), box-shadow var(--t1);
+  border-radius: var(--a2-radius); background: var(--a2-fill); border: 1px solid var(--a2-line); cursor: text;
+  transition: background-color var(--t1), border-color var(--t1);
 }
-.box:hover { background: var(--a2-fill-hover); }
-.box:focus-within { background: var(--a2-fill-active); }
-:host([error]) .box { background: color-mix(in srgb, var(--a2-danger) 14%, var(--a2-fill)); }
+.box:hover { background: var(--a2-fill-hover); border-color: var(--a2-line-strong); }
+.box:focus-within { background: var(--a2-fill-hover); border-color: var(--a2-accent); }
+:host([error]) .box { background: color-mix(in srgb, var(--a2-danger) 10%, transparent); border-color: var(--a2-danger); }
 .ctl {
-  flex: 1; min-width: 0; height: var(--a2-h); padding: 0.12em 0 0; border: 0; outline: 0; background: transparent;
+  flex: 1; min-width: 0; height: calc(var(--a2-h) - 2px); padding: 0.12em 0 0; border: 0; outline: 0; background: transparent;
   color: var(--a2-text); caret-color: var(--a2-accent);
 }
 .ctl::placeholder { color: var(--a2-text-faint); }
@@ -19,7 +19,7 @@ const FIELD_CSS = `
 .ctl:focus-visible { outline: 0; }
 ::slotted([slot="prefix"]), ::slotted([slot="suffix"]) { color: var(--a2-text-muted); flex: none; }
 .mini {
-  flex: none; width: 24px; height: 24px; border-radius: 6px; display: none; place-items: center; color: var(--a2-text-muted);
+  flex: none; width: 26px; height: 26px; border-radius: 6px; display: none; place-items: center; color: var(--a2-text-muted);
   transition: background-color var(--t1), color var(--t1);
 }
 .mini:hover { background: var(--a2-fill-active); color: var(--a2-text); }
@@ -61,7 +61,7 @@ export class A2Input extends FieldBase {
   static observedAttributes = ['label', 'hint', 'error', 'placeholder', 'type', 'disabled', 'readonly', 'required', 'clearable', 'maxlength', 'minlength', 'pattern', 'autocomplete', 'inputmode', 'value'];
   static styles = FIELD_CSS;
   render() {
-    this.root.innerHTML = `${this.fieldHead('f')}<div class="box" part="box"><slot name="prefix"></slot><input id="f" class="ctl" part="input"><button class="mini clear" type="button" tabindex="-1" aria-label="지우기">${icon('x', 14)}</button><button class="mini reveal" type="button" tabindex="-1" aria-label="보이기">${icon('eye', 16)}</button><slot name="suffix"></slot></div><div class="hint t" part="hint"></div>`;
+    this.root.innerHTML = `${this.fieldHead('f')}<div class="box" part="box"><slot name="prefix"></slot><input id="f" class="ctl" part="input"><button class="mini hit clear" type="button" tabindex="-1" aria-label="지우기">${icon('x', 12)}</button><button class="mini hit reveal" type="button" tabindex="-1" aria-label="보이기">${icon('eye', 15)}</button><slot name="suffix"></slot></div><div class="hint t" part="hint"></div>`;
     this.ctl = this.$('input');
     this.ctl.value = this.str('value');
     this.$('.box').addEventListener('pointerdown', e => { if (e.target === this.$('.box')) { e.preventDefault(); this.ctl.focus(); } });
@@ -81,7 +81,7 @@ export class A2Input extends FieldBase {
     this.ctl.type = t === 'password' && this._reveal ? 'text' : t;
     const rv = this.$('.reveal');
     rv.style.display = t === 'password' ? 'grid' : 'none';
-    if (rv.dataset.on !== String(!!this._reveal)) { rv.dataset.on = String(!!this._reveal); rv.innerHTML = icon(this._reveal ? 'eyeOff' : 'eye', 16); rv.setAttribute('aria-label', this._reveal ? '가리기' : '보이기'); }
+    if (rv.dataset.on !== String(!!this._reveal)) { rv.dataset.on = String(!!this._reveal); rv.innerHTML = icon(this._reveal ? 'eyeOff' : 'eye', 15); rv.setAttribute('aria-label', this._reveal ? '가리기' : '보이기'); }
     if (this.hasAttribute('label')) this.ctl.setAttribute('aria-label', this.getAttribute('label'));
     this.after();
   }
@@ -106,7 +106,9 @@ export class A2Textarea extends FieldBase {
     this.$('.box').addEventListener('pointerdown', e => { if (e.target === this.$('.box')) { e.preventDefault(); this.ctl.focus(); } });
     this.ctl.addEventListener('input', () => this.after());
     this.ctl.addEventListener('change', () => this.fire('change'));
-    new ResizeObserver(() => this.fit()).observe(this);
+    // 너비가 바뀔 때만 다시 잰다(높이는 fit 이 바꾸므로 되돌아오지 않게)
+    let w = 0;
+    new ResizeObserver(([e]) => { const nw = Math.round(e.contentRect.width); if (nw !== w) { w = nw; this.fit(); } }).observe(this);
   }
   attr(name, v) { if (name === 'value') { if (this.ctl.value !== (v ?? '')) this.value = v ?? ''; } else this.update(); }
   update() {
